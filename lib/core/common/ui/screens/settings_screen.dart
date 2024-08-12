@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
+import 'package:flex_workout_mobile/core/config/providers.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/auth/ui/containers/user_info_card.dart';
@@ -63,6 +64,14 @@ class SettingsScreen extends ConsumerWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppLayout.p4),
                   child: ThemeSelector(),
+                ),
+                const SizedBox(height: AppLayout.p6),
+                Center(
+                  child: Text(
+                    'Version ${packageInfo.version}',
+                    style: context.typography.labelMedium
+                        .copyWith(color: context.colors.foregroundSecondary),
+                  ),
                 ),
               ],
             ),
