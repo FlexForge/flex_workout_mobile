@@ -1,0 +1,58 @@
+name: new_app_version
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: 'Release type (one of): breaking, major, minor'
+        required: true
+        default: 'patch'
+        options:
+          - breaking
+          - major
+          - minor
+          - patch
+      build:
+        type: string
+        description: 'Will set the build part to the given value. This is useful when build is a not a simple numeric value, e.g. a timestamp.'
+        required: false
+      pre:
+        type: choice
+        description: 'Sets the prerelease prefix.'
+        required: false
+        options:
+          - alpha
+          - beta
+
+jobs:
+  release:
+    name: Create New Version and push new tag
+    
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.22.2
+          channel: stable
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+      
+      - name: 📦 Install Dependencies
+        run: flutter pub global activate cider
+
+      - name: 👊 Bump Version
+        run: cider bump ${{ github.event.inputs.release-type }} ${{(github.event.inputs.pre && '--bump-build --pre=') || ''}}${{ github.event.inputs.pre }} ${{(github.event.inputs.pre && '--build=') || '' }}${{ github.event.inputs.pre }}
+
+      - name: 🏷️ Push Tag
+        run: |
+          chmod +x ./scripts/app-release.sh
+          ./scripts/app-release.sh
