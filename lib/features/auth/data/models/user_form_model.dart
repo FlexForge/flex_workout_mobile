@@ -13,7 +13,6 @@ class User with _$User {
     String? name,
     @RfControl(validators: [RequiredValidator(), EmailValidator()])
     String? email,
-    @RfControl<dynamic>() DateTime? birthDate,
     @RfControl(validators: [RequiredValidator()]) int? sex,
   }) = _User;
 }
