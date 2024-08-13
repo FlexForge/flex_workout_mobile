@@ -1,7 +1,7 @@
 name: flex_workout_mobile
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.0.2-alpha+2
+version: 0.1.0-alpha+3
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
