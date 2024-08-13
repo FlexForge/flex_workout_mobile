@@ -19,12 +19,16 @@ ProviderContainer createContainer({
 }
 
 class WidgetWrapper extends StatelessWidget {
-  const WidgetWrapper({required this.child, super.key});
+  const WidgetWrapper({this.child, this.function, super.key});
 
-  final Widget child;
+  final Widget? child;
+  final void Function(BuildContext)? function;
 
   @override
   Widget build(BuildContext context) {
+    if (function != null) {
+      Future.delayed(Duration.zero, () => function!(context));
+    }
     return MaterialApp(
       home: Scaffold(
         body: child,

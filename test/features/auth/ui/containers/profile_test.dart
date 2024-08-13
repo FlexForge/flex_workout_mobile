@@ -19,14 +19,6 @@ void main() async {
     mockUserRepository = MockUserRepository();
   });
 
-  ProviderContainer createUserInfoContainer() {
-    return createContainer(
-      overrides: [
-        userRepositoryProvider.overrideWithValue(mockUserRepository),
-      ],
-    );
-  }
-
   group('displays user information', () {
     testWidgets('exists', (tester) async {
       final firstName = faker.person.firstName();
