@@ -1,4 +1,3 @@
-import 'package:flex_workout_mobile/core/config/providers.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/auth/data/repositories/onboarding_repository.dart';
 import 'package:flex_workout_mobile/features/auth/data/repositories/user_repository.dart';
