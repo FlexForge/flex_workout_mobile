@@ -5,7 +5,7 @@ on:
     inputs:
       release-type:
         type: choice
-        description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
+        description: 'Release type (one of): breaking, major, minor'
         required: true
         default: 'patch'
         options:
@@ -15,11 +15,11 @@ on:
           - patch
       build:
         type: string
-        description: ''
+        description: 'Will set the build part to the given value. This is useful when build is a not a simple numeric value, e.g. a timestamp.'
         required: false
       pre:
         type: choice
-        description: 
+        description: 'Sets the prerelease prefix.'
         required: false
         options:
           - alpha
