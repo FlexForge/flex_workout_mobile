@@ -22,6 +22,7 @@ on:
         description: 'Sets the prerelease prefix.'
         required: false
         options:
+          - none
           - alpha
           - beta
 
@@ -50,7 +51,7 @@ jobs:
         run: flutter pub global activate cider
 
       - name: 👊 Bump Version
-        run: cider bump ${{ github.event.inputs.release-type }} ${{(github.event.inputs.pre && '--bump-build --pre=') || ''}}${{ github.event.inputs.pre }} ${{(github.event.inputs.pre && '--build=') || '' }}${{ github.event.inputs.pre }}
+        run: cider bump ${{ github.event.inputs.release-type }} ${{(!(github.event.inputs.pre=='none') && '--bump-build --pre=') || ''}}${{ (!(github.event.inputs.pre=='none') && github.event.inputs.pre) || '' }} ${{(github.event.inputs.build && '--build=') || '' }}${{ github.event.inputs.build }}
 
       - name: 🏷️ Push Tag
         run: |
