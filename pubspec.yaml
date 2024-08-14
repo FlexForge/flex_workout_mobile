@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.8
+  custom_sliding_segmented_control: ^1.8.3
   faker: ^2.1.0
   flutter:
     sdk: flutter
