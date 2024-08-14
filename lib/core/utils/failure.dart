@@ -26,7 +26,15 @@ class Failure implements Exception {
       _InternalServerErrorFailure;
 
   /// Get the error message for specified failure
-  String get error => this is _UnprocessableEntityFailure
-      ? (this as _UnprocessableEntityFailure).message
-      : '$this';
+  String get error {
+    if (this is _UnprocessableEntityFailure) {
+      return (this as _UnprocessableEntityFailure).message;
+    }
+
+    if (this is _InternalServerErrorFailure) {
+      return (this as _InternalServerErrorFailure).message ?? '$this';
+    }
+
+    return '$this';
+  }
 }

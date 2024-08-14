@@ -57,6 +57,9 @@ jobs:
           cache: true
           cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
       
+      - name: 📦 Install Dependencies
+        run: flutter pub global activate very_good_cli
+
       - name: ⚙️ Run Setup
         run: dart run build_runner build
 
@@ -65,6 +68,16 @@ jobs:
 
       - name: 🕵️ Analyze
         run: flutter analyze lib
+
+      - name: 🧪 Run Tests
+        run: very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random
+
+      - name: 📊 Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v3
+        with:
+          path: ./coverage/lcov.info
+          exclude: '**/*.g.dart **/*.freezed.dart **/*.gform.dart /theme/'
+          min_coverage: 70
 
   spell-check:
     runs-on: ubuntu-latest
