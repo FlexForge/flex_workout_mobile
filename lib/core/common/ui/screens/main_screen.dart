@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/components/navigation_bar.dart';
+import 'package:flex_workout_mobile/core/common/ui/screens/library_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _selectedIndex,
         children: const <Widget>[
+          LibraryScreen(),
           SettingsScreen(),
         ],
       ),

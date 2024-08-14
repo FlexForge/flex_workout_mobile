@@ -1,5 +1,7 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 /// Main Bottom Navigation Bar
 class MainNavigationBar extends StatelessWidget {
@@ -31,9 +33,16 @@ class MainNavigationBar extends StatelessWidget {
             children: <Widget>[
               _navigationBarItems(
                 context,
-                0,
-                'Feed',
-                Icons.settings,
+                index: 0,
+                label: 'Library',
+                icon: Symbols.bookmark,
+              ),
+              _navigationBarItems(
+                context,
+                index: 1,
+                label: 'More',
+                icon: CupertinoIcons.ellipsis_circle,
+                fillIcon: CupertinoIcons.ellipsis_circle_fill,
               ),
             ],
           ),
@@ -43,11 +52,12 @@ class MainNavigationBar extends StatelessWidget {
   }
 
   Widget _navigationBarItems(
-    BuildContext context,
-    int index,
-    String label,
-    IconData icon,
-  ) {
+    BuildContext context, {
+    required int index,
+    required String label,
+    required IconData icon,
+    IconData? fillIcon,
+  }) {
     bool isSelected(int index) {
       return selectedIndex == index;
     }
@@ -76,7 +86,7 @@ class MainNavigationBar extends StatelessWidget {
           children: <Widget>[
             Icon(
               size: 29,
-              icon,
+              isSelected(index) && fillIcon != null ? fillIcon : icon,
               color: isSelected(index)
                   ? context.colors.foregroundPrimary
                   : context.colors.foregroundSecondary,

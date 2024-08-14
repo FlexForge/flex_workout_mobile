@@ -68,7 +68,8 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: AppLayout.p6),
                 Center(
                   child: Text(
-                    'Version ${packageInfo.version}',
+                    'Version ${packageInfo.version}'
+                    '-alpha+${packageInfo.buildNumber}',
                     style: context.typography.labelMedium
                         .copyWith(color: context.colors.foregroundSecondary),
                   ),
