@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,6 +31,9 @@ class WidgetWrapper extends StatelessWidget {
       Future.delayed(Duration.zero, () => function!(context));
     }
     return MaterialApp(
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.light,
       home: Scaffold(
         body: child,
       ),
