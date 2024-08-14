@@ -44,7 +44,7 @@ void main() {
 
     testWidgets('calls onPressed when button is pressed',
         (WidgetTester tester) async {
-      bool onPressedCalled = false;
+      var onPressedCalled = false;
 
       await tester.pumpWidget(
         WidgetWrapper(
