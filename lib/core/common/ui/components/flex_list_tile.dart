@@ -42,6 +42,7 @@ class FlexListTile extends StatelessWidget {
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        splashFactory: NoSplash.splashFactory,
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor ?? context.colors.foregroundPrimary,
         disabledForegroundColor:
