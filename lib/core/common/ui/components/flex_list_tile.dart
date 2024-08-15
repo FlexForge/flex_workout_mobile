@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class FlexListTile extends StatelessWidget {
   const FlexListTile({
@@ -48,7 +49,7 @@ class FlexListTile extends StatelessWidget {
         disabledForegroundColor:
             disabledForegroundColor ?? context.colors.foregroundSecondary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+          borderRadius: BorderRadius.circular(AppLayout.p0),
         ),
       ),
       child: Padding(
@@ -66,7 +67,7 @@ class FlexListTile extends StatelessWidget {
                 children: [
                   if (prefix == null)
                     Icon(
-                      icon ?? Icons.brightness_1,
+                      icon ?? Symbols.brightness_1,
                       weight: icon != null ? 400 : 700,
                       size: 30,
                     ),

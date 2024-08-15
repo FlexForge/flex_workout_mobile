@@ -1,5 +1,9 @@
+import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,7 +12,7 @@ class ExerciseList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final exercises = ref.watch(exerciseListControllerProvider);
+    final exercises = ref.watch(exerciseListControllerProvider).toMap();
 
     return exercises.isEmpty
         ? SliverFillRemaining(
@@ -33,7 +37,55 @@ class ExerciseList extends ConsumerWidget {
           )
         : SliverList.builder(
             itemCount: exercises.length,
-            itemBuilder: (context, index) => Text(exercises[index].name),
+            itemBuilder: (context, index) {
+              final section = exercises.entries.toList()[index];
+
+              return Section(
+                header: section.key,
+                padding: const EdgeInsets.only(
+                  left: AppLayout.p4,
+                  right: AppLayout.p4,
+                  bottom: AppLayout.p6,
+                ),
+                body: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: section.value.length,
+                  itemBuilder: (context, index) {
+                    final exercise = section.value[index];
+
+                    return FlexListTile(
+                      onTap: () {},
+                      title: Text(
+                        exercise.name,
+                        style: context.typography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      subtitle: exercise.description != null
+                          ? Text(
+                              exercise.description!,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: context.typography.bodySmall.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: context.colors.foregroundSecondary,
+                              ),
+                            )
+                          : null,
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      indent: 54,
+                      height: 0,
+                      color: context.colors.divider,
+                    );
+                  },
+                ),
+              );
+            },
           );
   }
 }
