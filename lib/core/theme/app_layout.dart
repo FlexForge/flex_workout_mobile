@@ -9,7 +9,7 @@ class AppLayout {
   static const double p7 = 28;
   static const double p8 = 32;
 
-  static const double bottomBuffer = 100;
+  static const double bottomBuffer = 250;
 
   static const double cornerRadius = 10;
   static const double roundedRadius = 250;

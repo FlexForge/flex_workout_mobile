@@ -2,6 +2,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/large_button.dart'
 import 'package:flex_workout_mobile/core/common/ui/components/segment_controller.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,6 +67,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                 ],
               ),
             ),
+          ),
+          if (_selectedValue == 2) const ExerciseList(),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: AppLayout.bottomBuffer),
           ),
         ],
       ),

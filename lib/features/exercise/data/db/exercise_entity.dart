@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -23,4 +24,15 @@ class Exercise {
   DateTime updatedAt;
   @Property(type: PropertyType.date)
   DateTime createdAt;
+}
+
+extension ConvertExericse on Exercise {
+  ExerciseModel toModel() => ExerciseModel(
+        id: id,
+        name: name,
+        description: description,
+        videoUrl: videoUrl,
+        updatedAt: updatedAt,
+        createdAt: createdAt,
+      );
 }
