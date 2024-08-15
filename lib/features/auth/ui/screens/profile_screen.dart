@@ -1,9 +1,9 @@
+import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/auth/ui/containers/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -21,15 +21,7 @@ class ProfileScreen extends StatelessWidget {
           'Profile',
           style: TextStyle(color: context.colors.foregroundPrimary),
         ),
-        leading: IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () => context.pop(),
-          icon: const Icon(
-            Icons.chevron_left,
-          ),
-          color: context.colors.foregroundPrimary,
-          iconSize: 24,
-        ),
+        leading: const FlexBackButton(),
         backgroundColor: context.colors.backgroundSecondary,
         border: null,
         padding: EdgeInsetsDirectional.zero,

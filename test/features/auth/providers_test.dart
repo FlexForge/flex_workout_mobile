@@ -15,7 +15,7 @@ void main() async {
       overrides: [
         objectBoxStoreProvider.overrideWith((ref) {
           return store;
-        })
+        }),
       ],
     );
   }
@@ -40,7 +40,7 @@ void main() async {
         container.read(onboardingRepositoryProvider);
       } catch (e) {
         expect(e.toString(),
-            'Failure.internalServerError(message: Shared preferences not initialized)');
+            'Failure.internalServerError(message: Shared preferences not initialized)',);
       }
     });
 

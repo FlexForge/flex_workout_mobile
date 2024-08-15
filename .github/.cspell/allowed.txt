@@ -49,3 +49,5 @@ autofocus
 autocorrect
 LTRB
 prefs
+Deadlift
+objectboxio

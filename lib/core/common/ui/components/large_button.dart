@@ -40,6 +40,7 @@ class LargeButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        splashFactory: NoSplash.splashFactory,
         foregroundColor: foregroundColor ?? context.colors.foregroundPrimary,
         backgroundColor: backgroundColor ?? context.colors.backgroundPrimary,
         disabledForegroundColor: context.colors.foregroundTertiary,

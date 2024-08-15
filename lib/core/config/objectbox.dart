@@ -1,5 +1,7 @@
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
+import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
+import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -25,5 +27,7 @@ class ObjectBox {
     return ObjectBox._create(store);
   }
 
-  void _putInitialPostData() {}
+  void _putInitialPostData() {
+    store.box<Exercise>().putManyAsync(masterExercises);
+  }
 }
