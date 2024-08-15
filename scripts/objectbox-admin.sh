@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# ObjectBox Admin front-end shell script for Docker container version.
+# ObjectBox Admin front end shell script for Docker container version.
 # For more information visit https://objectbox.io
 # Detailed documentation available at https://docs.objectbox.io/data-browser 
 
