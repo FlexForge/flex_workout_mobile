@@ -26,7 +26,7 @@ class Exercise {
   DateTime createdAt;
 }
 
-extension ConvertExericse on Exercise {
+extension ConvertExercise on Exercise {
   ExerciseModel toModel() => ExerciseModel(
         id: id,
         name: name,

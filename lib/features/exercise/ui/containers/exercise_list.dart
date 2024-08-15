@@ -1,9 +1,7 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 
 class ExerciseList extends ConsumerWidget {
   const ExerciseList({super.key});
@@ -24,7 +22,7 @@ class ExerciseList extends ConsumerWidget {
                     size: 48,
                   ),
                   Text(
-                    'No Posts Found',
+                    'No Exercises Found',
                     style: context.typography.headlineMedium.copyWith(
                       color: context.colors.foregroundSecondary,
                     ),

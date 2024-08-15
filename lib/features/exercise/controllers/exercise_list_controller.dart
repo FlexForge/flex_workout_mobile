@@ -9,7 +9,6 @@ class ExerciseListController extends _$ExerciseListController {
   @override
   List<ExerciseModel> build() {
     final res = ref.watch(exerciseRepositoryProvider).getExercises();
-
     return res.fold((l) => throw l, (r) => r);
   }
 }
