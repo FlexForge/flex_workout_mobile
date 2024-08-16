@@ -10,9 +10,13 @@ class LargeButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor,
     this.foregroundColor,
+    this.disabledBackgroundColor,
+    this.disabledForegroundColor,
     this.borderColor,
     this.padding,
     this.borderRadius,
+    this.labelStyle,
+    this.iconSize = 20,
     this.borderWidth = 2,
     this.enabled = true,
     this.expanded = false,
@@ -20,11 +24,15 @@ class LargeButton extends StatelessWidget {
   });
 
   final String? label;
+  final TextStyle? labelStyle;
   final IconData? icon;
+  final double iconSize;
   final Widget? child;
   final void Function()? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Color? disabledBackgroundColor;
+  final Color? disabledForegroundColor;
   final Color? borderColor;
   final EdgeInsets? padding;
   final double? borderRadius;
@@ -43,8 +51,10 @@ class LargeButton extends StatelessWidget {
         splashFactory: NoSplash.splashFactory,
         foregroundColor: foregroundColor ?? context.colors.foregroundPrimary,
         backgroundColor: backgroundColor ?? context.colors.backgroundPrimary,
-        disabledForegroundColor: context.colors.foregroundTertiary,
-        disabledBackgroundColor: context.colors.foregroundQuaternary,
+        disabledForegroundColor:
+            disabledForegroundColor ?? context.colors.foregroundTertiary,
+        disabledBackgroundColor:
+            disabledBackgroundColor ?? context.colors.foregroundQuaternary,
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.circular(borderRadius ?? AppLayout.cornerRadius),
@@ -72,20 +82,59 @@ class LargeButton extends StatelessWidget {
                 if (label != null)
                   Text(
                     label!,
-                    style: context.typography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: labelStyle ??
+                        context.typography.labelLarge.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 if (icon != null && label != null)
                   const SizedBox(width: AppLayout.p1),
                 if (icon != null)
                   Icon(
                     icon,
-                    size: 20,
+                    size: iconSize,
                   ),
               ],
             ),
       ),
+    );
+  }
+}
+
+class SquareButton extends StatelessWidget {
+  const SquareButton({
+    required this.label,
+    required this.icon,
+    this.iconSize = 20,
+    this.onPressed,
+    super.key,
+  });
+
+  final void Function()? onPressed;
+  final String label;
+  final IconData icon;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        LargeButton(
+          icon: icon,
+          iconSize: iconSize,
+          padding: const EdgeInsets.all(AppLayout.p2),
+          backgroundColor: context.colors.backgroundTertiary,
+          foregroundColor: context.colors.foregroundPrimary,
+          onPressed: () => {},
+        ),
+        const SizedBox(height: AppLayout.p1),
+        Text(
+          label,
+          style: context.typography.labelSmall.copyWith(
+            color: context.colors.foregroundPrimary,
+          ),
+        ),
+      ],
     );
   }
 }
