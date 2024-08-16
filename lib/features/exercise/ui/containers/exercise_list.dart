@@ -4,8 +4,10 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ExerciseList extends ConsumerWidget {
   const ExerciseList({super.key});
@@ -56,7 +58,12 @@ class ExerciseList extends ConsumerWidget {
                     final exercise = section.value[index];
 
                     return FlexListTile(
-                      onTap: () {},
+                      onTap: () => context.goNamed(
+                        ExerciseViewScreen.routeName,
+                        pathParameters: {
+                          'eid': exercise.id.toString(),
+                        },
+                      ),
                       title: Text(
                         exercise.name,
                         style: context.typography.bodyMedium.copyWith(

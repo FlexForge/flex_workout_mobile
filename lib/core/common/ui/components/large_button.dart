@@ -13,6 +13,7 @@ class LargeButton extends StatelessWidget {
     this.borderColor,
     this.padding,
     this.borderRadius,
+    this.iconSize = 20,
     this.borderWidth = 2,
     this.enabled = true,
     this.expanded = false,
@@ -21,6 +22,7 @@ class LargeButton extends StatelessWidget {
 
   final String? label;
   final IconData? icon;
+  final double iconSize;
   final Widget? child;
   final void Function()? onPressed;
   final Color? backgroundColor;
@@ -81,11 +83,49 @@ class LargeButton extends StatelessWidget {
                 if (icon != null)
                   Icon(
                     icon,
-                    size: 20,
+                    size: iconSize,
                   ),
               ],
             ),
       ),
+    );
+  }
+}
+
+class SquareButton extends StatelessWidget {
+  const SquareButton({
+    required this.label,
+    required this.icon,
+    this.iconSize = 20,
+    this.onPressed,
+    super.key,
+  });
+
+  final void Function()? onPressed;
+  final String label;
+  final IconData icon;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        LargeButton(
+          icon: icon,
+          iconSize: iconSize,
+          padding: const EdgeInsets.all(AppLayout.p2),
+          backgroundColor: context.colors.backgroundTertiary,
+          foregroundColor: context.colors.foregroundPrimary,
+          onPressed: () => {},
+        ),
+        const SizedBox(height: AppLayout.p1),
+        Text(
+          label,
+          style: context.typography.labelSmall.copyWith(
+            color: context.colors.foregroundPrimary,
+          ),
+        ),
+      ],
     );
   }
 }

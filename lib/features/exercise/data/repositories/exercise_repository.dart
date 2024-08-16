@@ -19,4 +19,20 @@ class ExerciseRepository {
       return left(Failure.internalServerError(message: e.toString()));
     }
   }
+
+  Either<Failure, ExerciseModel> getExerciseById(int id) {
+    try {
+      final res = box.get(id);
+
+      if (res == null) {
+        return left(
+          const Failure.unprocessableEntity(message: 'Exercise does not exist'),
+        );
+      }
+
+      return right(res.toModel());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
 }
