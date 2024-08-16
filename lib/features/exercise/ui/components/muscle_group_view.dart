@@ -171,7 +171,7 @@ class _MuscleGroupViewState extends State<MuscleGroupView> {
                           ),
                         ],
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ),

@@ -40,7 +40,7 @@ class ExerciseViewScreen extends ConsumerWidget {
             ExerciseSummary(exercise: exercise),
             const SizedBox(height: AppLayout.p6),
             ExerciseOverview(exercise: exercise),
-            const SizedBox(height: AppLayout.bottomBuffer)
+            const SizedBox(height: AppLayout.bottomBuffer),
           ],
         ),
       ),
