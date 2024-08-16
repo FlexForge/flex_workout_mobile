@@ -24,7 +24,7 @@ dependencies:
   material_symbols_icons: ^4.2780.0
   mocktail: ^1.0.4
   objectbox: ^4.0.1
-  objectbox_flutter_libs: any
+  objectbox_flutter_libs: 4.0.2
   package_info_plus: ^8.0.2
   path: ^1.9.0
   path_provider: ^2.1.4
