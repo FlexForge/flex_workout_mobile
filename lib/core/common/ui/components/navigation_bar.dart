@@ -8,11 +8,14 @@ class MainNavigationBar extends StatelessWidget {
   const MainNavigationBar({
     required this.selectedIndex,
     required this.onItemTapped,
+    required this.showToolbarModalBottomSheet,
     super.key,
   });
 
   final int selectedIndex;
   final void Function(int) onItemTapped;
+
+  final VoidCallback showToolbarModalBottomSheet;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +34,31 @@ class MainNavigationBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _navigationBarItems(
+              navigationBarItems(
                 context,
                 index: 0,
+                label: 'Dashboard',
+                icon: Symbols.dashboard,
+              ),
+              navigationBarItems(
+                context,
+                index: 1,
+                label: 'History',
+                icon: Symbols.history,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: showToolbar(context),
+              ),
+              navigationBarItems(
+                context,
+                index: 2,
                 label: 'Library',
                 icon: Symbols.bookmark,
               ),
-              _navigationBarItems(
+              navigationBarItems(
                 context,
-                index: 1,
+                index: 3,
                 label: 'More',
                 icon: CupertinoIcons.ellipsis_circle,
                 fillIcon: CupertinoIcons.ellipsis_circle_fill,
@@ -51,7 +70,21 @@ class MainNavigationBar extends StatelessWidget {
     );
   }
 
-  Widget _navigationBarItems(
+  Widget showToolbar(BuildContext context) {
+    return IconButton.filled(
+      icon: const Icon(Symbols.add),
+      iconSize: 24,
+      onPressed: showToolbarModalBottomSheet,
+      style: IconButton.styleFrom(
+        padding: const EdgeInsets.all(12),
+        splashFactory: NoSplash.splashFactory,
+        backgroundColor: context.colors.foregroundPrimary,
+        foregroundColor: context.colors.backgroundPrimary,
+      ),
+    );
+  }
+
+  Widget navigationBarItems(
     BuildContext context, {
     required int index,
     required String label,

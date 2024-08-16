@@ -1,7 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/navigation_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/library_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/settings_screen.dart';
+import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/features/dashboard/ui/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,12 +22,26 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void _showToolbarModalBottomSheet(BuildContext context) {
+    showCupertinoModalBottomSheet<void>(
+      context: context,
+      useRootNavigator: true,
+      barrierColor: context.colors.overlay,
+      elevation: 0,
+      builder: (context) => Container(
+        color: context.colors.backgroundPrimary,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
         children: const <Widget>[
+          DashboardScreen(),
+          Scaffold(),
           LibraryScreen(),
           SettingsScreen(),
         ],
@@ -32,6 +49,8 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: MainNavigationBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onTabTapped,
+        showToolbarModalBottomSheet: () =>
+            _showToolbarModalBottomSheet(context),
       ),
     );
   }
