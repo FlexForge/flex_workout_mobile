@@ -52,3 +52,10 @@ prefs
 Deadlift
 objectboxio
 kettlebell
+glutes
+infraspinatus
+Delts
+Reclip
+sodipodi
+inkscape
+docname
