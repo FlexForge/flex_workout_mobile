@@ -39,7 +39,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.5.2
-  objectbox_generator: any
+  objectbox_generator: 4.0.2
   reactive_forms_generator: ^5.0.5
   riverpod_generator: ^2.4.0
   riverpod_lint: ^2.3.10
