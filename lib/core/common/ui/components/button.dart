@@ -10,9 +10,12 @@ class LargeButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor,
     this.foregroundColor,
+    this.disabledBackgroundColor,
+    this.disabledForegroundColor,
     this.borderColor,
     this.padding,
     this.borderRadius,
+    this.labelStyle,
     this.iconSize = 20,
     this.borderWidth = 2,
     this.enabled = true,
@@ -21,12 +24,15 @@ class LargeButton extends StatelessWidget {
   });
 
   final String? label;
+  final TextStyle? labelStyle;
   final IconData? icon;
   final double iconSize;
   final Widget? child;
   final void Function()? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Color? disabledBackgroundColor;
+  final Color? disabledForegroundColor;
   final Color? borderColor;
   final EdgeInsets? padding;
   final double? borderRadius;
@@ -45,8 +51,10 @@ class LargeButton extends StatelessWidget {
         splashFactory: NoSplash.splashFactory,
         foregroundColor: foregroundColor ?? context.colors.foregroundPrimary,
         backgroundColor: backgroundColor ?? context.colors.backgroundPrimary,
-        disabledForegroundColor: context.colors.foregroundTertiary,
-        disabledBackgroundColor: context.colors.foregroundQuaternary,
+        disabledForegroundColor:
+            disabledForegroundColor ?? context.colors.foregroundTertiary,
+        disabledBackgroundColor:
+            disabledBackgroundColor ?? context.colors.foregroundQuaternary,
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.circular(borderRadius ?? AppLayout.cornerRadius),
@@ -74,9 +82,10 @@ class LargeButton extends StatelessWidget {
                 if (label != null)
                   Text(
                     label!,
-                    style: context.typography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: labelStyle ??
+                        context.typography.labelLarge.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 if (icon != null && label != null)
                   const SizedBox(width: AppLayout.p1),

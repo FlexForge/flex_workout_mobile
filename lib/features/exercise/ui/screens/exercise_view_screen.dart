@@ -5,7 +5,6 @@ import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_sum
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class ExerciseViewScreen extends ConsumerWidget {
   const ExerciseViewScreen({required this.id, super.key});

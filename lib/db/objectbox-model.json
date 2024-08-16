@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "3:6397758297497243710",
-      "lastPropertyId": "6:8717447058233911604",
+      "lastPropertyId": "8:4635906542739559423",
       "name": "Exercise",
       "properties": [
         {
@@ -38,6 +38,16 @@
           "id": "6:8717447058233911604",
           "name": "createdAt",
           "type": 10
+        },
+        {
+          "id": "7:5435612076421902876",
+          "name": "dbEquipment",
+          "type": 6
+        },
+        {
+          "id": "8:4635906542739559423",
+          "name": "dbMovementPattern",
+          "type": 6
         }
       ],
       "relations": []

@@ -1,4 +1,4 @@
-import 'package:flex_workout_mobile/core/common/ui/components/large_button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/form_wrapper.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';

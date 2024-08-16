@@ -1,4 +1,4 @@
-import 'package:flex_workout_mobile/core/common/ui/components/large_button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';

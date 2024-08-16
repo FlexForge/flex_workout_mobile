@@ -12,6 +12,8 @@ void main() {
         updatedAt: faker.date.dateTime(),
         description: faker.randomGenerator.string(1500),
         videoUrl: faker.internet.httpsUrl(),
+        equipment: Equipment.barbell,
+        movementPattern: MovementPattern.fly,
       );
       final res = model.toEntity();
 
