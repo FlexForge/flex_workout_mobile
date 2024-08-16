@@ -1,7 +1,9 @@
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
+import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
+import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -37,6 +39,8 @@ class ObjectBox {
 
   void _resetData() {
     store.box<Exercise>().removeAll();
+    store.box<MuscleGroup>().removeAll();
+    store.box<MuscleGroup>().putMany(muscleGroups);
     store.box<Exercise>().putManyAsync(masterExercises);
   }
 }

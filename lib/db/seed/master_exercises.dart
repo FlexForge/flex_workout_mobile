@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_redundant_argument_values
 
+import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 
@@ -12,7 +13,9 @@ final barbellBenchPress = Exercise(
   movementPattern: MovementPattern.horizontalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([chest])
+  ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
 final dumbbellPullover = Exercise(
   name: 'Pullover (Dumbbell)',
@@ -23,7 +26,9 @@ final dumbbellPullover = Exercise(
   movementPattern: MovementPattern.pullOver,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([lats])
+  ..secondaryMuscleGroups.addAll([chest, rearDelts, midBack, triceps]);
 
 final barbellAdPress = Exercise(
   name: 'AD Press (Barbell)',
@@ -34,7 +39,9 @@ final barbellAdPress = Exercise(
   movementPattern: MovementPattern.verticalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([frontDelts])
+  ..secondaryMuscleGroups.addAll([triceps, chest]);
 
 final cableCrunch = Exercise(
   name: 'Cable Crunch',
@@ -45,7 +52,9 @@ final cableCrunch = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([abs])
+  ..secondaryMuscleGroups.addAll([]);
 
 final dumbbellBenchPress = Exercise(
   name: 'Bench Press (Dumbbell)',
@@ -56,7 +65,9 @@ final dumbbellBenchPress = Exercise(
   movementPattern: MovementPattern.horizontalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([chest])
+  ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
 final cableTricepExtension = Exercise(
   name: 'Tricep Extension (Cable)',
@@ -67,7 +78,9 @@ final cableTricepExtension = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([triceps])
+  ..secondaryMuscleGroups.addAll([]);
 
 final plateLoadedNeckExtension = Exercise(
   name: 'Neck Extension (Plate Loaded)',
@@ -78,7 +91,9 @@ final plateLoadedNeckExtension = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([neck])
+  ..secondaryMuscleGroups.addAll([]);
 
 final weightedChinUps = Exercise(
   name: 'Chin Ups (Weighted)',
@@ -89,7 +104,9 @@ final weightedChinUps = Exercise(
   movementPattern: MovementPattern.verticalPull,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([lats, biceps])
+  ..secondaryMuscleGroups.addAll([rearDelts, midBack]);
 
 final legExtension = Exercise(
   name: 'Leg Extension',
@@ -99,7 +116,9 @@ final legExtension = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([quads])
+  ..secondaryMuscleGroups.addAll([]);
 
 final barbellRomanianDeadlift = Exercise(
   name: 'Romanian Deadlift (Barbell)',
@@ -110,7 +129,9 @@ final barbellRomanianDeadlift = Exercise(
   movementPattern: MovementPattern.hipHinge,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([quads])
+  ..secondaryMuscleGroups.addAll([]);
 
 final dumbbellInclineCurl = Exercise(
   name: 'Incline Curl (Dumbbell)',
@@ -121,7 +142,9 @@ final dumbbellInclineCurl = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([biceps])
+  ..secondaryMuscleGroups.addAll([]);
 
 final standingCalfRaise = Exercise(
   name: 'Standing Calf Raise (Machine)',
@@ -131,7 +154,9 @@ final standingCalfRaise = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([calves])
+  ..secondaryMuscleGroups.addAll([]);
 
 final legPress = Exercise(
   name: 'Leg Press',
@@ -141,7 +166,9 @@ final legPress = Exercise(
   movementPattern: MovementPattern.squat,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([quads])
+  ..secondaryMuscleGroups.addAll([glutes]);
 
 final dumbbellRow = Exercise(
   name: 'Row (Dumbbell)',
@@ -152,7 +179,9 @@ final dumbbellRow = Exercise(
   movementPattern: MovementPattern.horizontalPull,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([lats, midBack])
+  ..secondaryMuscleGroups.addAll([biceps, forearms, rearDelts]);
 
 final barbellUprightRow = Exercise(
   name: 'Upright Row (Barbell)',
@@ -163,7 +192,9 @@ final barbellUprightRow = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([midDelts])
+  ..secondaryMuscleGroups.addAll([midBack]);
 
 final closeGripBarbellBenchPress = Exercise(
   name: 'Close Grip Bench Press (Barbell)',
@@ -174,7 +205,9 @@ final closeGripBarbellBenchPress = Exercise(
   movementPattern: MovementPattern.horizontalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([triceps])
+  ..secondaryMuscleGroups.addAll([chest, frontDelts]);
 
 final dumbbellHammerCurl = Exercise(
   name: 'Hammer Curl (Dumbbell)',
@@ -185,7 +218,9 @@ final dumbbellHammerCurl = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([biceps])
+  ..secondaryMuscleGroups.addAll([]);
 
 final barbellInclineBenchPress = Exercise(
   name: 'Incline Bench Press (Barbell)',
@@ -196,7 +231,9 @@ final barbellInclineBenchPress = Exercise(
   movementPattern: MovementPattern.horizontalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([chest])
+  ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
 final neckCurl = Exercise(
   name: 'Neck Curl (Plate Loaded)',
@@ -207,7 +244,9 @@ final neckCurl = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([neck])
+  ..secondaryMuscleGroups.addAll([]);
 
 final jmPress = Exercise(
   name: 'JM Press (Barbell)',
@@ -218,7 +257,9 @@ final jmPress = Exercise(
   movementPattern: MovementPattern.horizontalPush,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([triceps])
+  ..secondaryMuscleGroups.addAll([frontDelts, chest]);
 
 final landmineObliqueTwist = Exercise(
   name: 'Oblique Twist (Landmine)',
@@ -229,7 +270,9 @@ final landmineObliqueTwist = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([abs])
+  ..secondaryMuscleGroups.addAll([frontDelts]);
 
 final barbellDeadlift = Exercise(
   name: 'Conventional Deadlift (Barbell)',
@@ -240,7 +283,9 @@ final barbellDeadlift = Exercise(
   movementPattern: MovementPattern.hipHinge,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([lowerBack, hamstrings])
+  ..secondaryMuscleGroups.addAll([abs, forearms, glutes, lats, quads, midBack]);
 
 final seatedCalfRaise = Exercise(
   name: 'Seated Calf Raise (Machine)',
@@ -250,7 +295,9 @@ final seatedCalfRaise = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([calves])
+  ..secondaryMuscleGroups.addAll([]);
 
 final smithMachineSquat = Exercise(
   name: 'Squat (Smith Machine)',
@@ -261,7 +308,9 @@ final smithMachineSquat = Exercise(
   movementPattern: MovementPattern.squat,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([quads])
+  ..secondaryMuscleGroups.addAll([abs, lowerBack, glutes, hamstrings]);
 
 final barbellPreacherCurl = Exercise(
   name: 'Preacher Curl (Barbell)',
@@ -272,7 +321,9 @@ final barbellPreacherCurl = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([biceps])
+  ..secondaryMuscleGroups.addAll([]);
 
 final krocRow = Exercise(
   name: 'Kroc Row',
@@ -283,7 +334,9 @@ final krocRow = Exercise(
   movementPattern: MovementPattern.horizontalPull,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([lats, midBack])
+  ..secondaryMuscleGroups.addAll([biceps, forearms, rearDelts]);
 
 final cableLateralRaise = Exercise(
   name: 'Lateral Raise (Cable)',
@@ -294,7 +347,9 @@ final cableLateralRaise = Exercise(
   movementPattern: MovementPattern.isolation,
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-);
+)
+  ..primaryMuscleGroups.addAll([midDelts])
+  ..secondaryMuscleGroups.addAll([frontDelts]);
 
 final masterExercises = [
   barbellBenchPress,

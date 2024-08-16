@@ -55,7 +55,18 @@
           "type": 6
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "1:2584876106965066276",
+          "name": "primaryMuscleGroups",
+          "targetId": "5:5827586521444761878"
+        },
+        {
+          "id": "2:3429635341427705104",
+          "name": "secondaryMuscleGroups",
+          "targetId": "5:5827586521444761878"
+        }
+      ]
     },
     {
       "id": "4:7359632297161443866",
@@ -115,11 +126,45 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:5827586521444761878",
+      "lastPropertyId": "5:8725679368810692080",
+      "name": "MuscleGroup",
+      "properties": [
+        {
+          "id": "1:7334641723825713314",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7201401242415370606",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7521451397244145199",
+          "name": "diagramPathNames",
+          "type": 30
+        },
+        {
+          "id": "4:4970087725282634009",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "5:8725679368810692080",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "4:7359632297161443866",
+  "lastEntityId": "5:5827586521444761878",
   "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastRelationId": "2:3429635341427705104",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
