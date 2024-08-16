@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'tracker_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TrackerFormController extends _$TrackerFormController {
   @override
   TrackerForm build() {

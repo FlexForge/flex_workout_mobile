@@ -19,51 +19,54 @@ class MainNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 99,
-      child: BottomAppBar(
-        color: context.colors.backgroundSecondary,
-        padding: EdgeInsets.zero,
-        elevation: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: context.colors.divider), // Top border
+    return ColoredBox(
+      color: context.colors.backgroundSecondary,
+      child: SafeArea(
+        child: BottomAppBar(
+          color: context.colors.backgroundSecondary,
+          padding: EdgeInsets.zero,
+          height: 64,
+          elevation: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: context.colors.divider), // Top border
+              ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              navigationBarItems(
-                context,
-                index: 0,
-                label: 'Dashboard',
-                icon: Symbols.dashboard,
-              ),
-              navigationBarItems(
-                context,
-                index: 1,
-                label: 'History',
-                icon: Symbols.history,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: showToolbar(context),
-              ),
-              navigationBarItems(
-                context,
-                index: 2,
-                label: 'Library',
-                icon: Symbols.bookmark,
-              ),
-              navigationBarItems(
-                context,
-                index: 3,
-                label: 'More',
-                icon: CupertinoIcons.ellipsis_circle,
-                fillIcon: CupertinoIcons.ellipsis_circle_fill,
-              ),
-            ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                navigationBarItems(
+                  context,
+                  index: 0,
+                  label: 'Dashboard',
+                  icon: Symbols.dashboard,
+                ),
+                navigationBarItems(
+                  context,
+                  index: 1,
+                  label: 'History',
+                  icon: Symbols.history,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: showToolbar(context),
+                ),
+                navigationBarItems(
+                  context,
+                  index: 2,
+                  label: 'Library',
+                  icon: Symbols.bookmark,
+                ),
+                navigationBarItems(
+                  context,
+                  index: 3,
+                  label: 'More',
+                  icon: CupertinoIcons.ellipsis_circle,
+                  fillIcon: CupertinoIcons.ellipsis_circle_fill,
+                ),
+              ],
+            ),
           ),
         ),
       ),
