@@ -53,6 +53,7 @@ Deadlift
 objectboxio
 kettlebell
 glutes
+glute
 infraspinatus
 Delts
 Reclip
