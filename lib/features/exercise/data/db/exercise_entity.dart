@@ -10,6 +10,7 @@ class Exercise {
     this.id = 0,
     this.description,
     this.videoUrl,
+    this.engagement = Engagement.bilateral,
     this.equipment = Equipment.other,
     this.movementPattern = MovementPattern.other,
   });
@@ -21,6 +22,19 @@ class Exercise {
   String? description;
 
   String? videoUrl;
+
+  @Transient()
+  Engagement engagement;
+
+  int get dbEngagement {
+    return engagement.index;
+  }
+
+  set dbEngagement(int value) {
+    engagement = value >= 0 && value < Engagement.values.length
+        ? Engagement.values[value]
+        : Engagement.bilateral;
+  }
 
   @Transient()
   Equipment equipment;
@@ -60,6 +74,7 @@ extension ConvertExercise on Exercise {
         name: name,
         description: description,
         videoUrl: videoUrl,
+        engagement: engagement,
         equipment: equipment,
         movementPattern: movementPattern,
         updatedAt: updatedAt,

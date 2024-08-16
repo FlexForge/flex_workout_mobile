@@ -12,6 +12,7 @@ void main() {
         updatedAt: faker.date.dateTime(),
         description: faker.randomGenerator.string(1500),
         videoUrl: faker.internet.httpsUrl(),
+        engagement: Engagement.bilateral,
         equipment: Equipment.barbell,
         movementPattern: MovementPattern.fly,
       );

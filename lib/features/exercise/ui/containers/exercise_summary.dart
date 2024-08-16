@@ -86,6 +86,12 @@ class ExerciseSummary extends StatelessWidget {
                   exercise.equipment.readableName,
                   Symbols.exercise,
                 ),
+                const SizedBox(width: AppLayout.p3),
+                extraInfo(
+                  context,
+                  exercise.engagement.readableName,
+                  Symbols.keyboard_double_arrow_up,
+                ),
                 const SizedBox(width: AppLayout.p4),
               ],
             ),
