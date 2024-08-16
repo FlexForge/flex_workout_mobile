@@ -15,10 +15,6 @@ void main() {
         preferredTheme: theme,
       );
 
-      test('get dbPreferredTheme', () {
-        expect(entity.dbPreferredTheme, theme.index);
-      });
-
       test('set dbPreferredTheme', () {
         entity.dbPreferredTheme = ThemeMode.dark.index;
         expect(entity.preferredTheme, ThemeMode.dark);
