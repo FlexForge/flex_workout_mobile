@@ -1,6 +1,6 @@
+import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_radio_list_item.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/info_card.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_radio_list.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/form_wrapper.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';

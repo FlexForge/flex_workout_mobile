@@ -38,7 +38,7 @@ final router = GoRouter(
           builder: (context, state) => ExerciseViewScreen(
             id: state.pathParameters['eid']!,
           ),
-        )
+        ),
       ],
     ),
     GoRoute(

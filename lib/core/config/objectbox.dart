@@ -5,9 +5,13 @@ import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.da
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+const devMode = true;
+
 class ObjectBox {
   ObjectBox._create(this.store) {
-    if (isFirstLoadListener.value) {
+    if (devMode) {
+      _resetData();
+    } else if (isFirstLoadListener.value) {
       _putInitialPostData();
     }
   }
@@ -28,6 +32,11 @@ class ObjectBox {
   }
 
   void _putInitialPostData() {
+    store.box<Exercise>().putManyAsync(masterExercises);
+  }
+
+  void _resetData() {
+    store.box<Exercise>().removeAll();
     store.box<Exercise>().putManyAsync(masterExercises);
   }
 }

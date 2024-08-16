@@ -39,8 +39,11 @@ void main() async {
       try {
         container.read(onboardingRepositoryProvider);
       } catch (e) {
-        expect(e.toString(),
-            'Failure.internalServerError(message: Shared preferences not initialized)',);
+        expect(
+          e.toString(),
+          'Failure.internalServerError'
+          '(message: Shared preferences not initialized)',
+        );
       }
     });
 
