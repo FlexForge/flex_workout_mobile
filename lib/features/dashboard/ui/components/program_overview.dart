@@ -50,6 +50,7 @@ class ProgramOverview extends StatelessWidget {
           LargeButton(
             onPressed: () {},
             label: 'Start Empty Workout',
+            backgroundColor: context.colors.backgroundTertiary,
             expanded: true,
           ),
         ],
