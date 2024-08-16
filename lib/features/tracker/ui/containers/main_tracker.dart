@@ -44,9 +44,13 @@ class _TrackerState extends ConsumerState<Tracker> {
         backgroundColor: context.colors.backgroundPrimary,
         bottomNavigationBar: const TrackerBottomBar(),
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(16),
+          preferredSize: const Size.fromHeight(24),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+            padding: const EdgeInsets.only(
+              left: AppLayout.p4,
+              right: AppLayout.p4,
+              bottom: AppLayout.p2,
+            ),
             child: Row(
               children: [
                 Text(
@@ -66,10 +70,10 @@ class _TrackerState extends ConsumerState<Tracker> {
             ),
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          primary: false,
           children: [
-            const SizedBox(height: AppLayout.p2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               child: Text(
@@ -87,7 +91,9 @@ class _TrackerState extends ConsumerState<Tracker> {
                   useRootNavigator: true,
                   barrierColor: context.colors.overlay,
                   elevation: 0,
-                  builder: (context) => Container(),
+                  builder: (context) => Container(
+                    color: context.colors.backgroundPrimary,
+                  ),
                 ),
                 expanded: true,
                 label: 'Add Exercise',
@@ -101,7 +107,7 @@ class _TrackerState extends ConsumerState<Tracker> {
               height: 0,
             ),
             const SizedBox(height: AppLayout.p6),
-            const TrackedWorkoutSummary()
+            const TrackedWorkoutSummary(),
           ],
         ),
       ),

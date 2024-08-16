@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
@@ -21,17 +22,31 @@ class TrackedWorkoutSummary extends ConsumerStatefulWidget {
 }
 
 class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
-  String _timeString = "";
+  String _timeString = '';
   late Timer _timer;
 
   @override
   void initState() {
+    super.initState();
+
+    final startTime =
+        ref.read(trackerFormControllerProvider).model.startTimestamp!;
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        _timeString = DateFormat('s').format(DateTime.now());
+        final difference = DateTime.now().difference(startTime);
+
+        _timeString = DateFormat('HH:mm:ss').format(
+          DateTime(0, 0, 0, 0, 0, difference.inSeconds),
+        );
       });
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -82,7 +97,7 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
                 alignment: CrossAxisAlignment.start,
               ),
               StackedText(
-                heading: _timeString,
+                heading: _timeString.isEmpty ? '00:00:00' : _timeString,
                 subHeading: 'Workout length',
                 alignment: CrossAxisAlignment.start,
               ),
@@ -90,6 +105,21 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
           ),
         ),
         const SizedBox(height: AppLayout.p4),
+        Section(
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          body: Container(
+            padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+            child: Center(
+              child: Text(
+                'No muscles targeted',
+                style: context.typography.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: context.colors.foregroundSecondary,
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
