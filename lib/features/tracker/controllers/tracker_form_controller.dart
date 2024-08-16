@@ -19,6 +19,7 @@ class TrackerFormController extends _$TrackerFormController {
             : 'Evening';
 
     state
+      ..titleValueUpdate('Temp Workout')
       ..subtitleValueUpdate('$time Workout')
       ..startTimestampValueUpdate(now);
   }

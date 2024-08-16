@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
@@ -76,10 +77,39 @@ class _TrackerState extends ConsumerState<Tracker> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-              child: Text(
-                'Temp Workout Name',
+              child: FlexTextField(
+                formControl: form.titleControl,
+                inputAction: TextInputAction.done,
+                inputType: TextInputType.name,
+                hintText: 'Workout Name',
+                contentPadding: EdgeInsets.zero,
                 style: context.typography.headlineLarge
                     .copyWith(fontWeight: FontWeight.w700),
+                suffix: Icon(
+                  Symbols.edit,
+                  size: 20,
+                  weight: 700,
+                  color: context.colors.foregroundSecondary,
+                ),
+                enableBorder: false,
+                isRequired: true,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+              child: FlexTextField(
+                formControl: form.notesControl,
+                inputAction: TextInputAction.done,
+                inputType: TextInputType.name,
+                isTextArea: true,
+                minLines: 1,
+                hintText: 'Notes',
+                contentPadding: EdgeInsets.zero,
+                style: context.typography.bodyMedium.copyWith(
+                  color: context.colors.foregroundSecondary,
+                ),
+                enableBorder: false,
+                isRequired: true,
               ),
             ),
             const SizedBox(height: AppLayout.p6),

@@ -22,8 +22,13 @@ class FlexTextField<T> extends ConsumerWidget {
     this.obscureText = false,
     this.isRequired = false,
     this.isTextArea = false,
+    this.minLines = 5,
     this.autoFocus = false,
+    this.enableBorder = true,
     this.padding = EdgeInsets.zero,
+    this.contentPadding,
+    this.style,
+    this.hintStyle,
     super.key,
   });
 
@@ -35,6 +40,7 @@ class FlexTextField<T> extends ConsumerWidget {
   final bool isRequired;
   final bool obscureText;
   final bool isTextArea;
+  final int minLines;
   final bool autoFocus;
   final String? hintText;
   final String? errorText;
@@ -48,6 +54,11 @@ class FlexTextField<T> extends ConsumerWidget {
   final TextInputType inputType;
   final TextInputAction inputAction;
   final TextCapitalization inputCapitalization;
+
+  final TextStyle? style;
+  final TextStyle? hintStyle;
+  final bool enableBorder;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,57 +96,73 @@ class FlexTextField<T> extends ConsumerWidget {
             autofocus: autoFocus,
             autocorrect: false,
             maxLines: isTextArea ? null : 1,
-            minLines: isTextArea ? 5 : 1,
+            minLines: isTextArea ? minLines : 1,
             maxLength: maxCharacters,
             maxLengthEnforcement: MaxLengthEnforcement.none,
             validationMessages: validationMessages,
-            style: context.typography.bodyMedium.copyWith(
-              color: context.colors.foregroundPrimary,
-              fontWeight: FontWeight.w500,
-            ),
+            style: style ??
+                context.typography.bodyMedium.copyWith(
+                  color: context.colors.foregroundPrimary,
+                  fontWeight: FontWeight.w500,
+                ),
             keyboardType: inputType,
             cursorColor: context.colors.foregroundPrimary,
             decoration: InputDecoration(
               isCollapsed: true,
               hintText: hintText,
-              hintStyle: context.typography.bodyMedium.copyWith(
-                color: context.colors.foregroundSecondary,
-              ),
+              hintStyle: style?.copyWith(
+                    color: context.colors.foregroundSecondary,
+                  ) ??
+                  context.typography.bodyMedium.copyWith(
+                    color: context.colors.foregroundSecondary,
+                  ),
               suffix: suffix,
               counterStyle: context.typography.labelXSmall
                   .copyWith(color: context.colors.foregroundSecondary),
               hintMaxLines: isTextArea ? 5 : 1,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: AppLayout.p2,
-                vertical: AppLayout.p3,
-              ),
-              focusedBorder: OutlineInputBorder(
-                // Border style when the field is focused
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(
-                  color: context.colors.foregroundPrimary,
-                  width: 2,
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: context.colors.divider,
-                ),
-                borderRadius: BorderRadius.circular(AppLayout.cornerRadius / 2),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: context.theme.colorScheme.error,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(AppLayout.cornerRadius / 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: context.theme.colorScheme.error,
-                ),
-                borderRadius: BorderRadius.circular(AppLayout.cornerRadius / 2),
-              ),
+              contentPadding: contentPadding ??
+                  const EdgeInsets.symmetric(
+                    horizontal: AppLayout.p2,
+                    vertical: AppLayout.p3,
+                  ),
+              focusedBorder: enableBorder
+                  ? OutlineInputBorder(
+                      // Border style when the field is focused
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: BorderSide(
+                        color: context.colors.foregroundPrimary,
+                        width: 2,
+                      ),
+                    )
+                  : const OutlineInputBorder(borderSide: BorderSide.none),
+              enabledBorder: enableBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: context.colors.divider,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(AppLayout.cornerRadius / 2),
+                    )
+                  : const OutlineInputBorder(borderSide: BorderSide.none),
+              focusedErrorBorder: enableBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: context.theme.colorScheme.error,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(AppLayout.cornerRadius / 2),
+                    )
+                  : const OutlineInputBorder(borderSide: BorderSide.none),
+              errorBorder: enableBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: context.theme.colorScheme.error,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(AppLayout.cornerRadius / 2),
+                    )
+                  : const OutlineInputBorder(borderSide: BorderSide.none),
             ),
           ),
         ],
