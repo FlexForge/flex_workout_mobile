@@ -1,6 +1,8 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_view_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_overview.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,9 @@ class ExerciseViewScreen extends ConsumerWidget {
         child: Column(
           children: [
             ExerciseSummary(exercise: exercise),
+            const SizedBox(height: AppLayout.p6),
+            ExerciseOverview(exercise: exercise),
+            const SizedBox(height: AppLayout.bottomBuffer),
           ],
         ),
       ),

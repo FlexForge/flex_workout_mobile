@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -22,6 +23,9 @@ class Exercise {
   String? description;
 
   String? videoUrl;
+
+  final primaryMuscleGroups = ToMany<MuscleGroup>();
+  final secondaryMuscleGroups = ToMany<MuscleGroup>();
 
   @Transient()
   Engagement engagement;
@@ -74,6 +78,10 @@ extension ConvertExercise on Exercise {
         name: name,
         description: description,
         videoUrl: videoUrl,
+        primaryMuscleGroups:
+            primaryMuscleGroups.map((e) => e.toModel()).toList(),
+        secondaryMuscleGroups:
+            secondaryMuscleGroups.map((e) => e.toModel()).toList(),
         engagement: engagement,
         equipment: equipment,
         movementPattern: movementPattern,

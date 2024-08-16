@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'exercise_model.freezed.dart';
@@ -13,6 +14,8 @@ class ExerciseModel with _$ExerciseModel {
     required Engagement engagement,
     required DateTime createdAt,
     required DateTime updatedAt,
+    @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
+    @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
     String? description,
     String? videoUrl,
   }) = _ExerciseModel;
@@ -29,7 +32,11 @@ extension ConvertExerciseModel on ExerciseModel {
         movementPattern: movementPattern,
         updatedAt: updatedAt,
         createdAt: createdAt,
-      );
+      )
+        ..primaryMuscleGroups
+            .addAll(primaryMuscleGroups.map((e) => e.toEntity()))
+        ..secondaryMuscleGroups
+            .addAll(secondaryMuscleGroups.map((e) => e.toEntity()));
 }
 
 enum Engagement {

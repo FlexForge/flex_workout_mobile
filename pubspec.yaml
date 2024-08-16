@@ -1,7 +1,7 @@
 name: flex_workout_mobile
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0-alpha+5
+version: 0.2.0-alpha+5
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -27,11 +27,13 @@ dependencies:
   objectbox_flutter_libs: any
   package_info_plus: ^8.0.2
   path: ^1.9.0
+  path_drawing: ^1.0.1
   path_provider: ^2.1.4
   reactive_forms: ^17.0.1
   reactive_forms_annotations: ^5.0.0
   riverpod_annotation: ^2.3.5
   shared_preferences: ^2.3.1
+  xml: ^6.5.0
 
 dev_dependencies:
   build_runner: ^2.4.12
@@ -50,6 +52,7 @@ flutter:
   generate: true
   assets:
     - assets/
+    - assets/muscle_groups/
 
 objectbox:
   output_dir: db

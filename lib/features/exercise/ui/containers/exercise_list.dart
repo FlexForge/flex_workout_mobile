@@ -3,6 +3,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -70,17 +71,7 @@ class ExerciseList extends ConsumerWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      subtitle: exercise.description != null
-                          ? Text(
-                              exercise.description!,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: context.typography.bodySmall.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: context.colors.foregroundSecondary,
-                              ),
-                            )
-                          : null,
+                      subtitle: rowSubtitle(context, exercise),
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -94,5 +85,31 @@ class ExerciseList extends ConsumerWidget {
               );
             },
           );
+  }
+
+  Widget rowSubtitle(BuildContext context, ExerciseModel exercise) {
+    return Row(
+      children: [
+        Text(
+          exercise.movementPattern.readableName,
+          style: context.typography.bodySmall.copyWith(
+            fontWeight: FontWeight.w500,
+            color: context.colors.foregroundSecondary,
+          ),
+        ),
+        const SizedBox(width: AppLayout.p4),
+        Flexible(
+          child: Text(
+            exercise.primaryMuscleGroups.map((e) => e.name).join(' • '),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: context.typography.bodySmall.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
