@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/bootstrap.dart';
+import 'package:flex_workout_mobile/core/utils/svg.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/auth/controllers/onboarding_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,9 @@ PackageInfo packageInfo = PackageInfo(
   version: '',
   buildNumber: '',
 );
+
+List<PathContainer> frontMuscleGroups = [];
+List<PathContainer> backMuscleGroups = [];
 
 @riverpod
 Store objectBoxStore(ObjectBoxStoreRef ref) {
@@ -31,4 +35,11 @@ Future<void> initializeProviders(ProviderContainer container) async {
   packageInfo = await PackageInfo.fromPlatform();
 
   container.read(onboardingControllerProvider);
+
+  frontMuscleGroups = await SvgParser.loadSvgImage(
+    pathToSvg: 'assets/muscle_groups/front_view.svg',
+  );
+  backMuscleGroups = await SvgParser.loadSvgImage(
+    pathToSvg: 'assets/muscle_groups/back_view.svg',
+  );
 }
