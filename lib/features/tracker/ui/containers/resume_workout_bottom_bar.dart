@@ -6,8 +6,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker.dart'
-    as main;
+import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,12 +26,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
         useRootNavigator: true,
         barrierColor: context.colors.overlay,
         elevation: 0,
-        builder: (context) => const Column(
-          children: [
-            DragHandle(),
-            Expanded(child: main.Tracker()),
-          ],
-        ),
+        builder: (context) => const TrackerScreen(),
       ),
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,

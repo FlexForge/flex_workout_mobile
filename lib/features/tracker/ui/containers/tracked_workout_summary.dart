@@ -107,7 +107,7 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
         const SizedBox(height: AppLayout.p4),
         Section(
           padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          body: Container(
+          body: Padding(
             padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
             child: Center(
               child: Text(

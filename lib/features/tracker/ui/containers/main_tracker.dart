@@ -13,7 +13,9 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Tracker extends ConsumerStatefulWidget {
-  const Tracker({super.key});
+  const Tracker({required this.next, super.key});
+
+  final VoidCallback next;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TrackerState();
@@ -48,7 +50,7 @@ class _TrackerState extends ConsumerState<Tracker> {
       form: form,
       child: Scaffold(
         backgroundColor: context.colors.backgroundPrimary,
-        bottomNavigationBar: const TrackerBottomBar(),
+        bottomNavigationBar: TrackerBottomBar(next: widget.next),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(24),
           child: Padding(
