@@ -36,7 +36,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
     _pageViewController.animateToPage(
       index - 1,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }

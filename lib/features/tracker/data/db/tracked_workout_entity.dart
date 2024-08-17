@@ -6,12 +6,12 @@ class TrackedWorkout {
   TrackedWorkout({
     required this.title,
     required this.subtitle,
-    required this.notes,
     required this.durationInMinutes,
     required this.startTimestamp,
     required this.updatedAt,
     required this.createdAt,
     this.id = 0,
+    this.notes,
   });
 
   @Id()
@@ -20,7 +20,7 @@ class TrackedWorkout {
   String title;
   String subtitle;
 
-  String notes;
+  String? notes;
 
   int durationInMinutes;
 

@@ -15,7 +15,7 @@ class TrackedWorkoutCreateController extends _$TrackedWorkoutCreateController {
   void handle(TrackerForm form, int durationInMinutes) {
     final title = form.model.title;
     final subtitle = form.model.subtitle;
-    final notes = form.model.notes;
+    final notes = form.model.notes ?? '';
     final startTimestamp = form.model.startTimestamp;
 
     if (title == null ||

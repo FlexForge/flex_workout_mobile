@@ -14,9 +14,9 @@ class TrackedWorkoutRepository {
   Either<Failure, TrackedWorkoutModel> createTrackedWorkout({
     required String title,
     required String subtitle,
-    required String notes,
     required int durationInMinutes,
     required DateTime startTimestamp,
+    String? notes,
   }) {
     try {
       final workoutToAdd = TrackedWorkout(

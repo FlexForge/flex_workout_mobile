@@ -9,11 +9,11 @@ class TrackedWorkoutModel with _$TrackedWorkoutModel {
     required int id,
     required String title,
     required String subtitle,
-    required String notes,
     required int durationInMinutes,
     required DateTime startTimestamp,
     required DateTime createdAt,
     required DateTime updatedAt,
+    String? notes,
   }) = _TrackedWorkoutModel;
 }
 
