@@ -1,10 +1,13 @@
+import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/resume_workout_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 /// Main Bottom Navigation Bar
-class MainNavigationBar extends StatelessWidget {
+class MainNavigationBar extends ConsumerWidget {
   const MainNavigationBar({
     required this.selectedIndex,
     required this.onItemTapped,
@@ -18,50 +21,61 @@ class MainNavigationBar extends StatelessWidget {
   final VoidCallback showToolbarModalBottomSheet;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 99,
-      child: BottomAppBar(
-        color: context.colors.backgroundSecondary,
-        padding: EdgeInsets.zero,
-        elevation: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: context.colors.divider), // Top border
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              navigationBarItems(
-                context,
-                index: 0,
-                label: 'Dashboard',
-                icon: Symbols.dashboard,
-              ),
-              navigationBarItems(
-                context,
-                index: 1,
-                label: 'History',
-                icon: Symbols.history,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: showToolbar(context),
-              ),
-              navigationBarItems(
-                context,
-                index: 2,
-                label: 'Library',
-                icon: Symbols.bookmark,
-              ),
-              navigationBarItems(
-                context,
-                index: 3,
-                label: 'More',
-                icon: CupertinoIcons.ellipsis_circle,
-                fillIcon: CupertinoIcons.ellipsis_circle_fill,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final app = ref.watch(appControllerProvider);
+
+    return ColoredBox(
+      color: context.colors.backgroundSecondary,
+      child: SafeArea(
+        child: BottomAppBar(
+          padding: EdgeInsets.zero,
+          height: 64 + (app.workoutInProgress ? 52 : 0),
+          elevation: 0,
+          child: Column(
+            children: [
+              if (app.workoutInProgress) const ResumeWorkoutBottomBar(),
+              Container(
+                decoration: BoxDecoration(
+                  color: context.colors.backgroundSecondary,
+                  border: Border(
+                    top:
+                        BorderSide(color: context.colors.divider), // Top border
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    navigationBarItems(
+                      context,
+                      index: 0,
+                      label: 'Dashboard',
+                      icon: Symbols.dashboard,
+                    ),
+                    navigationBarItems(
+                      context,
+                      index: 1,
+                      label: 'History',
+                      icon: Symbols.history,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: showToolbar(context),
+                    ),
+                    navigationBarItems(
+                      context,
+                      index: 2,
+                      label: 'Library',
+                      icon: Symbols.bookmark,
+                    ),
+                    navigationBarItems(
+                      context,
+                      index: 3,
+                      label: 'More',
+                      icon: CupertinoIcons.ellipsis_circle,
+                      fillIcon: CupertinoIcons.ellipsis_circle_fill,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
