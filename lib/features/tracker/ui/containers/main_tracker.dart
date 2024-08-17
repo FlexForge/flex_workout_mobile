@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
@@ -21,9 +22,13 @@ class Tracker extends ConsumerStatefulWidget {
 class _TrackerState extends ConsumerState<Tracker> {
   @override
   void initState() {
-    final exists = ref.exists(trackerFormControllerProvider);
+    final workoutInProgress = ref.read(appControllerProvider).workoutInProgress;
 
-    if (!exists) {
+    if (!workoutInProgress) {
+      Future(() {
+        ref.read(appControllerProvider.notifier).startWorkout();
+      });
+
       ref.read(trackerFormControllerProvider.notifier).fillNewEmptyWorkout();
     }
 

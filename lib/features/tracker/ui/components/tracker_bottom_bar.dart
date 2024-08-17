@@ -1,15 +1,25 @@
+import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class TrackerBottomBar extends StatelessWidget {
+class TrackerBottomBar extends ConsumerWidget {
   const TrackerBottomBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void finishWorkout() {
+      ref.invalidate(trackerFormControllerProvider);
+      ref.read(appControllerProvider.notifier).endWorkout();
+
+      context.pop();
+    }
+
     return ColoredBox(
       color: context.colors.backgroundSecondary,
       child: SafeArea(
@@ -26,7 +36,7 @@ class TrackerBottomBar extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: LargeButton(
-                      onPressed: () => context.pop(),
+                      onPressed: finishWorkout,
                       label: 'Finish',
                       icon: Symbols.check,
                       backgroundColor: context.colors.foregroundPrimary,

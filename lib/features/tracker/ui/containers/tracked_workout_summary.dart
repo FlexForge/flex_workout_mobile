@@ -27,8 +27,6 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
 
   @override
   void initState() {
-    super.initState();
-
     final startTime =
         ref.read(trackerFormControllerProvider).model.startTimestamp!;
 
@@ -41,6 +39,8 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
         );
       });
     });
+
+    super.initState();
   }
 
   @override
