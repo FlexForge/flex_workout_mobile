@@ -20,7 +20,7 @@ class _DarkMode {
 
   Color get divider => const Color(0xA6545458);
 
-  Color get overlay => const Color(0xDD000000);
+  Color get overlay => const Color(0xBB000000);
 
   Color get pink => const Color(0xFFFE7FA2);
   Color get purple => const Color(0xFFB28DF7);

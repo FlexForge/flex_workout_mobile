@@ -119,7 +119,7 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
