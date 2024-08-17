@@ -1,6 +1,6 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/components/resume_workout_bottom_bar.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/resume_workout_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

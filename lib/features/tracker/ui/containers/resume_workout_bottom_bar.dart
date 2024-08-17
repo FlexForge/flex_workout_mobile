@@ -1,5 +1,7 @@
+import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/drag_handle.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
@@ -8,6 +10,7 @@ import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker.
     as main;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -58,7 +61,20 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LargeButton(
-                  onPressed: () {},
+                  onPressed: () => showFlexAlertDialog(
+                    context,
+                    title: 'Discard Workout',
+                    description:
+                        'Are you sure you want to discard this workout?'
+                        ' All progress in the current workout will be lost.',
+                    actionLabel: 'Discard',
+                    onPressed: () {
+                      ref.invalidate(trackerFormControllerProvider);
+                      ref.read(appControllerProvider.notifier).endWorkout();
+
+                      context.pop();
+                    },
+                  ),
                   borderRadius: AppLayout.roundedRadius,
                   padding: const EdgeInsets.all(AppLayout.p2),
                   backgroundColor: context.colors.backgroundTertiary,
