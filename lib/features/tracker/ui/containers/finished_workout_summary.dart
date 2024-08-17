@@ -1,12 +1,15 @@
+import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/summary_highlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class FinishedWorkoutSummary extends ConsumerWidget {
@@ -18,8 +21,20 @@ class FinishedWorkoutSummary extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final form = ref.watch(trackerFormControllerProvider);
 
-    final totalMinutes =
-        DateTime.now().difference(form.model.startTimestamp!).inMinutes;
+    final totalMinutes = DateTime.now()
+        .difference(form.model.startTimestamp ?? DateTime.now())
+        .inMinutes;
+
+    void logWorkout() {
+      ref
+          .read(trackedWorkoutCreateControllerProvider.notifier)
+          .handle(form, totalMinutes);
+
+      ref.invalidate(trackerFormControllerProvider);
+      ref.read(appControllerProvider.notifier).endWorkout();
+
+      context.pop();
+    }
 
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
@@ -69,7 +84,7 @@ class FinishedWorkoutSummary extends ConsumerWidget {
                 const SizedBox(width: AppLayout.p2),
                 Expanded(
                   child: LargeButton(
-                    onPressed: () {},
+                    onPressed: logWorkout,
                     label: 'Log Workout',
                     icon: Symbols.add_task,
                     backgroundColor: context.colors.foregroundPrimary,

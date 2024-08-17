@@ -1,9 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/drag_handle.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/finished_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TrackerScreen extends StatefulWidget {
