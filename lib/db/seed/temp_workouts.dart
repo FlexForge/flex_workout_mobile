@@ -15,8 +15,10 @@ List<TrackedWorkout> generateTrackedWorkouts(int amount) {
             .join(' '),
         notes: faker.lorem.sentences(5).join(' '),
         durationInMinutes: faker.randomGenerator.integer(180, min: 20),
-        startTimestamp:
-            faker.date.dateTimeBetween(DateTime(2023), DateTime(2025)),
+        startTimestamp: faker.date.dateTimeBetween(
+          DateTime(2024),
+          DateTime.now().subtract(const Duration(days: 1)),
+        ),
         updatedAt: DateTime.now(),
         createdAt: DateTime.now(),
       ),

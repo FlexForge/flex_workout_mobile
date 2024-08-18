@@ -1,6 +1,6 @@
-import 'package:flex_workout_mobile/features/tracker/ui/containers/flex_calendar.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/history_calendar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/workout_history_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class HistoryScreen extends ConsumerWidget {
             heroTag: 'history_screen',
           ),
           const SliverToBoxAdapter(
-            child: FlexCalendar(),
+            child: HistoricCalendar(),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(height: AppLayout.p6),

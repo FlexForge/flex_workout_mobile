@@ -45,7 +45,11 @@ extension HashMapGenerator on List<TrackedWorkoutModel> {
     return separatedList;
   }
 
-  LinkedHashMap<DateTime, List<TrackedWorkoutModel>> toHash() {
+  LinkedHashMap<DateTime, List<TrackedWorkoutModel>> toHash(
+    DateTime? selectedDay,
+  ) {
+    print(selectedDay);
+
     final map = toDateTimeMap();
 
     return LinkedHashMap<DateTime, List<TrackedWorkoutModel>>(

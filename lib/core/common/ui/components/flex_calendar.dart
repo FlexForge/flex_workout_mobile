@@ -1,8 +1,8 @@
+import 'dart:collection';
+
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,14 +10,22 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class FlexCalendar extends ConsumerStatefulWidget {
-  const FlexCalendar({super.key});
+class FlexCalendar<T> extends ConsumerStatefulWidget {
+  const FlexCalendar({
+    required this.events,
+    this.onDaySelected,
+    super.key,
+  });
+
+  final LinkedHashMap<DateTime, List<T>> events;
+  final void Function(DateTime? selectedDay)? onDaySelected;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _FlexCalendarState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _FlexCalendarState<T>();
 }
 
-class _FlexCalendarState extends ConsumerState<FlexCalendar> {
+class _FlexCalendarState<T> extends ConsumerState<FlexCalendar<T>> {
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
   final DateTime today = DateTime.now();
 
@@ -48,15 +56,14 @@ class _FlexCalendarState extends ConsumerState<FlexCalendar> {
       }
       _focusedDay.value = focusedDay;
     });
+
+    widget.onDaySelected?.call(_selectedDay);
   }
 
   @override
   Widget build(BuildContext context) {
-    final historicWorkouts =
-        ref.watch(trackedWorkoutListControllerProvider).toHash();
-
-    List<TrackedWorkoutModel> getEventsForDay(DateTime day) {
-      return historicWorkouts[day] ?? [];
+    List<T> getEventsForDay(DateTime day) {
+      return widget.events[day] ?? [];
     }
 
     return Container(
@@ -85,7 +92,7 @@ class _FlexCalendarState extends ConsumerState<FlexCalendar> {
           const SizedBox(height: AppLayout.p2),
           const _CalendarDow(),
           const SizedBox(height: AppLayout.p2),
-          TableCalendar<TrackedWorkoutModel>(
+          TableCalendar<T>(
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             headerVisible: false,

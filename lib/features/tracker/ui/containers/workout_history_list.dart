@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/extensions/list_extensions.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,12 @@ class WorkoutHistoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workouts = ref.watch(trackedWorkoutListControllerProvider).toMap();
+    final selectedDay = ref.watch(trackedWorkoutFilterControllerProvider);
+    final workoutList = ref.watch(trackedWorkoutListControllerProvider);
+
+    final workouts = selectedDay != null
+        ? workoutList.toSingleMap(selectedDay: selectedDay)
+        : workoutList.toFullMap();
 
     return SliverList.builder(
       itemCount: workouts.length,
