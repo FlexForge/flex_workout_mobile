@@ -11,6 +11,16 @@ class TrackedWorkoutRepository {
 
   Box<TrackedWorkout> get box => store.box<TrackedWorkout>();
 
+  Either<Failure, List<TrackedWorkoutModel>> getTrackedWorkouts() {
+    try {
+      final res = box.getAll().map((e) => e.toModel()).toList();
+
+      return right(res);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
   Either<Failure, TrackedWorkoutModel> createTrackedWorkout({
     required String title,
     required String subtitle,

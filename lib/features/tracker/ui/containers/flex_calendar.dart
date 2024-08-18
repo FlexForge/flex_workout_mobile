@@ -1,20 +1,23 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_list_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class FlexCalendar extends StatefulWidget {
+class FlexCalendar extends ConsumerStatefulWidget {
   const FlexCalendar({super.key});
 
   @override
-  State<FlexCalendar> createState() => _FlexCalendarState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FlexCalendarState();
 }
 
-class _FlexCalendarState extends State<FlexCalendar> {
+class _FlexCalendarState extends ConsumerState<FlexCalendar> {
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
   final DateTime today = DateTime.now();
 
@@ -38,13 +41,24 @@ class _FlexCalendarState extends State<FlexCalendar> {
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      _selectedDay = selectedDay;
+      if (isSameDay(_selectedDay, selectedDay)) {
+        _selectedDay = null;
+      } else {
+        _selectedDay = selectedDay;
+      }
       _focusedDay.value = focusedDay;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final historicWorkouts =
+        ref.watch(trackedWorkoutListControllerProvider).toHash();
+
+    List<TrackedWorkoutModel> getEventsForDay(DateTime day) {
+      return historicWorkouts[day] ?? [];
+    }
+
     return Container(
       color: context.colors.backgroundSecondary,
       padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
@@ -71,7 +85,7 @@ class _FlexCalendarState extends State<FlexCalendar> {
           const SizedBox(height: AppLayout.p2),
           const _CalendarDow(),
           const SizedBox(height: AppLayout.p2),
-          TableCalendar<dynamic>(
+          TableCalendar<TrackedWorkoutModel>(
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             headerVisible: false,
@@ -82,9 +96,14 @@ class _FlexCalendarState extends State<FlexCalendar> {
             calendarFormat: _calendarFormat,
             rangeSelectionMode: _rangeSelectionMode,
             onCalendarCreated: (controller) => _pageController = controller,
-            onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
+            onPageChanged: (focusedDay) {
+              setState(() {
+                _focusedDay.value = focusedDay;
+              });
+            },
             onDaySelected: _onDaySelected,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            eventLoader: getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
             calendarBuilders: CalendarBuilders(
               defaultBuilder: (context, day, focusedDay) => Container(
@@ -180,8 +199,26 @@ class _FlexCalendarState extends State<FlexCalendar> {
                   ),
                 ],
               ),
+              markerBuilder: (context, day, events) {
+                if (events.isEmpty) return const SizedBox();
+
+                return Container(
+                  margin: const EdgeInsets.all(4),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+                    border: Border.all(
+                      color: (_focusedDay.value.month == day.month)
+                          ? context.colors.blue
+                          : context.colors.blue.withOpacity(0.1),
+                      width: 2,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
+          const SizedBox(height: AppLayout.p3),
         ],
       ),
     );
