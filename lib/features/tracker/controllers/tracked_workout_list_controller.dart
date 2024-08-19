@@ -16,6 +16,10 @@ class TrackedWorkoutListController extends _$TrackedWorkoutListController {
 
     return res.fold((l) => throw l, (r) => r);
   }
+
+  void addWorkout(TrackedWorkoutModel workout) {
+    state = [...state, workout];
+  }
 }
 
 extension HashMapGenerator on List<TrackedWorkoutModel> {
