@@ -1,9 +1,11 @@
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
+import 'package:flex_workout_mobile/db/seed/temp_workouts.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
+import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -38,9 +40,13 @@ class ObjectBox {
   }
 
   void _resetData() {
+    final workouts = generateTrackedWorkouts(50);
+
     store.box<Exercise>().removeAll();
     store.box<MuscleGroup>().removeAll();
+    store.box<TrackedWorkout>().removeAll();
     store.box<MuscleGroup>().putMany(muscleGroups);
+    store.box<TrackedWorkout>().putMany(workouts);
     store.box<Exercise>().putManyAsync(masterExercises);
   }
 }
