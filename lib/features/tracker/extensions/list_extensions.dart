@@ -46,7 +46,7 @@ extension TrackedWorkoutHistoryListToMap on List<TrackedWorkoutModel> {
   }) {
     final separatedList = <String, List<TrackedWorkoutModel>>{};
 
-    final key = DateFormat.yMMMM().format(selectedDay);
+    final key = DateFormat.yMMMMEEEEd().format(selectedDay);
 
     for (final workout in this) {
       if (isSameDay(selectedDay, workout.startTimestamp)) {
