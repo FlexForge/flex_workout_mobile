@@ -4,6 +4,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/extensions/list_extensions.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/workout_history_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -65,42 +66,7 @@ class WorkoutHistoryList extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final workout = section.value[index];
 
-                        return Section(
-                          subHeader: workout.title,
-                          body: Container(
-                            padding: const EdgeInsets.only(
-                              left: AppLayout.p4,
-                              right: AppLayout.p4,
-                              bottom: AppLayout.p4,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      workout.subtitle,
-                                      style: context.typography.labelMedium
-                                          .copyWith(
-                                        color:
-                                            context.colors.foregroundSecondary,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      DateFormat.yMMMEd()
-                                          .format(workout.startTimestamp),
-                                      style: context.typography.labelMedium
-                                          .copyWith(
-                                        color:
-                                            context.colors.foregroundSecondary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return WorkoutHistoryListTile(workout: workout);
                       },
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: AppLayout.p3),

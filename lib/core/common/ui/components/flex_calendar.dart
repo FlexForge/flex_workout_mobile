@@ -137,9 +137,9 @@ class _FlexCalendarState<T> extends ConsumerState<FlexCalendar<T>> {
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFFe0f2f1),
+                        color: context.colors.foregroundPrimary,
                       ),
                     ),
                   ),
