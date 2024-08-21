@@ -1,7 +1,10 @@
 import 'dart:collection';
 
+import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flex_workout_mobile/features/tracker/providers.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -59,4 +62,137 @@ extension HashMapGenerator on List<TrackedWorkoutModel> {
       hashCode: getHashCode,
     )..addAll(map);
   }
+}
+
+extension TrackedWorkoutHistoryListToMap on List<TrackedWorkoutModel> {
+  Map<String, List<TrackedWorkoutModel>> toFullMap() {
+    final separatedList = <DateTime, List<TrackedWorkoutModel>>{};
+
+    for (final workout in this) {
+      final key = workout.startTimestamp.copyWith(
+        day: 1,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        microsecond: 0,
+      );
+
+      if (separatedList.containsKey(key)) {
+        separatedList[key]!.add(workout);
+      } else {
+        separatedList[key] = [workout];
+      }
+    }
+
+    // Sort each subgroup
+    for (final key in separatedList.keys) {
+      separatedList[key]!
+          .sort((a, b) => a.startTimestamp.isBefore(b.startTimestamp) ? 1 : -1);
+    }
+
+    // Sort the keys
+    final keys = separatedList.keys.toList()
+      ..sort((a, b) => a.isBefore(b) ? 1 : -1);
+
+    final sortedSeparatedList = <String, List<TrackedWorkoutModel>>{};
+    for (final key in keys) {
+      sortedSeparatedList[DateFormat.yMMMM().format(key)] = separatedList[key]!;
+    }
+
+    return sortedSeparatedList;
+  }
+
+  Map<String, List<TrackedWorkoutModel>> toSingleMap({
+    required DateTime selectedDay,
+  }) {
+    final separatedList = <String, List<TrackedWorkoutModel>>{};
+
+    final key = DateFormat.yMMMMEEEEd().format(selectedDay);
+
+    for (final workout in this) {
+      if (isSameDay(selectedDay, workout.startTimestamp)) {
+        if (separatedList.containsKey(key)) {
+          separatedList[key]!.add(workout);
+        } else {
+          separatedList[key] = [workout];
+        }
+      }
+    }
+
+    // Sort each subgroup
+    for (final key in separatedList.keys) {
+      separatedList[key]!
+          .sort((a, b) => a.startTimestamp.isBefore(b.startTimestamp) ? 1 : -1);
+    }
+
+    return separatedList;
+  }
+}
+
+extension WorkoutSectionHelper on List<WorkoutSectionModel> {
+  int _getNumberOfSets(
+    List<SetOrganizerModel> organizers,
+    ExerciseModel exercise,
+  ) {
+    return organizers
+        .where(
+          (organizer) => organizer.superSet
+              .where((e) => e.exercise.id == exercise.id)
+              .isNotEmpty,
+        )
+        .length;
+  }
+
+  List<WorkoutHistoryTableCell> toWorkoutHistoryTable() {
+    final table = <WorkoutHistoryTableCell>[];
+    var superSetIndex = 0;
+
+    for (final section in this) {
+      if (section.organizers.first.defaultSet != null) {
+        final organizer = section.organizers.first;
+
+        table.add(
+          WorkoutHistoryTableCell(
+            organizer.defaultSet!.exercise.name,
+            section.organizers.length,
+            '245 lbs x 5',
+          ),
+        );
+
+        continue;
+      }
+
+      if (section.organizers.first.superSet.isNotEmpty) {
+        for (final superSet in section.organizers.first.superSet) {
+          table.add(
+            WorkoutHistoryTableCell(
+              superSet.exercise.name,
+              _getNumberOfSets(section.organizers, superSet.exercise),
+              '20 lbs x 10',
+              superSetIndex: superSetIndex,
+            ),
+          );
+        }
+
+        superSetIndex++;
+      }
+    }
+
+    return table;
+  }
+}
+
+class WorkoutHistoryTableCell {
+  WorkoutHistoryTableCell(
+    this.title,
+    this.sets,
+    this.bestSet, {
+    this.superSetIndex,
+  });
+
+  final String title;
+  final int sets;
+  final String bestSet;
+  final int? superSetIndex;
 }

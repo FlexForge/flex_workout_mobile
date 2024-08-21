@@ -4,7 +4,7 @@ import 'package:flex_workout_mobile/core/common/ui/screens/settings_screen.dart'
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/dashboard/ui/screens/dashboard_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/screens/workout_history_screen.dart';
+import 'package:flex_workout_mobile/features/history/ui/screen/workout_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
