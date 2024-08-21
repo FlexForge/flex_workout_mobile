@@ -1,7 +1,9 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/get_colors.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/logic/workout_sections_logic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -12,6 +14,8 @@ class WorkoutHistoryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sections = workout.sections.toWorkoutHistoryTable();
+
     return Section(
       subHeader: workout.title,
       body: Container(
@@ -39,28 +43,123 @@ class WorkoutHistoryListTile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppLayout.p4),
+            const SizedBox(height: AppLayout.p2),
             Table(
-              children: workout.sections
-                  .map(
-                    (e) => TableRow(
-                      children: [
-                        Text(
+              columnWidths: const <int, TableColumnWidth>{
+                0: FlexColumnWidth(3),
+                1: IntrinsicColumnWidth(),
+                2: IntrinsicColumnWidth(),
+              },
+              children: [
+                TableRow(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: context.colors.divider,
+                      ),
+                    ),
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppLayout.p2,
+                      ),
+                      child: Text(
+                        'Exercise',
+                        style: context.typography.labelMedium.copyWith(
+                          color: context.colors.foregroundSecondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppLayout.p2,
+                      ),
+                      child: Text(
+                        'Sets',
+                        textAlign: TextAlign.end,
+                        style: context.typography.labelMedium.copyWith(
+                          color: context.colors.foregroundSecondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: AppLayout.p2,
+                        left: AppLayout.p3,
+                      ),
+                      child: Text(
+                        'Best set',
+                        textAlign: TextAlign.end,
+                        style: context.typography.labelMedium.copyWith(
+                          color: context.colors.foregroundSecondary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ...sections.map(
+                  (e) => TableRow(
+                    decoration: e.superSetIndex != null
+                        ? BoxDecoration(
+                            border: Border(
+                              left: BorderSide(
+                                color: getColorFromIndex(
+                                  context,
+                                  e.superSetIndex!,
+                                ),
+                                width: 4,
+                              ),
+                            ),
+                          )
+                        : null,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: e.superSetIndex != null ? AppLayout.p3 : 0,
+                          top:
+                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
+                          bottom: AppLayout.p1,
+                        ),
+                        child: Text(
                           e.title,
                           style: context.typography.labelMedium.copyWith(
-                            color: context.colors.foregroundSecondary,
+                            fontWeight: FontWeight.w600,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Text(
-                          e.organizers.length.toString(),
-                          style: context.typography.labelMedium.copyWith(
-                            color: context.colors.foregroundSecondary,
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top:
+                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
+                          bottom: AppLayout.p1,
+                          left: AppLayout.p3,
                         ),
-                      ],
-                    ),
-                  )
-                  .toList(),
+                        child: Text(
+                          e.sets.toString(),
+                          textAlign: TextAlign.end,
+                          style: context.typography.labelMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top:
+                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
+                          bottom: AppLayout.p1,
+                          left: AppLayout.p3,
+                        ),
+                        child: Text(
+                          e.bestSet,
+                          textAlign: TextAlign.end,
+                          style: context.typography.labelMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

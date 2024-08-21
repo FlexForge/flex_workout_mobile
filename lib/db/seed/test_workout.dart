@@ -72,6 +72,43 @@ final inclinePressAndNeckExtension =
       ..organizers
           .addAll([superOrganizerOne, superOrganizerTwo, superOrganizerThree]);
 
+/// Section 3: Other Superset
+
+/// Set 1
+final superSetOne1 = SetType()
+  ..exercise.target = jmPress
+  ..normalSet.target = NormalSet();
+final superSetOneTwo1 = SetType()
+  ..exercise.target = landmineObliqueTwist
+  ..normalSet.target = NormalSet();
+
+final superOrganizerOne1 = SetOrganizer()
+  ..superSet.addAll([superSetOne1, superSetOneTwo1]);
+
+/// Set 2
+final superSetTwo1 = SetType()
+  ..exercise.target = jmPress
+  ..normalSet.target = NormalSet();
+final superSetTwoTwo1 = SetType()
+  ..exercise.target = landmineObliqueTwist
+  ..normalSet.target = NormalSet();
+
+final superOrganizerTwo1 = SetOrganizer()
+  ..superSet.addAll([superSetTwo1, superSetTwoTwo1]);
+
+/// Set 3
+final superSetThree1 = SetType()
+  ..exercise.target = jmPress
+  ..normalSet.target = NormalSet();
+
+final superOrganizerThree1 = SetOrganizer()..superSet.addAll([superSetThree1]);
+
+final inclinePressAndNeckExtension1 =
+    WorkoutSection(title: 'Incline Press and Neck Extension (Superset)')
+      ..organizers.addAll(
+        [superOrganizerOne1, superOrganizerTwo1, superOrganizerThree1],
+      );
+
 final exampleWorkout = TrackedWorkout(
   title: 'Test Workout',
   subtitle: 'Subtitle',
@@ -79,4 +116,6 @@ final exampleWorkout = TrackedWorkout(
   startTimestamp: DateTime.now(),
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
-)..sections.addAll([benchPress, inclinePressAndNeckExtension]);
+)..sections.addAll(
+    [benchPress, inclinePressAndNeckExtension, inclinePressAndNeckExtension1],
+  );

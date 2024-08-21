@@ -12,6 +12,30 @@ class WorkoutSectionModel with _$WorkoutSectionModel {
   }) = _WorkoutSectionModel;
 }
 
+extension WorkoutSectionHelpers on WorkoutSectionModel {
+  String getName() {
+    final name = StringBuffer();
+
+    final organizer = organizers.first;
+
+    if (organizer.defaultSet != null) {
+      name.write(organizer.defaultSet!.exercise.name);
+    } else {
+      for (final set in organizer.superSet) {
+        name.write(set.exercise.name);
+
+        if (organizer.superSet.last != set) {
+          name.write(' & ');
+        } else {
+          name.write(' (Superset)');
+        }
+      }
+    }
+
+    return name.toString();
+  }
+}
+
 @freezed
 class SetOrganizerModel with _$SetOrganizerModel {
   const factory SetOrganizerModel({
