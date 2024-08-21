@@ -3,6 +3,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'workout_section_model.freezed.dart';
 
+enum SetOrganizationEnum {
+  defaultSet,
+  superSet,
+}
+
+enum SetTypeEnum {
+  normalSet,
+}
+
 @freezed
 class WorkoutSectionModel with _$WorkoutSectionModel {
   const factory WorkoutSectionModel({
@@ -12,34 +21,11 @@ class WorkoutSectionModel with _$WorkoutSectionModel {
   }) = _WorkoutSectionModel;
 }
 
-extension WorkoutSectionHelpers on WorkoutSectionModel {
-  String getName() {
-    final name = StringBuffer();
-
-    final organizer = organizers.first;
-
-    if (organizer.defaultSet != null) {
-      name.write(organizer.defaultSet!.exercise.name);
-    } else {
-      for (final set in organizer.superSet) {
-        name.write(set.exercise.name);
-
-        if (organizer.superSet.last != set) {
-          name.write(' & ');
-        } else {
-          name.write(' (Superset)');
-        }
-      }
-    }
-
-    return name.toString();
-  }
-}
-
 @freezed
 class SetOrganizerModel with _$SetOrganizerModel {
   const factory SetOrganizerModel({
     required int id,
+    required SetOrganizationEnum organization,
     SetTypeModel? defaultSet,
     @Default([]) List<SetTypeModel> superSet,
   }) = _SetOrganizerModel;
@@ -50,6 +36,7 @@ class SetTypeModel with _$SetTypeModel {
   const factory SetTypeModel({
     required int id,
     required ExerciseModel exercise,
+    required SetTypeEnum type,
     NormalSetModel? normalSet,
   }) = _SetTypeModel;
 }

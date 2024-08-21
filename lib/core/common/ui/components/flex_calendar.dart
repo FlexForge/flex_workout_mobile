@@ -181,9 +181,9 @@ class _FlexCalendarState<T> extends ConsumerState<FlexCalendar<T>> {
                       child: Container(
                         width: 6,
                         height: 6,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFFe0f2f1),
+                          color: context.colors.foregroundPrimary,
                         ),
                       ),
                     ),
@@ -218,7 +218,7 @@ class _FlexCalendarState<T> extends ConsumerState<FlexCalendar<T>> {
                       color: (_focusedDay.value.month == day.month)
                           ? context.colors.blue
                           : context.colors.blue.withOpacity(0.1),
-                      width: 2,
+                      width: 3,
                     ),
                   ),
                 );

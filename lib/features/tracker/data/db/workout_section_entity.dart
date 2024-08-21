@@ -48,11 +48,22 @@ class SetOrganizer {
 }
 
 extension ConvertSetOrganizer on SetOrganizer {
-  SetOrganizerModel toModel() => SetOrganizerModel(
-        id: id,
-        defaultSet: defaultSet.target?.toModel(),
-        superSet: superSet.map((e) => e.toModel()).toList(),
-      );
+  SetOrganizerModel toModel() {
+    SetOrganizationEnum organization;
+
+    if (defaultSet.target != null) {
+      organization = SetOrganizationEnum.defaultSet;
+    } else {
+      organization = SetOrganizationEnum.superSet;
+    }
+
+    return SetOrganizerModel(
+      id: id,
+      organization: organization,
+      defaultSet: defaultSet.target?.toModel(),
+      superSet: superSet.map((e) => e.toModel()).toList(),
+    );
+  }
 }
 
 @Entity()
@@ -72,11 +83,16 @@ class SetType {
 }
 
 extension ConvertSetType on SetType {
-  SetTypeModel toModel() => SetTypeModel(
-        id: id,
-        exercise: exercise.target!.toModel(),
-        normalSet: normalSet.target?.toModel(),
-      );
+  SetTypeModel toModel() {
+    const type = SetTypeEnum.normalSet;
+
+    return SetTypeModel(
+      id: id,
+      type: type,
+      exercise: exercise.target!.toModel(),
+      normalSet: normalSet.target?.toModel(),
+    );
+  }
 }
 
 @Entity()
