@@ -1,10 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_filter_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_list_controller.dart';
+import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_filter_controller.dart';
+import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
+import 'package:flex_workout_mobile/features/history/ui/components/workout_history_list_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/extensions/list_extensions.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/components/workout_history_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
