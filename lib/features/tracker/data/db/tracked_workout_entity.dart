@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/tracker/data/db/workout_section_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -24,6 +25,9 @@ class TrackedWorkout {
 
   int durationInMinutes;
 
+  @Backlink('workout')
+  final sections = ToMany<WorkoutSection>();
+
   @Property(type: PropertyType.date)
   DateTime startTimestamp;
 
@@ -41,6 +45,7 @@ extension ConvertTrackedWorkout on TrackedWorkout {
         notes: notes,
         durationInMinutes: durationInMinutes,
         startTimestamp: startTimestamp,
+        sections: sections.map((e) => e.toModel()).toList(),
         updatedAt: updatedAt,
         createdAt: createdAt,
       );

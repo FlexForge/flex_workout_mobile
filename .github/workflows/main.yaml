@@ -76,7 +76,7 @@ jobs:
         uses: VeryGoodOpenSource/very_good_coverage@v3
         with:
           path: ./coverage/lcov.info
-          exclude: '**/*.g.dart **/*.freezed.dart **/*.gform.dart /theme/'
+          exclude: '**/*.g.dart **/*.freezed.dart **/*.gform.dart **/theme/ **/db/seed/'
           min_coverage: 70
 
   spell-check:

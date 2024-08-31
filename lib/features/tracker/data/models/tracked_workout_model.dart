@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tracked_workout_model.freezed.dart';
@@ -13,6 +14,7 @@ class TrackedWorkoutModel with _$TrackedWorkoutModel {
     required DateTime startTimestamp,
     required DateTime createdAt,
     required DateTime updatedAt,
+    @Default([]) List<WorkoutSectionModel> sections,
     String? notes,
   }) = _TrackedWorkoutModel;
 }
