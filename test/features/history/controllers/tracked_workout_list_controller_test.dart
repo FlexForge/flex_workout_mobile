@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../generators.dart';
 import '../../../mocks.dart';
 import '../../../utils.dart';
+import '../../exercise/data/db/store.dart';
+import '../../tracker/data/models/store.dart';
 
 void main() {
   late MockTrackedWorkoutRepository mockTrackedWorkoutRepository;
@@ -216,5 +217,29 @@ void main() {
     });
   });
 
-  group('WorkoutSectionTile', () {});
+  group('WorkoutSectionTile', () {
+    test('toWorkoutHistoryTable', () {
+      final sections = exampleWorkout.sections;
+
+      final historyTable = sections.toWorkoutHistoryTable();
+
+      final expected = <WorkoutHistoryTableCell>[
+        WorkoutHistoryTableCell(exampleExerciseOne.name, 2, '245 lbs x 5'),
+        WorkoutHistoryTableCell(
+          exampleExerciseTwo.name,
+          2,
+          '20 lbs x 10',
+          superSetIndex: 0,
+        ),
+        WorkoutHistoryTableCell(
+          exampleExerciseThree.name,
+          2,
+          '20 lbs x 10',
+          superSetIndex: 0,
+        ),
+      ];
+
+      expect(historyTable.length, expected.length);
+    });
+  });
 }

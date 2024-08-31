@@ -25,6 +25,23 @@ final exampleSectionOne = WorkoutSectionModel(
       ),
     ),
     SetOrganizerModel(
+      id: 3,
+      organization: SetOrganizationEnum.defaultSet,
+      defaultSet: SetTypeModel(
+        id: 4,
+        exercise: exampleExerciseOne,
+        type: SetTypeEnum.normalSet,
+        normalSet: const NormalSetModel(id: 4),
+      ),
+    ),
+  ],
+);
+
+final exampleSectionTwo = WorkoutSectionModel(
+  id: 2,
+  title: 'Example Section 2',
+  organizers: [
+    SetOrganizerModel(
       id: 2,
       organization: SetOrganizationEnum.superSet,
       superSet: [
@@ -42,36 +59,19 @@ final exampleSectionOne = WorkoutSectionModel(
         ),
       ],
     ),
-  ],
-);
-
-final exampleSectionTwo = WorkoutSectionModel(
-  id: 2,
-  title: 'Example Section 2',
-  organizers: [
-    SetOrganizerModel(
-      id: 3,
-      organization: SetOrganizationEnum.defaultSet,
-      defaultSet: SetTypeModel(
-        id: 4,
-        exercise: exampleExerciseOne,
-        type: SetTypeEnum.normalSet,
-        normalSet: const NormalSetModel(id: 4),
-      ),
-    ),
     SetOrganizerModel(
       id: 4,
       organization: SetOrganizationEnum.superSet,
       superSet: [
         SetTypeModel(
           id: 5,
-          exercise: exampleExerciseOne,
+          exercise: exampleExerciseTwo,
           type: SetTypeEnum.normalSet,
           normalSet: const NormalSetModel(id: 5),
         ),
         SetTypeModel(
           id: 6,
-          exercise: exampleExerciseTwo,
+          exercise: exampleExerciseThree,
           type: SetTypeEnum.normalSet,
           normalSet: const NormalSetModel(id: 6),
         ),

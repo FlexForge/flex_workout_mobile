@@ -1,20 +1,12 @@
-import 'package:faker/faker.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'store.dart';
 
 void main() {
   group('TrackedWorkoutModel', () {
     test('ConvertTrackedWorkout', () {
-      final model = TrackedWorkoutModel(
-        id: faker.randomGenerator.integer(9999),
-        title: faker.person.name(),
-        subtitle: faker.person.name(),
-        durationInMinutes: faker.randomGenerator.integer(100),
-        startTimestamp: faker.date.dateTime(),
-        notes: faker.randomGenerator.string(1500),
-        createdAt: faker.date.dateTime(),
-        updatedAt: faker.date.dateTime(),
-      );
+      final model = generateTrackedWorkout();
       final res = model.toEntity();
 
       expect(res.title, model.title);
