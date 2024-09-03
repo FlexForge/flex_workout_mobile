@@ -10,7 +10,6 @@ import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_botto
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Tracker extends ConsumerStatefulWidget {
   const Tracker({required this.next, super.key});
@@ -123,15 +122,7 @@ class _TrackerState extends ConsumerState<Tracker> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               child: LargeButton(
-                onPressed: () => showCupertinoModalBottomSheet<void>(
-                  context: context,
-                  useRootNavigator: true,
-                  barrierColor: context.colors.overlay,
-                  elevation: 0,
-                  builder: (context) => Container(
-                    color: context.colors.backgroundPrimary,
-                  ),
-                ),
+                onPressed: () => {},
                 expanded: true,
                 label: 'Add Exercise',
                 icon: Symbols.add,

@@ -1,13 +1,38 @@
-import 'package:flex_workout_mobile/core/common/ui/components/drag_handle.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/finished_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
+
+final trackerScreenObserver = NavigationSheetTransitionObserver();
+
+class TrackerScreenModal extends StatelessWidget {
+  const TrackerScreenModal({
+    required this.nestedNavigator,
+    super.key,
+  });
+
+  final Widget nestedNavigator;
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationSheet(
+      transitionObserver: trackerScreenObserver,
+      child: Material(
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        child: nestedNavigator,
+      ),
+    );
+  }
+}
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({super.key});
 
   static const routePath = 'tracker';
+  static const routeName = 'tracker_view';
 
   @override
   State<TrackerScreen> createState() => _TrackerScreenState();
@@ -45,25 +70,21 @@ class _TrackerScreenState extends State<TrackerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
-      body: ColoredBox(
-        color: context.colors.backgroundSecondary,
-        child: SafeArea(
-          child: Column(
-            children: [
-              const DragHandle(),
-              Expanded(
-                child: PageView(
-                  controller: _pageViewController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    Tracker(next: () => _updateCurrentPageIndex(2)),
-                    FinishedWorkoutSummary(
-                      back: () => _updateCurrentPageIndex(1),
-                    ),
-                  ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: AppLayout.p4),
+        child: ColoredBox(
+          color: context.colors.backgroundSecondary,
+          child: SafeArea(
+            child: PageView(
+              controller: _pageViewController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                Tracker(next: () => _updateCurrentPageIndex(2)),
+                FinishedWorkoutSummary(
+                  back: () => _updateCurrentPageIndex(1),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

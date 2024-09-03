@@ -1,12 +1,12 @@
 import 'package:flex_workout_mobile/core/common/ui/components/navigation_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/library_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/settings_screen.dart';
-import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/dashboard/ui/screens/dashboard_screen.dart';
 import 'package:flex_workout_mobile/features/history/ui/screen/workout_history_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,33 +24,26 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _showToolbarModalBottomSheet(BuildContext context) {
-    showCupertinoModalBottomSheet<void>(
-      context: context,
-      useRootNavigator: true,
-      barrierColor: context.colors.overlay,
-      elevation: 0,
-      builder: (context) => const TrackerScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const <Widget>[
-          DashboardScreen(),
-          HistoryScreen(),
-          LibraryScreen(),
-          SettingsScreen(),
-        ],
-      ),
-      bottomNavigationBar: MainNavigationBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onTabTapped,
-        showToolbarModalBottomSheet: () =>
-            _showToolbarModalBottomSheet(context),
+    return CupertinoStackedTransition(
+      cornerRadius: Tween(begin: 0, end: 16),
+      child: Scaffold(
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: const <Widget>[
+            DashboardScreen(),
+            HistoryScreen(),
+            LibraryScreen(),
+            SettingsScreen(),
+          ],
+        ),
+        bottomNavigationBar: MainNavigationBar(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onTabTapped,
+          showToolbarModalBottomSheet: () =>
+              context.goNamed(TrackerScreen.routeName),
+        ),
       ),
     );
   }
