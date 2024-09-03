@@ -602,14 +602,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  modal_bottom_sheet:
-    dependency: "direct main"
-    description:
-      name: modal_bottom_sheet
-      sha256: eac66ef8cb0461bf069a38c5eb0fa728cee525a531a8304bd3f7b2185407c67e
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   objectbox:
     dependency: "direct main"
     description:
@@ -951,6 +943,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_sheets:
+    dependency: "direct main"
+    description:
+      name: smooth_sheets
+      sha256: "065c69fac51856775045d4c63f68950e0b1eface8c39e09ab9dc73a2c5a1b142"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.4"
   source_gen:
     dependency: transitive
     description:

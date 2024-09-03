@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ResumeWorkoutBottomBar extends ConsumerWidget {
   const ResumeWorkoutBottomBar({super.key});
@@ -20,13 +19,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
     final form = ref.watch(trackerFormControllerProvider);
 
     return TextButton(
-      onPressed: () => showCupertinoModalBottomSheet<void>(
-        context: context,
-        useRootNavigator: true,
-        barrierColor: context.colors.overlay,
-        elevation: 0,
-        builder: (context) => const TrackerScreen(),
-      ),
+      onPressed: () => context.goNamed(TrackerScreen.routeName),
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
