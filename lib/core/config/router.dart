@@ -5,6 +5,7 @@ import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/swipe_action_navigator_observer.dart';
@@ -28,21 +29,19 @@ final router = GoRouter(
       builder: (context, state) => const MainScreen(),
       routes: [
         /// Tracker
-        ShellRoute(
-          observers: [trackerScreenObserver],
-          pageBuilder: (context, state, child) => CupertinoModalSheetPage(
-            key: state.pageKey,
-            swipeDismissible: true,
-            barrierColor: context.colors.overlay,
-            child: TrackerScreenModal(nestedNavigator: child),
+        GoRoute(
+          path: TrackerScreen.routePath,
+          name: TrackerScreen.routeName,
+          pageBuilder: (context, state) => CupertinoModalSheetPage(
+            child: TrackerScreenModal(nestedNavigator: TrackerScreen()),
           ),
           routes: [
             GoRoute(
-              path: TrackerScreen.routePath,
-              name: TrackerScreen.routeName,
-              pageBuilder: (context, state) => DraggableNavigationSheetPage(
-                key: state.pageKey,
-                child: const TrackerScreen(),
+              path: ExerciseSelectionScreen.routePath,
+              name: ExerciseSelectionScreen.routeName,
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
+                child: ExerciseSelectionScreenModal(
+                    nestedNavigator: ExerciseSelectionScreen()),
               ),
             ),
           ],

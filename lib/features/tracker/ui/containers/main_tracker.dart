@@ -1,15 +1,19 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
+import 'package:flex_workout_mobile/core/common/ui/screens/main_screen.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_bottom_bar.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
 
 class Tracker extends ConsumerStatefulWidget {
   const Tracker({required this.next, super.key});
@@ -122,7 +126,12 @@ class _TrackerState extends ConsumerState<Tracker> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               child: LargeButton(
-                onPressed: () => {},
+                onPressed: () {
+                  DefaultSheetController.maybeOf(context)
+                      ?.animateTo(const Extent.proportional(1));
+
+                  context.goNamed(ExerciseSelectionScreen.routeName);
+                },
                 expanded: true,
                 label: 'Add Exercise',
                 icon: Symbols.add,

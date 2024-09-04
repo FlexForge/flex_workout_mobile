@@ -17,8 +17,7 @@ class TrackerScreenModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationSheet(
-      transitionObserver: trackerScreenObserver,
+    return DraggableSheet(
       child: Material(
         borderRadius: BorderRadius.circular(16),
         clipBehavior: Clip.antiAlias,
