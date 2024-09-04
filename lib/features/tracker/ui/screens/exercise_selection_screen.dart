@@ -1,6 +1,5 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_picker.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 

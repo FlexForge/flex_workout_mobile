@@ -16,6 +16,7 @@ class FlexListTile extends StatelessWidget {
     this.backgroundColor = Colors.transparent,
     this.prefix,
     this.suffix,
+    this.suffixPadding = const EdgeInsets.only(right: AppLayout.p2),
     super.key,
   });
 
@@ -30,6 +31,7 @@ class FlexListTile extends StatelessWidget {
   final IconData? trailingIcon;
   final Widget? prefix;
   final Widget? suffix;
+  final EdgeInsets suffixPadding;
 
   final Color? foregroundColor;
   final Color? disabledForegroundColor;
@@ -101,7 +103,7 @@ class FlexListTile extends StatelessWidget {
                         ),
                         if (suffix != null)
                           Padding(
-                            padding: const EdgeInsets.only(right: AppLayout.p2),
+                            padding: suffixPadding,
                             child: suffix,
                           ),
                         if (trailingIcon != null)

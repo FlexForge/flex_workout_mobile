@@ -5,9 +5,11 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ExerciseSelectionPicker extends ConsumerStatefulWidget {
@@ -72,7 +74,13 @@ class _ExerciseSelectionPickerState
                 ),
                 Expanded(
                   child: LargeButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref
+                          .read(trackerFormControllerProvider.notifier)
+                          .addExercises(items);
+
+                      context.pop();
+                    },
                     label: 'Add Exercises'
                         '${items.isNotEmpty ? ' (${items.length})' : ''}',
                     backgroundColor: context.colors.foregroundPrimary,
