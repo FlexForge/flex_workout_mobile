@@ -142,21 +142,44 @@ class _TrackerState extends ConsumerState<Tracker> {
                     ),
                     body: Column(
                       children: [
-                        ...section.organizersTrackedSetOrganizerForm
-                            .map((organizer) {
-                          switch (organizer.model.organization) {
-                            case SetOrganizationEnum.defaultSet:
-                              return DefaultSetTile(organizerForm: organizer);
-                            case SetOrganizationEnum.superSet:
-                              return const Text('');
-                          }
-                        }),
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              section.organizersTrackedSetOrganizerForm.length,
+                          itemBuilder: (context, index) {
+                            final organizer = section
+                                .organizersTrackedSetOrganizerForm[index];
+
+                            switch (organizer.model.organization) {
+                              case SetOrganizationEnum.defaultSet:
+                                return DefaultSetTile(organizerForm: organizer);
+                              case SetOrganizationEnum.superSet:
+                                return const Text('');
+                            }
+                          },
+                          separatorBuilder: (context, index) => Divider(
+                            indent: 54,
+                            height: 0,
+                            color: context.colors.divider,
+                          ),
+                        ),
+                        Divider(
+                          height: 0,
+                          color: context.colors.divider,
+                        ),
+                        const SizedBox(height: AppLayout.p4),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppLayout.p4,
                           ),
                           child: LargeButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ref
+                                  .read(trackerFormControllerProvider.notifier)
+                                  .addDefaultSet(section);
+                              setState(() {});
+                            },
                             expanded: true,
                             label: 'Add Set',
                             icon: Symbols.add,

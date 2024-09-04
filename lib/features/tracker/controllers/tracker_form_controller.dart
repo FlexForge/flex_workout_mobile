@@ -36,9 +36,19 @@ class TrackerFormController extends _$TrackerFormController {
         defaultSet: setType,
       );
 
-      final section =
-          TrackedWorkoutSection(title: exercise.name, organizers: [organizer]);
+      final section = TrackedWorkoutSection(
+        title: exercise.name,
+        template: organizer,
+        organizers: [organizer],
+      );
       state.addSectionsItem(section);
     }
+  }
+
+  void addDefaultSet(TrackedWorkoutSectionForm section) {
+    final setNumber = section.model.organizers.length + 1;
+    final newSet = section.model.template.copyWith(setNumber: setNumber);
+
+    section.addOrganizersItem(newSet);
   }
 }

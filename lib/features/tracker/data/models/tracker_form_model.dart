@@ -28,6 +28,7 @@ class Tracker with _$Tracker {
 class TrackedWorkoutSection with _$TrackedWorkoutSection {
   const factory TrackedWorkoutSection({
     required String title,
+    required TrackedSetOrganizer template,
     @RfArray() @Default([]) List<TrackedSetOrganizer> organizers,
   }) = _TrackedWorkoutSection;
 }
@@ -47,8 +48,8 @@ class TrackedSetOrganizer with _$TrackedSetOrganizer {
 @freezed
 class TrackedSetType with _$TrackedSetType {
   const factory TrackedSetType({
-    required SetTypeEnum type,
     required ExerciseModel exercise,
+    @Default(SetTypeEnum.normalSet) SetTypeEnum type,
   }) = _TrackedSetType;
 }
 
