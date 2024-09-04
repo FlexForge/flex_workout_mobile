@@ -1,6 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,8 @@ class Tracker with _$Tracker {
     @RfControl() String? notes,
     @RfControl() DateTime? startTimestamp,
     @RfControl() DateTime? endTimestamp,
+    @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
+    @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
     @Default([]) @RfArray() List<TrackedWorkoutSection> sections,
   }) = _Tracker;
 }

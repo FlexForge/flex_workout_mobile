@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,8 +29,33 @@ class TrackerFormController extends _$TrackerFormController {
 
   void addExercises(List<ExerciseModel> exercises) {
     for (final exercise in exercises) {
-      final setType =
-          TrackedSetType(type: SetTypeEnum.normalSet, exercise: exercise);
+      /// Update muscle groups
+      final primaryMuscleGroups =
+          List<MuscleGroupModel>.from(state.model.primaryMuscleGroups);
+      final secondaryMuscleGroups =
+          List<MuscleGroupModel>.from(state.model.secondaryMuscleGroups);
+
+      primaryMuscleGroups
+        ..addAll(exercise.primaryMuscleGroups)
+        ..toSet()
+        ..toList();
+      secondaryMuscleGroups
+        ..addAll(exercise.secondaryMuscleGroups)
+        ..toSet()
+        ..toList();
+
+      for (final primary in primaryMuscleGroups) {
+        if (secondaryMuscleGroups.contains(primary)) {
+          secondaryMuscleGroups.remove(primary);
+        }
+      }
+
+      state
+        ..primaryMuscleGroupsValueUpdate(primaryMuscleGroups)
+        ..secondaryMuscleGroupsValueUpdate(secondaryMuscleGroups);
+
+      /// Add Set
+      final setType = TrackedSetType(exercise: exercise);
       final organizer = TrackedSetOrganizer(
         setNumber: 1,
         organization: SetOrganizationEnum.defaultSet,
