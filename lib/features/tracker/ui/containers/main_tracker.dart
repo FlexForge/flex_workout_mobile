@@ -1,7 +1,6 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
-import 'package:flex_workout_mobile/core/common/ui/screens/main_screen.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
@@ -83,7 +82,6 @@ class _TrackerState extends ConsumerState<Tracker> {
         ),
         body: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          primary: false,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),

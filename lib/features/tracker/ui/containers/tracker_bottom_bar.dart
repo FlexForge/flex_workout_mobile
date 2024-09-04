@@ -12,10 +12,15 @@ class TrackerBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
+    return Container(
       height: 60,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: context.colors.divider), // Top border
+        ),
+      ),
       child: BottomAppBar(
-        color: context.colors.backgroundSecondary,
+        color: context.colors.backgroundPrimary,
         padding: EdgeInsets.zero,
         elevation: 0,
         child: Padding(

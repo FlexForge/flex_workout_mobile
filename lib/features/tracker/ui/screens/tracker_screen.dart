@@ -72,9 +72,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: AppLayout.p4),
         child: ColoredBox(
-          color: context.colors.backgroundSecondary,
+          color: context.colors.backgroundPrimary,
           child: SafeArea(
-            child: PageView(
+            child: PageView( 
               controller: _pageViewController,
               physics: const NeverScrollableScrollPhysics(),
               children: [

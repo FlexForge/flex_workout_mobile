@@ -1,6 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/screens/error_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/main_screen.dart';
-import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
@@ -28,20 +27,23 @@ final router = GoRouter(
       name: 'home',
       builder: (context, state) => const MainScreen(),
       routes: [
-        /// Tracker
+        /// Tracker Routes
         GoRoute(
           path: TrackerScreen.routePath,
           name: TrackerScreen.routeName,
-          pageBuilder: (context, state) => CupertinoModalSheetPage(
+          pageBuilder: (context, state) => const CupertinoModalSheetPage(
+            swipeDismissible: true,
             child: TrackerScreenModal(nestedNavigator: TrackerScreen()),
           ),
           routes: [
             GoRoute(
               path: ExerciseSelectionScreen.routePath,
               name: ExerciseSelectionScreen.routeName,
-              pageBuilder: (context, state) => CupertinoModalSheetPage(
+              pageBuilder: (context, state) => const CupertinoModalSheetPage(
+                swipeDismissible: true,
                 child: ExerciseSelectionScreenModal(
-                    nestedNavigator: ExerciseSelectionScreen()),
+                  nestedNavigator: ExerciseSelectionScreen(),
+                ),
               ),
             ),
           ],
