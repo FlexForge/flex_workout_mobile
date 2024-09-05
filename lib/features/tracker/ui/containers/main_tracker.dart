@@ -163,7 +163,12 @@ class _TrackerState extends ConsumerState<Tracker> {
                                   setState: setState,
                                 );
                               case SetOrganizationEnum.superSet:
-                                return SuperSetTile(organizerForm: organizer);
+                                return SuperSetTile(
+                                  sectionForm: section,
+                                  organizerForm: organizer,
+                                  index: index,
+                                  setState: setState,
+                                );
                             }
                           },
                           separatorBuilder: (context, index) {

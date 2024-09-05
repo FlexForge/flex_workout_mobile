@@ -89,6 +89,21 @@ class TrackerFormController extends _$TrackerFormController {
     _resetSetNumbers(section);
   }
 
+  void removeSuperSet(
+    TrackedWorkoutSectionForm section,
+    TrackedSetOrganizerForm organizer,
+    int setIndex,
+    int organizerIndex,
+  ) {
+    organizer.removeSuperSetItemAtIndex(setIndex);
+
+    if (organizer.model.superSet.isEmpty) {
+      section.removeOrganizersItemAtIndex(organizerIndex);
+    }
+
+    _resetSetNumbers(section);
+  }
+
   void removeSection(int index) {
     state.removeSectionsItemAtIndex(index);
     _resetMuscleGroups();
