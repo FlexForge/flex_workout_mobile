@@ -238,7 +238,7 @@ class _TrackerState extends ConsumerState<Tracker> {
             ),
             const SizedBox(height: AppLayout.p6),
             const TrackedWorkoutSummary(),
-            const SizedBox(height: AppLayout.bottomBuffer)
+            const SizedBox(height: AppLayout.bottomBuffer),
           ],
         ),
       ),

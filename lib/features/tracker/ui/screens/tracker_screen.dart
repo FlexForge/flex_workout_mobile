@@ -74,7 +74,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
         child: ColoredBox(
           color: context.colors.backgroundPrimary,
           child: SafeArea(
-            child: PageView( 
+            child: PageView(
               controller: _pageViewController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
