@@ -34,6 +34,16 @@ class _ExerciseSelectionPickerState
     });
   }
 
+  void addExercise(List<ExerciseModel> exercises) {
+    ref.read(trackerFormControllerProvider.notifier).addExercises(items);
+    context.pop();
+  }
+
+  void addSuperSet(List<ExerciseModel> exercises) {
+    ref.read(trackerFormControllerProvider.notifier).addSuperSet(items);
+    context.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     final sections =
@@ -63,15 +73,8 @@ class _ExerciseSelectionPickerState
               children: <Widget>[
                 Expanded(
                   child: LargeButton(
-                    onPressed: items.length > 1
-                        ? () {
-                            ref
-                                .read(trackerFormControllerProvider.notifier)
-                                .addSuperSet(items);
-
-                            context.pop();
-                          }
-                        : null,
+                    onPressed:
+                        items.length > 1 ? () => addSuperSet(items) : null,
                     label: 'Add as Superset',
                     backgroundColor: context.colors.backgroundSecondary,
                     foregroundColor: context.colors.foregroundPrimary,
@@ -82,13 +85,7 @@ class _ExerciseSelectionPickerState
                 ),
                 Expanded(
                   child: LargeButton(
-                    onPressed: () {
-                      ref
-                          .read(trackerFormControllerProvider.notifier)
-                          .addExercises(items);
-
-                      context.pop();
-                    },
+                    onPressed: () => addExercise(items),
                     label: 'Add Exercises'
                         '${items.isNotEmpty ? ' (${items.length})' : ''}',
                     backgroundColor: context.colors.foregroundPrimary,

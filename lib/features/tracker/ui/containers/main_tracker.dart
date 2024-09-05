@@ -7,9 +7,9 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/components/default_set_tile.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/components/super_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_bottom_bar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
@@ -50,6 +50,11 @@ class _TrackerState extends ConsumerState<Tracker> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void addSet(TrackedWorkoutSectionForm section) {
+    ref.read(trackerFormControllerProvider.notifier).addDefaultSet(section);
+    setState(() {});
   }
 
   @override
@@ -199,12 +204,7 @@ class _TrackerState extends ConsumerState<Tracker> {
                             horizontal: AppLayout.p4,
                           ),
                           child: LargeButton(
-                            onPressed: () {
-                              ref
-                                  .read(trackerFormControllerProvider.notifier)
-                                  .addDefaultSet(section);
-                              setState(() {});
-                            },
+                            onPressed: () => addSet(section),
                             expanded: true,
                             label: 'Add Set',
                             icon: Symbols.add,
