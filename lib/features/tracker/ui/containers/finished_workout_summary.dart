@@ -9,6 +9,7 @@ import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_mo
 import 'package:flex_workout_mobile/features/tracker/ui/components/summary_highlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class FinishedWorkoutSummary extends ConsumerWidget {
@@ -31,6 +32,7 @@ class FinishedWorkoutSummary extends ConsumerWidget {
 
       ref.invalidate(trackerFormControllerProvider);
       ref.read(appControllerProvider.notifier).endWorkout();
+      context.pop();
     }
 
     return Scaffold(
@@ -62,10 +64,15 @@ class FinishedWorkoutSummary extends ConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar: Container(
         height: 60,
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: context.colors.divider), // Top border
+          ),
+        ),
         child: BottomAppBar(
-          color: context.colors.backgroundSecondary,
+          color: context.colors.backgroundPrimary,
           padding: EdgeInsets.zero,
           elevation: 0,
           child: Padding(

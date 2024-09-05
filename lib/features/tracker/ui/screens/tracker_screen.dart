@@ -17,8 +17,7 @@ class TrackerScreenModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationSheet(
-      transitionObserver: trackerScreenObserver,
+    return DraggableSheet(
       child: Material(
         borderRadius: BorderRadius.circular(16),
         clipBehavior: Clip.antiAlias,
@@ -73,7 +72,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: AppLayout.p4),
         child: ColoredBox(
-          color: context.colors.backgroundSecondary,
+          color: context.colors.backgroundPrimary,
           child: SafeArea(
             child: PageView(
               controller: _pageViewController,

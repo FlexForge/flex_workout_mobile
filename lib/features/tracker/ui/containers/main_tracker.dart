@@ -1,15 +1,24 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/default_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/super_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_bottom_bar.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
 
 class Tracker extends ConsumerStatefulWidget {
   const Tracker({required this.next, super.key});
@@ -79,7 +88,6 @@ class _TrackerState extends ConsumerState<Tracker> {
         ),
         body: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          primary: false,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
@@ -118,11 +126,105 @@ class _TrackerState extends ConsumerState<Tracker> {
                 isRequired: true,
               ),
             ),
-            const SizedBox(height: AppLayout.p6),
+            const SizedBox(height: AppLayout.p3),
+            ReactiveFormArray(
+              formArray: form.sectionsControl,
+              builder: (context, formArray, child) {
+                final sections = form.sectionsTrackedWorkoutSectionForm
+                    .mapWithIndex((section, index) {
+                  return Section(
+                    header: section.model.title,
+                    subHeader: 'Working Sets',
+                    padding: const EdgeInsets.only(
+                      left: AppLayout.p4,
+                      right: AppLayout.p4,
+                      // top: AppLayout.p6,
+                      bottom: AppLayout.p3,
+                    ),
+                    body: Column(
+                      children: [
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              section.organizersTrackedSetOrganizerForm.length,
+                          itemBuilder: (context, index) {
+                            final organizer = section
+                                .organizersTrackedSetOrganizerForm[index];
+
+                            switch (organizer.model.organization) {
+                              case SetOrganizationEnum.defaultSet:
+                                return DefaultSetTile(organizerForm: organizer);
+                              case SetOrganizationEnum.superSet:
+                                return SuperSetTile(organizerForm: organizer);
+                            }
+                          },
+                          separatorBuilder: (context, index) {
+                            final organization = section
+                                .organizersTrackedSetOrganizerForm[index]
+                                .model
+                                .organization;
+
+                            return Divider(
+                              indent:
+                                  organization == SetOrganizationEnum.superSet
+                                      ? 0
+                                      : 54,
+                              height: 0,
+                              color: context.colors.divider,
+                            );
+                          },
+                        ),
+                        Divider(
+                          height: 0,
+                          color: context.colors.divider,
+                        ),
+                        const SizedBox(height: AppLayout.p4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppLayout.p4,
+                          ),
+                          child: LargeButton(
+                            onPressed: () {
+                              ref
+                                  .read(trackerFormControllerProvider.notifier)
+                                  .addDefaultSet(section);
+                              setState(() {});
+                            },
+                            expanded: true,
+                            label: 'Add Set',
+                            icon: Symbols.add,
+                            backgroundColor: context.colors.backgroundTertiary,
+                            foregroundColor: context.colors.foregroundPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: AppLayout.p4),
+                      ],
+                    ),
+                  );
+                }).toList();
+
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: sections.length,
+                  itemBuilder: (context, index) => sections[index],
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: AppLayout.p3,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: AppLayout.p3),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               child: LargeButton(
-                onPressed: () => {},
+                onPressed: () {
+                  DefaultSheetController.maybeOf(context)
+                      ?.animateTo(const Extent.proportional(1));
+
+                  context.goNamed(ExerciseSelectionScreen.routeName);
+                },
                 expanded: true,
                 label: 'Add Exercise',
                 icon: Symbols.add,
@@ -136,6 +238,7 @@ class _TrackerState extends ConsumerState<Tracker> {
             ),
             const SizedBox(height: AppLayout.p6),
             const TrackedWorkoutSummary(),
+            const SizedBox(height: AppLayout.bottomBuffer),
           ],
         ),
       ),
