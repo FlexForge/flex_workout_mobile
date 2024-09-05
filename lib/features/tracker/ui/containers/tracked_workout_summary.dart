@@ -6,16 +6,12 @@ import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.da
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
-import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class TrackedWorkoutSummary extends ConsumerStatefulWidget {
@@ -56,18 +52,6 @@ class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<TrackedWorkoutModel?>(
-      trackedWorkoutCreateControllerProvider,
-      (previous, next) {
-        if (next == null) return;
-
-        ref
-            .read(trackedWorkoutListControllerProvider.notifier)
-            .addWorkout(next);
-        context.pop();
-      },
-    );
-
     return ReactiveTrackerFormConsumer(
       builder: (context, form, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,

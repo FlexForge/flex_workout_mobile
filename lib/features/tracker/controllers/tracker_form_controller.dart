@@ -84,6 +84,47 @@ class TrackerFormController extends _$TrackerFormController {
     section.addOrganizersItem(newSet);
   }
 
+  void removeDefaultSet(TrackedWorkoutSectionForm section, int index) {
+    section.removeOrganizersItemAtIndex(index);
+    _resetSetNumbers(section);
+  }
+
+  void removeSuperSet(
+    TrackedWorkoutSectionForm section,
+    TrackedSetOrganizerForm organizer,
+    int setIndex,
+    int organizerIndex,
+  ) {
+    organizer.removeSuperSetItemAtIndex(setIndex);
+
+    if (organizer.model.superSet.isEmpty) {
+      section.removeOrganizersItemAtIndex(organizerIndex);
+    }
+
+    _resetSetNumbers(section);
+  }
+
+  void removeSection(int index) {
+    state.removeSectionsItemAtIndex(index);
+    _resetMuscleGroups();
+  }
+
+  List<ExerciseModel> _getExercises() {
+    return state.model.sections
+        .map((section) {
+          switch (section.template.organization) {
+            case SetOrganizationEnum.superSet:
+              return section.template.superSet
+                  .map((set) => set.exercise)
+                  .toList();
+            case SetOrganizationEnum.defaultSet:
+              return [section.template.defaultSet!.exercise];
+          }
+        })
+        .flatten
+        .toList();
+  }
+
   String _getSuperSetName(List<ExerciseModel> exercises) {
     final name = StringBuffer();
 
@@ -98,6 +139,41 @@ class TrackerFormController extends _$TrackerFormController {
     }
 
     return name.toString();
+  }
+
+  void _resetSetNumbers(TrackedWorkoutSectionForm section) {
+    final organizers =
+        section.model.organizers.mapWithIndex((organizer, index) {
+      final newSet = organizer.copyWith(setNumber: index + 1);
+      return newSet;
+    }).toList();
+
+    section.organizersValueUpdate(organizers);
+  }
+
+  void _resetMuscleGroups() {
+    final exercises = _getExercises();
+
+    final primaryMuscleGroups = exercises
+        .map((exercise) => exercise.primaryMuscleGroups)
+        .flatten
+        .toSet()
+        .toList();
+    final secondaryMuscleGroups = exercises
+        .map((exercise) => exercise.secondaryMuscleGroups)
+        .flatten
+        .toSet()
+        .toList();
+
+    for (final primary in primaryMuscleGroups) {
+      if (secondaryMuscleGroups.contains(primary)) {
+        secondaryMuscleGroups.remove(primary);
+      }
+    }
+
+    state
+      ..primaryMuscleGroupsValueUpdate(primaryMuscleGroups)
+      ..secondaryMuscleGroupsValueUpdate(secondaryMuscleGroups);
   }
 
   void _updateMuscleGroups(List<ExerciseModel> exercises) {
