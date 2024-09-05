@@ -42,7 +42,7 @@ class _ExerciseSelectionPickerState
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(24),
+        preferredSize: Size.fromHeight(80),
         child: ExerciseSelectionTopBar(),
       ),
       bottomNavigationBar: Container(
@@ -118,7 +118,19 @@ class _ExerciseSelectionPickerState
 
                 return FlexListTile(
                   onTap: () => updateSelectedItems(exercise),
-                  title: Text(exercise.name),
+                  title: Text(
+                    exercise.name,
+                    style: context.typography.bodyMedium.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Exercise Information',
+                    style: context.typography.bodySmall.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: context.colors.foregroundSecondary,
+                    ),
+                  ),
                   suffix: items.contains(exercise)
                       ? CircleAvatar(
                           radius: 10,
