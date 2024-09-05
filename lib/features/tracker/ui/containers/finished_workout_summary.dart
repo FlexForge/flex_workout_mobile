@@ -3,8 +3,10 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/summary_highlight.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +34,19 @@ class FinishedWorkoutSummary extends ConsumerWidget {
 
       ref.invalidate(trackerFormControllerProvider);
       ref.read(appControllerProvider.notifier).endWorkout();
-      context.pop();
     }
+
+    ref.listen<TrackedWorkoutModel?>(
+      trackedWorkoutCreateControllerProvider,
+      (previous, next) {
+        if (next == null) return;
+
+        ref
+            .read(trackedWorkoutListControllerProvider.notifier)
+            .addWorkout(next);
+        context.pop();
+      },
+    );
 
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
