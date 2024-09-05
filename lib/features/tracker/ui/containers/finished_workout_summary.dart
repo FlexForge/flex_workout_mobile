@@ -147,6 +147,12 @@ class FinishedWorkoutSummary extends ConsumerWidget {
             height: 0,
           ),
           const SizedBox(height: AppLayout.p6),
+          Text(
+            form.model.toString(),
+            style: context.typography.headlineMedium
+                .copyWith(fontWeight: FontWeight.w700),
+            textAlign: TextAlign.center,
+          ),
           Section(
             header: 'Overview',
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),

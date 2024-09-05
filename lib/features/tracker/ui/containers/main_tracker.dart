@@ -9,11 +9,13 @@ import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_mo
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/default_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/super_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_bottom_bar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -154,7 +156,12 @@ class _TrackerState extends ConsumerState<Tracker> {
 
                             switch (organizer.model.organization) {
                               case SetOrganizationEnum.defaultSet:
-                                return DefaultSetTile(organizerForm: organizer);
+                                return DefaultSetTile(
+                                  sectionForm: section,
+                                  organizerForm: organizer,
+                                  index: index,
+                                  setState: setState,
+                                );
                               case SetOrganizationEnum.superSet:
                                 return SuperSetTile(organizerForm: organizer);
                             }
@@ -175,10 +182,12 @@ class _TrackerState extends ConsumerState<Tracker> {
                             );
                           },
                         ),
-                        Divider(
-                          height: 0,
-                          color: context.colors.divider,
-                        ),
+                        if (section
+                            .organizersTrackedSetOrganizerForm.isNotEmpty)
+                          Divider(
+                            height: 0,
+                            color: context.colors.divider,
+                          ),
                         const SizedBox(height: AppLayout.p4),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -208,7 +217,27 @@ class _TrackerState extends ConsumerState<Tracker> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: sections.length,
-                  itemBuilder: (context, index) => sections[index],
+                  itemBuilder: (context, index) => SwipeActionCell(
+                    key: ObjectKey(sections[index].hashCode),
+                    backgroundColor: context.colors.backgroundPrimary,
+                    trailingActions: [
+                      SwipeAction(
+                        content: SwipeActionCircle(
+                          color: context.colors.red,
+                          icon: Symbols.delete,
+                        ),
+                        color: Colors.transparent,
+                        widthSpace: 64,
+                        onTap: (handler) async => {
+                          await handler(true),
+                          ref
+                              .read(trackerFormControllerProvider.notifier)
+                              .removeSection(index),
+                        },
+                      ),
+                    ],
+                    child: sections[index],
+                  ),
                   separatorBuilder: (context, index) => const SizedBox(
                     height: AppLayout.p3,
                   ),
