@@ -109,6 +109,35 @@ class TrackerFormController extends _$TrackerFormController {
     _resetMuscleGroups();
   }
 
+  List<WorkoutSummaryTableCell> getWorkoutSummary() {
+    final cells = <WorkoutSummaryTableCell>[];
+
+    var superSetIndex = 0;
+
+    for (final section in state.model.sections) {
+      for (final organizer in section.organizers) {
+        switch (organizer.organization) {
+          case SetOrganizationEnum.superSet:
+            for (final set in organizer.superSet) {
+              cells.add(
+                WorkoutSummaryTableCell(
+                  set.exercise,
+                  superSetIndex: superSetIndex,
+                ),
+              );
+            }
+            superSetIndex++;
+          case SetOrganizationEnum.defaultSet:
+            cells.add(
+              WorkoutSummaryTableCell(organizer.defaultSet!.exercise),
+            );
+        }
+      }
+    }
+
+    return cells;
+  }
+
   List<ExerciseModel> _getExercises() {
     return state.model.sections
         .map((section) {
@@ -202,4 +231,14 @@ class TrackerFormController extends _$TrackerFormController {
         ..secondaryMuscleGroupsValueUpdate(uniqueSecondaryMuscleGroups);
     }
   }
+}
+
+class WorkoutSummaryTableCell {
+  WorkoutSummaryTableCell(
+    this.exercise, {
+    this.superSetIndex,
+  });
+
+  final ExerciseModel exercise;
+  final int? superSetIndex;
 }
