@@ -28,6 +28,8 @@ class Section extends StatelessWidget {
           if (header != null)
             Text(
               header!,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: context.typography.headlineMedium
                   .copyWith(fontWeight: FontWeight.bold),
             ),

@@ -63,7 +63,15 @@ class _ExerciseSelectionPickerState
               children: <Widget>[
                 Expanded(
                   child: LargeButton(
-                    onPressed: () {},
+                    onPressed: items.length > 1
+                        ? () {
+                            ref
+                                .read(trackerFormControllerProvider.notifier)
+                                .addSuperSet(items);
+
+                            context.pop();
+                          }
+                        : null,
                     label: 'Add as Superset',
                     backgroundColor: context.colors.backgroundSecondary,
                     foregroundColor: context.colors.foregroundPrimary,

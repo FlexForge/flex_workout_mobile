@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_co
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/default_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/super_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracked_workout_summary.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/tracker_bottom_bar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
@@ -155,14 +156,24 @@ class _TrackerState extends ConsumerState<Tracker> {
                               case SetOrganizationEnum.defaultSet:
                                 return DefaultSetTile(organizerForm: organizer);
                               case SetOrganizationEnum.superSet:
-                                return const Text('');
+                                return SuperSetTile(organizerForm: organizer);
                             }
                           },
-                          separatorBuilder: (context, index) => Divider(
-                            indent: 54,
-                            height: 0,
-                            color: context.colors.divider,
-                          ),
+                          separatorBuilder: (context, index) {
+                            final organization = section
+                                .organizersTrackedSetOrganizerForm[index]
+                                .model
+                                .organization;
+
+                            return Divider(
+                              indent:
+                                  organization == SetOrganizationEnum.superSet
+                                      ? 0
+                                      : 54,
+                              height: 0,
+                              color: context.colors.divider,
+                            );
+                          },
                         ),
                         Divider(
                           height: 0,

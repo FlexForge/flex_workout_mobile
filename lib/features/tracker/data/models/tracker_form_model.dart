@@ -52,6 +52,7 @@ class TrackedSetOrganizer with _$TrackedSetOrganizer {
 class TrackedSetType with _$TrackedSetType {
   const factory TrackedSetType({
     required ExerciseModel exercise,
+    String? setLetter,
     @Default(SetTypeEnum.normalSet) SetTypeEnum type,
   }) = _TrackedSetType;
 }
