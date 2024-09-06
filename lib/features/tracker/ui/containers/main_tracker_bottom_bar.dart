@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class TrackerBottomBar extends ConsumerWidget {
-  const TrackerBottomBar({required this.next, super.key});
+class MainTrackerBottomBar extends ConsumerWidget {
+  const MainTrackerBottomBar({required this.next, super.key});
 
   final VoidCallback next;
 

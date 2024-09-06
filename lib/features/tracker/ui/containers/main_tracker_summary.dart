@@ -14,15 +14,15 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class TrackedWorkoutSummary extends ConsumerStatefulWidget {
-  const TrackedWorkoutSummary({super.key});
+class MainTrackerSummary extends ConsumerStatefulWidget {
+  const MainTrackerSummary({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _TrackedWorkoutSummaryState();
+      _MainTrackerSummaryState();
 }
 
-class _TrackedWorkoutSummaryState extends ConsumerState<TrackedWorkoutSummary> {
+class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
   String _timeString = '';
   late Timer _timer;
 
