@@ -115,23 +115,24 @@ class TrackerFormController extends _$TrackerFormController {
     var superSetIndex = 0;
 
     for (final section in state.model.sections) {
-      for (final organizer in section.organizers) {
-        switch (organizer.organization) {
-          case SetOrganizationEnum.superSet:
-            for (final set in organizer.superSet) {
-              cells.add(
-                WorkoutSummaryTableCell(
-                  set.exercise,
-                  superSetIndex: superSetIndex,
-                ),
-              );
-            }
-            superSetIndex++;
-          case SetOrganizationEnum.defaultSet:
+      switch (section.template.organization) {
+        case SetOrganizationEnum.superSet:
+          for (final set in section.template.superSet) {
             cells.add(
-              WorkoutSummaryTableCell(organizer.defaultSet!.exercise),
+              WorkoutSummaryTableCell(
+                set.exercise,
+                superSetIndex: superSetIndex,
+              ),
             );
-        }
+          }
+          superSetIndex++;
+
+        case SetOrganizationEnum.defaultSet:
+          cells.add(
+            WorkoutSummaryTableCell(
+              section.template.defaultSet!.exercise,
+            ),
+          );
       }
     }
 
