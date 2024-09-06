@@ -14,6 +14,7 @@ class FlexListTile extends StatelessWidget {
     this.foregroundColor,
     this.disabledForegroundColor,
     this.backgroundColor = Colors.transparent,
+    this.borderColor,
     this.prefix,
     this.suffix,
     this.suffixPadding = const EdgeInsets.only(right: AppLayout.p2),
@@ -36,6 +37,7 @@ class FlexListTile extends StatelessWidget {
   final Color? foregroundColor;
   final Color? disabledForegroundColor;
   final Color backgroundColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +56,19 @@ class FlexListTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppLayout.p0),
         ),
       ),
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.only(
-          left: AppLayout.p3,
+          left: AppLayout.p2,
           top: AppLayout.p2,
           bottom: AppLayout.p2,
+        ),
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              color: borderColor ?? backgroundColor,
+              width: 4,
+            ),
+          ),
         ),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 44),

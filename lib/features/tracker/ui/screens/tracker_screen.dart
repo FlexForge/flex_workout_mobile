@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/finished_workout_summary.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/main_tracker_screen.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/workout_summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
@@ -78,8 +78,8 @@ class _TrackerScreenState extends State<TrackerScreen> {
               controller: _pageViewController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                Tracker(next: () => _updateCurrentPageIndex(2)),
-                FinishedWorkoutSummary(
+                MainTrackerScreen(next: () => _updateCurrentPageIndex(2)),
+                WorkoutSummaryScreen(
                   back: () => _updateCurrentPageIndex(1),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flex_workout_mobile/core/utils/failure.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 class TrackedWorkoutRepository {
@@ -26,6 +27,7 @@ class TrackedWorkoutRepository {
     required String subtitle,
     required int durationInMinutes,
     required DateTime startTimestamp,
+    required List<WorkoutSectionModel> sections,
     String? notes,
   }) {
     try {
@@ -37,7 +39,7 @@ class TrackedWorkoutRepository {
         startTimestamp: startTimestamp,
         updatedAt: DateTime.now(),
         createdAt: DateTime.now(),
-      );
+      )..sections.addAll(sections.map((e) => e.toEntity()).toList());
       final id = box.put(workoutToAdd);
 
       final res = box.get(id);
