@@ -1,4 +1,4 @@
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 
 String getName(WorkoutSectionModel section) {
   final name = StringBuffer();

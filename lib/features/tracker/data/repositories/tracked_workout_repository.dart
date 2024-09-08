@@ -2,7 +2,6 @@ import 'package:flex_workout_mobile/core/utils/failure.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 class TrackedWorkoutRepository {

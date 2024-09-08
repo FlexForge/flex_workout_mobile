@@ -3,7 +3,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_tile.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_tile.dart';

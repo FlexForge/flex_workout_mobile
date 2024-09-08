@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flex_workout_mobile/features/tracker/providers.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
