@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 part 'tracked_workout_model.freezed.dart';
 
@@ -30,4 +31,11 @@ extension ConvertTrackedWorkoutModel on TrackedWorkoutModel {
         updatedAt: updatedAt,
         createdAt: createdAt,
       );
+}
+
+extension Date on DateTime {
+  String toReadableDate() => DateFormat.yMMMMd().format(this);
+
+  String toReadableTime() =>
+      DateFormat.jm().format(this).toLowerCase().replaceAll(' ', '');
 }

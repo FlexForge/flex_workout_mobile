@@ -60,6 +60,7 @@ extension ConvertSetOrganizer on SetOrganizer {
     return SetOrganizerModel(
       id: id,
       organization: organization,
+      setNumber: 0,
       defaultSet: defaultSet.target?.toModel(),
       superSet: superSet.map((e) => e.toModel()).toList(),
     );

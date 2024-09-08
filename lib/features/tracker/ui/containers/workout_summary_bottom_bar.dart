@@ -2,8 +2,8 @@ import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart'
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -15,18 +15,19 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final form = ref.watch(trackerFormControllerProvider);
+    final workout = ref.watch(currentWorkoutControllerProvider);
 
-    final totalMinutes = DateTime.now()
-        .difference(form.model.startTimestamp ?? DateTime.now())
-        .inMinutes;
+    final totalMinutes =
+        DateTime.now().difference(workout.startTimestamp).inMinutes;
 
     void logWorkout() {
       ref
           .read(trackedWorkoutCreateControllerProvider.notifier)
-          .handle(form, totalMinutes);
+          .handle(totalMinutes);
 
-      ref.invalidate(trackerFormControllerProvider);
+      ref
+        ..invalidate(currentWorkoutControllerProvider)
+        ..invalidate(mainTrackerInfoFormControllerProvider);
       ref.read(appControllerProvider.notifier).endWorkout();
     }
 

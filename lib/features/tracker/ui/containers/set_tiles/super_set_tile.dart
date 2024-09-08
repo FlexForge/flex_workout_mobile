@@ -2,8 +2,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
@@ -11,17 +10,12 @@ import 'package:material_symbols_icons/symbols.dart';
 
 class SuperSetTile extends ConsumerWidget {
   const SuperSetTile({
-    required this.sectionForm,
-    required this.organizerForm,
-    required this.index,
+    required this.organizer,
     required this.setState,
     super.key,
   });
 
-  final TrackedWorkoutSectionForm sectionForm;
-  final TrackedSetOrganizerForm organizerForm;
-  final int index;
-
+  final SetOrganizerModel organizer;
   final void Function(VoidCallback) setState;
 
   @override
@@ -29,18 +23,18 @@ class SuperSetTile extends ConsumerWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: organizerForm.model.superSet.length,
+      itemCount: organizer.superSet.length,
       separatorBuilder: (context, index) => Divider(
         indent: 54,
         height: 0,
         color: context.colors.divider,
       ),
       itemBuilder: (context, setIndex) {
-        final superSet = organizerForm.model.superSet[setIndex];
+        final superSet = organizer.superSet[setIndex];
 
         return SwipeActionCell(
           key: ObjectKey(
-            '${organizerForm.model.setNumber}${superSet.hashCode}',
+            '${organizer.setNumber}${superSet.hashCode}',
           ),
           backgroundColor: context.colors.backgroundSecondary,
           trailingActions: <SwipeAction>[
@@ -52,16 +46,7 @@ class SuperSetTile extends ConsumerWidget {
                 size: 20,
               ),
               style: context.typography.labelSmall,
-              onTap: (CompletionHandler handler) async {
-                await handler(true);
-                ref.read(trackerFormControllerProvider.notifier).removeSuperSet(
-                      sectionForm,
-                      organizerForm,
-                      setIndex,
-                      index,
-                    );
-                setState(() {});
-              },
+              onTap: (CompletionHandler handler) async {},
               color: context.colors.red,
             ),
           ],
@@ -69,7 +54,7 @@ class SuperSetTile extends ConsumerWidget {
             onTap: () {},
             prefix: Center(
               child: Text(
-                '${organizerForm.model.setNumber}${superSet.setLetter}',
+                '${organizer.setNumber}${superSet.setLetter}',
                 style: context.typography.headlineMedium.copyWith(
                   fontWeight: FontWeight.bold,
                 ),

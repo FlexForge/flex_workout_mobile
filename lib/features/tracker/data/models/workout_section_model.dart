@@ -33,6 +33,7 @@ class SetOrganizerModel with _$SetOrganizerModel {
   const factory SetOrganizerModel({
     required int id,
     required SetOrganizationEnum organization,
+    required int setNumber,
     SetTypeModel? defaultSet,
     @Default([]) List<SetTypeModel> superSet,
   }) = _SetOrganizerModel;
@@ -52,6 +53,7 @@ class SetTypeModel with _$SetTypeModel {
     required int id,
     required ExerciseModel exercise,
     required SetTypeEnum type,
+    String? setLetter,
     NormalSetModel? normalSet,
   }) = _SetTypeModel;
 }

@@ -4,8 +4,8 @@ import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,12 +35,12 @@ class _ExerciseSelectionPickerState
   }
 
   void addExercise(List<ExerciseModel> exercises) {
-    ref.read(trackerFormControllerProvider.notifier).addExercises(items);
+    ref.read(currentWorkoutControllerProvider.notifier).addExercises(exercises);
     context.pop();
   }
 
   void addSuperSet(List<ExerciseModel> exercises) {
-    ref.read(trackerFormControllerProvider.notifier).addSuperSet(items);
+    ref.read(currentWorkoutControllerProvider.notifier).addSuperSet(exercises);
     context.pop();
   }
 

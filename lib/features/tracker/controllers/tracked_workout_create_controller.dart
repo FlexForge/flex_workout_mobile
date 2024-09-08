@@ -17,63 +17,65 @@ class TrackedWorkoutCreateController extends _$TrackedWorkoutCreateController {
     return null;
   }
 
-  void handle(TrackerForm form, int durationInMinutes) {
-    final title = form.model.title;
-    final subtitle = form.model.subtitle;
-    final notes = form.model.notes;
-    final startTimestamp = form.model.startTimestamp;
-    final sections = form.model.sections;
+  void handle(int durationInMinutes) {
+    // final title = form.model.title;
+    // final subtitle = form.model.subtitle;
+    // final notes = form.model.notes;
+    // final startTimestamp = form.model.startTimestamp;
+    // final sections = form.model.sections;
 
-    if (title == null || subtitle == null || startTimestamp == null) return;
+    // if (title == null || subtitle == null || startTimestamp == null) return;
 
-    /// Convert sections to [WorkoutSectionModel]
-    final sectionsModel = sections.map((e) {
-      final organizers = e.organizers.map((organizer) {
-        switch (organizer.organization) {
-          case SetOrganizationEnum.defaultSet:
-            final defaultSet = SetTypeModel(
-              id: _random.nextInt(1 << 32),
-              exercise: organizer.defaultSet!.exercise,
-              type: organizer.defaultSet!.type,
-            );
+    // /// Convert sections to [WorkoutSectionModel]
+    // final sectionsModel = sections.map((e) {
+    //   final organizers = e.organizers.map((organizer) {
+    //     switch (organizer.organization) {
+    //       case SetOrganizationEnum.defaultSet:
+    //         final defaultSet = SetTypeModel(
+    //           id: _random.nextInt(1 << 32),
+    //           exercise: organizer.defaultSet!.exercise,
+    //           type: organizer.defaultSet!.type,
+    //         );
 
-            return SetOrganizerModel(
-              id: _random.nextInt(1 << 32),
-              organization: organizer.organization,
-              defaultSet: defaultSet,
-            );
-          case SetOrganizationEnum.superSet:
-            return SetOrganizerModel(
-              id: _random.nextInt(1 << 32),
-              organization: organizer.organization,
-              superSet: organizer.superSet
-                  .map(
-                    (e) => SetTypeModel(
-                      id: _random.nextInt(1 << 32),
-                      exercise: e.exercise,
-                      type: e.type,
-                    ),
-                  )
-                  .toList(),
-            );
-        }
-      }).toList();
+    //         return SetOrganizerModel(
+    //           id: _random.nextInt(1 << 32),
+    //           setNumber: organizer.setNumber,
+    //           organization: organizer.organization,
+    //           defaultSet: defaultSet,
+    //         );
+    //       case SetOrganizationEnum.superSet:
+    //         return SetOrganizerModel(
+    //           id: _random.nextInt(1 << 32),
+    //           setNumber: organizer.setNumber,
+    //           organization: organizer.organization,
+    //           superSet: organizer.superSet
+    //               .map(
+    //                 (e) => SetTypeModel(
+    //                   id: _random.nextInt(1 << 32),
+    //                   exercise: e.exercise,
+    //                   type: e.type,
+    //                 ),
+    //               )
+    //               .toList(),
+    //         );
+    //     }
+    //   }).toList();
 
-      return WorkoutSectionModel(
-        id: _random.nextInt(1 << 32),
-        title: e.title,
-        organizers: organizers,
-      );
-    }).toList();
+    //   return WorkoutSectionModel(
+    //     id: _random.nextInt(1 << 32),
+    //     title: e.title,
+    //     organizers: organizers,
+    //   );
+    // }).toList();
 
-    final res = ref.read(trackedWorkoutRepositoryProvider).createTrackedWorkout(
-          title: title,
-          subtitle: subtitle,
-          notes: notes,
-          durationInMinutes: durationInMinutes,
-          startTimestamp: startTimestamp,
-          sections: sectionsModel,
-        );
-    state = res.fold((l) => throw l, (r) => r);
+    // final res = ref.read(trackedWorkoutRepositoryProvider).createTrackedWorkout(
+    //       title: title,
+    //       subtitle: subtitle,
+    //       notes: notes,
+    //       durationInMinutes: durationInMinutes,
+    //       startTimestamp: startTimestamp,
+    //       sections: sectionsModel,
+    //     );
+    // state = res.fold((l) => throw l, (r) => r);
   }
 }

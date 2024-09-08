@@ -2,8 +2,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
@@ -11,23 +10,18 @@ import 'package:material_symbols_icons/symbols.dart';
 
 class DefaultSetTile extends ConsumerWidget {
   const DefaultSetTile({
-    required this.sectionForm,
-    required this.organizerForm,
-    required this.index,
+    required this.organizer,
     required this.setState,
     super.key,
   });
 
-  final TrackedWorkoutSectionForm sectionForm;
-  final TrackedSetOrganizerForm organizerForm;
-  final int index;
-
+  final SetOrganizerModel organizer;
   final void Function(VoidCallback) setState;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SwipeActionCell(
-      key: ObjectKey(organizerForm.hashCode),
+      key: ObjectKey(organizer.hashCode),
       backgroundColor: context.colors.backgroundSecondary,
       trailingActions: <SwipeAction>[
         SwipeAction(
@@ -38,14 +32,7 @@ class DefaultSetTile extends ConsumerWidget {
             size: 20,
           ),
           style: context.typography.labelSmall,
-          onTap: (CompletionHandler handler) async {
-            await handler(true);
-
-            ref
-                .read(trackerFormControllerProvider.notifier)
-                .removeDefaultSet(sectionForm, index);
-            setState(() {});
-          },
+          onTap: (CompletionHandler handler) async {},
           color: context.colors.red,
         ),
       ],
@@ -53,7 +40,7 @@ class DefaultSetTile extends ConsumerWidget {
         onTap: () {},
         prefix: Center(
           child: Text(
-            '${organizerForm.model.setNumber}',
+            '${organizer.setNumber}',
             style: context.typography.headlineMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
