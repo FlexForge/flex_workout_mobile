@@ -6,8 +6,8 @@ import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.da
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -28,8 +28,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   void initState() {
-    final startTime =
-        ref.read(trackerFormControllerProvider).model.startTimestamp!;
+    final startTime = ref.read(currentWorkoutControllerProvider).startTimestamp;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -52,84 +51,84 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveTrackerFormConsumer(
-      builder: (context, form, child) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-            child: Text(
-              'Workout Summary',
-              style: context.typography.headlineMedium
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
+    final workout = ref.watch(currentWorkoutControllerProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          child: Text(
+            'Workout Summary',
+            style: context.typography.headlineMedium
+                .copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: AppLayout.p4),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-            child: LayoutGrid(
-              columnSizes: [1.fr, 1.fr, 1.fr],
-              rowSizes: const [auto, auto],
-              rowGap: AppLayout.p4, // equivalent to mainAxisSpacing
-              columnGap: AppLayout.p4,
-              children: [
-                TextWithColor(
-                  color: context.colors.blue,
-                  label: 'Total volume',
-                  value: '0',
-                  isLarge: true,
-                ),
-                TextWithColor(
-                  color: context.colors.green,
-                  label: 'Sets completed',
-                  value: '0',
-                  isLarge: true,
-                ),
-                TextWithColor(
-                  color: context.colors.yellow,
-                  label: 'Reps completed',
-                  value: '0',
-                  isLarge: true,
-                ),
-                StackedText(
-                  heading: form.model.startTimestamp?.toReadableTime() ?? '',
-                  subHeading: 'Start Time',
-                  alignment: CrossAxisAlignment.start,
-                ),
-                StackedText(
-                  heading: _timeString.isEmpty ? '00:00:00' : _timeString,
-                  subHeading: 'Workout length',
-                  alignment: CrossAxisAlignment.start,
-                ),
-              ],
-            ),
+        ),
+        const SizedBox(height: AppLayout.p4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          child: LayoutGrid(
+            columnSizes: [1.fr, 1.fr, 1.fr],
+            rowSizes: const [auto, auto],
+            rowGap: AppLayout.p4, // equivalent to mainAxisSpacing
+            columnGap: AppLayout.p4,
+            children: [
+              TextWithColor(
+                color: context.colors.blue,
+                label: 'Total volume',
+                value: '0',
+                isLarge: true,
+              ),
+              TextWithColor(
+                color: context.colors.green,
+                label: 'Sets completed',
+                value: '0',
+                isLarge: true,
+              ),
+              TextWithColor(
+                color: context.colors.yellow,
+                label: 'Reps completed',
+                value: '0',
+                isLarge: true,
+              ),
+              StackedText(
+                heading: workout.startTimestamp.toReadableTime(),
+                subHeading: 'Start Time',
+                alignment: CrossAxisAlignment.start,
+              ),
+              StackedText(
+                heading: _timeString.isEmpty ? '00:00:00' : _timeString,
+                subHeading: 'Workout length',
+                alignment: CrossAxisAlignment.start,
+              ),
+            ],
           ),
-          const SizedBox(height: AppLayout.p4),
-          Section(
-            subHeader: form.model.primaryMuscleGroups.isNotEmpty
-                ? 'Muscle Groups Targeted'
-                : null,
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-            body: form.model.primaryMuscleGroups.isNotEmpty
-                ? MuscleGroupView(
-                    primaryMuscleGroups: form.model.primaryMuscleGroups,
-                    secondaryMuscleGroups: form.model.secondaryMuscleGroups,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
-                    child: Center(
-                      child: Text(
-                        'No muscles targeted',
-                        style: context.typography.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: context.colors.foregroundSecondary,
-                        ),
+        ),
+        const SizedBox(height: AppLayout.p4),
+        Section(
+          subHeader: workout.primaryMuscleGroups.isNotEmpty
+              ? 'Muscle Groups Targeted'
+              : null,
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          body: workout.primaryMuscleGroups.isNotEmpty
+              ? MuscleGroupView(
+                  primaryMuscleGroups: workout.primaryMuscleGroups,
+                  secondaryMuscleGroups: workout.secondaryMuscleGroups,
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+                  child: Center(
+                    child: Text(
+                      'No muscles targeted',
+                      style: context.typography.bodyMedium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundSecondary,
                       ),
                     ),
                   ),
-          ),
-        ],
-      ),
+                ),
+        ),
+      ],
     );
   }
 }

@@ -2,18 +2,15 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_tile.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_organizer.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
 
 class MainTrackerSections extends ConsumerWidget {
   const MainTrackerSections({required this.setState, super.key});
@@ -22,25 +19,45 @@ class MainTrackerSections extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final form = ref.watch(trackerFormControllerProvider);
+    final sections = ref.watch(currentWorkoutControllerProvider).sections;
 
-    void addSet(TrackedWorkoutSectionForm section) {
-      ref.read(trackerFormControllerProvider.notifier).addDefaultSet(section);
+    void addSet(int sectionIndex) {
+      ref.read(currentWorkoutControllerProvider.notifier).addSet(sectionIndex);
       setState(() {});
     }
 
-    return ReactiveFormArray(
-      formArray: form.sectionsControl,
-      builder: (context, formArray, child) {
-        final sections = form.sectionsTrackedWorkoutSectionForm
-            .mapWithIndex((section, index) {
-          return Section(
-            header: section.model.title,
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: sections.length,
+      itemBuilder: (context, sectionIndex) {
+        final section = sections[sectionIndex];
+
+        return SwipeActionCell(
+          key: ObjectKey(sections[sectionIndex].hashCode),
+          backgroundColor: context.colors.backgroundPrimary,
+          trailingActions: [
+            SwipeAction(
+              content: SwipeActionCircle(
+                color: context.colors.red,
+                icon: Symbols.delete,
+              ),
+              color: Colors.transparent,
+              widthSpace: 64,
+              onTap: (handler) async {
+                await handler(true);
+                ref
+                    .read(currentWorkoutControllerProvider.notifier)
+                    .removeSection(sectionIndex);
+              },
+            ),
+          ],
+          child: Section(
+            header: section.title,
             subHeader: 'Working Sets',
             padding: const EdgeInsets.only(
               left: AppLayout.p4,
               right: AppLayout.p4,
-              // top: AppLayout.p6,
               bottom: AppLayout.p3,
             ),
             body: Column(
@@ -48,33 +65,28 @@ class MainTrackerSections extends ConsumerWidget {
                 ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: section.organizersTrackedSetOrganizerForm.length,
-                  itemBuilder: (context, index) {
-                    final organizer =
-                        section.organizersTrackedSetOrganizerForm[index];
-
-                    switch (organizer.model.organization) {
+                  itemCount: section.organizers.length,
+                  itemBuilder: (context, organizerIndex) {
+                    final organizer = section.organizers[organizerIndex];
+                    switch (organizer.organization) {
                       case SetOrganizationEnum.defaultSet:
-                        return DefaultSetTile(
-                          sectionForm: section,
-                          organizerForm: organizer,
-                          index: index,
+                        return DefaultSetOrganizer(
+                          sectionIndex: sectionIndex,
+                          organizerIndex: organizerIndex,
+                          organizer: organizer,
                           setState: setState,
                         );
                       case SetOrganizationEnum.superSet:
-                        return SuperSetTile(
-                          sectionForm: section,
-                          organizerForm: organizer,
-                          index: index,
+                        return SuperSetOrganizer(
+                          sectionIndex: sectionIndex,
+                          organizerIndex: organizerIndex,
+                          organizer: organizer,
                           setState: setState,
                         );
                     }
                   },
                   separatorBuilder: (context, index) {
-                    final organization = section
-                        .organizersTrackedSetOrganizerForm[index]
-                        .model
-                        .organization;
+                    final organization = section.organizers[index].organization;
 
                     return Divider(
                       indent:
@@ -84,7 +96,7 @@ class MainTrackerSections extends ConsumerWidget {
                     );
                   },
                 ),
-                if (section.organizersTrackedSetOrganizerForm.isNotEmpty)
+                if (section.organizers.isNotEmpty)
                   Divider(
                     height: 0,
                     color: context.colors.divider,
@@ -95,7 +107,7 @@ class MainTrackerSections extends ConsumerWidget {
                     horizontal: AppLayout.p4,
                   ),
                   child: LargeButton(
-                    onPressed: () => addSet(section),
+                    onPressed: () => addSet(sectionIndex),
                     expanded: true,
                     label: 'Add Set',
                     icon: Symbols.add,
@@ -106,39 +118,12 @@ class MainTrackerSections extends ConsumerWidget {
                 const SizedBox(height: AppLayout.p4),
               ],
             ),
-          );
-        }).toList();
-
-        return ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: sections.length,
-          itemBuilder: (context, index) => SwipeActionCell(
-            key: ObjectKey(sections[index].hashCode),
-            backgroundColor: context.colors.backgroundPrimary,
-            trailingActions: [
-              SwipeAction(
-                content: SwipeActionCircle(
-                  color: context.colors.red,
-                  icon: Symbols.delete,
-                ),
-                color: Colors.transparent,
-                widthSpace: 64,
-                onTap: (handler) async => {
-                  await handler(true),
-                  ref
-                      .read(trackerFormControllerProvider.notifier)
-                      .removeSection(index),
-                },
-              ),
-            ],
-            child: sections[index],
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: AppLayout.p3,
           ),
         );
       },
+      separatorBuilder: (context, index) => const SizedBox(
+        height: AppLayout.p3,
+      ),
     );
   }
 }

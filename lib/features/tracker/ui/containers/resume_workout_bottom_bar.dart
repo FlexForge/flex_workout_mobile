@@ -3,7 +3,8 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracker_form_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final form = ref.watch(trackerFormControllerProvider);
+    final form = ref.watch(mainTrackerInfoFormControllerProvider);
+    final workout = ref.watch(currentWorkoutControllerProvider);
 
     return TextButton(
       onPressed: () => context.goNamed(TrackerScreen.routeName),
@@ -34,7 +36,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
           ),
         ),
       ),
-      child: ReactiveTrackerForm(
+      child: ReactiveMainTrackerInfoForm(
         form: form,
         child: Container(
           constraints: const BoxConstraints(minHeight: 44),
@@ -55,7 +57,9 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
                         ' All progress in the current workout will be lost.',
                     actionLabel: 'Discard',
                     onPressed: () {
-                      ref.invalidate(trackerFormControllerProvider);
+                      ref
+                        ..invalidate(mainTrackerInfoFormControllerProvider)
+                        ..invalidate(currentWorkoutControllerProvider);
                       ref.read(appControllerProvider.notifier).endWorkout();
 
                       context.pop();
@@ -66,7 +70,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
                   backgroundColor: context.colors.backgroundTertiary,
                   icon: Icons.close,
                 ),
-                ReactiveTrackerFormConsumer(
+                ReactiveMainTrackerInfoFormConsumer(
                   builder: (context, model, child) {
                     return Column(
                       children: [
@@ -75,8 +79,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
                           style: context.typography.labelLarge.copyWith(),
                         ),
                         Text(
-                          form.model.startTimestamp?.toReadableDate() ??
-                              'Jan 1, 2024',
+                          workout.startTimestamp.toReadableDate(),
                           style: context.typography.labelSmall.copyWith(
                             color: context.colors.foregroundSecondary,
                           ),

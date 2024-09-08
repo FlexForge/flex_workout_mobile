@@ -1,5 +1,4 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/main_tracker_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/workout_summary_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +17,8 @@ class TrackerScreenModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableSheet(
-      child: Material(
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
         child: nestedNavigator,
       ),
     );
@@ -67,25 +65,17 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SheetContentScaffold(
       backgroundColor: context.colors.backgroundPrimary,
-      body: Padding(
-        padding: const EdgeInsets.only(top: AppLayout.p4),
-        child: ColoredBox(
-          color: context.colors.backgroundPrimary,
-          child: SafeArea(
-            child: PageView(
-              controller: _pageViewController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                MainTrackerScreen(next: () => _updateCurrentPageIndex(2)),
-                WorkoutSummaryScreen(
-                  back: () => _updateCurrentPageIndex(1),
-                ),
-              ],
-            ),
+      body: PageView(
+        controller: _pageViewController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          MainTrackerScreen(next: () => _updateCurrentPageIndex(2)),
+          WorkoutSummaryScreen(
+            back: () => _updateCurrentPageIndex(1),
           ),
-        ),
+        ],
       ),
     );
   }

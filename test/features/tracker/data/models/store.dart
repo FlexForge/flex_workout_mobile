@@ -2,7 +2,6 @@ import 'package:faker/faker.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/workout_section_model.dart';
 
 import '../../../exercise/data/db/store.dart';
 
@@ -23,6 +22,7 @@ final exampleSectionOne = WorkoutSectionModel(
         type: SetTypeEnum.normalSet,
         normalSet: const NormalSetModel(id: 1),
       ),
+      setNumber: 1,
     ),
     SetOrganizerModel(
       id: 3,
@@ -33,6 +33,7 @@ final exampleSectionOne = WorkoutSectionModel(
         type: SetTypeEnum.normalSet,
         normalSet: const NormalSetModel(id: 4),
       ),
+      setNumber: 2,
     ),
   ],
 );
@@ -58,6 +59,7 @@ final exampleSectionTwo = WorkoutSectionModel(
           normalSet: const NormalSetModel(id: 3),
         ),
       ],
+      setNumber: 1,
     ),
     SetOrganizerModel(
       id: 4,
@@ -76,6 +78,7 @@ final exampleSectionTwo = WorkoutSectionModel(
           normalSet: const NormalSetModel(id: 6),
         ),
       ],
+      setNumber: 2,
     ),
   ],
 );
@@ -152,6 +155,7 @@ TrackedWorkoutModel generateTrackedWorkout({
                             ),
                           ).toList()
                         : [],
+                    setNumber: 1,
                   );
                 },
               ),

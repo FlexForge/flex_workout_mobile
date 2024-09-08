@@ -1,6 +1,5 @@
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
-import 'package:flex_workout_mobile/features/tracker/data/db/workout_section_entity.dart';
 
 /// Temp seed data for testing
 final workoutSection = WorkoutSection(title: 'Section 1');

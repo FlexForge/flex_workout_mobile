@@ -30,26 +30,23 @@ class WorkoutSummaryScreen extends ConsumerWidget {
       },
     );
 
-    return Scaffold(
-      backgroundColor: context.colors.backgroundPrimary,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(24),
-        child: MainTrackerAppBar(),
-      ),
-      bottomNavigationBar: WorkoutSummaryBottomBar(back: back),
-      body: ListView(
-        children: [
-          const WorkoutSummaryHeader(),
-          const SizedBox(height: AppLayout.p4),
-          Divider(
-            color: context.colors.divider,
-            height: 0,
+    return Column(
+      children: [
+        const MainTrackerAppBar(),
+        Expanded(
+          child: ListView(
+            children: [
+              const WorkoutSummaryHeader(),
+              const SizedBox(height: AppLayout.p4),
+              Divider(color: context.colors.divider, height: 0),
+              const SizedBox(height: AppLayout.p6),
+              const WorkoutSummaryOverview(),
+              const SizedBox(height: AppLayout.bottomBuffer),
+            ],
           ),
-          const SizedBox(height: AppLayout.p6),
-          const WorkoutSummaryOverview(),
-          const SizedBox(height: AppLayout.bottomBuffer),
-        ],
-      ),
+        ),
+        WorkoutSummaryBottomBar(back: back),
+      ],
     );
   }
 }

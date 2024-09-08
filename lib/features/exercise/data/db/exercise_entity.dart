@@ -1,6 +1,6 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/db/workout_section_entity.dart';
+import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
