@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,6 +11,8 @@ class CurrentWorkout with _$CurrentWorkout {
     required String title,
     required String subtitle,
     required DateTime startTimestamp,
+    @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
+    @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
     @Default([]) List<CurrentWorkoutSection> sections,
     String? notes,
   }) = _CurrentWorkout;

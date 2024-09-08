@@ -5,6 +5,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart'
 import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/material.dart';
@@ -105,19 +106,27 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
         ),
         const SizedBox(height: AppLayout.p4),
         Section(
+          subHeader: workout.primaryMuscleGroups.isNotEmpty
+              ? 'Muscle Groups Targeted'
+              : null,
           padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
-            child: Center(
-              child: Text(
-                'No muscles targeted',
-                style: context.typography.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colors.foregroundSecondary,
+          body: workout.primaryMuscleGroups.isNotEmpty
+              ? MuscleGroupView(
+                  primaryMuscleGroups: workout.primaryMuscleGroups,
+                  secondaryMuscleGroups: workout.secondaryMuscleGroups,
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+                  child: Center(
+                    child: Text(
+                      'No muscles targeted',
+                      style: context.typography.bodyMedium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundSecondary,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
         ),
       ],
     );

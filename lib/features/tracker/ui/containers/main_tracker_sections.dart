@@ -21,7 +21,8 @@ class MainTrackerSections extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sections = ref.watch(currentWorkoutControllerProvider).sections;
 
-    void addSet() {
+    void addSet(int sectionIndex) {
+      ref.read(currentWorkoutControllerProvider.notifier).addSet(sectionIndex);
       setState(() {});
     }
 
@@ -43,7 +44,12 @@ class MainTrackerSections extends ConsumerWidget {
               ),
               color: Colors.transparent,
               widthSpace: 64,
-              onTap: (handler) async => {},
+              onTap: (handler) async {
+                await handler(true);
+                ref
+                    .read(currentWorkoutControllerProvider.notifier)
+                    .removeSection(sectionIndex);
+              },
             ),
           ],
           child: Section(
@@ -65,11 +71,15 @@ class MainTrackerSections extends ConsumerWidget {
                     switch (organizer.organization) {
                       case SetOrganizationEnum.defaultSet:
                         return DefaultSetTile(
+                          sectionIndex: sectionIndex,
+                          organizerIndex: organizerIndex,
                           organizer: organizer,
                           setState: setState,
                         );
                       case SetOrganizationEnum.superSet:
                         return SuperSetTile(
+                          sectionIndex: sectionIndex,
+                          organizerIndex: organizerIndex,
                           organizer: organizer,
                           setState: setState,
                         );
@@ -97,7 +107,7 @@ class MainTrackerSections extends ConsumerWidget {
                     horizontal: AppLayout.p4,
                   ),
                   child: LargeButton(
-                    onPressed: addSet,
+                    onPressed: () => addSet(sectionIndex),
                     expanded: true,
                     label: 'Add Set',
                     icon: Symbols.add,
