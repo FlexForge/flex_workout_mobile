@@ -16,9 +16,8 @@ class ExerciseSelectionScreenModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableSheet(
-      child: Material(
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
         child: nestedNavigator,
       ),
     );
@@ -33,11 +32,9 @@ class ExerciseSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ColoredBox(
-        color: context.colors.backgroundPrimary,
-        child: const SafeArea(child: ExerciseSelectionPicker()),
-      ),
+    return SheetContentScaffold(
+      backgroundColor: context.colors.backgroundPrimary,
+      body: const ExerciseSelectionPicker(),
     );
   }
 }

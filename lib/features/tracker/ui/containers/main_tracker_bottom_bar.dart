@@ -19,26 +19,21 @@ class MainTrackerBottomBar extends ConsumerWidget {
           top: BorderSide(color: context.colors.divider), // Top border
         ),
       ),
-      child: BottomAppBar(
-        color: context.colors.backgroundPrimary,
-        padding: EdgeInsets.zero,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: LargeButton(
-                  onPressed: next,
-                  label: 'Finish',
-                  icon: Symbols.check,
-                  backgroundColor: context.colors.foregroundPrimary,
-                  foregroundColor: context.colors.backgroundPrimary,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: LargeButton(
+                onPressed: next,
+                label: 'Finish',
+                icon: Symbols.check,
+                backgroundColor: context.colors.foregroundPrimary,
+                foregroundColor: context.colors.backgroundPrimary,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

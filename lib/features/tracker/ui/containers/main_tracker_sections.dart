@@ -5,8 +5,8 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_tile.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_tile.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/default_set_organizer.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/set_tiles/super_set_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
@@ -70,14 +70,14 @@ class MainTrackerSections extends ConsumerWidget {
                     final organizer = section.organizers[organizerIndex];
                     switch (organizer.organization) {
                       case SetOrganizationEnum.defaultSet:
-                        return DefaultSetTile(
+                        return DefaultSetOrganizer(
                           sectionIndex: sectionIndex,
                           organizerIndex: organizerIndex,
                           organizer: organizer,
                           setState: setState,
                         );
                       case SetOrganizationEnum.superSet:
-                        return SuperSetTile(
+                        return SuperSetOrganizer(
                           sectionIndex: sectionIndex,
                           organizerIndex: organizerIndex,
                           organizer: organizer,

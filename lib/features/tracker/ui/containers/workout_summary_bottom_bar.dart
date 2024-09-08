@@ -16,14 +16,12 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workout = ref.watch(currentWorkoutControllerProvider);
-
-    final totalMinutes =
-        DateTime.now().difference(workout.startTimestamp).inMinutes;
+    final form = ref.watch(mainTrackerInfoFormControllerProvider);
 
     void logWorkout() {
       ref
           .read(trackedWorkoutCreateControllerProvider.notifier)
-          .handle(totalMinutes);
+          .handle(form, workout);
 
       ref
         ..invalidate(currentWorkoutControllerProvider)
@@ -38,32 +36,27 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
           top: BorderSide(color: context.colors.divider), // Top border
         ),
       ),
-      child: BottomAppBar(
-        color: context.colors.backgroundPrimary,
-        padding: EdgeInsets.zero,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              LargeButton(
-                onPressed: back,
-                icon: Symbols.chevron_left,
-                backgroundColor: context.colors.backgroundSecondary,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            LargeButton(
+              onPressed: back,
+              icon: Symbols.chevron_left,
+              backgroundColor: context.colors.backgroundSecondary,
+            ),
+            const SizedBox(width: AppLayout.p2),
+            Expanded(
+              child: LargeButton(
+                onPressed: logWorkout,
+                label: 'Log Workout',
+                icon: Symbols.add_task,
+                backgroundColor: context.colors.foregroundPrimary,
+                foregroundColor: context.colors.backgroundPrimary,
               ),
-              const SizedBox(width: AppLayout.p2),
-              Expanded(
-                child: LargeButton(
-                  onPressed: logWorkout,
-                  label: 'Log Workout',
-                  icon: Symbols.add_task,
-                  backgroundColor: context.colors.foregroundPrimary,
-                  foregroundColor: context.colors.backgroundPrimary,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

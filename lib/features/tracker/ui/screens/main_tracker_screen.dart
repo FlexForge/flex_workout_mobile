@@ -45,45 +45,42 @@ class _MainTrackerScreenState extends ConsumerState<MainTrackerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.backgroundPrimary,
-      bottomNavigationBar: MainTrackerBottomBar(next: widget.next),
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(24),
-        child: MainTrackerAppBar(),
-      ),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          const MainTrackerHeader(),
-          const SizedBox(height: AppLayout.p4),
-          MainTrackerSections(setState: setState),
-          const SizedBox(height: AppLayout.p3),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-            child: LargeButton(
-              onPressed: () {
-                DefaultSheetController.maybeOf(context)
-                    ?.animateTo(const Extent.proportional(1));
+    return Column(
+      children: [
+        const MainTrackerAppBar(),
+        Expanded(
+          child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              const MainTrackerHeader(),
+              const SizedBox(height: AppLayout.p4),
+              MainTrackerSections(setState: setState),
+              const SizedBox(height: AppLayout.p3),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+                child: LargeButton(
+                  onPressed: () {
+                    DefaultSheetController.maybeOf(context)
+                        ?.animateTo(const Extent.proportional(1));
 
-                context.goNamed(ExerciseSelectionScreen.routeName);
-              },
-              expanded: true,
-              label: 'Add Exercise',
-              icon: Symbols.add,
-              backgroundColor: context.colors.backgroundSecondary,
-            ),
+                    context.goNamed(ExerciseSelectionScreen.routeName);
+                  },
+                  expanded: true,
+                  label: 'Add Exercise',
+                  icon: Symbols.add,
+                  backgroundColor: context.colors.backgroundSecondary,
+                ),
+              ),
+              const SizedBox(height: AppLayout.p6),
+              Divider(color: context.colors.divider, height: 0),
+              const SizedBox(height: AppLayout.p6),
+              const MainTrackerSummary(),
+              const SizedBox(height: AppLayout.bottomBuffer),
+            ],
           ),
-          const SizedBox(height: AppLayout.p6),
-          Divider(
-            color: context.colors.divider,
-            height: 0,
-          ),
-          const SizedBox(height: AppLayout.p6),
-          const MainTrackerSummary(),
-          const SizedBox(height: AppLayout.bottomBuffer),
-        ],
-      ),
+        ),
+        MainTrackerBottomBar(next: widget.next),
+      ],
     );
   }
 }

@@ -13,10 +13,11 @@ class MainTrackerAppBar extends ConsumerWidget {
     final workout = ref.watch(currentWorkoutControllerProvider);
 
     return Padding(
-      padding: const EdgeInsets.only(
-        left: AppLayout.p4,
-        right: AppLayout.p4,
-        bottom: AppLayout.p2,
+      padding: const EdgeInsets.fromLTRB(
+        AppLayout.p4,
+        AppLayout.p2,
+        AppLayout.p4,
+        AppLayout.p2,
       ),
       child: Row(
         children: [
