@@ -9,9 +9,16 @@ class SegmentedController extends StatelessWidget {
     required this.onValueChanged,
     required this.items,
     this.initialValue = 0,
-    this.small = false,
+    this.padding = AppLayout.p4,
     this.stretch = false,
+    this.borderRadius = AppLayout.cornerRadius,
     this.backgroundColor,
+    this.thumbColor,
+    this.thumbBorderColor,
+    this.foregroundSelectedColor,
+    this.foregroundUnselectedColor,
+    this.textStyle,
+    this.height,
     super.key,
   });
 
@@ -19,42 +26,51 @@ class SegmentedController extends StatelessWidget {
   final ValueChanged<int> onValueChanged;
   final List<String> items;
   final int? initialValue;
-  final bool small;
   final bool stretch;
 
+  final Color? thumbColor;
+  final Color? thumbBorderColor;
   final Color? backgroundColor;
+  final Color? foregroundSelectedColor;
+  final Color? foregroundUnselectedColor;
+
+  final TextStyle? textStyle;
+
+  final double? height;
+  final double padding;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return CustomSlidingSegmentedControl<int>(
       initialValue: initialValue ?? 0,
-      height: small ? 32 : 44,
+      height: height ?? 44,
       children: {
         for (var i = 0; i < items.length; i++)
           i: Text(
             items[i],
-            style: small
-                ? context.typography.labelSmall.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: i == selectedValue
-                        ? context.colors.backgroundPrimary
-                        : context.colors.foregroundPrimary,
-                  )
-                : context.typography.labelLarge.copyWith(
-                    color: i == selectedValue
-                        ? context.colors.backgroundPrimary
-                        : context.colors.foregroundPrimary,
-                  ),
+            style: (textStyle ?? context.typography.labelLarge).copyWith(
+              fontWeight: FontWeight.w500,
+              color: i == selectedValue
+                  ? (foregroundSelectedColor ??
+                      context.colors.backgroundPrimary)
+                  : (foregroundUnselectedColor ??
+                      context.colors.foregroundPrimary),
+            ),
           ),
       },
-      padding: small ? AppLayout.p3 : AppLayout.p4,
+      padding: padding,
+      innerPadding: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: backgroundColor ?? context.colors.backgroundSecondary,
-        borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       thumbDecoration: BoxDecoration(
-        color: context.colors.foregroundPrimary,
-        borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+        color: thumbColor ?? context.colors.foregroundPrimary,
+        borderRadius: BorderRadius.circular(borderRadius),
+        border: thumbBorderColor != null
+            ? Border.all(color: thumbBorderColor!)
+            : null,
       ),
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOutCubic,

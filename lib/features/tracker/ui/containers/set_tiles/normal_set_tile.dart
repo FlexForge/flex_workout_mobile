@@ -2,7 +2,9 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NormalSetTile extends StatelessWidget {
@@ -13,7 +15,7 @@ class NormalSetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-      onTap: () {},
+      onTap: () => context.pushNamed(NormalSetScreen.routeName),
       prefix: Center(
         child: Text(
           prefix,
@@ -62,7 +64,6 @@ class NormalSetTile extends StatelessWidget {
       ),
       suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
       suffix: LargeButton(
-        onPressed: () {},
         label: 'Log set',
         icon: Symbols.edit,
         iconSize: 16,
@@ -70,7 +71,8 @@ class NormalSetTile extends StatelessWidget {
           horizontal: AppLayout.p4,
           vertical: AppLayout.p1,
         ),
-        backgroundColor: context.colors.backgroundTertiary,
+        disabledForegroundColor: context.colors.foregroundPrimary,
+        disabledBackgroundColor: context.colors.backgroundTertiary,
       ),
     );
   }

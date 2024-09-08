@@ -1,10 +1,12 @@
 import 'package:flex_workout_mobile/core/common/ui/screens/error_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/main_screen.dart';
+import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/swipe_action_navigator_observer.dart';
@@ -45,6 +47,19 @@ final router = GoRouter(
                   nestedNavigator: ExerciseSelectionScreen(),
                 ),
               ),
+            ),
+            GoRoute(
+              path: NormalSetScreen.routePath,
+              name: NormalSetScreen.routeName,
+              pageBuilder: (context, state) {
+                return CupertinoModalSheetPage(
+                  swipeDismissible: true,
+                  barrierColor: context.colors.overlay,
+                  child: const NormalSetScreenModal(
+                    nestedNavigator: NormalSetScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),

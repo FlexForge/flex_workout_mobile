@@ -59,7 +59,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   const Spacer(),
                   LargeButton(
                     icon: Symbols.add,
-                    padding: const EdgeInsets.all(14),
+                    padding: const EdgeInsets.all(AppLayout.p3),
                     backgroundColor: context.colors.backgroundSecondary,
                     foregroundColor: context.colors.foregroundPrimary,
                     onPressed: () => {},

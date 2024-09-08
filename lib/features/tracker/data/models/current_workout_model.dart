@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
@@ -71,7 +72,11 @@ extension ConvertCurrentWorkoutSetType on CurrentWorkoutSetType {
 
 @freezed
 class CurrentWorkoutNormalSet with _$CurrentWorkoutNormalSet {
-  const factory CurrentWorkoutNormalSet() = _CurrentWorkoutNormalSet;
+  const factory CurrentWorkoutNormalSet({
+    required int reps,
+    required double load,
+    required Units units,
+  }) = _CurrentWorkoutNormalSet;
 }
 
 extension ConvertCurrentWorkoutNormalSet on CurrentWorkoutNormalSet {
