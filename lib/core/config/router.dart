@@ -52,11 +52,19 @@ final router = GoRouter(
               path: NormalSetScreen.routePath,
               name: NormalSetScreen.routeName,
               pageBuilder: (context, state) {
+                final sectionIndex = state.pathParameters['sectionIndex']!;
+                final organizerIndex = state.pathParameters['organizerIndex']!;
+                final setIndex = state.pathParameters['setIndex']!;
+
                 return CupertinoModalSheetPage(
                   swipeDismissible: true,
                   barrierColor: context.colors.overlay,
-                  child: const NormalSetScreenModal(
-                    nestedNavigator: NormalSetScreen(),
+                  child: NormalSetScreenModal(
+                    nestedNavigator: NormalSetScreen(
+                      sectionIndex: int.parse(sectionIndex),
+                      organizerIndex: int.parse(organizerIndex),
+                      setIndex: int.tryParse(setIndex),
+                    ),
                   ),
                 );
               },

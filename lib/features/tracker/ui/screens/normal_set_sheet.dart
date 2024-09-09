@@ -46,20 +46,37 @@ class NormalSetScreenModal extends StatelessWidget {
 }
 
 class NormalSetScreen extends StatelessWidget {
-  const NormalSetScreen({super.key});
+  const NormalSetScreen({
+    required this.sectionIndex,
+    required this.organizerIndex,
+    this.setIndex,
+    super.key,
+  });
 
-  static const routePath = 'normal_set';
+  static const routePath = 'normal_set/:sectionIndex/:organizerIndex/:setIndex';
   static const routeName = 'normal_set_form';
+
+  final int sectionIndex;
+  final int organizerIndex;
+  final int? setIndex;
 
   @override
   Widget build(BuildContext context) {
     return SheetContentScaffold(
       extendBody: true,
       backgroundColor: context.colors.backgroundPrimary,
-      body: const Padding(
-        padding:
-            EdgeInsets.fromLTRB(AppLayout.p4, AppLayout.p4, AppLayout.p4, 0),
-        child: NormalSetForm(),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          AppLayout.p4,
+          AppLayout.p4,
+          AppLayout.p4,
+          0,
+        ),
+        child: NormalSetInputForm(
+          sectionIndex: sectionIndex,
+          organizerIndex: organizerIndex,
+          setIndex: setIndex,
+        ),
       ),
     );
   }

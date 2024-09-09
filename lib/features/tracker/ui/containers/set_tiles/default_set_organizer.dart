@@ -43,7 +43,12 @@ class DefaultSetOrganizer extends ConsumerWidget {
           color: context.colors.red,
         ),
       ],
-      child: NormalSetTile(prefix: '${organizer.setNumber}'),
+      child: NormalSetTile(
+        set: organizer.defaultSet!.normalSet,
+        sectionIndex: sectionIndex,
+        organizerIndex: organizerIndex,
+        prefix: '${organizer.setNumber}',
+      ),
     );
   }
 }

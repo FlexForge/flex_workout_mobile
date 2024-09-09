@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
@@ -88,6 +89,54 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
         setNumber: setNumber,
       ),
     );
+  }
+
+  void addNormalSet(
+    NormalSetForm form,
+    int sectionIndex,
+    int organizerIndex,
+    int? superSetIndex,
+  ) {
+    final section = state.sections[sectionIndex];
+    final organizer = section.organizers[organizerIndex];
+
+    switch (organizer.organization) {
+      case SetOrganizationEnum.superSet:
+        final setToAdd = organizer.superSet[superSetIndex!].copyWith(
+          type: SetTypeEnum.normalSet,
+          normalSet: CurrentWorkoutNormalSet(
+            reps: form.model.reps!,
+            load: form.model.load!,
+            units: Units.values[form.model.units!],
+          ),
+        );
+
+        final superSet = List<CurrentWorkoutSetType>.from(organizer.superSet)
+          ..[superSetIndex] = setToAdd;
+
+        state.sections[sectionIndex].organizers[organizerIndex] =
+            organizer.copyWith(
+          superSet: superSet,
+        );
+
+      case SetOrganizationEnum.defaultSet:
+        final setToAdd = organizer.defaultSet!.copyWith(
+          type: SetTypeEnum.normalSet,
+          normalSet: CurrentWorkoutNormalSet(
+            reps: form.model.reps!,
+            load: form.model.load!,
+            units: Units.values[form.model.units!],
+          ),
+        );
+
+        state.sections[sectionIndex].organizers[organizerIndex] =
+            organizer.copyWith(
+          defaultSet: setToAdd,
+        );
+    }
+
+    // Forces the UI to update
+    state = state.copyWith(sections: state.sections);
   }
 
   void removeSection(int index) {
