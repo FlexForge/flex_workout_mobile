@@ -17,6 +17,88 @@ class NormalSetTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return setType?.normalSet == null
+        ? _Incomplete(prefix: prefix, setType: setType)
+        : _Completed(prefix: prefix, setType: setType);
+  }
+}
+
+class _Completed extends StatelessWidget {
+  const _Completed({required this.prefix, this.setType});
+
+  final String prefix;
+  final CurrentWorkoutSetType? setType;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlexListTile(
+      onTap: () => context.pushNamed(NormalSetScreen.routeName, extra: setType),
+      prefix: Center(
+        child: Text(
+          prefix,
+          style: context.typography.headlineMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.colors.foregroundTertiary,
+          ),
+        ),
+      ),
+      title: Row(
+        children: [
+          Text(
+            '${setType?.normalSet?.load} ${setType?.normalSet?.units.name}',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundTertiary,
+            ),
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Icon(
+            Symbols.close,
+            size: 12,
+            weight: 900,
+            color: context.colors.foregroundTertiary,
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Text(
+            '${setType?.normalSet?.reps} reps',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundTertiary,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(
+        'Normal Set',
+        style: context.typography.bodySmall.copyWith(
+          fontWeight: FontWeight.w500,
+          color: context.colors.foregroundQuaternary,
+        ),
+      ),
+      suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
+      suffix: LargeButton(
+        label: 'Complete',
+        icon: Symbols.done_all,
+        iconSize: 16,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.p4,
+          vertical: AppLayout.p1,
+        ),
+        disabledForegroundColor: context.colors.foregroundTertiary,
+        disabledBackgroundColor: context.colors.backgroundTertiary,
+      ),
+    );
+  }
+}
+
+class _Incomplete extends StatelessWidget {
+  const _Incomplete({required this.prefix, this.setType});
+
+  final String prefix;
+  final CurrentWorkoutSetType? setType;
+
+  @override
+  Widget build(BuildContext context) {
     return FlexListTile(
       onTap: () => context.pushNamed(NormalSetScreen.routeName, extra: setType),
       prefix: Center(
@@ -30,26 +112,20 @@ class NormalSetTile extends ConsumerWidget {
       title: RichText(
         overflow: TextOverflow.ellipsis,
         text: TextSpan(
-          text: setType?.normalSet?.load.toString() ?? '--',
+          text: '--',
           style: context.typography.bodyMedium.copyWith(
             fontWeight: FontWeight.w500,
           ),
           children: <TextSpan>[
             TextSpan(
-              text: ' ${setType?.normalSet?.units.name}',
+              text: ' lbs',
               style: context.typography.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: context.colors.foregroundSecondary,
               ),
             ),
             TextSpan(
-              text: ' x ',
-              style: context.typography.bodyMedium.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            TextSpan(
-              text: setType?.normalSet?.reps.toString() ?? '--',
+              text: ' x --',
               style: context.typography.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -65,7 +141,8 @@ class NormalSetTile extends ConsumerWidget {
         ),
       ),
       subtitle: Text(
-        'Normal Set',
+        setType?.exercise.name ?? 'Exercise',
+        overflow: TextOverflow.ellipsis,
         style: context.typography.bodySmall.copyWith(
           fontWeight: FontWeight.w500,
           color: context.colors.foregroundSecondary,
