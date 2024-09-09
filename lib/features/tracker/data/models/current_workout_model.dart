@@ -7,25 +7,25 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'current_workout_model.freezed.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class CurrentWorkout with _$CurrentWorkout {
   const factory CurrentWorkout({
     required String title,
     required String subtitle,
     required DateTime startTimestamp,
+    required List<CurrentWorkoutSection> sections,
     @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
     @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
-    @Default([]) List<CurrentWorkoutSection> sections,
     String? notes,
   }) = _CurrentWorkout;
 }
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class CurrentWorkoutSection with _$CurrentWorkoutSection {
   const factory CurrentWorkoutSection({
     required String title,
     required CurrentWorkoutOrganizer templateOrganizer,
-    @Default([]) List<CurrentWorkoutOrganizer> organizers,
+    required List<CurrentWorkoutOrganizer> organizers,
   }) = _CurrentWorkoutSection;
 }
 
@@ -35,13 +35,13 @@ extension ConvertCurrentWorkoutSection on CurrentWorkoutSection {
       )..organizers.addAll(organizers.map((e) => e.toEntity()).toList());
 }
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class CurrentWorkoutOrganizer with _$CurrentWorkoutOrganizer {
   const factory CurrentWorkoutOrganizer({
     required SetOrganizationEnum organization,
     required int setNumber,
+    required List<CurrentWorkoutSetType> superSet,
     CurrentWorkoutSetType? defaultSet,
-    @Default([]) List<CurrentWorkoutSetType> superSet,
   }) = _CurrentWorkoutOrganizer;
 }
 

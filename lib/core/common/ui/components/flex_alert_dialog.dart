@@ -4,7 +4,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Future<T?> showFlexAlertDialog<T>(
+Future<void> showFlexAlertDialog(
   BuildContext context, {
   String? title,
   String? description,
@@ -13,7 +13,7 @@ Future<T?> showFlexAlertDialog<T>(
   String? actionLabel,
   String? cancelLabel,
 }) {
-  return showDialog<T?>(
+  return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(

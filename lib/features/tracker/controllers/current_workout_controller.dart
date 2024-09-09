@@ -23,6 +23,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
       title: 'Temp Workout',
       subtitle: '$time Workout',
       startTimestamp: now,
+      sections: [],
     );
   }
 
@@ -47,7 +48,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
       organizers: [organizer],
     );
 
-    state = state.copyWith(sections: [...state.sections, section]);
+    state.sections.add(section);
     _updateMuscleGroups();
   }
 
@@ -63,6 +64,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
         setNumber: 1,
         organization: SetOrganizationEnum.defaultSet,
         defaultSet: setType,
+        superSet: [],
       );
 
       final section = CurrentWorkoutSection(
@@ -71,101 +73,48 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
         organizers: [organizer],
       );
 
-      state = state.copyWith(sections: [...state.sections, section]);
+      state.sections.add(section);
     }
 
     _updateMuscleGroups();
   }
 
   void addSet(int sectionIndex) {
-    final sections = List<CurrentWorkoutSection>.from(state.sections);
-    final section = sections[sectionIndex];
-
-    final organizers = List<CurrentWorkoutOrganizer>.from(section.organizers);
-
+    final section = state.sections[sectionIndex];
     final setNumber = section.organizers.length + 1;
 
-    final newOrganizer = section.templateOrganizer.copyWith(
-      setNumber: setNumber,
-    );
-
-    state = state.copyWith(
-      sections: sections
-        ..removeAt(sectionIndex)
-        ..insert(
-          sectionIndex,
-          section.copyWith(
-            organizers: organizers..add(newOrganizer),
-          ),
-        ),
+    section.organizers.add(
+      section.templateOrganizer.copyWith(
+        setNumber: setNumber,
+      ),
     );
   }
 
   void removeSection(int index) {
-    final sections = List<CurrentWorkoutSection>.from(state.sections);
-    state = state.copyWith(
-      sections: sections..removeAt(index),
-    );
+    state.sections.removeAt(index);
     _updateMuscleGroups();
   }
 
   void removeDefaultSet(int sectionIndex, int organizerIndex) {
-    final sections = List<CurrentWorkoutSection>.from(state.sections);
-    final section = sections[sectionIndex];
-
-    final organizers = List<CurrentWorkoutOrganizer>.from(section.organizers);
-
-    state = state.copyWith(
-      sections: sections
-        ..removeAt(sectionIndex)
-        ..insert(
-          sectionIndex,
-          section.copyWith(
-            organizers: organizers..removeAt(organizerIndex),
-          ),
-        ),
-    );
-
+    state.sections[sectionIndex].organizers.removeAt(organizerIndex);
     _resetSetNumbers(sectionIndex);
   }
 
   void removeSuperSet(int sectionIndex, int organizerIndex, int superSetIndex) {
-    final sections = List<CurrentWorkoutSection>.from(state.sections);
-    final section = sections[sectionIndex];
-
-    final organizers = List<CurrentWorkoutOrganizer>.from(section.organizers);
-    final organizer = organizers[organizerIndex];
+    final section = state.sections[sectionIndex];
+    final organizer = section.organizers[organizerIndex];
 
     final superSets = List<CurrentWorkoutSetType>.from(organizer.superSet)
       ..removeAt(superSetIndex);
 
     if (superSets.isEmpty) {
-      state = state.copyWith(
-        sections: sections
-          ..removeAt(sectionIndex)
-          ..insert(
-            sectionIndex,
-            section.copyWith(
-              organizers: organizers..removeAt(organizerIndex),
-            ),
-          ),
+      section.organizers.remove(organizer);
+    } else {
+      section.organizers[organizerIndex] = organizer.copyWith(
+        superSet: superSets,
       );
-      _resetSetNumbers(sectionIndex);
-      return;
     }
 
-    state = state.copyWith(
-      sections: sections
-        ..removeAt(sectionIndex)
-        ..insert(
-          sectionIndex,
-          section.copyWith(
-            organizers: organizers
-              ..removeAt(organizerIndex)
-              ..insert(organizerIndex, organizer.copyWith(superSet: superSets)),
-          ),
-        ),
-    );
     _resetSetNumbers(sectionIndex);
   }
 
@@ -177,14 +126,9 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
       (organizer, index) => organizer.copyWith(setNumber: index + 1),
     );
 
-    state = state.copyWith(
-      sections: sections
-        ..removeAt(sectionIndex)
-        ..insert(
-          sectionIndex,
-          section.copyWith(organizers: organizers.toList()),
-        ),
-    );
+    sections[sectionIndex] = section.copyWith(organizers: organizers.toList());
+
+    state = state.copyWith(sections: sections);
   }
 
   void _updateMuscleGroups() {

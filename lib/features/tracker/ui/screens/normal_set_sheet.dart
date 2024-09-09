@@ -18,20 +18,18 @@ class NormalSetScreenModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         if (!didPop) {
-          final shouldPop = await showFlexAlertDialog<bool>(
+          await showFlexAlertDialog(
             context,
             title: 'Hold on!',
             description: 'By exiting without saving, your changes will be lost'
                 " and your set won't be recorded."
                 ' Are you sure you want to exit?',
-            onPressed: () => context.pop(true),
+            onPressed: () => context
+              ..pop()
+              ..pop(),
           );
-
-          if (shouldPop != null && shouldPop && context.mounted) {
-            context.pop();
-          }
         }
       },
       child: SheetKeyboardDismissible(
