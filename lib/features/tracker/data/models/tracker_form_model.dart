@@ -14,3 +14,13 @@ class MainTrackerInfo with _$MainTrackerInfo {
     @RfControl() String? notes,
   }) = _MainTrackerInfo;
 }
+
+@Rf()
+@freezed
+class NormalSet with _$NormalSet {
+  const factory NormalSet({
+    @RfControl(validators: [RequiredValidator()]) int? reps,
+    @RfControl(validators: [RequiredValidator()]) double? load,
+    @RfControl() int? units,
+  }) = _NormalSet;
+}

@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -69,11 +70,13 @@ class SetOrganizerModel with _$SetOrganizerModel {
 }
 
 extension ConvertSetOrganizerModel on SetOrganizerModel {
-  SetOrganizer toEntity() => SetOrganizer()
-    ..defaultSet.target = organization == SetOrganizationEnum.defaultSet
-        ? defaultSet?.toEntity()
-        : null
-    ..superSet.addAll(superSet.map((e) => e.toEntity()).toList());
+  SetOrganizer toEntity() => SetOrganizer(
+        setNumber: setNumber,
+      )
+        ..defaultSet.target = organization == SetOrganizationEnum.defaultSet
+            ? defaultSet?.toEntity()
+            : null
+        ..superSet.addAll(superSet.map((e) => e.toEntity()).toList());
 }
 
 @freezed
@@ -88,21 +91,30 @@ class SetTypeModel with _$SetTypeModel {
 }
 
 extension ConvertSetTypeModel on SetTypeModel {
-  SetType toEntity() => SetType()
-    ..exercise.target = exercise.toEntity()
-    ..normalSet.target =
-        type == SetTypeEnum.normalSet ? normalSet?.toEntity() : null;
+  SetType toEntity() => SetType(
+        setLetter: setLetter,
+      )
+        ..exercise.target = exercise.toEntity()
+        ..normalSet.target =
+            type == SetTypeEnum.normalSet ? normalSet?.toEntity() : null;
 }
 
 @freezed
 class NormalSetModel with _$NormalSetModel {
   const factory NormalSetModel({
     required int id,
+    required int reps,
+    required double load,
+    required Units units,
   }) = _NormalSetModel;
 }
 
 extension ConvertNormalSetModel on NormalSetModel {
-  NormalSet toEntity() => NormalSet();
+  NormalSet toEntity() => NormalSet(
+        reps: reps,
+        load: load,
+        units: units,
+      );
 }
 
 extension Date on DateTime {

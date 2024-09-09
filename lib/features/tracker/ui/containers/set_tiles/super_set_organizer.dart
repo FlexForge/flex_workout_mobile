@@ -59,6 +59,7 @@ class SuperSetOrganizer extends ConsumerWidget {
             ),
           ],
           child: NormalSetTile(
+            setType: superSet,
             prefix: '${organizer.setNumber}${superSet.setLetter}',
           ),
         );

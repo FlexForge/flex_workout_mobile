@@ -212,7 +212,7 @@
     },
     {
       "id": "7:8989956499185761741",
-      "lastPropertyId": "3:56617250722294883",
+      "lastPropertyId": "6:8134949510941968155",
       "name": "NormalSet",
       "properties": [
         {
@@ -220,13 +220,28 @@
           "name": "id",
           "type": 6,
           "flags": 1
+        },
+        {
+          "id": "4:923286069666022921",
+          "name": "reps",
+          "type": 6
+        },
+        {
+          "id": "5:6639640216451598021",
+          "name": "load",
+          "type": 8
+        },
+        {
+          "id": "6:8134949510941968155",
+          "name": "dbUnits",
+          "type": 6
         }
       ],
       "relations": []
     },
     {
       "id": "8:475983448748029103",
-      "lastPropertyId": "3:4253930569672176476",
+      "lastPropertyId": "4:5146432640803301795",
       "name": "SetOrganizer",
       "properties": [
         {
@@ -250,13 +265,18 @@
           "flags": 520,
           "indexId": "8:1570427806275773450",
           "relationTarget": "SetType"
+        },
+        {
+          "id": "4:5146432640803301795",
+          "name": "setNumber",
+          "type": 6
         }
       ],
       "relations": []
     },
     {
       "id": "9:8972193450090133298",
-      "lastPropertyId": "5:5248678107356308723",
+      "lastPropertyId": "6:2370917952521035057",
       "name": "SetType",
       "properties": [
         {
@@ -288,6 +308,11 @@
           "flags": 520,
           "indexId": "9:7844695761955936551",
           "relationTarget": "NormalSet"
+        },
+        {
+          "id": "6:2370917952521035057",
+          "name": "setLetter",
+          "type": 9
         }
       ],
       "relations": []

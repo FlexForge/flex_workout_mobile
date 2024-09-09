@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
@@ -20,7 +21,8 @@ final exampleSectionOne = WorkoutSectionModel(
         id: 1,
         exercise: exampleExerciseOne,
         type: SetTypeEnum.normalSet,
-        normalSet: const NormalSetModel(id: 1),
+        normalSet:
+            const NormalSetModel(id: 1, reps: 10, load: 100, units: Units.kgs),
       ),
       setNumber: 1,
     ),
@@ -31,7 +33,12 @@ final exampleSectionOne = WorkoutSectionModel(
         id: 4,
         exercise: exampleExerciseOne,
         type: SetTypeEnum.normalSet,
-        normalSet: const NormalSetModel(id: 4),
+        normalSet: const NormalSetModel(
+          id: 4,
+          reps: 10,
+          load: 100,
+          units: Units.kgs,
+        ),
       ),
       setNumber: 2,
     ),
@@ -50,13 +57,23 @@ final exampleSectionTwo = WorkoutSectionModel(
           id: 2,
           exercise: exampleExerciseTwo,
           type: SetTypeEnum.normalSet,
-          normalSet: const NormalSetModel(id: 2),
+          normalSet: const NormalSetModel(
+            id: 2,
+            reps: 10,
+            load: 100,
+            units: Units.kgs,
+          ),
         ),
         SetTypeModel(
           id: 3,
           exercise: exampleExerciseThree,
           type: SetTypeEnum.normalSet,
-          normalSet: const NormalSetModel(id: 3),
+          normalSet: const NormalSetModel(
+            id: 3,
+            reps: 10,
+            load: 100,
+            units: Units.kgs,
+          ),
         ),
       ],
       setNumber: 1,
@@ -69,13 +86,23 @@ final exampleSectionTwo = WorkoutSectionModel(
           id: 5,
           exercise: exampleExerciseTwo,
           type: SetTypeEnum.normalSet,
-          normalSet: const NormalSetModel(id: 5),
+          normalSet: const NormalSetModel(
+            id: 5,
+            reps: 10,
+            load: 100,
+            units: Units.kgs,
+          ),
         ),
         SetTypeModel(
           id: 6,
           exercise: exampleExerciseThree,
           type: SetTypeEnum.normalSet,
-          normalSet: const NormalSetModel(id: 6),
+          normalSet: const NormalSetModel(
+            id: 6,
+            reps: 10,
+            load: 100,
+            units: Units.kgs,
+          ),
         ),
       ],
       setNumber: 2,
@@ -139,6 +166,12 @@ TrackedWorkoutModel generateTrackedWorkout({
                             type: SetTypeEnum.normalSet,
                             normalSet: NormalSetModel(
                               id: faker.randomGenerator.integer(9999999),
+                              reps: faker.randomGenerator.integer(20, min: 1),
+                              load: faker.randomGenerator
+                                  .integer(100, min: 1)
+                                  .toDouble(),
+                              units: Units.values[faker.randomGenerator
+                                  .integer(Units.values.length)],
                             ),
                           )
                         : null,
@@ -151,6 +184,12 @@ TrackedWorkoutModel generateTrackedWorkout({
                               type: SetTypeEnum.normalSet,
                               normalSet: NormalSetModel(
                                 id: faker.randomGenerator.integer(9999999),
+                                reps: faker.randomGenerator.integer(20, min: 1),
+                                load: faker.randomGenerator
+                                    .integer(100, min: 1)
+                                    .toDouble(),
+                                units: Units.values[faker.randomGenerator
+                                    .integer(Units.values.length)],
                               ),
                             ),
                           ).toList()
