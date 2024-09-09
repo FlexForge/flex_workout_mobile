@@ -44,9 +44,7 @@ class DefaultSetOrganizer extends ConsumerWidget {
         ),
       ],
       child: NormalSetTile(
-        set: organizer.defaultSet!.normalSet,
-        sectionIndex: sectionIndex,
-        organizerIndex: organizerIndex,
+        setType: organizer.defaultSet,
         prefix: '${organizer.setNumber}',
       ),
     );

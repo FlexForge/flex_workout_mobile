@@ -31,6 +31,9 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
   void addSuperSet(List<ExerciseModel> exercises) {
     final setTypes = exercises.mapWithIndex(
       (exercise, index) => CurrentWorkoutSetType(
+        sectionIndex: state.sections.length,
+        organizerIndex: 0,
+        setIndex: index,
         setLetter: String.fromCharCode(65 + index),
         type: SetTypeEnum.normalSet,
         exercise: exercise,
@@ -57,6 +60,8 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
     for (final exercise in exercises) {
       /// Add Set
       final setType = CurrentWorkoutSetType(
+        sectionIndex: state.sections.length,
+        organizerIndex: 0,
         type: SetTypeEnum.normalSet,
         exercise: exercise,
       );
@@ -87,22 +92,32 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
     section.organizers.add(
       section.templateOrganizer.copyWith(
         setNumber: setNumber,
+        superSet: section.templateOrganizer.superSet
+            .map(
+              (set) => set.copyWith(
+                sectionIndex: sectionIndex,
+                organizerIndex: section.organizers.length,
+              ),
+            )
+            .toList(),
+        defaultSet: section.templateOrganizer.defaultSet?.copyWith(
+          sectionIndex: sectionIndex,
+          organizerIndex: section.organizers.length,
+        ),
       ),
     );
   }
 
   void addNormalSet(
     NormalSetForm form,
-    int sectionIndex,
-    int organizerIndex,
-    int? superSetIndex,
+    CurrentWorkoutSetType set,
   ) {
-    final section = state.sections[sectionIndex];
-    final organizer = section.organizers[organizerIndex];
+    final section = state.sections[set.sectionIndex];
+    final organizer = section.organizers[set.organizerIndex];
 
     switch (organizer.organization) {
       case SetOrganizationEnum.superSet:
-        final setToAdd = organizer.superSet[superSetIndex!].copyWith(
+        final setToAdd = organizer.superSet[set.setIndex!].copyWith(
           type: SetTypeEnum.normalSet,
           normalSet: CurrentWorkoutNormalSet(
             reps: form.model.reps!,
@@ -112,9 +127,9 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
         );
 
         final superSet = List<CurrentWorkoutSetType>.from(organizer.superSet)
-          ..[superSetIndex] = setToAdd;
+          ..[set.setIndex!] = setToAdd;
 
-        state.sections[sectionIndex].organizers[organizerIndex] =
+        state.sections[set.sectionIndex].organizers[set.organizerIndex] =
             organizer.copyWith(
           superSet: superSet,
         );
@@ -129,7 +144,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
           ),
         );
 
-        state.sections[sectionIndex].organizers[organizerIndex] =
+        state.sections[set.sectionIndex].organizers[set.organizerIndex] =
             organizer.copyWith(
           defaultSet: setToAdd,
         );
@@ -141,12 +156,16 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
 
   void removeSection(int index) {
     state.sections.removeAt(index);
+
     _updateMuscleGroups();
+    _resetIndexes();
   }
 
   void removeDefaultSet(int sectionIndex, int organizerIndex) {
     state.sections[sectionIndex].organizers.removeAt(organizerIndex);
+
     _resetSetNumbers(sectionIndex);
+    _resetIndexes();
   }
 
   void removeSuperSet(int sectionIndex, int organizerIndex, int superSetIndex) {
@@ -165,6 +184,50 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
     }
 
     _resetSetNumbers(sectionIndex);
+    _resetIndexes();
+  }
+
+  void _resetIndexes() {
+    final sections = List<CurrentWorkoutSection>.from(state.sections);
+
+    final newSections = sections.mapWithIndex(
+      (section, index) => section.copyWith(
+        templateOrganizer: section.templateOrganizer.copyWith(
+          superSet: section.templateOrganizer.superSet
+              .mapWithIndex(
+                (set, setIndex) => set.copyWith(
+                  sectionIndex: index,
+                  setIndex: setIndex,
+                ),
+              )
+              .toList(),
+          defaultSet: section.templateOrganizer.defaultSet?.copyWith(
+            sectionIndex: index,
+          ),
+        ),
+        organizers: section.organizers
+            .mapWithIndex(
+              (organizer, organizerIndex) => organizer.copyWith(
+                superSet: organizer.superSet
+                    .mapWithIndex(
+                      (set, setIndex) => set.copyWith(
+                        sectionIndex: index,
+                        organizerIndex: organizerIndex,
+                        setIndex: setIndex,
+                      ),
+                    )
+                    .toList(),
+                defaultSet: organizer.defaultSet?.copyWith(
+                  sectionIndex: index,
+                  organizerIndex: organizerIndex,
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+
+    state = state.copyWith(sections: newSections.toList());
   }
 
   void _resetSetNumbers(int sectionIndex) {

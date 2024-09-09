@@ -56,8 +56,12 @@ extension ConvertCurrentWorkoutOrganizer on CurrentWorkoutOrganizer {
 @freezed
 class CurrentWorkoutSetType with _$CurrentWorkoutSetType {
   const factory CurrentWorkoutSetType({
+    // Index Information
     required ExerciseModel exercise,
     required SetTypeEnum type,
+    required int sectionIndex,
+    required int organizerIndex,
+    int? setIndex,
     String? setLetter,
     CurrentWorkoutNormalSet? normalSet,
   }) = _CurrentWorkoutSetType;

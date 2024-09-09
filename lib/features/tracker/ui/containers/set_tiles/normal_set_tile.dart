@@ -2,7 +2,6 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
@@ -11,32 +10,15 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NormalSetTile extends ConsumerWidget {
-  const NormalSetTile({
-    required this.prefix,
-    required this.sectionIndex,
-    required this.organizerIndex,
-    this.setIndex,
-    this.set,
-    super.key,
-  });
+  const NormalSetTile({required this.prefix, this.setType, super.key});
 
   final String prefix;
-  final int sectionIndex;
-  final int organizerIndex;
-  final int? setIndex;
-  final CurrentWorkoutNormalSet? set;
+  final CurrentWorkoutSetType? setType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FlexListTile(
-      onTap: () => context.pushNamed(
-        NormalSetScreen.routeName,
-        pathParameters: {
-          'sectionIndex': sectionIndex.toString(),
-          'organizerIndex': organizerIndex.toString(),
-          'setIndex': setIndex?.toString() ?? 'null',
-        },
-      ),
+      onTap: () => context.pushNamed(NormalSetScreen.routeName, extra: setType),
       prefix: Center(
         child: Text(
           prefix,
@@ -48,13 +30,13 @@ class NormalSetTile extends ConsumerWidget {
       title: RichText(
         overflow: TextOverflow.ellipsis,
         text: TextSpan(
-          text: set?.load.toString() ?? '--',
+          text: setType?.normalSet?.load.toString() ?? '--',
           style: context.typography.bodyMedium.copyWith(
             fontWeight: FontWeight.w500,
           ),
           children: <TextSpan>[
             TextSpan(
-              text: ' lbs',
+              text: ' ${setType?.normalSet?.units.name}',
               style: context.typography.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: context.colors.foregroundSecondary,
@@ -67,7 +49,7 @@ class NormalSetTile extends ConsumerWidget {
               ),
             ),
             TextSpan(
-              text: set?.reps.toString() ?? '--',
+              text: setType?.normalSet?.reps.toString() ?? '--',
               style: context.typography.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
               ),
