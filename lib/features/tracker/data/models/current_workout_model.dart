@@ -46,11 +46,13 @@ class CurrentWorkoutOrganizer with _$CurrentWorkoutOrganizer {
 }
 
 extension ConvertCurrentWorkoutOrganizer on CurrentWorkoutOrganizer {
-  SetOrganizer toEntity() => SetOrganizer()
+  SetOrganizer toEntity() => SetOrganizer(setNumber: setNumber)
     ..defaultSet.target = organization == SetOrganizationEnum.defaultSet
         ? defaultSet?.toEntity()
         : null
-    ..superSet.addAll(superSet.map((e) => e.toEntity()).toList());
+    ..superSet.addAll(
+      superSet.where((e) => e.toEntity() != null).map((e) => e.toEntity()!),
+    );
 }
 
 @freezed
@@ -61,6 +63,7 @@ class CurrentWorkoutSetType with _$CurrentWorkoutSetType {
     required SetTypeEnum type,
     required int sectionIndex,
     required int organizerIndex,
+    @Default(false) bool isComplete,
     int? setIndex,
     String? setLetter,
     CurrentWorkoutNormalSet? normalSet,
@@ -68,10 +71,12 @@ class CurrentWorkoutSetType with _$CurrentWorkoutSetType {
 }
 
 extension ConvertCurrentWorkoutSetType on CurrentWorkoutSetType {
-  SetType toEntity() => SetType()
-    ..exercise.target = exercise.toEntity()
-    ..normalSet.target =
-        type == SetTypeEnum.normalSet ? normalSet?.toEntity() : null;
+  SetType? toEntity() => isComplete
+      ? (SetType(setLetter: setLetter)
+        ..exercise.target = exercise.toEntity()
+        ..normalSet.target =
+            type == SetTypeEnum.normalSet ? normalSet?.toEntity() : null)
+      : null;
 }
 
 @freezed
@@ -84,5 +89,9 @@ class CurrentWorkoutNormalSet with _$CurrentWorkoutNormalSet {
 }
 
 extension ConvertCurrentWorkoutNormalSet on CurrentWorkoutNormalSet {
-  NormalSet toEntity() => NormalSet();
+  NormalSet toEntity() => NormalSet(
+        reps: reps,
+        load: load,
+        units: units,
+      );
 }

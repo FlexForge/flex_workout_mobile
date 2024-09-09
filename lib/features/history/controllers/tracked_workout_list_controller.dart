@@ -158,7 +158,7 @@ extension WorkoutSectionTile on List<WorkoutSectionModel> {
             WorkoutHistoryTableCell(
               organizer.defaultSet!.exercise.name,
               section.organizers.length,
-              '245 lbs x 5',
+              organizer.defaultSet?.normalSet?.load.toString() ?? 'Error',
             ),
           );
         case SetOrganizationEnum.superSet:

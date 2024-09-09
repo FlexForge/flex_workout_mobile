@@ -119,6 +119,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
       case SetOrganizationEnum.superSet:
         final setToAdd = organizer.superSet[set.setIndex!].copyWith(
           type: SetTypeEnum.normalSet,
+          isComplete: true,
           normalSet: CurrentWorkoutNormalSet(
             reps: form.model.reps!,
             load: form.model.load!,
@@ -137,6 +138,7 @@ class CurrentWorkoutController extends _$CurrentWorkoutController {
       case SetOrganizationEnum.defaultSet:
         final setToAdd = organizer.defaultSet!.copyWith(
           type: SetTypeEnum.normalSet,
+          isComplete: true,
           normalSet: CurrentWorkoutNormalSet(
             reps: form.model.reps!,
             load: form.model.load!,

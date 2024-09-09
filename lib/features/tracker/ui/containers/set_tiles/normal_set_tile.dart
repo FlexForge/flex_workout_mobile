@@ -145,7 +145,7 @@ class _Incomplete extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: context.typography.bodySmall.copyWith(
           fontWeight: FontWeight.w500,
-          color: context.colors.foregroundSecondary,
+          color: context.colors.foregroundTertiary,
         ),
       ),
       suffixPadding: const EdgeInsets.only(right: AppLayout.p4),

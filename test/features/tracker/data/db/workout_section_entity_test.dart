@@ -17,7 +17,7 @@ void main() {
 
   group('SetOrganizer', () {
     test('ConvertSetOrganizer', () {
-      final entity = SetOrganizer();
+      final entity = SetOrganizer(setNumber: 1);
       final res = entity.toModel();
 
       expect(res.id, entity.id);
@@ -36,7 +36,7 @@ void main() {
 
   group('NormalSet', () {
     test('ConvertNormalSet', () {
-      final entity = NormalSet();
+      final entity = NormalSet(reps: 10, load: 100);
       final res = entity.toModel();
 
       expect(res.id, entity.id);

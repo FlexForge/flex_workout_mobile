@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:objectbox/objectbox.dart';
@@ -80,11 +81,14 @@ extension ConvertWorkoutSection on WorkoutSection {
 @Entity()
 class SetOrganizer {
   SetOrganizer({
+    required this.setNumber,
     this.id = 0,
   });
 
   @Id()
   int id = 0;
+
+  int setNumber;
 
   final section = ToOne<WorkoutSection>();
 
@@ -107,7 +111,7 @@ extension ConvertSetOrganizer on SetOrganizer {
     return SetOrganizerModel(
       id: id,
       organization: organization,
-      setNumber: 0,
+      setNumber: setNumber,
       defaultSet: defaultSet.target?.toModel(),
       superSet: superSet.map((e) => e.toModel()).toList(),
     );
@@ -117,11 +121,14 @@ extension ConvertSetOrganizer on SetOrganizer {
 @Entity()
 class SetType {
   SetType({
+    this.setLetter,
     this.id = 0,
   });
 
   @Id()
   int id = 0;
+
+  String? setLetter;
 
   final exercise = ToOne<Exercise>();
 
@@ -137,6 +144,7 @@ extension ConvertSetType on SetType {
     return SetTypeModel(
       id: id,
       type: type,
+      setLetter: setLetter,
       exercise: exercise.target!.toModel(),
       normalSet: normalSet.target?.toModel(),
     );
@@ -146,15 +154,37 @@ extension ConvertSetType on SetType {
 @Entity()
 class NormalSet {
   NormalSet({
+    required this.reps,
+    required this.load,
+    this.units = Units.lbs,
     this.id = 0,
   });
 
   @Id()
   int id = 0;
+
+  int reps;
+  double load;
+
+  @Transient()
+  Units units;
+
+  int get dbUnits {
+    return units.index;
+  }
+
+  set dbUnits(int value) {
+    units = value >= 0 && value < Units.values.length
+        ? Units.values[value]
+        : Units.lbs;
+  }
 }
 
 extension ConvertNormalSet on NormalSet {
   NormalSetModel toModel() => NormalSetModel(
         id: id,
+        reps: reps,
+        load: load,
+        units: units,
       );
 }

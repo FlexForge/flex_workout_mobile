@@ -34,17 +34,19 @@ final router = GoRouter(
         GoRoute(
           path: TrackerScreen.routePath,
           name: TrackerScreen.routeName,
-          pageBuilder: (context, state) => const CupertinoModalSheetPage(
+          pageBuilder: (context, state) => CupertinoModalSheetPage(
             swipeDismissible: true,
-            child: TrackerScreenModal(nestedNavigator: TrackerScreen()),
+            barrierColor: context.colors.overlay,
+            child: const TrackerScreenModal(nestedNavigator: TrackerScreen()),
           ),
           routes: [
             GoRoute(
               path: ExerciseSelectionScreen.routePath,
               name: ExerciseSelectionScreen.routeName,
-              pageBuilder: (context, state) => const CupertinoModalSheetPage(
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
                 swipeDismissible: true,
-                child: ExerciseSelectionScreenModal(
+                barrierColor: context.colors.overlay,
+                child: const ExerciseSelectionScreenModal(
                   nestedNavigator: ExerciseSelectionScreen(),
                 ),
               ),
