@@ -101,16 +101,12 @@ extension ConvertCurrentWorkoutNormalSet on CurrentWorkoutNormalSet {
 @MappableClass()
 class LiveWorkoutModel with LiveWorkoutModelMappable {
   LiveWorkoutModel({
-    required this.title,
     required this.subtitle,
     required this.startTimestamp,
     this.primaryMuscleGroups = const <MuscleGroupModel>[],
     this.secondaryMuscleGroups = const <MuscleGroupModel>[],
-    this.sections = const <LiveSectionModel>[],
+    this.sections = const <ILiveSection>[],
   });
-
-  final String title;
-  String? notes;
 
   final String subtitle;
   final DateTime startTimestamp;
@@ -118,57 +114,51 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
   final List<MuscleGroupModel> primaryMuscleGroups;
   final List<MuscleGroupModel> secondaryMuscleGroups;
 
-  final List<LiveSectionModel> sections;
-}
-
-@MappableClass()
-class LiveSectionModel with LiveSectionModelMappable {
-  LiveSectionModel({
-    required this.title,
-    required this.templateOrganizer,
-    required this.organizers,
-  });
-
-  final String title;
-  final ILiveOrganizer templateOrganizer;
-  final List<ILiveOrganizer> organizers;
-
-  String get generateTitle => 'Test';
+  final List<ILiveSection> sections;
 }
 
 @MappableClass(discriminatorKey: 'organization')
-sealed class ILiveOrganizer with ILiveOrganizerMappable {
-  ILiveOrganizer({
-    required this.setNumber,
+sealed class ILiveSection with ILiveSectionMappable {
+  ILiveSection({
+    required this.title,
   });
-  final String setNumber;
+
+  final String title;
+  String get generateTitle;
 }
 
 @MappableClass(discriminatorValue: 'default')
-class LiveDefaultOrganizerModel
-    with LiveDefaultOrganizerModelMappable
-    implements ILiveOrganizer {
-  LiveDefaultOrganizerModel({required this.setNumber, required this.set});
-
-  @override
-  final String setNumber;
-
-  final ILiveSet set;
-}
-
-@MappableClass(discriminatorValue: 'superset')
-class LiveSupersetOrganizerModel
-    with LiveSupersetOrganizerModelMappable
-    implements ILiveOrganizer {
-  LiveSupersetOrganizerModel({
-    required this.setNumber,
+class LiveDefaultSectionModel
+    with LiveDefaultSectionModelMappable
+    implements ILiveSection {
+  LiveDefaultSectionModel({
+    required this.title,
     required this.sets,
   });
 
   @override
-  final String setNumber;
+  final String title;
+  final List<ILiveSet> sets;
 
-  final Map<String, ILiveSet> sets;
+  @override
+  String get generateTitle => 'Test';
+}
+
+@MappableClass(discriminatorValue: 'superset')
+class LiveSupersetSectionModel
+    with LiveSupersetSectionModelMappable
+    implements ILiveSection {
+  LiveSupersetSectionModel({
+    required this.title,
+    required this.sets,
+  });
+
+  @override
+  final String title;
+  final List<Map<String, ILiveSet>> sets;
+
+  @override
+  String get generateTitle => 'Test';
 }
 
 @MappableClass(discriminatorKey: 'type')
