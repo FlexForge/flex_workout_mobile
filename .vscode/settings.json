@@ -4,5 +4,54 @@
     "editor.detectIndentation": false,
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.formatOnSave": true,
-  }
+  },
+  "editor.formatOnSave": true,
+  // Disables the Minimap
+  "editor.minimap.enabled": false,
+  // Only renders whitespace when a portion of text is selected
+  "editor.renderWhitespace": "selection",
+  // Disable line highlight, you can enable this if you want
+  "editor.renderLineHighlight": "none",
+  // Disables the overview ruler.
+  "editor.overviewRulerBorder": false,
+  // Some stuff about the overview rules
+  "editor.hideCursorInOverviewRuler": true,
+  // Don't match brackets
+  "editor.matchBrackets": "never",
+  // Disable glyph margin
+  "editor.glyphMargin": false,
+  // // Don't show open editors in the Explorer pane
+  "explorer.openEditors.visible": 1,
+  // Disable icons in the tabs
+  "workbench.editor.showIcons": false,
+  // Hide statusbar
+  "workbench.colorCustomizations": {
+    // Tab active border
+    "tab.activeBorder": "#0000"
+  },
+  "editor.fontSize": 14,
+  // Enable font ligatures
+  "editor.fontLigatures": true,
+  // Enable the cool cursive like font variations
+  "editor.fontVariations": true,
+  // Enables that smooth caret animation!
+  "editor.cursorBlinking": "phase",
+  // Make the cursor move around the code smoothly
+  "editor.cursorSmoothCaretAnimation": "on",
+  // Adjusts the line height. Also changes the caret width
+  "editor.lineHeight": 26,
+  // Enable line numbers
+  "editor.lineNumbers": "on",
+  // Enables different color pools for different bracket types, for example {}, [], ()
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  // Enable guides for bracket pairs
+  "editor.guides.bracketPairs": false,
+  // Disables breadcrumbs. Please, do not enable them, for the love of god, please
+  "breadcrumbs.enabled": false,
+  // Sets the window title
+  "window.title": "${dirty}${activeEditorShort}",
+  // Disable indent guides
+  "workbench.tree.renderIndentGuides": "none",
+  // Enables smooth scrolling, a must have
+  "editor.smoothScrolling": true
 }

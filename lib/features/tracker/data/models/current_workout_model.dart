@@ -1,3 +1,4 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
@@ -6,6 +7,7 @@ import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'current_workout_model.freezed.dart';
+part 'current_workout_model.mapper.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 class CurrentWorkout with _$CurrentWorkout {
@@ -94,4 +96,119 @@ extension ConvertCurrentWorkoutNormalSet on CurrentWorkoutNormalSet {
         load: load,
         units: units,
       );
+}
+
+@MappableClass()
+class LiveWorkoutModel with LiveWorkoutModelMappable {
+  LiveWorkoutModel({
+    required this.title,
+    required this.subtitle,
+    required this.startTimestamp,
+    this.primaryMuscleGroups = const <MuscleGroupModel>[],
+    this.secondaryMuscleGroups = const <MuscleGroupModel>[],
+    this.sections = const <LiveSectionModel>[],
+  });
+
+  final String title;
+  String? notes;
+
+  final String subtitle;
+  final DateTime startTimestamp;
+
+  final List<MuscleGroupModel> primaryMuscleGroups;
+  final List<MuscleGroupModel> secondaryMuscleGroups;
+
+  final List<LiveSectionModel> sections;
+}
+
+@MappableClass()
+class LiveSectionModel with LiveSectionModelMappable {
+  LiveSectionModel({
+    required this.title,
+    required this.templateOrganizer,
+    required this.organizers,
+  });
+
+  final String title;
+  final ILiveOrganizer templateOrganizer;
+  final List<ILiveOrganizer> organizers;
+
+  String get generateTitle => 'Test';
+}
+
+@MappableClass(discriminatorKey: 'organization')
+sealed class ILiveOrganizer with ILiveOrganizerMappable {
+  ILiveOrganizer({
+    required this.setNumber,
+  });
+  final String setNumber;
+}
+
+@MappableClass(discriminatorValue: 'default')
+class LiveDefaultOrganizerModel
+    with LiveDefaultOrganizerModelMappable
+    implements ILiveOrganizer {
+  LiveDefaultOrganizerModel({required this.setNumber, required this.set});
+
+  @override
+  final String setNumber;
+
+  final ILiveSet set;
+}
+
+@MappableClass(discriminatorValue: 'superset')
+class LiveSupersetOrganizerModel
+    with LiveSupersetOrganizerModelMappable
+    implements ILiveOrganizer {
+  LiveSupersetOrganizerModel({
+    required this.setNumber,
+    required this.sets,
+  });
+
+  @override
+  final String setNumber;
+
+  final Map<String, ILiveSet> sets;
+}
+
+@MappableClass(discriminatorKey: 'type')
+sealed class ILiveSet with ILiveSetMappable {
+  ILiveSet({
+    required this.isComplete,
+    required this.exercise,
+    required this.sectionIndex,
+    required this.organizerIndex,
+  });
+  final bool isComplete;
+  final ExerciseModel exercise;
+
+  // Index
+  final int sectionIndex;
+  final int organizerIndex;
+}
+
+@MappableClass(discriminatorValue: 'default_set')
+class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
+  LiveDefaultSetModel({
+    required this.reps,
+    required this.load,
+    required this.units,
+    required this.exercise,
+    required this.isComplete,
+    required this.sectionIndex,
+    required this.organizerIndex,
+  });
+
+  final int reps;
+  final double load;
+  final Units units;
+
+  @override
+  final ExerciseModel exercise;
+  @override
+  final bool isComplete;
+  @override
+  final int sectionIndex;
+  @override
+  final int organizerIndex;
 }
