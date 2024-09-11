@@ -21,6 +21,10 @@ class SupersetSectionView extends ConsumerWidget {
       ref.read(liveWorkoutControllerProvider.notifier).addSet(section);
     }
 
+    void deleteSection() {
+      ref.read(liveWorkoutControllerProvider.notifier).removeSection(section);
+    }
+
     return SwipeActionCell(
       key: ObjectKey(section.hashCode),
       backgroundColor: context.colors.backgroundPrimary,
@@ -33,10 +37,8 @@ class SupersetSectionView extends ConsumerWidget {
           color: Colors.transparent,
           widthSpace: 64,
           onTap: (handler) async {
-            // await handler(true);
-            // ref
-            //     .read(currentWorkoutControllerProvider.notifier)
-            //     .removeSection(sectionIndex);
+            await handler(true);
+            deleteSection();
           },
         ),
       ],
@@ -67,37 +69,9 @@ class SupersetSectionView extends ConsumerWidget {
                     color: context.colors.divider,
                   ),
                   itemBuilder: (context, exerciseIndex) {
-                    final key = String.fromCharCode(65 + exerciseIndex);
-                    final superSet = set[key];
+                    final superSet = set.values.toList()[exerciseIndex];
 
-                    if (superSet == null) return const Text('Error');
-
-                    return SwipeActionCell(
-                      key: ObjectKey(
-                        '${superSet.sectionIndex}${superSet.hashCode}',
-                      ),
-                      backgroundColor: context.colors.backgroundSecondary,
-                      trailingActions: <SwipeAction>[
-                        SwipeAction(
-                          title: 'Delete',
-                          performsFirstActionWithFullSwipe: true,
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 20,
-                          ),
-                          style: context.typography.labelSmall,
-                          onTap: (CompletionHandler handler) async {
-                            await handler(true);
-                            // ref
-                            //     .read(currentWorkoutControllerProvider.notifier)
-                            //     .removeSuperSet(
-                            //         sectionIndex, organizerIndex, setIndex);
-                          },
-                          color: context.colors.red,
-                        ),
-                      ],
-                      child: superSet.display(),
-                    );
+                    return superSet.display();
                   },
                 );
               },

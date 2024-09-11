@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:fpdart/fpdart.dart';
@@ -14,8 +15,8 @@ class LiveWorkoutController extends _$LiveWorkoutController {
     final now = DateTime.now();
 
     var time = 'Evening';
-    if (now.hour > 17) time = 'Afternoon';
-    if (now.hour > 11) time = 'Morning';
+    if (now.hour < 17) time = 'Afternoon';
+    if (now.hour < 11) time = 'Morning';
 
     return LiveWorkoutModel(
       subtitle: '$time Workout',
@@ -40,8 +41,7 @@ class LiveWorkoutController extends _$LiveWorkoutController {
       state.sections.add(section);
     }
 
-    // Force UI to update
-    state = state.copyWith(subtitle: state.subtitle);
+    _updateMuscleGroups();
   }
 
   void addSupersetSection(List<ExerciseModel> exercises) {
@@ -52,17 +52,18 @@ class LiveWorkoutController extends _$LiveWorkoutController {
         exercise: exercise,
         sectionIndex: state.sections.length,
         setIndex: 0,
+        setString: key,
       );
 
       set.addAll({key: value});
     }
+    final template = Map<String, ILiveSet>.from(set);
 
-    final section = LiveSupersetSectionModel(templateSet: set, sets: [set])
+    final section = LiveSupersetSectionModel(templateSet: template, sets: [set])
       ..generateTitle(exercises);
 
     state.sections.add(section);
-    // Force UI to update
-    state = state.copyWith(subtitle: state.subtitle);
+    _updateMuscleGroups();
   }
 
   void addSet(ILiveSection<dynamic> section) {
@@ -114,7 +115,93 @@ class LiveWorkoutController extends _$LiveWorkoutController {
     }
   }
 
-  void removeSection(int sectionIndex) {
-    state.sections.removeAt(sectionIndex);
+  void removeSection(ILiveSection<dynamic> section) {
+    state = state.copyWith(sections: state.sections..remove(section));
+    _resetIndexes();
+    _updateMuscleGroups();
+  }
+
+  void removeDefaultSet(LiveDefaultSetModel setToRemove) {
+    final section = state.sections[setToRemove.sectionIndex];
+
+    switch (section) {
+      case final LiveDefaultSectionModel obj:
+        state = state.copyWith.sections.at(setToRemove.sectionIndex)(
+          sets: obj.sets..remove(setToRemove),
+        );
+
+      case final LiveSupersetSectionModel obj:
+        obj.sets[setToRemove.setIndex]
+            .removeWhere((key, value) => key == setToRemove.setString);
+
+        if (obj.sets[setToRemove.setIndex].isEmpty) {
+          state = state.copyWith.sections.at(setToRemove.sectionIndex)(
+            sets: obj.sets..removeAt(setToRemove.setIndex),
+          );
+        }
+    }
+
+    _resetIndexes();
+    _updateMuscleGroups();
+  }
+
+  void _resetIndexes() {
+    final sections = List<ILiveSection<dynamic>>.from(state.sections);
+    final newSections =
+        sections.mapWithIndex<ILiveSection<dynamic>>((section, sectionIndex) {
+      switch (section) {
+        case final LiveDefaultSectionModel obj:
+          return obj.copyWith(
+            templateSet: obj.templateSet.copyWith(sectionIndex: sectionIndex),
+            sets: obj.sets.mapWithIndex((set, setIndex) {
+              return set.copyWith(
+                sectionIndex: sectionIndex,
+                setIndex: setIndex,
+              );
+            }).toList(),
+          );
+        case final LiveSupersetSectionModel obj:
+          return obj.copyWith(
+            templateSet: obj.templateSet
+              ..updateAll(
+                (key, value) => value.copyWith(sectionIndex: sectionIndex),
+              ),
+            sets: obj.sets.mapWithIndex((set, setIndex) {
+              return set
+                ..updateAll(
+                  (key, value) => value.copyWith(
+                    sectionIndex: sectionIndex,
+                    setIndex: setIndex,
+                  ),
+                );
+            }).toList(),
+          );
+      }
+    }).toList();
+
+    state = state.copyWith(sections: newSections);
+  }
+
+  void _updateMuscleGroups() {
+    final exercises =
+        state.sections.flatMap((section) => section.getExercises()).toSet();
+
+    final primaryMuscleGroups = exercises.map((exercise) {
+      return exercise.primaryMuscleGroups;
+    }).fold(<MuscleGroupModel>{}, (previousValue, element) {
+      return previousValue.union(element.toSet());
+    }).toList();
+
+    final secondaryMuscleGroups = exercises.map((exercise) {
+      return exercise.secondaryMuscleGroups;
+    }).fold(<MuscleGroupModel>{}, (previousValue, element) {
+      return previousValue.union(element.toSet());
+    }).toList()
+      ..removeWhere(primaryMuscleGroups.contains);
+
+    state = state.copyWith(
+      primaryMuscleGroups: primaryMuscleGroups,
+      secondaryMuscleGroups: secondaryMuscleGroups,
+    );
   }
 }

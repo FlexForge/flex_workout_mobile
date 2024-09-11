@@ -17,8 +17,12 @@ class DefaultSectionView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void addSet(LiveDefaultSectionModel sectionIndex) {
+    void addSet() {
       ref.read(liveWorkoutControllerProvider.notifier).addSet(section);
+    }
+
+    void deleteSection() {
+      ref.read(liveWorkoutControllerProvider.notifier).removeSection(section);
     }
 
     return SwipeActionCell(
@@ -33,6 +37,7 @@ class DefaultSectionView extends ConsumerWidget {
           color: Colors.transparent,
           widthSpace: 64,
           onTap: (handler) async {
+            deleteSection();
             // await handler(true);
             // ref
             //     .read(currentWorkoutControllerProvider.notifier)
@@ -69,7 +74,7 @@ class DefaultSectionView extends ConsumerWidget {
                 horizontal: AppLayout.p4,
               ),
               child: LargeButton(
-                onPressed: () => addSet(section),
+                onPressed: addSet,
                 expanded: true,
                 label: 'Add Set',
                 icon: Symbols.add,

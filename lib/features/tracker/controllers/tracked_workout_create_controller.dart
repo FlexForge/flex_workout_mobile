@@ -13,13 +13,13 @@ class TrackedWorkoutCreateController extends _$TrackedWorkoutCreateController {
     return null;
   }
 
-  void handle(MainTrackerInfoForm infoForm, CurrentWorkout workout) {
-    final title = infoForm.model.title ?? workout.title;
-    final notes = infoForm.model.notes ?? workout.notes;
+  void handle(MainTrackerInfoForm infoForm, LiveWorkoutModel workout) {
+    // final title = infoForm.model.title ?? workout.title;
+    // final notes = infoForm.model.notes ?? workout.notes;
 
-    final res = ref
-        .read(trackedWorkoutRepositoryProvider)
-        .createTrackedWorkout(title: title, notes: notes, workout: workout);
-    state = res.fold((l) => throw l, (r) => r);
+    // final res = ref
+    //     .read(trackedWorkoutRepositoryProvider)
+    //     .createTrackedWorkout(title: title, notes: notes, workout: workout);
+    // state = res.fold((l) => throw l, (r) => r);
   }
 }

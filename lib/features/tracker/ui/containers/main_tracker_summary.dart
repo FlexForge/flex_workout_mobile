@@ -6,7 +6,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.da
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,7 +28,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   void initState() {
-    final startTime = ref.read(currentWorkoutControllerProvider).startTimestamp;
+    final startTime = ref.read(liveWorkoutControllerProvider).startTimestamp;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -51,7 +51,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final workout = ref.watch(currentWorkoutControllerProvider);
+    final workout = ref.watch(liveWorkoutControllerProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

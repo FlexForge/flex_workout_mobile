@@ -129,6 +129,7 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
   List<T> sets;
 
   Widget display();
+  List<ExerciseModel> getExercises();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -154,6 +155,9 @@ class LiveDefaultSectionModel
 
   @override
   Widget display() => DefaultSectionView(section: this);
+
+  @override
+  List<ExerciseModel> getExercises() => [templateSet.exercise];
 }
 
 @MappableClass(discriminatorValue: 'superset')
@@ -188,6 +192,10 @@ class LiveSupersetSectionModel
 
   @override
   Widget display() => SupersetSectionView(section: this);
+
+  @override
+  List<ExerciseModel> getExercises() =>
+      templateSet.values.map((value) => value.exercise).toList();
 }
 
 @MappableClass(discriminatorKey: 'type')
@@ -197,6 +205,7 @@ sealed class ILiveSet with ILiveSetMappable {
     required this.sectionIndex,
     required this.setIndex,
     this.isComplete = false,
+    this.setString = '',
   });
   final bool isComplete;
   final ExerciseModel exercise;
@@ -206,6 +215,7 @@ sealed class ILiveSet with ILiveSetMappable {
   // Indexes
   final int sectionIndex;
   final int setIndex;
+  final String setString;
 }
 
 @MappableClass(discriminatorValue: 'default_set')
@@ -214,6 +224,7 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
     required this.exercise,
     required this.sectionIndex,
     required this.setIndex,
+    this.setString = '',
     this.isComplete = false,
     this.reps,
     this.load,
@@ -232,6 +243,8 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   final int sectionIndex;
   @override
   final int setIndex;
+  @override
+  final String setString;
 
   @override
   Widget display() => DefaultSetTile(set: this);
