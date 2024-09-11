@@ -19,7 +19,7 @@
   // Don't match brackets
   "editor.matchBrackets": "never",
   // Disable glyph margin
-  "editor.glyphMargin": false,
+  // "editor.glyphMargin": false,
   // // Don't show open editors in the Explorer pane
   "explorer.openEditors.visible": 1,
   // Disable icons in the tabs

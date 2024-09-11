@@ -1,11 +1,13 @@
-// ignore_for_file: avoid_setters_without_getters
-
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/default_section.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/superset_section.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'current_workout_model.freezed.dart';
@@ -105,9 +107,9 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
   LiveWorkoutModel({
     required this.subtitle,
     required this.startTimestamp,
+    required this.sections,
     this.primaryMuscleGroups = const <MuscleGroupModel>[],
     this.secondaryMuscleGroups = const <MuscleGroupModel>[],
-    this.sections = const <ILiveSection>[],
   });
 
   final String subtitle;
@@ -116,22 +118,23 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
   final List<MuscleGroupModel> primaryMuscleGroups;
   final List<MuscleGroupModel> secondaryMuscleGroups;
 
-  final List<ILiveSection> sections;
+  List<ILiveSection<dynamic>> sections;
 }
 
 @MappableClass(discriminatorKey: 'organization')
-sealed class ILiveSection with ILiveSectionMappable {
-  ILiveSection({
-    required this.title,
-  });
+sealed class ILiveSection<T> with ILiveSectionMappable<T> {
+  ILiveSection({required this.title, required this.sets});
 
   String title;
+  List<T> sets;
+
+  Widget display();
 }
 
 @MappableClass(discriminatorValue: 'default')
 class LiveDefaultSectionModel
     with LiveDefaultSectionModelMappable
-    implements ILiveSection {
+    implements ILiveSection<ILiveSet> {
   LiveDefaultSectionModel({
     required this.sets,
     required this.templateSet,
@@ -142,17 +145,21 @@ class LiveDefaultSectionModel
   String title;
 
   final ILiveSet templateSet;
-  final List<ILiveSet> sets;
+  @override
+  List<ILiveSet> sets;
 
   void generateTitle(ExerciseModel exercise) {
     title = exercise.name;
   }
+
+  @override
+  Widget display() => DefaultSectionView(section: this);
 }
 
 @MappableClass(discriminatorValue: 'superset')
 class LiveSupersetSectionModel
     with LiveSupersetSectionModelMappable
-    implements ILiveSection {
+    implements ILiveSection<Map<String, ILiveSet>> {
   LiveSupersetSectionModel({
     required this.sets,
     required this.templateSet,
@@ -163,11 +170,24 @@ class LiveSupersetSectionModel
   String title;
 
   final Map<String, ILiveSet> templateSet;
-  final List<Map<String, ILiveSet>> sets;
+  @override
+  List<Map<String, ILiveSet>> sets;
 
   void generateTitle(List<ExerciseModel> exercises) {
     title = exercises.first.name;
   }
+
+  MapEntry<String, ILiveSet> getSetFromExercise(
+    ExerciseModel exercise,
+    int setIndex,
+  ) {
+    return sets[setIndex].entries.firstWhere(
+          (entry) => entry.value.exercise.id == exercise.id,
+        );
+  }
+
+  @override
+  Widget display() => SupersetSectionView(section: this);
 }
 
 @MappableClass(discriminatorKey: 'type')
@@ -180,6 +200,8 @@ sealed class ILiveSet with ILiveSetMappable {
   });
   final bool isComplete;
   final ExerciseModel exercise;
+
+  Widget display();
 
   // Indexes
   final int sectionIndex;
@@ -210,4 +232,7 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   final int sectionIndex;
   @override
   final int setIndex;
+
+  @override
+  Widget display() => DefaultSetTile(set: this);
 }
