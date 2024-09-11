@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_setters_without_getters
+
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
@@ -123,8 +125,7 @@ sealed class ILiveSection with ILiveSectionMappable {
     required this.title,
   });
 
-  final String title;
-  String get generateTitle;
+  String title;
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -132,16 +133,20 @@ class LiveDefaultSectionModel
     with LiveDefaultSectionModelMappable
     implements ILiveSection {
   LiveDefaultSectionModel({
-    required this.title,
     required this.sets,
+    required this.templateSet,
+    this.title = '',
   });
 
   @override
-  final String title;
+  String title;
+
+  final ILiveSet templateSet;
   final List<ILiveSet> sets;
 
-  @override
-  String get generateTitle => 'Test';
+  void generateTitle(ExerciseModel exercise) {
+    title = exercise.name;
+  }
 }
 
 @MappableClass(discriminatorValue: 'superset')
@@ -149,49 +154,53 @@ class LiveSupersetSectionModel
     with LiveSupersetSectionModelMappable
     implements ILiveSection {
   LiveSupersetSectionModel({
-    required this.title,
     required this.sets,
+    required this.templateSet,
+    this.title = '',
   });
 
   @override
-  final String title;
+  String title;
+
+  final Map<String, ILiveSet> templateSet;
   final List<Map<String, ILiveSet>> sets;
 
-  @override
-  String get generateTitle => 'Test';
+  void generateTitle(List<ExerciseModel> exercises) {
+    title = exercises.first.name;
+  }
 }
 
 @MappableClass(discriminatorKey: 'type')
 sealed class ILiveSet with ILiveSetMappable {
   ILiveSet({
-    required this.isComplete,
     required this.exercise,
     required this.sectionIndex,
-    required this.organizerIndex,
+    required this.setIndex,
+    this.isComplete = false,
   });
   final bool isComplete;
   final ExerciseModel exercise;
 
-  // Index
+  // Indexes
   final int sectionIndex;
-  final int organizerIndex;
+  final int setIndex;
 }
 
 @MappableClass(discriminatorValue: 'default_set')
 class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   LiveDefaultSetModel({
-    required this.reps,
-    required this.load,
-    required this.units,
     required this.exercise,
-    required this.isComplete,
     required this.sectionIndex,
-    required this.organizerIndex,
+    required this.setIndex,
+    this.isComplete = false,
+    this.reps,
+    this.load,
+    this.units,
   });
 
-  final int reps;
-  final double load;
-  final Units units;
+  final int? reps;
+  final double? load;
+  final Units? units;
 
   @override
   final ExerciseModel exercise;
@@ -200,5 +209,5 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   @override
   final int sectionIndex;
   @override
-  final int organizerIndex;
+  final int setIndex;
 }
