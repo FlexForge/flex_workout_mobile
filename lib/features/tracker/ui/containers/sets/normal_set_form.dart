@@ -5,7 +5,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

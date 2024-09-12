@@ -1,106 +1,14 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
+import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/default_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/superset_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'current_workout_model.freezed.dart';
-part 'current_workout_model.mapper.dart';
-
-@Freezed(makeCollectionsUnmodifiable: false)
-class CurrentWorkout with _$CurrentWorkout {
-  const factory CurrentWorkout({
-    required String title,
-    required String subtitle,
-    required DateTime startTimestamp,
-    required List<CurrentWorkoutSection> sections,
-    @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
-    @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
-    String? notes,
-  }) = _CurrentWorkout;
-}
-
-@Freezed(makeCollectionsUnmodifiable: false)
-class CurrentWorkoutSection with _$CurrentWorkoutSection {
-  const factory CurrentWorkoutSection({
-    required String title,
-    required CurrentWorkoutOrganizer templateOrganizer,
-    required List<CurrentWorkoutOrganizer> organizers,
-  }) = _CurrentWorkoutSection;
-}
-
-extension ConvertCurrentWorkoutSection on CurrentWorkoutSection {
-  WorkoutSection toEntity() => WorkoutSection(
-        title: title,
-      )..organizers.addAll(organizers.map((e) => e.toEntity()).toList());
-}
-
-@Freezed(makeCollectionsUnmodifiable: false)
-class CurrentWorkoutOrganizer with _$CurrentWorkoutOrganizer {
-  const factory CurrentWorkoutOrganizer({
-    required SetOrganizationEnum organization,
-    required int setNumber,
-    required List<CurrentWorkoutSetType> superSet,
-    CurrentWorkoutSetType? defaultSet,
-  }) = _CurrentWorkoutOrganizer;
-}
-
-extension ConvertCurrentWorkoutOrganizer on CurrentWorkoutOrganizer {
-  SetOrganizer toEntity() => SetOrganizer(setNumber: setNumber)
-    ..defaultSet.target = organization == SetOrganizationEnum.defaultSet
-        ? defaultSet?.toEntity()
-        : null
-    ..superSet.addAll(
-      superSet.where((e) => e.toEntity() != null).map((e) => e.toEntity()!),
-    );
-}
-
-@freezed
-class CurrentWorkoutSetType with _$CurrentWorkoutSetType {
-  const factory CurrentWorkoutSetType({
-    // Index Information
-    required ExerciseModel exercise,
-    required SetTypeEnum type,
-    required int sectionIndex,
-    required int organizerIndex,
-    @Default(false) bool isComplete,
-    int? setIndex,
-    String? setLetter,
-    CurrentWorkoutNormalSet? normalSet,
-  }) = _CurrentWorkoutSetType;
-}
-
-extension ConvertCurrentWorkoutSetType on CurrentWorkoutSetType {
-  SetType? toEntity() => isComplete
-      ? (SetType(setLetter: setLetter)
-        ..exercise.target = exercise.toEntity()
-        ..normalSet.target =
-            type == SetTypeEnum.normalSet ? normalSet?.toEntity() : null)
-      : null;
-}
-
-@freezed
-class CurrentWorkoutNormalSet with _$CurrentWorkoutNormalSet {
-  const factory CurrentWorkoutNormalSet({
-    required int reps,
-    required double load,
-    required Units units,
-  }) = _CurrentWorkoutNormalSet;
-}
-
-extension ConvertCurrentWorkoutNormalSet on CurrentWorkoutNormalSet {
-  NormalSet toEntity() => NormalSet(
-        reps: reps,
-        load: load,
-        units: units,
-      );
-}
+part 'live_workout_model.mapper.dart';
 
 @MappableClass()
 class LiveWorkoutModel with LiveWorkoutModelMappable {
@@ -130,6 +38,9 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
 
   Widget display();
   List<ExerciseModel> getExercises();
+
+  double getVolume(Units units);
+  int getCompletedSets();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -153,11 +64,24 @@ class LiveDefaultSectionModel
     title = exercise.name;
   }
 
+  List<ILiveSet> get completedSets =>
+      sets.where((element) => element.isComplete).toList();
+
   @override
   Widget display() => DefaultSectionView(section: this);
 
   @override
   List<ExerciseModel> getExercises() => [templateSet.exercise];
+
+  @override
+  double getVolume(Units units) {
+    return completedSets.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units);
+    });
+  }
+
+  @override
+  int getCompletedSets() => sets.where((element) => element.isComplete).length;
 }
 
 @MappableClass(discriminatorValue: 'superset')
@@ -181,14 +105,10 @@ class LiveSupersetSectionModel
     title = exercises.first.name;
   }
 
-  MapEntry<String, ILiveSet> getSetFromExercise(
-    ExerciseModel exercise,
-    int setIndex,
-  ) {
-    return sets[setIndex].entries.firstWhere(
-          (entry) => entry.value.exercise.id == exercise.id,
-        );
-  }
+  List<ILiveSet> get allSets =>
+      sets.map((e) => e.values).expand((e) => e).toList();
+  List<ILiveSet> get completedSets =>
+      allSets.where((element) => element.isComplete).toList();
 
   @override
   Widget display() => SupersetSectionView(section: this);
@@ -196,6 +116,17 @@ class LiveSupersetSectionModel
   @override
   List<ExerciseModel> getExercises() =>
       templateSet.values.map((value) => value.exercise).toList();
+
+  @override
+  double getVolume(Units units) {
+    return completedSets.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units);
+    });
+  }
+
+  @override
+  int getCompletedSets() =>
+      allSets.where((element) => element.isComplete).length;
 }
 
 @MappableClass(discriminatorKey: 'type')
@@ -210,6 +141,7 @@ sealed class ILiveSet with ILiveSetMappable {
   final bool isComplete;
   final ExerciseModel exercise;
 
+  double getVolume(Units units);
   Widget display();
 
   // Indexes
@@ -235,6 +167,9 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   final double? load;
   final Units? units;
 
+  double getLoadInKgs() => (units == Units.kgs) ? load! : lbsToKgs(load!);
+  double getLoadInLbs() => (units == Units.lbs) ? load! : kgsToLbs(load!);
+
   @override
   final ExerciseModel exercise;
   @override
@@ -246,6 +181,9 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   @override
   final String setString;
 
+  @override
+  double getVolume(Units units) =>
+      (units == Units.kgs) ? getLoadInKgs() * reps! : getLoadInLbs() * reps!;
   @override
   Widget display() => DefaultSetTile(set: this);
 }

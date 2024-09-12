@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -147,6 +147,18 @@ class LiveWorkoutController extends _$LiveWorkoutController {
 
     _resetIndexes();
     _updateMuscleGroups();
+  }
+
+  double getTotalVolume(Units units) {
+    return state.sections.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units);
+    });
+  }
+
+  double getSetsCompleted() {
+    return state.sections.fold(0, (previousValue, element) {
+      return previousValue + element.getCompletedSets();
+    });
   }
 
   void _resetIndexes() {
