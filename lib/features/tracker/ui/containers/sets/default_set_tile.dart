@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
@@ -67,7 +68,7 @@ class _Completed extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            '${set.load} ${set.units?.name}',
+            '${set.load?.cleanNumber()} ${set.units?.name}',
             style: context.typography.bodyMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: context.colors.foregroundTertiary,

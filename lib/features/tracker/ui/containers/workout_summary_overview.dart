@@ -15,59 +15,8 @@ class WorkoutSummaryOverview extends ConsumerWidget {
 
     return Column(
       children: [
-        // Section(
-        //   header: 'Overview',
-        //   subHeader: workout.sections.isNotEmpty ? 'Exercises Completed' : null,
-        //   padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-        //   body: workout.sections.isNotEmpty
-        //       ? ListView.separated(
-        //           padding: EdgeInsets.zero,
-        //           physics: const NeverScrollableScrollPhysics(),
-        //           shrinkWrap: true,
-        //           itemCount: exerciseSummary.length,
-        //           itemBuilder: (context, index) {
-        //             final summary = exerciseSummary[index];
-
-        //             return FlexListTile(
-        //               onTap: () => {},
-        //               title: Text(
-        //                 summary.exercise.name,
-        //                 style: context.typography.bodyMedium.copyWith(
-        //                   fontWeight: FontWeight.w500,
-        //                 ),
-        //               ),
-        //               trailingIcon: Symbols.info,
-        //               borderColor: summary.superSetIndex != null
-        //                   ? getColorFromIndex(
-        //                       context,
-        //                       summary.superSetIndex!,
-        //                     )
-        //                   : null,
-        //             );
-        //           },
-        //           separatorBuilder: (context, index) {
-        //             return Divider(
-        //               indent: 54,
-        //               height: 0,
-        //               color: context.colors.divider,
-        //             );
-        //           },
-        //         )
-        //       : Padding(
-        //           padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
-        //           child: Center(
-        //             child: Text(
-        //               'No exercises recorded',
-        //               style: context.typography.bodyMedium.copyWith(
-        //                 fontWeight: FontWeight.w500,
-        //                 color: context.colors.foregroundSecondary,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        // ),
-        const SizedBox(height: AppLayout.p3),
         Section(
+          header: 'Overview',
           subHeader: workout.primaryMuscleGroups.isNotEmpty
               ? 'Muscle Groups Targeted'
               : null,

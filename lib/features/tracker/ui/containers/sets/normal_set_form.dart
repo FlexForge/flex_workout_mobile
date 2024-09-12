@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
 
 class NormalSetInputForm extends ConsumerWidget {
   const NormalSetInputForm({
@@ -45,6 +46,10 @@ class NormalSetInputForm extends ConsumerWidget {
                   inputAction: TextInputAction.done,
                   inputType: TextInputType.number,
                   autoFocus: true,
+                  validationMessages: {
+                    ValidationMessage.required: (error) =>
+                        'The load is required',
+                  },
                 ),
               ),
               const SizedBox(width: AppLayout.p2),
@@ -72,17 +77,15 @@ class NormalSetInputForm extends ConsumerWidget {
             hintText: 'Enter reps completed',
             inputAction: TextInputAction.done,
             inputType: TextInputType.number,
+            validationMessages: {
+              ValidationMessage.required: (error) =>
+                  'The number of reps are required',
+            },
             suffix: Text(
               'rep(s)',
               style: context.typography.labelMedium
                   .copyWith(color: context.colors.foregroundSecondary),
             ),
-          ),
-          const SizedBox(height: AppLayout.p4),
-          ReactiveNormalSetFormConsumer(
-            builder: (context, form, child) {
-              return Text(form.form.value.toString());
-            },
           ),
           const SizedBox(height: AppLayout.p4),
         ],
@@ -125,8 +128,7 @@ class NormalSetInputForm extends ConsumerWidget {
             return LargeButton(
               onPressed: form.form.valid ? () => onSubmit(form) : null,
               icon: Symbols.check,
-              iconSize: 18,
-              padding: const EdgeInsets.all(AppLayout.p2),
+              iconSize: 16,
               backgroundColor: context.colors.foregroundPrimary,
               foregroundColor: context.colors.backgroundPrimary,
               borderRadius: AppLayout.roundedRadius,
