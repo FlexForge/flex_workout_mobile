@@ -3,10 +3,12 @@ import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/default_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/superset_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 
 part 'live_workout_model.mapper.dart';
 
@@ -41,6 +43,8 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
 
   double getVolume(Units units);
   int getCompletedSets();
+
+  WorkoutSection toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -82,6 +86,18 @@ class LiveDefaultSectionModel
 
   @override
   int getCompletedSets() => sets.where((element) => element.isComplete).length;
+
+  @override
+  WorkoutSection toEntity() {
+    return WorkoutSection(
+      title: title,
+    )..organizers.addAll(
+        completedSets.map(
+          (e) => SetOrganizer(setNumber: e.setIndex)
+            ..defaultSet.target = e.toEntity(),
+        ),
+      );
+  }
 }
 
 @MappableClass(discriminatorValue: 'superset')
@@ -109,6 +125,9 @@ class LiveSupersetSectionModel
       sets.map((e) => e.values).expand((e) => e).toList();
   List<ILiveSet> get completedSets =>
       allSets.where((element) => element.isComplete).toList();
+  List<Map<String, ILiveSet>> get completeSetsMap => sets
+      .map((e) => e..removeWhere((key, value) => !value.isComplete))
+      .toList();
 
   @override
   Widget display() => SupersetSectionView(section: this);
@@ -127,6 +146,18 @@ class LiveSupersetSectionModel
   @override
   int getCompletedSets() =>
       allSets.where((element) => element.isComplete).length;
+
+  @override
+  WorkoutSection toEntity() {
+    return WorkoutSection(
+      title: title,
+    )..organizers.addAll(
+        completeSetsMap.mapWithIndex(
+          (e, index) => SetOrganizer(setNumber: index)
+            ..superSet.addAll(e.values.map((e) => e.toEntity())),
+        ),
+      );
+  }
 }
 
 @MappableClass(discriminatorKey: 'type')
@@ -148,6 +179,8 @@ sealed class ILiveSet with ILiveSetMappable {
   final int sectionIndex;
   final int setIndex;
   final String setString;
+
+  SetType toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default_set')
@@ -186,4 +219,15 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
       (units == Units.kgs) ? getLoadInKgs() * reps! : getLoadInLbs() * reps!;
   @override
   Widget display() => DefaultSetTile(set: this);
+
+  @override
+  SetType toEntity() {
+    return SetType(setLetter: setString)
+      ..exercise.target = exercise.toEntity()
+      ..normalSet.target = NormalSet(
+        reps: reps!,
+        load: load!,
+        units: units!,
+      );
+  }
 }
