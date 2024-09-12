@@ -37,11 +37,8 @@ class DefaultSectionView extends ConsumerWidget {
           color: Colors.transparent,
           widthSpace: 64,
           onTap: (handler) async {
+            await handler(true);
             deleteSection();
-            // await handler(true);
-            // ref
-            //     .read(currentWorkoutControllerProvider.notifier)
-            //     .removeSection(sectionIndex);
           },
         ),
       ],

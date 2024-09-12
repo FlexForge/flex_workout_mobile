@@ -4,9 +4,11 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class DefaultSetTile extends ConsumerWidget {
@@ -33,18 +35,14 @@ class DefaultSetTile extends ConsumerWidget {
           ),
           style: context.typography.labelSmall,
           onTap: (handler) async {
+            await handler(true);
             deleteSet();
-            // await handler(true);
-            // ref
-            //     .read(currentWorkoutControllerProvider.notifier)
-            //     .removeDefaultSet(sectionIndex, organizerIndex);
           },
           color: context.colors.red,
         ),
       ],
       child: FlexListTile(
-        onTap: () => {},
-        // context.goNamed(NormalSetScreen.routeName, extra: setType),
+        onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
         prefix: Center(
           child: Text(
             '${set.setIndex + 1}${set.setString}',
@@ -57,7 +55,7 @@ class DefaultSetTile extends ConsumerWidget {
         title: RichText(
           overflow: TextOverflow.ellipsis,
           text: TextSpan(
-            text: '--',
+            text: set.load.toString(),
             style: context.typography.bodyMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: context.colors.foregroundPrimary,

@@ -55,12 +55,12 @@ final router = GoRouter(
               path: NormalSetScreen.routePath,
               name: NormalSetScreen.routeName,
               pageBuilder: (context, state) {
-                final setType = state.extra as CurrentWorkoutSetType?;
+                final set = state.extra as LiveDefaultSetModel?;
                 return CupertinoModalSheetPage(
                   swipeDismissible: true,
                   barrierColor: context.colors.overlay,
                   child: NormalSetScreenModal(
-                    nestedNavigator: NormalSetScreen(setType: setType),
+                    nestedNavigator: NormalSetScreen(set: set),
                   ),
                 );
               },

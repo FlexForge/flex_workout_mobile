@@ -91,7 +91,8 @@ class LiveWorkoutController extends _$LiveWorkoutController {
 
     switch (section) {
       case final LiveDefaultSectionModel obj:
-        obj.copyWith.sets.at(currentSet.setIndex).$update((set) {
+        state.sections[currentSet.sectionIndex] =
+            obj.copyWith.sets.at(currentSet.setIndex).$update((set) {
           return currentSet.copyWith(
             isComplete: true,
             load: form.model.load,
@@ -101,18 +102,21 @@ class LiveWorkoutController extends _$LiveWorkoutController {
         });
 
       case final LiveSupersetSectionModel obj:
-        final mapEntry =
-            obj.getSetFromExercise(currentSet.exercise, currentSet.setIndex);
-
-        obj.sets[currentSet.setIndex][mapEntry.key]!.copyWith.$update((set) {
-          return currentSet.copyWith(
+        state.sections[currentSet.sectionIndex] =
+            obj.copyWith.sets.at(currentSet.setIndex).$update((set) {
+          set[currentSet.setString] = currentSet.copyWith(
             isComplete: true,
             load: form.model.load,
             reps: form.model.reps,
             units: Units.values[form.model.units!],
           );
+
+          return set;
         });
     }
+
+    // Force UI to update
+    state = state.copyWith(subtitle: state.subtitle);
   }
 
   void removeSection(ILiveSection<dynamic> section) {
