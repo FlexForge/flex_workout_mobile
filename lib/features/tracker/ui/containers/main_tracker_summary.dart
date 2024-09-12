@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.dart';
+import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
@@ -82,13 +83,13 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
               TextWithColor(
                 color: context.colors.blue,
                 label: 'Total volume',
-                value: totalVolume.toString(),
+                value: totalVolume.cleanNumber(),
                 isLarge: true,
               ),
               TextWithColor(
                 color: context.colors.green,
                 label: 'Sets completed',
-                value: totalSets.toString(),
+                value: totalSets.cleanNumber(decimal: 0),
                 isLarge: true,
               ),
               TextWithColor(

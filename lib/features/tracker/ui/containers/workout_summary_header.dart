@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
@@ -41,14 +42,14 @@ class WorkoutSummaryHeader extends ConsumerWidget {
               SummaryHighlight(
                 diameter: 110,
                 color: context.colors.blue,
-                value: totalVolume.toString(),
+                value: totalVolume.cleanNumber(decimal: 0),
                 label: 'lbs',
               ),
               const Spacer(),
               SummaryHighlight(
                 diameter: 110,
                 color: context.colors.yellow,
-                value: totalSets.toString(),
+                value: totalSets.cleanNumber(decimal: 0),
                 label: 'sets',
               ),
               const Spacer(),
