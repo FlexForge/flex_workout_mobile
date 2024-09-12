@@ -5,7 +5,7 @@ import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
@@ -55,12 +55,12 @@ final router = GoRouter(
               path: NormalSetScreen.routePath,
               name: NormalSetScreen.routeName,
               pageBuilder: (context, state) {
-                final setType = state.extra as CurrentWorkoutSetType?;
+                final set = state.extra as LiveDefaultSetModel?;
                 return CupertinoModalSheetPage(
                   swipeDismissible: true,
                   barrierColor: context.colors.overlay,
                   child: NormalSetScreenModal(
-                    nestedNavigator: NormalSetScreen(setType: setType),
+                    nestedNavigator: NormalSetScreen(set: set),
                   ),
                 );
               },

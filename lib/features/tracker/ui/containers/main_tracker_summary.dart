@@ -5,8 +5,9 @@ import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart'
 import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/current_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,7 +29,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   void initState() {
-    final startTime = ref.read(currentWorkoutControllerProvider).startTimestamp;
+    final startTime = ref.read(liveWorkoutControllerProvider).startTimestamp;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -51,7 +52,12 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final workout = ref.watch(currentWorkoutControllerProvider);
+    final workout = ref.watch(liveWorkoutControllerProvider);
+    final totalVolume = ref
+        .watch(liveWorkoutControllerProvider.notifier)
+        .getTotalVolume(Units.lbs);
+    final totalSets =
+        ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,13 +82,13 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
               TextWithColor(
                 color: context.colors.blue,
                 label: 'Total volume',
-                value: '0',
+                value: totalVolume.toString(),
                 isLarge: true,
               ),
               TextWithColor(
                 color: context.colors.green,
                 label: 'Sets completed',
-                value: '0',
+                value: totalSets.toString(),
                 isLarge: true,
               ),
               TextWithColor(

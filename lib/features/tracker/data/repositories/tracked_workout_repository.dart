@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/core/utils/failure.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -24,7 +24,7 @@ class TrackedWorkoutRepository {
 
   Either<Failure, TrackedWorkoutModel> createTrackedWorkout({
     required String title,
-    required CurrentWorkout workout,
+    required LiveWorkoutModel workout,
     String? notes,
   }) {
     try {

@@ -34,6 +34,7 @@ coverage/
 **/*.freezed.dart
 **/*.g.dart
 **/*.gform.dart
+**/*.mapper.dart
 
 # Symbolication related
 app.*.symbols

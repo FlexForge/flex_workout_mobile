@@ -2,40 +2,62 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/current_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class NormalSetTile extends ConsumerWidget {
-  const NormalSetTile({required this.prefix, this.setType, super.key});
+class DefaultSetTile extends ConsumerWidget {
+  const DefaultSetTile({required this.set, super.key});
 
-  final String prefix;
-  final CurrentWorkoutSetType? setType;
+  final LiveDefaultSetModel set;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return setType?.normalSet == null
-        ? _Incomplete(prefix: prefix, setType: setType)
-        : _Completed(prefix: prefix, setType: setType);
+    void deleteSet() {
+      ref.read(liveWorkoutControllerProvider.notifier).removeDefaultSet(set);
+    }
+
+    return SwipeActionCell(
+      key: ObjectKey(set.hashCode),
+      backgroundColor: context.colors.backgroundSecondary,
+      trailingActions: <SwipeAction>[
+        SwipeAction(
+          title: 'Delete',
+          performsFirstActionWithFullSwipe: true,
+          icon: const Icon(
+            Icons.delete,
+            size: 20,
+          ),
+          style: context.typography.labelSmall,
+          onTap: (handler) async {
+            await handler(true);
+            deleteSet();
+          },
+          color: context.colors.red,
+        ),
+      ],
+      child: set.isComplete ? _Completed(set: set) : _Incomplete(set: set),
+    );
   }
 }
 
 class _Completed extends StatelessWidget {
-  const _Completed({required this.prefix, this.setType});
+  const _Completed({required this.set});
 
-  final String prefix;
-  final CurrentWorkoutSetType? setType;
+  final LiveDefaultSetModel set;
 
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-      onTap: () => context.pushNamed(NormalSetScreen.routeName, extra: setType),
+      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
       prefix: Center(
         child: Text(
-          prefix,
+          '${set.setIndex + 1}${set.setString}',
           style: context.typography.headlineMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: context.colors.foregroundTertiary,
@@ -45,7 +67,7 @@ class _Completed extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            '${setType?.normalSet?.load} ${setType?.normalSet?.units.name}',
+            '${set.load} ${set.units?.name}',
             style: context.typography.bodyMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: context.colors.foregroundTertiary,
@@ -56,11 +78,11 @@ class _Completed extends StatelessWidget {
             Symbols.close,
             size: 12,
             weight: 900,
-            color: context.colors.foregroundTertiary,
+            color: context.colors.foregroundQuaternary,
           ),
           const SizedBox(width: AppLayout.p1),
           Text(
-            '${setType?.normalSet?.reps} reps',
+            '${set.reps} reps',
             style: context.typography.bodyMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: context.colors.foregroundTertiary,
@@ -69,7 +91,7 @@ class _Completed extends StatelessWidget {
         ],
       ),
       subtitle: Text(
-        'Normal Set',
+        'Extra notes here',
         style: context.typography.bodySmall.copyWith(
           fontWeight: FontWeight.w500,
           color: context.colors.foregroundQuaternary,
@@ -92,56 +114,65 @@ class _Completed extends StatelessWidget {
 }
 
 class _Incomplete extends StatelessWidget {
-  const _Incomplete({required this.prefix, this.setType});
+  const _Incomplete({required this.set});
 
-  final String prefix;
-  final CurrentWorkoutSetType? setType;
+  final LiveDefaultSetModel set;
 
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-      onTap: () => context.pushNamed(NormalSetScreen.routeName, extra: setType),
+      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
       prefix: Center(
         child: Text(
-          prefix,
+          '${set.setIndex + 1}${set.setString}',
           style: context.typography.headlineMedium.copyWith(
             fontWeight: FontWeight.bold,
+            color: context.colors.foregroundPrimary,
           ),
         ),
       ),
-      title: RichText(
-        overflow: TextOverflow.ellipsis,
-        text: TextSpan(
-          text: '--',
-          style: context.typography.bodyMedium.copyWith(
-            fontWeight: FontWeight.w500,
+      title: Row(
+        children: [
+          Text(
+            '--',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundPrimary,
+            ),
           ),
-          children: <TextSpan>[
-            TextSpan(
-              text: ' lbs',
-              style: context.typography.bodyMedium.copyWith(
-                fontWeight: FontWeight.w500,
-                color: context.colors.foregroundSecondary,
-              ),
+          Text(
+            ' lbs',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
             ),
-            TextSpan(
-              text: ' x --',
-              style: context.typography.bodyMedium.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Icon(
+            Symbols.close,
+            size: 12,
+            weight: 900,
+            color: context.colors.foregroundTertiary,
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Text(
+            '--',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundPrimary,
             ),
-            TextSpan(
-              text: ' reps',
-              style: context.typography.bodyMedium.copyWith(
-                fontWeight: FontWeight.w500,
-                color: context.colors.foregroundSecondary,
-              ),
+          ),
+          Text(
+            ' reps',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       subtitle: Text(
-        setType?.exercise.name ?? 'Exercise',
+        set.exercise.name,
         overflow: TextOverflow.ellipsis,
         style: context.typography.bodySmall.copyWith(
           fontWeight: FontWeight.w500,
