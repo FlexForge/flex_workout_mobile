@@ -41,70 +41,155 @@ class DefaultSetTile extends ConsumerWidget {
           color: context.colors.red,
         ),
       ],
-      child: FlexListTile(
-        onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
-        prefix: Center(
-          child: Text(
-            '${set.setIndex + 1}${set.setString}',
-            style: context.typography.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: context.colors.foregroundPrimary,
-            ),
+      child: set.isComplete ? _Completed(set: set) : _Incomplete(set: set),
+    );
+  }
+}
+
+class _Completed extends StatelessWidget {
+  const _Completed({required this.set});
+
+  final LiveDefaultSetModel set;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlexListTile(
+      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
+      prefix: Center(
+        child: Text(
+          '${set.setIndex + 1}${set.setString}',
+          style: context.typography.headlineMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.colors.foregroundTertiary,
           ),
         ),
-        title: RichText(
-          overflow: TextOverflow.ellipsis,
-          text: TextSpan(
-            text: set.load.toString(),
+      ),
+      title: Row(
+        children: [
+          Text(
+            '${set.load} ${set.units?.name}',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundTertiary,
+            ),
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Icon(
+            Symbols.close,
+            size: 12,
+            weight: 900,
+            color: context.colors.foregroundQuaternary,
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Text(
+            '${set.reps} reps',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundTertiary,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(
+        'Extra notes here',
+        style: context.typography.bodySmall.copyWith(
+          fontWeight: FontWeight.w500,
+          color: context.colors.foregroundQuaternary,
+        ),
+      ),
+      suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
+      suffix: LargeButton(
+        label: 'Complete',
+        icon: Symbols.done_all,
+        iconSize: 16,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.p4,
+          vertical: AppLayout.p1,
+        ),
+        disabledForegroundColor: context.colors.foregroundTertiary,
+        disabledBackgroundColor: context.colors.backgroundTertiary,
+      ),
+    );
+  }
+}
+
+class _Incomplete extends StatelessWidget {
+  const _Incomplete({required this.set});
+
+  final LiveDefaultSetModel set;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlexListTile(
+      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
+      prefix: Center(
+        child: Text(
+          '${set.setIndex + 1}${set.setString}',
+          style: context.typography.headlineMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.colors.foregroundPrimary,
+          ),
+        ),
+      ),
+      title: Row(
+        children: [
+          Text(
+            '--',
             style: context.typography.bodyMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: context.colors.foregroundPrimary,
             ),
-            children: <TextSpan>[
-              TextSpan(
-                text: ' lbs',
-                style: context.typography.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colors.foregroundSecondary,
-                ),
-              ),
-              TextSpan(
-                text: ' x --',
-                style: context.typography.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colors.foregroundPrimary,
-                ),
-              ),
-              TextSpan(
-                text: ' reps',
-                style: context.typography.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colors.foregroundSecondary,
-                ),
-              ),
-            ],
           ),
-        ),
-        subtitle: Text(
-          set.exercise.name,
-          overflow: TextOverflow.ellipsis,
-          style: context.typography.bodySmall.copyWith(
-            fontWeight: FontWeight.w500,
+          Text(
+            ' lbs',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
+            ),
+          ),
+          const SizedBox(width: AppLayout.p1),
+          Icon(
+            Symbols.close,
+            size: 12,
+            weight: 900,
             color: context.colors.foregroundTertiary,
           ),
-        ),
-        suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
-        suffix: LargeButton(
-          label: 'Log set',
-          icon: Symbols.edit,
-          iconSize: 16,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppLayout.p4,
-            vertical: AppLayout.p1,
+          const SizedBox(width: AppLayout.p1),
+          Text(
+            '--',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundPrimary,
+            ),
           ),
-          disabledForegroundColor: context.colors.foregroundPrimary,
-          disabledBackgroundColor: context.colors.backgroundTertiary,
+          Text(
+            ' reps',
+            style: context.typography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(
+        set.exercise.name,
+        overflow: TextOverflow.ellipsis,
+        style: context.typography.bodySmall.copyWith(
+          fontWeight: FontWeight.w500,
+          color: context.colors.foregroundTertiary,
         ),
+      ),
+      suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
+      suffix: LargeButton(
+        label: 'Log set',
+        icon: Symbols.edit,
+        iconSize: 16,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.p4,
+          vertical: AppLayout.p1,
+        ),
+        disabledForegroundColor: context.colors.foregroundPrimary,
+        disabledBackgroundColor: context.colors.backgroundTertiary,
       ),
     );
   }
