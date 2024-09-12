@@ -18,7 +18,7 @@ class NormalSetScreenModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (!didPop) {
           await showFlexAlertDialog(

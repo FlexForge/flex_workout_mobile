@@ -1,13 +1,10 @@
-import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/core/utils/get_colors.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class WorkoutSummaryOverview extends ConsumerWidget {
   const WorkoutSummaryOverview({super.key});

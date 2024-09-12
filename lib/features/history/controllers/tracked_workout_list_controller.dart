@@ -150,6 +150,10 @@ extension WorkoutSectionTile on List<WorkoutSectionModel> {
     var superSetIndex = 0;
 
     for (final section in this) {
+      if (section.organizers.isEmpty) {
+        continue;
+      }
+
       final organizer = section.organizers.first;
 
       switch (organizer.organization) {
