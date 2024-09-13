@@ -4,13 +4,21 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Failure', () {
     group('get error message', () {
-      test('default errors', () {
+      test('empty', () {
         const emptyFailure = Failure.empty();
-        const unauthorizedFailure = Failure.unauthorized();
-        const badRequestFailure = Failure.badRequest();
 
         expect(emptyFailure.error, 'Failure.empty()');
+      });
+
+      test('unauthorized', () {
+        const unauthorizedFailure = Failure.unauthorized();
+
         expect(unauthorizedFailure.error, 'Failure.unauthorized()');
+      });
+
+      test('badRequest', () {
+        const badRequestFailure = Failure.badRequest();
+
         expect(badRequestFailure.error, 'Failure.badRequest()');
       });
 
