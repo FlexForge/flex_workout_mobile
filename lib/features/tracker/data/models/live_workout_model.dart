@@ -64,9 +64,7 @@ class LiveDefaultSectionModel
   @override
   List<ILiveSet> sets;
 
-  void generateTitle(ExerciseModel exercise) {
-    title = exercise.name;
-  }
+  void generateTitle(ExerciseModel exercise) => title = exercise.name;
 
   List<ILiveSet> get completedSets =>
       sets.where((element) => element.isComplete).toList();

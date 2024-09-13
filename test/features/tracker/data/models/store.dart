@@ -2,9 +2,11 @@ import 'package:faker/faker.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
 
 import '../../../exercise/data/db/store.dart';
+
 
 ///
 /// Hardcoded Data
@@ -125,6 +127,77 @@ final exampleWorkout = TrackedWorkoutModel(
 ///
 /// Random Generators
 ///
+
+LiveWorkoutModel generateLiveWorkout({
+  bool generateSections = false,
+}) {
+  return LiveWorkoutModel(
+    subtitle:
+        faker.lorem.words(faker.randomGenerator.integer(5, min: 1)).join(' '),
+    startTimestamp: faker.date.dateTimeBetween(
+      DateTime(2024),
+      DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    sections: generateSections
+        ? List.generate(
+            faker.randomGenerator.integer(5, min: 1),
+            (index) => generateLiveSection(sectionIndex: index),
+          )
+        : [],
+  );
+}
+
+ILiveSection<dynamic> generateLiveSection({
+  required int sectionIndex,
+}) {
+  final type = faker.randomGenerator.integer(1);
+
+  if (type == 1) {
+    final sets = List.generate(
+      faker.randomGenerator.integer(5, min: 1),
+      (index) => generateLiveSet(sectionIndex: index, setIndex: index),
+    );
+    return LiveDefaultSectionModel(sets: sets, templateSet: sets.first);
+  }
+
+  final sets = List.generate(
+    faker.randomGenerator.integer(5, min: 1),
+    (setIndex) {
+      final sets = faker.randomGenerator.integer(5, min: 1);
+      return Map.fromEntries(
+        List.generate(sets, (index) {
+          final key = String.fromCharCode(65 + index);
+          return MapEntry(
+            key,
+            generateLiveSet(
+              sectionIndex: sectionIndex,
+              setIndex: setIndex,
+              setString: key,
+            ),
+          );
+        }),
+      );
+    },
+  );
+  return LiveSupersetSectionModel(sets: sets, templateSet: sets.first);
+}
+
+ILiveSet generateLiveSet({
+  required int sectionIndex,
+  required int setIndex,
+  String setString = '',
+}) {
+  return LiveDefaultSetModel(
+    exercise: generateRandomExercise(),
+    sectionIndex: sectionIndex,
+    setIndex: setIndex,
+    setString: setString,
+    isComplete: faker.randomGenerator.boolean(),
+    reps: faker.randomGenerator.integer(20, min: 1),
+    load: faker.randomGenerator.integer(100, min: 1).toDouble(),
+    units: Units.values[faker.randomGenerator.integer(Units.values.length)],
+  );
+}
 
 TrackedWorkoutModel generateTrackedWorkout({
   bool generateSections = false,
