@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class User {
-  User(
+class UserEntity {
+  UserEntity(
     this.firstName,
     this.lastName,
     this.email, {
@@ -56,7 +56,7 @@ class User {
   }
 }
 
-extension ConvertUser on User {
+extension ConvertUser on UserEntity {
   UserModel toModel() => UserModel(
         id: id,
         firstName: firstName,

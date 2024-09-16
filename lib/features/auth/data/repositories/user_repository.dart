@@ -10,7 +10,7 @@ class UserRepository {
 
   final ob.Store store;
 
-  ob.Box<User> get box => store.box<User>();
+  ob.Box<UserEntity> get box => store.box<UserEntity>();
 
   Either<Failure, UserModel> getUser() {
     try {
@@ -33,7 +33,7 @@ class UserRepository {
     required bool isMale,
   }) {
     try {
-      final userToAdd = User(
+      final userToAdd = UserEntity(
         firstName,
         lastName,
         email,

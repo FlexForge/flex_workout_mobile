@@ -4,7 +4,7 @@ import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 
-final barbellBenchPress = Exercise(
+final barbellBenchPress = ExerciseEntity(
   name: 'Bench Press (Barbell)',
   description:
       'Lie supine on bench. Graph bar with overhand and slightly wider than shoulder width grip. Arch back, extend hips, and position feet back flat on floor. Dismount barbell from rack over chest.\n\nLower weight to lower chest. Press bar upwards until arms are extended. Repeat.',
@@ -17,7 +17,7 @@ final barbellBenchPress = Exercise(
   ..primaryMuscleGroups.addAll([chest])
   ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
-final dumbbellPullover = Exercise(
+final dumbbellPullover = ExerciseEntity(
   name: 'Pullover (Dumbbell)',
   description:
       'Lie supine on bench. Hold dumbbell over chest with both hands. Lower dumbbell over and beyond head. Pull dumbbell back over chest. Repeat.',
@@ -30,7 +30,7 @@ final dumbbellPullover = Exercise(
   ..primaryMuscleGroups.addAll([lats])
   ..secondaryMuscleGroups.addAll([chest, rearDelts, midBack, triceps]);
 
-final barbellAdPress = Exercise(
+final barbellAdPress = ExerciseEntity(
   name: 'AD Press (Barbell)',
   description:
       'Sit on bench. Hold barbell with overhand grip. Press barbell overhead. Repeat.',
@@ -43,7 +43,7 @@ final barbellAdPress = Exercise(
   ..primaryMuscleGroups.addAll([frontDelts])
   ..secondaryMuscleGroups.addAll([triceps, chest]);
 
-final cableCrunch = Exercise(
+final cableCrunch = ExerciseEntity(
   name: 'Cable Crunch',
   description:
       'Kneel in front of cable machine. Hold rope attachment overhead. Crunch down and forward. Repeat.',
@@ -56,7 +56,7 @@ final cableCrunch = Exercise(
   ..primaryMuscleGroups.addAll([abs])
   ..secondaryMuscleGroups.addAll([]);
 
-final dumbbellBenchPress = Exercise(
+final dumbbellBenchPress = ExerciseEntity(
   name: 'Bench Press (Dumbbell)',
   description:
       'Lie supine on bench. Hold dumbbells over chest. Press dumbbells upwards until arms are extended. Repeat.',
@@ -69,7 +69,7 @@ final dumbbellBenchPress = Exercise(
   ..primaryMuscleGroups.addAll([chest])
   ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
-final cableTricepExtension = Exercise(
+final cableTricepExtension = ExerciseEntity(
   name: 'Tricep Extension (Cable)',
   engagement: Engagement.bilateral,
   description:
@@ -82,7 +82,7 @@ final cableTricepExtension = Exercise(
   ..primaryMuscleGroups.addAll([triceps])
   ..secondaryMuscleGroups.addAll([]);
 
-final plateLoadedNeckExtension = Exercise(
+final plateLoadedNeckExtension = ExerciseEntity(
   name: 'Neck Extension (Plate Loaded)',
   description:
       'Sit on bench. Hold weight plate behind head. Extend neck. Repeat.',
@@ -95,7 +95,7 @@ final plateLoadedNeckExtension = Exercise(
   ..primaryMuscleGroups.addAll([neck])
   ..secondaryMuscleGroups.addAll([]);
 
-final weightedChinUps = Exercise(
+final weightedChinUps = ExerciseEntity(
   name: 'Chin Ups (Weighted)',
   description:
       'Hang from bar with underhand grip. Pull body upwards until chin is above bar. Repeat.',
@@ -108,7 +108,7 @@ final weightedChinUps = Exercise(
   ..primaryMuscleGroups.addAll([lats, biceps])
   ..secondaryMuscleGroups.addAll([rearDelts, midBack]);
 
-final legExtension = Exercise(
+final legExtension = ExerciseEntity(
   name: 'Leg Extension',
   description: 'Sit on machine. Place feet under pad. Extend legs. Repeat.',
   engagement: Engagement.bilateral,
@@ -120,7 +120,7 @@ final legExtension = Exercise(
   ..primaryMuscleGroups.addAll([quads])
   ..secondaryMuscleGroups.addAll([]);
 
-final barbellRomanianDeadlift = Exercise(
+final barbellRomanianDeadlift = ExerciseEntity(
   name: 'Romanian Deadlift (Barbell)',
   description:
       'Stand with feet hip width apart. Hold barbell with overhand grip. Hinge at hips and lower barbell to mid-shin. Extend hips and return to standing. Repeat.',
@@ -133,7 +133,7 @@ final barbellRomanianDeadlift = Exercise(
   ..primaryMuscleGroups.addAll([quads])
   ..secondaryMuscleGroups.addAll([]);
 
-final dumbbellInclineCurl = Exercise(
+final dumbbellInclineCurl = ExerciseEntity(
   name: 'Incline Curl (Dumbbell)',
   description:
       'Sit on incline bench. Hold dumbbells with underhand grip. Curl dumbbells upwards. Repeat.',
@@ -146,7 +146,7 @@ final dumbbellInclineCurl = Exercise(
   ..primaryMuscleGroups.addAll([biceps])
   ..secondaryMuscleGroups.addAll([]);
 
-final standingCalfRaise = Exercise(
+final standingCalfRaise = ExerciseEntity(
   name: 'Standing Calf Raise (Machine)',
   description: 'Stand on calf raise machine. Raise heels upwards. Repeat.',
   engagement: Engagement.bilateral,
@@ -158,7 +158,7 @@ final standingCalfRaise = Exercise(
   ..primaryMuscleGroups.addAll([calves])
   ..secondaryMuscleGroups.addAll([]);
 
-final legPress = Exercise(
+final legPress = ExerciseEntity(
   name: 'Leg Press',
   description: 'Sit on machine. Push platform upwards. Repeat.',
   engagement: Engagement.bilateral,
@@ -170,7 +170,7 @@ final legPress = Exercise(
   ..primaryMuscleGroups.addAll([quads])
   ..secondaryMuscleGroups.addAll([glutes]);
 
-final dumbbellRow = Exercise(
+final dumbbellRow = ExerciseEntity(
   name: 'Row (Dumbbell)',
   description:
       'Stand with feet hip width apart. Hold dumbbells with overhand grip. Hinge at hips and lower dumbbells to mid-shin. Extend hips and return to standing. Repeat.',
@@ -183,7 +183,7 @@ final dumbbellRow = Exercise(
   ..primaryMuscleGroups.addAll([lats, midBack])
   ..secondaryMuscleGroups.addAll([biceps, forearms, rearDelts]);
 
-final barbellUprightRow = Exercise(
+final barbellUprightRow = ExerciseEntity(
   name: 'Upright Row (Barbell)',
   description:
       'Stand with feet hip width apart. Hold barbell with overhand grip. Pull barbell upwards to chin. Repeat.',
@@ -196,7 +196,7 @@ final barbellUprightRow = Exercise(
   ..primaryMuscleGroups.addAll([midDelts])
   ..secondaryMuscleGroups.addAll([midBack]);
 
-final closeGripBarbellBenchPress = Exercise(
+final closeGripBarbellBenchPress = ExerciseEntity(
   name: 'Close Grip Bench Press (Barbell)',
   description:
       'Lie supine on bench. Graph bar with overhand and shoulder width grip. Arch back, extend hips, and position feet back flat on floor. Dismount barbell from rack over chest.\n\nLower weight to lower chest. Press bar upwards until arms are extended. Repeat.',
@@ -209,7 +209,7 @@ final closeGripBarbellBenchPress = Exercise(
   ..primaryMuscleGroups.addAll([triceps])
   ..secondaryMuscleGroups.addAll([chest, frontDelts]);
 
-final dumbbellHammerCurl = Exercise(
+final dumbbellHammerCurl = ExerciseEntity(
   name: 'Hammer Curl (Dumbbell)',
   description:
       'Stand with feet hip width apart. Hold dumbbells with neutral grip. Curl dumbbells upwards. Repeat.',
@@ -222,7 +222,7 @@ final dumbbellHammerCurl = Exercise(
   ..primaryMuscleGroups.addAll([biceps])
   ..secondaryMuscleGroups.addAll([]);
 
-final barbellInclineBenchPress = Exercise(
+final barbellInclineBenchPress = ExerciseEntity(
   name: 'Incline Bench Press (Barbell)',
   description:
       'Lie supine on incline bench. Graph bar with overhand and slightly wider than shoulder width grip. Arch back, extend hips, and position feet back flat on floor. Dismount barbell from rack over chest.\n\nLower weight to lower chest. Press bar upwards until arms are extended. Repeat.',
@@ -235,7 +235,7 @@ final barbellInclineBenchPress = Exercise(
   ..primaryMuscleGroups.addAll([chest])
   ..secondaryMuscleGroups.addAll([frontDelts, triceps]);
 
-final neckCurl = Exercise(
+final neckCurl = ExerciseEntity(
   name: 'Neck Curl (Plate Loaded)',
   description:
       'Sit on bench. Hold weight plate on forehead. Curl neck. Repeat.',
@@ -248,7 +248,7 @@ final neckCurl = Exercise(
   ..primaryMuscleGroups.addAll([neck])
   ..secondaryMuscleGroups.addAll([]);
 
-final jmPress = Exercise(
+final jmPress = ExerciseEntity(
   name: 'JM Press (Barbell)',
   description:
       'Lie supine on bench. Graph bar with overhand and slightly wider than shoulder width grip. Arch back, extend hips, and position feet back flat on floor. Dismount barbell from rack over chest.\n\nLower weight to lower chest. Press bar upwards until arms are extended. Repeat.',
@@ -261,7 +261,7 @@ final jmPress = Exercise(
   ..primaryMuscleGroups.addAll([triceps])
   ..secondaryMuscleGroups.addAll([frontDelts, chest]);
 
-final landmineObliqueTwist = Exercise(
+final landmineObliqueTwist = ExerciseEntity(
   name: 'Oblique Twist (Landmine)',
   description:
       'Stand with feet hip width apart. Hold barbell with both hands. Rotate torso to one side. Repeat.',
@@ -274,7 +274,7 @@ final landmineObliqueTwist = Exercise(
   ..primaryMuscleGroups.addAll([abs])
   ..secondaryMuscleGroups.addAll([frontDelts]);
 
-final barbellDeadlift = Exercise(
+final barbellDeadlift = ExerciseEntity(
   name: 'Conventional Deadlift (Barbell)',
   description:
       'Stand with feet hip width apart. Hold barbell with overhand grip. Hinge at hips and lower barbell to mid-shin. Extend hips and return to standing. Repeat.',
@@ -287,7 +287,7 @@ final barbellDeadlift = Exercise(
   ..primaryMuscleGroups.addAll([lowerBack, hamstrings])
   ..secondaryMuscleGroups.addAll([abs, forearms, glutes, lats, quads, midBack]);
 
-final seatedCalfRaise = Exercise(
+final seatedCalfRaise = ExerciseEntity(
   name: 'Seated Calf Raise (Machine)',
   description: 'Sit on calf raise machine. Raise heels upwards. Repeat.',
   engagement: Engagement.bilateral,
@@ -299,7 +299,7 @@ final seatedCalfRaise = Exercise(
   ..primaryMuscleGroups.addAll([calves])
   ..secondaryMuscleGroups.addAll([]);
 
-final smithMachineSquat = Exercise(
+final smithMachineSquat = ExerciseEntity(
   name: 'Squat (Smith Machine)',
   description:
       'Stand with feet hip width apart. Hold barbell with overhand grip. Squat downwards. Repeat.',
@@ -312,7 +312,7 @@ final smithMachineSquat = Exercise(
   ..primaryMuscleGroups.addAll([quads])
   ..secondaryMuscleGroups.addAll([abs, lowerBack, glutes, hamstrings]);
 
-final barbellPreacherCurl = Exercise(
+final barbellPreacherCurl = ExerciseEntity(
   name: 'Preacher Curl (Barbell)',
   description:
       'Sit on preacher bench. Hold barbell with underhand grip. Curl barbell upwards. Repeat.',
@@ -325,7 +325,7 @@ final barbellPreacherCurl = Exercise(
   ..primaryMuscleGroups.addAll([biceps])
   ..secondaryMuscleGroups.addAll([]);
 
-final krocRow = Exercise(
+final krocRow = ExerciseEntity(
   name: 'Kroc Row',
   description:
       'Stand with feet hip width apart. Hold dumbbell with overhand grip. Hinge at hips and lower dumbbell to mid-shin. Extend hips and return to standing. Repeat.',
@@ -338,7 +338,7 @@ final krocRow = Exercise(
   ..primaryMuscleGroups.addAll([lats, midBack])
   ..secondaryMuscleGroups.addAll([biceps, forearms, rearDelts]);
 
-final cableLateralRaise = Exercise(
+final cableLateralRaise = ExerciseEntity(
   name: 'Lateral Raise (Cable)',
   description:
       'Stand in front of cable machine. Hold handle with one hand. Raise arm to side. Repeat.',

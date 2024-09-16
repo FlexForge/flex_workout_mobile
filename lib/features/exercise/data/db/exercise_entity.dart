@@ -4,8 +4,8 @@ import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_ent
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Exercise {
-  Exercise({
+class ExerciseEntity {
+  ExerciseEntity({
     required this.name,
     required this.updatedAt,
     required this.createdAt,
@@ -68,7 +68,7 @@ class Exercise {
   }
 
   @Backlink('exercise')
-  final sets = ToMany<SetType>();
+  final sets = ToMany<SetTypeEntity>();
 
   @Property(type: PropertyType.date)
   DateTime updatedAt;
@@ -76,7 +76,7 @@ class Exercise {
   DateTime createdAt;
 }
 
-extension ConvertExercise on Exercise {
+extension ConvertExercise on ExerciseEntity {
   ExerciseModel toModel() => ExerciseModel(
         id: id,
         name: name,

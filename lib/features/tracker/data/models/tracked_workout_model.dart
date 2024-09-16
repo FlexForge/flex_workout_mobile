@@ -31,7 +31,7 @@ class TrackedWorkoutModel with _$TrackedWorkoutModel {
 }
 
 extension ConvertTrackedWorkoutModel on TrackedWorkoutModel {
-  TrackedWorkout toEntity() => TrackedWorkout(
+  TrackedWorkoutEntity toEntity() => TrackedWorkoutEntity(
         id: id,
         title: title,
         subtitle: subtitle,
@@ -53,7 +53,7 @@ class WorkoutSectionModel with _$WorkoutSectionModel {
 }
 
 extension ConvertWorkoutSectionModel on WorkoutSectionModel {
-  WorkoutSection toEntity() => WorkoutSection(
+  WorkoutSectionEntity toEntity() => WorkoutSectionEntity(
         title: title,
       )..organizers.addAll(organizers.map((e) => e.toEntity()).toList());
 }
@@ -70,7 +70,7 @@ class SetOrganizerModel with _$SetOrganizerModel {
 }
 
 extension ConvertSetOrganizerModel on SetOrganizerModel {
-  SetOrganizer toEntity() => SetOrganizer(
+  SetOrganizerEntity toEntity() => SetOrganizerEntity(
         setNumber: setNumber,
       )
         ..defaultSet.target = organization == SetOrganizationEnum.defaultSet
@@ -91,7 +91,7 @@ class SetTypeModel with _$SetTypeModel {
 }
 
 extension ConvertSetTypeModel on SetTypeModel {
-  SetType toEntity() => SetType(
+  SetTypeEntity toEntity() => SetTypeEntity(
         setLetter: setLetter,
       )
         ..exercise.target = exercise.toEntity()
@@ -110,7 +110,7 @@ class NormalSetModel with _$NormalSetModel {
 }
 
 extension ConvertNormalSetModel on NormalSetModel {
-  NormalSet toEntity() => NormalSet(
+  NormalSetEntity toEntity() => NormalSetEntity(
         reps: reps,
         load: load,
         units: units,

@@ -36,15 +36,15 @@ class ObjectBox {
   }
 
   void _putInitialPostData() {
-    store.box<Exercise>().putManyAsync(masterExercises);
+    store.box<ExerciseEntity>().putManyAsync(masterExercises);
   }
 
   void _resetData() {
-    store.box<Exercise>().removeAll();
+    store.box<ExerciseEntity>().removeAll();
     store.box<MuscleGroup>().removeAll();
-    store.box<TrackedWorkout>().removeAll();
+    store.box<TrackedWorkoutEntity>().removeAll();
     store.box<MuscleGroup>().putMany(muscleGroups);
-    store.box<TrackedWorkout>().put(exampleWorkout);
-    store.box<Exercise>().putManyAsync(masterExercises);
+    store.box<TrackedWorkoutEntity>().put(exampleWorkout);
+    store.box<ExerciseEntity>().putManyAsync(masterExercises);
   }
 }

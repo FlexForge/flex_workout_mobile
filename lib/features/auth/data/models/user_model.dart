@@ -22,7 +22,7 @@ class UserModel with _$UserModel {
 }
 
 extension ConvertUserModel on UserModel {
-  User toEntity() => User(
+  UserEntity toEntity() => UserEntity(
         firstName,
         lastName,
         email,

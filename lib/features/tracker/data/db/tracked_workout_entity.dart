@@ -4,8 +4,8 @@ import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class TrackedWorkout {
-  TrackedWorkout({
+class TrackedWorkoutEntity {
+  TrackedWorkoutEntity({
     required this.title,
     required this.subtitle,
     required this.durationInMinutes,
@@ -27,7 +27,7 @@ class TrackedWorkout {
   int durationInMinutes;
 
   @Backlink('workout')
-  final sections = ToMany<WorkoutSection>();
+  final sections = ToMany<WorkoutSectionEntity>();
 
   @Property(type: PropertyType.date)
   DateTime startTimestamp;
@@ -38,7 +38,7 @@ class TrackedWorkout {
   DateTime createdAt;
 }
 
-extension ConvertTrackedWorkout on TrackedWorkout {
+extension ConvertTrackedWorkout on TrackedWorkoutEntity {
   TrackedWorkoutModel toModel() => TrackedWorkoutModel(
         id: id,
         title: title,
@@ -53,8 +53,8 @@ extension ConvertTrackedWorkout on TrackedWorkout {
 }
 
 @Entity()
-class WorkoutSection {
-  WorkoutSection({
+class WorkoutSectionEntity {
+  WorkoutSectionEntity({
     required this.title,
     this.id = 0,
   });
@@ -64,13 +64,13 @@ class WorkoutSection {
 
   String title;
 
-  final workout = ToOne<TrackedWorkout>();
+  final workout = ToOne<TrackedWorkoutEntity>();
 
   @Backlink('section')
-  final organizers = ToMany<SetOrganizer>();
+  final organizers = ToMany<SetOrganizerEntity>();
 }
 
-extension ConvertWorkoutSection on WorkoutSection {
+extension ConvertWorkoutSection on WorkoutSectionEntity {
   WorkoutSectionModel toModel() => WorkoutSectionModel(
         id: id,
         title: title,
@@ -79,8 +79,8 @@ extension ConvertWorkoutSection on WorkoutSection {
 }
 
 @Entity()
-class SetOrganizer {
-  SetOrganizer({
+class SetOrganizerEntity {
+  SetOrganizerEntity({
     required this.setNumber,
     this.id = 0,
   });
@@ -90,15 +90,15 @@ class SetOrganizer {
 
   int setNumber;
 
-  final section = ToOne<WorkoutSection>();
+  final section = ToOne<WorkoutSectionEntity>();
 
   @Backlink('superOrganizer')
-  final superSet = ToMany<SetType>();
+  final superSet = ToMany<SetTypeEntity>();
 
-  final defaultSet = ToOne<SetType>();
+  final defaultSet = ToOne<SetTypeEntity>();
 }
 
-extension ConvertSetOrganizer on SetOrganizer {
+extension ConvertSetOrganizer on SetOrganizerEntity {
   SetOrganizerModel toModel() {
     SetOrganizationEnum organization;
 
@@ -119,8 +119,8 @@ extension ConvertSetOrganizer on SetOrganizer {
 }
 
 @Entity()
-class SetType {
-  SetType({
+class SetTypeEntity {
+  SetTypeEntity({
     this.setLetter,
     this.id = 0,
   });
@@ -130,14 +130,14 @@ class SetType {
 
   String? setLetter;
 
-  final exercise = ToOne<Exercise>();
+  final exercise = ToOne<ExerciseEntity>();
 
-  final superOrganizer = ToOne<SetOrganizer>();
+  final superOrganizer = ToOne<SetOrganizerEntity>();
 
-  final normalSet = ToOne<NormalSet>();
+  final normalSet = ToOne<NormalSetEntity>();
 }
 
-extension ConvertSetType on SetType {
+extension ConvertSetType on SetTypeEntity {
   SetTypeModel toModel() {
     const type = SetTypeEnum.normalSet;
 
@@ -152,8 +152,8 @@ extension ConvertSetType on SetType {
 }
 
 @Entity()
-class NormalSet {
-  NormalSet({
+class NormalSetEntity {
+  NormalSetEntity({
     required this.reps,
     required this.load,
     this.units = Units.lbs,
@@ -180,7 +180,7 @@ class NormalSet {
   }
 }
 
-extension ConvertNormalSet on NormalSet {
+extension ConvertNormalSet on NormalSetEntity {
   NormalSetModel toModel() => NormalSetModel(
         id: id,
         reps: reps,
