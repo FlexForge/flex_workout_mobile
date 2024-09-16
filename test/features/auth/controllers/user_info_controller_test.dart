@@ -8,7 +8,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks.dart';
 import '../../../utils.dart';
-import '../_stores/user_model_store.dart';
+import '../_stores/user_store.dart';
 
 void main() {
   late MockUserRepository mockUserRepository;

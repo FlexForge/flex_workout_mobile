@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/features/auth/data/models/user_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../_stores/user_model_store.dart';
+import '../../_stores/user_store.dart';
 
 void main() {
   group('UserModel', () {

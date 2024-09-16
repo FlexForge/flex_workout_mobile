@@ -1,3 +1,5 @@
+# ./scripts/test_with_full_coverage.sh 'flex_workout_mobile'
+
 file=test/coverage_helper_test.dart
 
 rm $file
