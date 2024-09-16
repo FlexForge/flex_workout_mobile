@@ -30,50 +30,46 @@ void main() {
     );
   }
 
-  group(
-    skip: 'Group is unimplemented',
-    'Providers',
-    () {
-      group('onboardingRepositoryProvider', () {
-        test('should throw error when prefs is null', () async {
-          SharedPreferences.setMockInitialValues({});
-          final pref = await SharedPreferences.getInstance();
-          final container = createOnboardingRepositoryProvider(pref);
+  group('Providers', () {
+    group('onboardingRepositoryProvider', () {
+      test('should throw error when prefs is null', () async {
+        SharedPreferences.setMockInitialValues({});
+        final pref = await SharedPreferences.getInstance();
+        final container = createOnboardingRepositoryProvider(pref);
 
-          try {
-            container.read(onboardingRepositoryProvider);
-          } catch (e) {
-            expect(
-              e.toString(),
-              'Failure.internalServerError'
-              '(message: Shared preferences not initialized)',
-            );
-          }
-        });
-
-        test('should return IsFirstLoadStore when prefs is NOT null', () async {
-          SharedPreferences.setMockInitialValues({
-            'is_first_load': true,
-          });
-          final pref = await SharedPreferences.getInstance();
-
-          final container = createOnboardingRepositoryProvider(pref);
-          final res = container.read(onboardingRepositoryProvider);
-
-          // ignore: inference_failure_on_function_invocation
-          expect(res.getIsFirstLoad(), right(true));
-        });
+        try {
+          container.read(onboardingRepositoryProvider);
+        } catch (e) {
+          expect(
+            e.toString(),
+            'Failure.internalServerError'
+            '(message: Shared preferences not initialized)',
+          );
+        }
       });
 
-      group('userRepositoryProvider', () {
-        test('should return UserRepository', () async {
-          final store = MockObjectBoxStore();
-          final container = createUserRepositoryProvider(store);
-          final res = container.read(userRepositoryProvider);
-
-          expect(res.store, store);
+      test('should return IsFirstLoadStore when prefs is NOT null', () async {
+        SharedPreferences.setMockInitialValues({
+          'is_first_load': true,
         });
+        final pref = await SharedPreferences.getInstance();
+
+        final container = createOnboardingRepositoryProvider(pref);
+        final res = container.read(onboardingRepositoryProvider);
+
+        // ignore: inference_failure_on_function_invocation
+        expect(res.getIsFirstLoad(), right(true));
       });
-    },
-  );
+    });
+
+    group('userRepositoryProvider', () {
+      test('should return UserRepository', () async {
+        final store = MockObjectBoxStore();
+        final container = createUserRepositoryProvider(store);
+        final res = container.read(userRepositoryProvider);
+
+        expect(res.store, store);
+      });
+    });
+  });
 }

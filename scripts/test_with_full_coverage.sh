@@ -9,7 +9,7 @@ find lib '!' -path '*theme*/*' '!' -path '*ui*/*' '!' -name '*.g.dart' '!' -name
 
 echo "void main() {}" >> $file
 
-very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random
+very_good test -j 4 --coverage --test-randomize-ordering-seed random
 lcov --remove coverage/lcov.info 'lib/core/theme/*' 'lib/db/*' 'lib/*/ui/*' 'lib/*/*.freezed.dart' 'lib/*/*.g.dart' 'lib/*/*.gform.dart' 'lib/*/*.mapper.dart'  -o coverage/lcov.info 
 genhtml coverage/lcov.info -o coverage/html
 open coverage/html/index.html
