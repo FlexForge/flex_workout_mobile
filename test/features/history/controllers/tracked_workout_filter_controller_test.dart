@@ -3,7 +3,7 @@ import 'package:flex_workout_mobile/features/history/controllers/tracked_workout
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../../test_old/utils.dart';
+import '../../../utils.dart';
 
 void main() {
   ProviderContainer createFilterContainer() {

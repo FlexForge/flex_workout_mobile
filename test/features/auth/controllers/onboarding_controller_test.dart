@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../test_old/utils.dart';
 import '../../../mocks.dart';
+import '../../../utils.dart';
 
 void main() {
   late MockOnboardingRepository mockOnboardingRepository;
