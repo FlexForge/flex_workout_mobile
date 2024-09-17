@@ -21,6 +21,8 @@ class FlexButton extends StatelessWidget {
     this.borderWidth = 2,
     this.enabled = true,
     this.expanded = false,
+    this.enableHaptics = true,
+    this.hapticFeedback = HapticFeedback.selectionClick,
     super.key,
   });
 
@@ -39,14 +41,18 @@ class FlexButton extends StatelessWidget {
   final double? borderRadius;
   final double borderWidth;
   final bool enabled;
+  final bool enableHaptics;
   final bool expanded;
+  final VoidCallback hapticFeedback;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: enabled && onPressed != null
           ? () {
-              HapticFeedback.selectionClick();
+              if (enableHaptics) {
+                hapticFeedback.call();
+              }
               onPressed?.call();
             }
           : null,
