@@ -28,7 +28,7 @@ class UserSetupFormStepThree extends ConsumerWidget {
       child: FormWrapper(
         backgroundColor: context.colors.backgroundPrimary,
         actionButtons: [
-          LargeButton(
+          FlexButton(
             onPressed: back,
             icon: Icons.chevron_left,
             backgroundColor: context.colors.backgroundSecondary,
@@ -36,7 +36,7 @@ class UserSetupFormStepThree extends ConsumerWidget {
           const SizedBox(width: AppLayout.p3),
           ReactiveUserFormConsumer(
             builder: (context, form, child) => Expanded(
-              child: LargeButton(
+              child: FlexButton(
                 enabled: form.sexControl?.valid ?? false,
                 onPressed: () {
                   ref.read(userFormControllerProvider.notifier).create();

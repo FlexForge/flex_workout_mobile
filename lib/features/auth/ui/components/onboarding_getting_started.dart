@@ -138,7 +138,7 @@ class OnboardingStepOne extends ConsumerWidget {
               const SizedBox(height: AppLayout.p4),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-                child: LargeButton(
+                child: FlexButton(
                   label: 'Get started now',
                   expanded: true,
                   onPressed: next,

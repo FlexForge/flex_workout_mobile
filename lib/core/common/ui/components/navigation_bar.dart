@@ -3,6 +3,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/resume_workout_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -111,7 +112,10 @@ class MainNavigationBar extends ConsumerWidget {
 
     return Expanded(
       child: TextButton(
-        onPressed: () => onItemTapped(index),
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          onItemTapped(index);
+        },
         style: TextButton.styleFrom(
           tapTargetSize: MaterialTapTargetSize.padded,
           padding: const EdgeInsets.all(8),

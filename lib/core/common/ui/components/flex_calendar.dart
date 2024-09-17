@@ -288,12 +288,12 @@ class _CalendarHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        LargeButton(
+        FlexButton(
           icon: Symbols.chevron_left,
           onPressed: onLeftArrowTap,
           backgroundColor: context.colors.backgroundSecondary,
         ),
-        LargeButton(
+        FlexButton(
           icon: Symbols.chevron_right,
           onPressed: onRightArrowTap,
           backgroundColor: context.colors.backgroundSecondary,

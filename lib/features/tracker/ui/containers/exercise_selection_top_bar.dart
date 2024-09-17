@@ -27,7 +27,7 @@ class ExerciseSelectionTopBar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppLayout.p2),
-          LargeButton(
+          FlexButton(
             onPressed: () {},
             icon: Icons.add,
             backgroundColor: context.colors.backgroundSecondary,

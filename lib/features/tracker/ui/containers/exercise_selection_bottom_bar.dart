@@ -39,7 +39,7 @@ class ExerciseSelectionBottomBar extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: items.length > 1 ? () => addSuperSet(items) : null,
                 label: 'Add as Superset',
                 backgroundColor: context.colors.backgroundSecondary,
@@ -50,7 +50,7 @@ class ExerciseSelectionBottomBar extends ConsumerWidget {
               width: AppLayout.p2,
             ),
             Expanded(
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: () => addExercise(items),
                 label: 'Add Exercises'
                     '${items.isNotEmpty ? ' (${items.length})' : ''}',

@@ -85,7 +85,7 @@ class SupersetSectionView extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppLayout.p4,
               ),
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: () => addSet(section),
                 expanded: true,
                 label: 'Add Set',

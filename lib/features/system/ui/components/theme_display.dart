@@ -2,6 +2,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_colors.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ThemeDisplay extends StatelessWidget {
   const ThemeDisplay({
@@ -58,7 +59,10 @@ class ThemeDisplay extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
             ),
             child: TextButton(
-              onPressed: onPressed,
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                onPressed?.call();
+              },
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
