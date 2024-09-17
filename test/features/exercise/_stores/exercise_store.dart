@@ -5,10 +5,10 @@ import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model
 import 'muscle_group_store.dart';
 
 class ExerciseModelGenerator {
-  static ExerciseModel single({DateTime? createdAt}) {
+  static ExerciseModel single({String? name, DateTime? createdAt}) {
     return ExerciseModel(
       id: faker.randomGenerator.integer(9999),
-      name: faker.person.name(),
+      name: name ?? faker.person.name(),
       description: faker.lorem.sentences(5).join(' '),
       videoUrl: faker.internet.httpsUrl(),
       equipment: Equipment.values[faker.randomGenerator.integer(8)],
