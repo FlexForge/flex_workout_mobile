@@ -61,7 +61,7 @@ void main() {
       );
 
       test(
-        'should return a map of exercises separated by first letter with a # key',
+        'should return a map of exercises with # key',
         () {
           final names = ['1 name', '2 name', 'D name', 'E name', '3 name'];
           final exercise = names
