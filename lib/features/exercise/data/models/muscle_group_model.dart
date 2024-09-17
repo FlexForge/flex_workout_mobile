@@ -15,7 +15,7 @@ class MuscleGroupModel with _$MuscleGroupModel {
 }
 
 extension ConvertMuscleGroupModel on MuscleGroupModel {
-  MuscleGroup toEntity() => MuscleGroup(
+  MuscleGroupEntity toEntity() => MuscleGroupEntity(
         id: id,
         name: name,
         diagramPathNames: diagramPathNames,

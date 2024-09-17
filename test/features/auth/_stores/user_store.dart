@@ -22,8 +22,8 @@ class UserModelGenerator {
 }
 
 class UserEntityGenerator {
-  static User single() {
-    return User(
+  static UserEntity single() {
+    return UserEntity(
       faker.person.firstName(),
       faker.person.lastName(),
       faker.internet.email(),

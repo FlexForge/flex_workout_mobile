@@ -28,8 +28,8 @@ class ExerciseModelGenerator {
 }
 
 class ExerciseEntityGenerator {
-  static Exercise single({DateTime? createdAt}) {
-    return Exercise(
+  static ExerciseEntity single({DateTime? createdAt}) {
+    return ExerciseEntity(
       id: faker.randomGenerator.integer(9999),
       name: faker.person.name(),
       description: faker.lorem.sentences(5).join(' '),
@@ -46,7 +46,7 @@ class ExerciseEntityGenerator {
           .addAll(MuscleGroupEntityGenerator.list(length: 3));
   }
 
-  static List<Exercise> list({required int length}) {
+  static List<ExerciseEntity> list({required int length}) {
     return List.generate(length, (index) => single());
   }
 }

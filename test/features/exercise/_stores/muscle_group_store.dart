@@ -19,8 +19,8 @@ class MuscleGroupModelGenerator {
 }
 
 class MuscleGroupEntityGenerator {
-  static MuscleGroup single({DateTime? createdAt}) {
-    return MuscleGroup(
+  static MuscleGroupEntity single({DateTime? createdAt}) {
+    return MuscleGroupEntity(
       id: faker.randomGenerator.integer(9999),
       name: faker.person.name(),
       diagramPathNames: [],
@@ -29,7 +29,7 @@ class MuscleGroupEntityGenerator {
     );
   }
 
-  static List<MuscleGroup> list({required int length}) {
+  static List<MuscleGroupEntity> list({required int length}) {
     return List.generate(length, (index) => single());
   }
 }

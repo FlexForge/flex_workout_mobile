@@ -2,8 +2,8 @@ import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_m
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class MuscleGroup {
-  MuscleGroup({
+class MuscleGroupEntity {
+  MuscleGroupEntity({
     required this.name,
     required this.diagramPathNames,
     required this.updatedAt,
@@ -23,7 +23,7 @@ class MuscleGroup {
   DateTime createdAt;
 }
 
-extension ConvertMuscleGroup on MuscleGroup {
+extension ConvertMuscleGroup on MuscleGroupEntity {
   MuscleGroupModel toModel() => MuscleGroupModel(
         id: id,
         name: name,

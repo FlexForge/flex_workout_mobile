@@ -25,8 +25,8 @@ class ExerciseEntity {
 
   String? videoUrl;
 
-  final primaryMuscleGroups = ToMany<MuscleGroup>();
-  final secondaryMuscleGroups = ToMany<MuscleGroup>();
+  final primaryMuscleGroups = ToMany<MuscleGroupEntity>();
+  final secondaryMuscleGroups = ToMany<MuscleGroupEntity>();
 
   @Transient()
   Engagement engagement;

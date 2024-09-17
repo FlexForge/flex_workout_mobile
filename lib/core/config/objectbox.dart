@@ -41,9 +41,9 @@ class ObjectBox {
 
   void _resetData() {
     store.box<ExerciseEntity>().removeAll();
-    store.box<MuscleGroup>().removeAll();
+    store.box<MuscleGroupEntity>().removeAll();
     store.box<TrackedWorkoutEntity>().removeAll();
-    store.box<MuscleGroup>().putMany(muscleGroups);
+    store.box<MuscleGroupEntity>().putMany(muscleGroups);
     store.box<TrackedWorkoutEntity>().put(exampleWorkout);
     store.box<ExerciseEntity>().putManyAsync(masterExercises);
   }
