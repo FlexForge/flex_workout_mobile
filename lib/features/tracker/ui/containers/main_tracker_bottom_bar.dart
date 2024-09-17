@@ -25,7 +25,7 @@ class MainTrackerBottomBar extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: next,
                 label: 'Finish',
                 icon: Symbols.check,

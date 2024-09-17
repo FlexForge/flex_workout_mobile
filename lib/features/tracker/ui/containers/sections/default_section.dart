@@ -70,7 +70,7 @@ class DefaultSectionView extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppLayout.p4,
               ),
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: addSet,
                 expanded: true,
                 label: 'Add Set',

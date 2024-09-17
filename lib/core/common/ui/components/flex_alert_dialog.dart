@@ -57,7 +57,7 @@ Future<void> showFlexAlertDialog(
           color: context.colors.foregroundPrimary,
         ),
         actions: <Widget>[
-          LargeButton(
+          FlexButton(
             label: cancelLabel ?? 'Cancel',
             backgroundColor: Colors.transparent,
             padding: const EdgeInsets.symmetric(
@@ -66,7 +66,7 @@ Future<void> showFlexAlertDialog(
             ),
             onPressed: () => context.pop(),
           ),
-          LargeButton(
+          FlexButton(
             label: actionLabel ?? 'Confirm',
             backgroundColor: context.colors.foregroundPrimary,
             foregroundColor: context.colors.backgroundPrimary,

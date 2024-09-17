@@ -42,14 +42,14 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            LargeButton(
+            FlexButton(
               onPressed: back,
               icon: Symbols.chevron_left,
               backgroundColor: context.colors.backgroundSecondary,
             ),
             const SizedBox(width: AppLayout.p2),
             Expanded(
-              child: LargeButton(
+              child: FlexButton(
                 onPressed: logWorkout,
                 label: 'Log Workout',
                 icon: Symbols.add_task,

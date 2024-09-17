@@ -58,7 +58,7 @@ class _MainTrackerScreenState extends ConsumerState<MainTrackerScreen> {
               const SizedBox(height: AppLayout.p3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-                child: LargeButton(
+                child: FlexButton(
                   onPressed: () {
                     DefaultSheetController.maybeOf(context)
                         ?.animateTo(const Extent.proportional(1));

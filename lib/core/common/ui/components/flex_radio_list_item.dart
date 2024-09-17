@@ -27,7 +27,7 @@ class RadioListItem extends StatelessWidget implements RadioListItemMixin {
 
   @override
   Widget build(BuildContext context) {
-    return LargeButton(
+    return FlexButton(
       onPressed: onPressed,
       borderColor:
           selected ? context.colors.foregroundPrimary : context.colors.divider,

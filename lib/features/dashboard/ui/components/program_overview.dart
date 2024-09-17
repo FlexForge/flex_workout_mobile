@@ -39,7 +39,7 @@ class ProgramOverview extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppLayout.p4),
-          LargeButton(
+          FlexButton(
             onPressed: () => {},
             label: 'Find a program',
             foregroundColor: context.colors.backgroundPrimary,
@@ -47,7 +47,7 @@ class ProgramOverview extends StatelessWidget {
             expanded: true,
           ),
           const SizedBox(height: AppLayout.p2),
-          LargeButton(
+          FlexButton(
             onPressed: () {},
             label: 'Start Empty Workout',
             backgroundColor: context.colors.backgroundTertiary,

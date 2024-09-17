@@ -9,6 +9,7 @@ import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -22,7 +23,10 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
     final workout = ref.watch(liveWorkoutControllerProvider);
 
     return TextButton(
-      onPressed: () => context.goNamed(TrackerScreen.routeName),
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        context.goNamed(TrackerScreen.routeName);
+      },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
@@ -49,7 +53,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LargeButton(
+                FlexButton(
                   onPressed: () => showFlexAlertDialog(
                     context,
                     title: 'Discard Workout',
@@ -89,7 +93,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
                     );
                   },
                 ),
-                LargeButton(
+                FlexButton(
                   icon: Symbols.resume,
                   iconSize: 24,
                   borderRadius: AppLayout.roundedRadius,

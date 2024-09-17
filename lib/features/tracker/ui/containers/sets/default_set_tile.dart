@@ -99,7 +99,7 @@ class _Completed extends StatelessWidget {
         ),
       ),
       suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
-      suffix: LargeButton(
+      suffix: FlexButton(
         label: 'Complete',
         icon: Symbols.done_all,
         iconSize: 16,
@@ -181,7 +181,7 @@ class _Incomplete extends StatelessWidget {
         ),
       ),
       suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
-      suffix: LargeButton(
+      suffix: FlexButton(
         label: 'Log set',
         icon: Symbols.edit,
         iconSize: 16,

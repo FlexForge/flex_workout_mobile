@@ -125,7 +125,7 @@ class NormalSetInputForm extends ConsumerWidget {
         const SizedBox(width: AppLayout.p4),
         ReactiveNormalSetFormConsumer(
           builder: (context, form, child) {
-            return LargeButton(
+            return FlexButton(
               onPressed: form.form.valid ? () => onSubmit(form) : null,
               icon: Symbols.check,
               iconSize: 16,

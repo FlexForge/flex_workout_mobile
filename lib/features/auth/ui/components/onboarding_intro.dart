@@ -53,7 +53,7 @@ class OnboardingIntro extends ConsumerWidget {
             ),
           ),
           const Spacer(),
-          LargeButton(
+          FlexButton(
             onPressed: next,
             backgroundColor: context.colors.foregroundPrimary,
             foregroundColor: context.colors.backgroundPrimary,

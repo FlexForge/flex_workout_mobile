@@ -57,7 +57,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                     items: const ['Programs', 'Workouts', 'Exercises'],
                   ),
                   const Spacer(),
-                  LargeButton(
+                  FlexButton(
                     icon: Symbols.add,
                     padding: const EdgeInsets.all(AppLayout.p3),
                     backgroundColor: context.colors.backgroundSecondary,

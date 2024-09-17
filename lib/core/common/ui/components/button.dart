@@ -1,9 +1,10 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class LargeButton extends StatelessWidget {
-  const LargeButton({
+class FlexButton extends StatelessWidget {
+  const FlexButton({
     this.label,
     this.icon,
     this.child,
@@ -20,6 +21,8 @@ class LargeButton extends StatelessWidget {
     this.borderWidth = 2,
     this.enabled = true,
     this.expanded = false,
+    this.enableHaptics = true,
+    this.hapticFeedback = HapticFeedback.selectionClick,
     super.key,
   });
 
@@ -38,12 +41,21 @@ class LargeButton extends StatelessWidget {
   final double? borderRadius;
   final double borderWidth;
   final bool enabled;
+  final bool enableHaptics;
   final bool expanded;
+  final VoidCallback hapticFeedback;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: enabled ? onPressed : null,
+      onPressed: enabled && onPressed != null
+          ? () {
+              if (enableHaptics) {
+                hapticFeedback.call();
+              }
+              onPressed?.call();
+            }
+          : null,
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
@@ -119,13 +131,13 @@ class SquareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        LargeButton(
+        FlexButton(
           icon: icon,
           iconSize: iconSize,
           padding: const EdgeInsets.all(AppLayout.p2),
           backgroundColor: context.colors.backgroundTertiary,
           foregroundColor: context.colors.foregroundPrimary,
-          onPressed: () => {},
+          onPressed: onPressed,
         ),
         const SizedBox(height: AppLayout.p1),
         Text(
