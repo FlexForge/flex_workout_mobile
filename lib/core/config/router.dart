@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flex_workout_mobile/core/common/ui/screens/error_screen.dart';
 import 'package:flex_workout_mobile/core/common/ui/screens/main_screen.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';

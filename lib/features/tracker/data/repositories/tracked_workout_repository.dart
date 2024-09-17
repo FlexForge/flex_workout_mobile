@@ -10,7 +10,7 @@ class TrackedWorkoutRepository {
 
   final Store store;
 
-  Box<TrackedWorkout> get box => store.box<TrackedWorkout>();
+  Box<TrackedWorkoutEntity> get box => store.box<TrackedWorkoutEntity>();
 
   Either<Failure, List<TrackedWorkoutModel>> getTrackedWorkouts() {
     try {
@@ -32,7 +32,7 @@ class TrackedWorkoutRepository {
 
       final totalMinutes = now.difference(workout.startTimestamp).inMinutes;
 
-      final workoutToAdd = TrackedWorkout(
+      final workoutToAdd = TrackedWorkoutEntity(
         title: title,
         subtitle: workout.subtitle,
         notes: notes,

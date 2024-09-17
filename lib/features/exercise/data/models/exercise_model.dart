@@ -22,7 +22,7 @@ class ExerciseModel with _$ExerciseModel {
 }
 
 extension ConvertExerciseModel on ExerciseModel {
-  Exercise toEntity() => Exercise(
+  ExerciseEntity toEntity() => ExerciseEntity(
         id: id,
         name: name,
         description: description,

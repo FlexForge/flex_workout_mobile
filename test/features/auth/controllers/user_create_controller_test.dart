@@ -19,7 +19,7 @@ void main() {
     mockUserRepository = MockUserRepository();
   });
 
-  ProviderContainer createUserCreateContainer() {
+  ProviderContainer createUserContainer() {
     return createContainer(
       overrides: [
         userRepositoryProvider.overrideWithValue(mockUserRepository),
@@ -28,16 +28,18 @@ void main() {
   }
 
   group('UserCreateController', () {
-    test('should return null on call', () {
-      final container = createUserCreateContainer();
-      final res = container.read(userCreateControllerProvider);
+    group('build', () {
+      test('should return null on call', () {
+        final container = createUserContainer();
+        final res = container.read(userCreateControllerProvider);
 
-      expect(res, null);
+        expect(res, null);
+      });
     });
-
     group('handle', () {
       final firstName = faker.person.firstName();
       final lastName = faker.person.lastName();
+
       final mockUser = User(
         name: '$firstName $lastName',
         email: faker.internet.email(),
@@ -65,11 +67,10 @@ void main() {
           ),
         ).thenReturn(right(expected));
 
-        final container = createUserCreateContainer();
-        container.read(userCreateControllerProvider.notifier).handle(inputForm);
+        final ref = createUserContainer();
+        ref.read(userCreateControllerProvider.notifier).handle(inputForm);
 
-        final res = container.read(userCreateControllerProvider);
-
+        final res = ref.read(userCreateControllerProvider);
         expect(res, expected);
       });
 
@@ -77,7 +78,7 @@ void main() {
         final inputUser = mockUser.copyWith(name: null);
         final inputForm = UserForm(UserForm.formElements(inputUser), null);
 
-        final container = createUserCreateContainer();
+        final container = createUserContainer();
         container.read(userCreateControllerProvider.notifier).handle(inputForm);
 
         final res = container.read(userCreateControllerProvider);
@@ -89,7 +90,7 @@ void main() {
         final inputUser = mockUser.copyWith(email: null);
         final inputForm = UserForm(UserForm.formElements(inputUser), null);
 
-        final container = createUserCreateContainer();
+        final container = createUserContainer();
         container.read(userCreateControllerProvider.notifier).handle(inputForm);
 
         final res = container.read(userCreateControllerProvider);
@@ -101,7 +102,7 @@ void main() {
         final inputUser = mockUser.copyWith(sex: null);
         final inputForm = UserForm(UserForm.formElements(inputUser), null);
 
-        final container = createUserCreateContainer();
+        final container = createUserContainer();
         container.read(userCreateControllerProvider.notifier).handle(inputForm);
 
         final res = container.read(userCreateControllerProvider);

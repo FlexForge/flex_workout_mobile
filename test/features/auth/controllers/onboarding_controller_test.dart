@@ -25,50 +25,51 @@ void main() {
   }
 
   group('OnboardingController', () {
-    test('should return true if first load', () {
-      when(
-        () => mockOnboardingRepository.getIsFirstLoad(),
-      ).thenReturn(right(true));
+    group('build', () {
+      test('should return true if first load', () {
+        when(() => mockOnboardingRepository.getIsFirstLoad())
+            .thenReturn(right(true));
 
-      final container = createOnboardingContainer();
-      final res = container.read(onboardingControllerProvider);
+        final container = createOnboardingContainer();
+        final res = container.read(onboardingControllerProvider);
 
-      final loadListener = isFirstLoadListener.value;
+        final loadListener = isFirstLoadListener.value;
 
-      expect(res, true);
-      expect(loadListener, true);
+        expect(res, true);
+        expect(loadListener, true);
+      });
     });
 
     group('setIsFirstLoad', () {
-      test('true', () async {
+      test('should set isFirstLoad to true', () async {
         when(
           () => mockOnboardingRepository.setIsFirstLoad(isFirstLoad: true),
         ).thenAnswer((_) => Future.value(right(true)));
 
-        final container = createOnboardingContainer();
-        await container
+        final ref = createOnboardingContainer();
+        await ref
             .read(onboardingControllerProvider.notifier)
             .setIsFirstLoad(isFirstLoad: true);
 
         final loadListener = isFirstLoadListener.value;
-        final res = container.read(onboardingControllerProvider);
+        final res = ref.read(onboardingControllerProvider);
 
         expect(res, true);
         expect(loadListener, true);
       });
 
-      test('false', () async {
+      test('should set isFirstLoad to false', () async {
         when(
           () => mockOnboardingRepository.setIsFirstLoad(isFirstLoad: false),
         ).thenAnswer((_) => Future.value(right(false)));
 
-        final container = createOnboardingContainer();
-        await container
+        final ref = createOnboardingContainer();
+        await ref
             .read(onboardingControllerProvider.notifier)
             .setIsFirstLoad(isFirstLoad: false);
 
         final loadListener = isFirstLoadListener.value;
-        final res = container.read(onboardingControllerProvider);
+        final res = ref.read(onboardingControllerProvider);
 
         expect(res, false);
         expect(loadListener, false);

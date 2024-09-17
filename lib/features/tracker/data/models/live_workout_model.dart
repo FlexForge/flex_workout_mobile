@@ -44,7 +44,7 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
   double getVolume(Units units);
   int getCompletedSets();
 
-  WorkoutSection toEntity();
+  WorkoutSectionEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -64,9 +64,7 @@ class LiveDefaultSectionModel
   @override
   List<ILiveSet> sets;
 
-  void generateTitle(ExerciseModel exercise) {
-    title = exercise.name;
-  }
+  void generateTitle(ExerciseModel exercise) => title = exercise.name;
 
   List<ILiveSet> get completedSets =>
       sets.where((element) => element.isComplete).toList();
@@ -88,12 +86,12 @@ class LiveDefaultSectionModel
   int getCompletedSets() => sets.where((element) => element.isComplete).length;
 
   @override
-  WorkoutSection toEntity() {
-    return WorkoutSection(
+  WorkoutSectionEntity toEntity() {
+    return WorkoutSectionEntity(
       title: title,
     )..organizers.addAll(
         completedSets.map(
-          (e) => SetOrganizer(setNumber: e.setIndex)
+          (e) => SetOrganizerEntity(setNumber: e.setIndex)
             ..defaultSet.target = e.toEntity(),
         ),
       );
@@ -148,12 +146,12 @@ class LiveSupersetSectionModel
       allSets.where((element) => element.isComplete).length;
 
   @override
-  WorkoutSection toEntity() {
-    return WorkoutSection(
+  WorkoutSectionEntity toEntity() {
+    return WorkoutSectionEntity(
       title: title,
     )..organizers.addAll(
         completeSetsMap.mapWithIndex(
-          (e, index) => SetOrganizer(setNumber: index)
+          (e, index) => SetOrganizerEntity(setNumber: index)
             ..superSet.addAll(e.values.map((e) => e.toEntity())),
         ),
       );
@@ -180,7 +178,7 @@ sealed class ILiveSet with ILiveSetMappable {
   final int setIndex;
   final String setString;
 
-  SetType toEntity();
+  SetTypeEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default_set')
@@ -221,10 +219,10 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   Widget display() => DefaultSetTile(set: this);
 
   @override
-  SetType toEntity() {
-    return SetType(setLetter: setString)
+  SetTypeEntity toEntity() {
+    return SetTypeEntity(setLetter: setString)
       ..exercise.target = exercise.toEntity()
-      ..normalSet.target = NormalSet(
+      ..normalSet.target = NormalSetEntity(
         reps: reps!,
         load: load!,
         units: units!,

@@ -1,6 +1,4 @@
-import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
-import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks.dart';
 import '../../../utils.dart';
+import '../_stores/exercise_store.dart';
 
 void main() {
   late MockExerciseRepository mockExerciseRepository;
@@ -17,7 +16,7 @@ void main() {
     mockExerciseRepository = MockExerciseRepository();
   });
 
-  ProviderContainer createExerciseListContainer() {
+  ProviderContainer createExerciseContainer() {
     return createContainer(
       overrides: [
         exerciseRepositoryProvider.overrideWithValue(mockExerciseRepository),
@@ -26,17 +25,19 @@ void main() {
   }
 
   group('ExerciseListController', () {
-    test('should return list of exercises on call', () {
-      final expected = masterExercises.map((e) => e.toModel()).toList();
+    group('build', () {
+      test('should return list of exercises on call', () {
+        final expected = ExerciseModelGenerator.list(length: 10);
 
-      when(
-        () => mockExerciseRepository.getExercises(),
-      ).thenReturn(right(expected));
+        when(
+          () => mockExerciseRepository.getExercises(),
+        ).thenReturn(right(expected));
 
-      final container = createExerciseListContainer();
-      final res = container.read(exerciseListControllerProvider);
+        final container = createExerciseContainer();
+        final res = container.read(exerciseListControllerProvider);
 
-      expect(res, expected);
+        expect(res, expected);
+      });
     });
   });
 }

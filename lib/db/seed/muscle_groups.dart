@@ -1,6 +1,6 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 
-final chest = MuscleGroup(
+final chest = MuscleGroupEntity(
   name: 'Chest',
   diagramPathNames: [
     'chest_left',
@@ -12,7 +12,7 @@ final chest = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final frontDelts = MuscleGroup(
+final frontDelts = MuscleGroupEntity(
   name: 'Front Delts',
   diagramPathNames: [
     'front_shoulder_left',
@@ -22,7 +22,7 @@ final frontDelts = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final midDelts = MuscleGroup(
+final midDelts = MuscleGroupEntity(
   name: 'Middle Delts',
   diagramPathNames: [
     'mid_shoulder_left',
@@ -32,7 +32,7 @@ final midDelts = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final rearDelts = MuscleGroup(
+final rearDelts = MuscleGroupEntity(
   name: 'Rear Delts',
   diagramPathNames: [
     'rear_shoulder_left',
@@ -42,21 +42,21 @@ final rearDelts = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final biceps = MuscleGroup(
+final biceps = MuscleGroupEntity(
   name: 'Biceps',
   diagramPathNames: ['bicep_left', 'bicep_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final triceps = MuscleGroup(
+final triceps = MuscleGroupEntity(
   name: 'Triceps',
   diagramPathNames: ['tricep_left', 'tricep_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final forearms = MuscleGroup(
+final forearms = MuscleGroupEntity(
   name: 'Forearms',
   diagramPathNames: [
     'forearm_bottom_left',
@@ -72,21 +72,21 @@ final forearms = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final lats = MuscleGroup(
+final lats = MuscleGroupEntity(
   name: 'Lats',
   diagramPathNames: ['lat_left', 'lat_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final trap = MuscleGroup(
+final trap = MuscleGroupEntity(
   name: 'Traps',
   diagramPathNames: ['trap_left', 'trap_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final midBack = MuscleGroup(
+final midBack = MuscleGroupEntity(
   name: 'Mid Back',
   diagramPathNames: [
     'infraspinatus_left',
@@ -98,21 +98,21 @@ final midBack = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final lowerBack = MuscleGroup(
+final lowerBack = MuscleGroupEntity(
   name: 'Lower Back',
   diagramPathNames: ['lower_back'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final neck = MuscleGroup(
+final neck = MuscleGroupEntity(
   name: 'Neck',
   diagramPathNames: ['neck_right', 'neck_left'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final abs = MuscleGroup(
+final abs = MuscleGroupEntity(
   name: 'Abs',
   diagramPathNames: [
     'oblique_1',
@@ -142,7 +142,7 @@ final abs = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final glutes = MuscleGroup(
+final glutes = MuscleGroupEntity(
   name: 'Glutes',
   diagramPathNames: [
     'glute_upper_left',
@@ -154,7 +154,7 @@ final glutes = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final hamstrings = MuscleGroup(
+final hamstrings = MuscleGroupEntity(
   name: 'Hamstrings',
   diagramPathNames: [
     'hamstring_1',
@@ -166,7 +166,7 @@ final hamstrings = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final quads = MuscleGroup(
+final quads = MuscleGroupEntity(
   name: 'Quads',
   diagramPathNames: [
     'quad_upper_left',
@@ -178,21 +178,21 @@ final quads = MuscleGroup(
   createdAt: DateTime.now(),
 );
 
-final abductors = MuscleGroup(
+final abductors = MuscleGroupEntity(
   name: 'Abductors',
   diagramPathNames: ['abductor_left', 'abductor_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final adductors = MuscleGroup(
+final adductors = MuscleGroupEntity(
   name: 'Adductors',
   diagramPathNames: ['adductor_left', 'adductor_right'],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 );
 
-final calves = MuscleGroup(
+final calves = MuscleGroupEntity(
   name: 'Calves',
   diagramPathNames: [
     'calve_left',

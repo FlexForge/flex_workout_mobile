@@ -9,9 +9,9 @@ class MockOnboardingRepository extends Mock implements OnboardingRepository {}
 
 class MockUserRepository extends Mock implements UserRepository {}
 
+class MockObjectBoxStore extends Mock implements Store {}
+
 class MockExerciseRepository extends Mock implements ExerciseRepository {}
 
 class MockTrackedWorkoutRepository extends Mock
     implements TrackedWorkoutRepository {}
-
-class MockObjectBoxStore extends Mock implements Store {}

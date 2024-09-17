@@ -8,7 +8,7 @@ class ExerciseRepository {
   ExerciseRepository({required this.store});
   final Store store;
 
-  Box<Exercise> get box => store.box<Exercise>();
+  Box<ExerciseEntity> get box => store.box<ExerciseEntity>();
 
   Either<Failure, List<ExerciseModel>> getExercises() {
     try {

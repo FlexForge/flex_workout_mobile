@@ -27,14 +27,13 @@ class Failure implements Exception {
 
   /// Get the error message for specified failure
   String get error {
-    if (this is _UnprocessableEntityFailure) {
-      return (this as _UnprocessableEntityFailure).message;
+    switch (this) {
+      case final _UnprocessableEntityFailure obj:
+        return obj.message;
+      case final _InternalServerErrorFailure obj:
+        return obj.message ?? '$this';
+      default:
+        return '$this';
     }
-
-    if (this is _InternalServerErrorFailure) {
-      return (this as _InternalServerErrorFailure).message ?? '$this';
-    }
-
-    return '$this';
   }
 }

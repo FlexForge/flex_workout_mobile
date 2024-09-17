@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../mocks.dart';
 import '../../utils.dart';
 
-void main() async {
+void main() {
   ProviderContainer createExerciseRepositoryProvider(Store store) {
     return createContainer(
       overrides: [
@@ -18,13 +18,15 @@ void main() async {
     );
   }
 
-  group('exerciseRepositoryProvider', () {
-    test('should return ExerciseRepository', () async {
-      final store = MockObjectBoxStore();
-      final container = createExerciseRepositoryProvider(store);
-      final res = container.read(exerciseRepositoryProvider);
+  group('Providers', () {
+    group('userRepositoryProvider', () {
+      test('should return UserRepository', () async {
+        final store = MockObjectBoxStore();
+        final container = createExerciseRepositoryProvider(store);
+        final res = container.read(exerciseRepositoryProvider);
 
-      expect(res.store, store);
+        expect(res.store, store);
+      });
     });
   });
 }
