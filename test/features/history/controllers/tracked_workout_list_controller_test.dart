@@ -25,7 +25,7 @@ void main() {
 
   group(
     skip: 'Group is unimplemented',
-    'TrackedWorkouttHistoryListToMap',
+    'TrackedWorkoutHistoryListToMap',
     () {
       group('toFullMap', () {});
 
