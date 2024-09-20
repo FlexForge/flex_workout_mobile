@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 
 part 'historic_workout_model.mapper.dart';
 
@@ -12,6 +13,7 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
     required this.id,
     required this.title,
     required this.subtitle,
+    required this.notes,
     required this.startTimestamp,
     required this.endTimestamp,
     required this.primaryMuscleGroups,
@@ -25,6 +27,7 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
   final int id;
   final String title;
   final String subtitle;
+  final String notes;
 
   final DateTime startTimestamp;
   final DateTime endTimestamp;
@@ -37,10 +40,25 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
 
   int get durationInMinutes =>
       startTimestamp.difference(endTimestamp).inMinutes;
+
+  HistoricWorkoutEntity toEntity() => HistoricWorkoutEntity(
+        id: id,
+        title: title,
+        subtitle: subtitle,
+        notes: notes,
+        startTimestamp: startTimestamp,
+        endTimestamp: endTimestamp,
+        updatedAt: updatedAt,
+        createdAt: createdAt,
+      )
+        ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
+        ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
 }
 
 @MappableClass(discriminatorKey: 'organization')
-class IHistoricSection with IHistoricSectionMappable {}
+sealed class IHistoricSection with IHistoricSectionMappable {
+  // HistoricSectionEntity toEntity();
+}
 
 @MappableClass(discriminatorValue: 'default')
 class HistoricDefaultSectionModel
@@ -69,7 +87,7 @@ class HistoricSupersetSectionModel
 }
 
 @MappableClass(discriminatorKey: 'type')
-class IHistoricSet with IHistoricSetMappable {}
+sealed class IHistoricSet with IHistoricSetMappable {}
 
 @MappableClass(discriminatorValue: 'superset')
 class HistoricDefaultSetModel
