@@ -1,5 +1,7 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
+import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -40,6 +42,24 @@ class HistoricWorkoutEntity {
   DateTime createdAt;
 }
 
+extension ConvertHistoricWorkout on HistoricWorkoutEntity {
+  HistoricWorkoutModel toModel() => HistoricWorkoutModel(
+        id: id,
+        title: title,
+        subtitle: subtitle,
+        notes: notes,
+        startTimestamp: startTimestamp,
+        endTimestamp: endTimestamp,
+        primaryMuscleGroups:
+            primaryMuscleGroups.map((e) => e.toModel()).toList(),
+        secondaryMuscleGroups:
+            secondaryMuscleGroups.map((e) => e.toModel()).toList(),
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        sections: sections.map((e) => e.toModel()).toList(),
+      );
+}
+
 @Entity()
 class HistoricSectionEntity {
   HistoricSectionEntity({this.id = 0});
@@ -51,6 +71,16 @@ class HistoricSectionEntity {
 
   final defaultSection = ToOne<HistoricDefaultSectionEntity>();
   final supersetSection = ToOne<HistoricSupersetSectionEntity>();
+}
+
+extension ConvertHistoricSection on HistoricSectionEntity {
+  IHistoricSection toModel() {
+    if (defaultSection.target != null) {
+      return defaultSection.target!.toModel();
+    } else {
+      return supersetSection.target!.toModel();
+    }
+  }
 }
 
 @Entity()
@@ -65,6 +95,16 @@ class HistoricDefaultSectionEntity {
   String title;
 
   final sets = ToMany<HistoricSetEntity>();
+}
+
+extension ConvertHistoricDefaultSection on HistoricDefaultSectionEntity {
+  IHistoricSection toModel() {
+    return HistoricDefaultSectionModel(
+      id: id,
+      title: title,
+      sets: sets.map((e) => e.toModel()).toList(),
+    );
+  }
 }
 
 @Entity()
@@ -82,6 +122,16 @@ class HistoricSupersetSectionEntity {
   final supersets = ToMany<HistoricSupersetWrapperEntity>();
 }
 
+extension ConvertHistoricSupersetSection on HistoricSupersetSectionEntity {
+  IHistoricSection toModel() {
+    return HistoricSupersetSectionModel(
+      id: id,
+      title: title,
+      sets: supersets.map((e) => e.toModel()).toList(),
+    );
+  }
+}
+
 @Entity()
 class HistoricSupersetWrapperEntity {
   HistoricSupersetWrapperEntity({this.id = 0});
@@ -94,6 +144,15 @@ class HistoricSupersetWrapperEntity {
   final sets = ToMany<HistoricSetEntity>();
 }
 
+extension ConvertHistoricSupersetWrapper on HistoricSupersetWrapperEntity {
+  Map<String, IHistoricSet> toModel() {
+    return {
+      for (final (index, e) in sets.indexed)
+        String.fromCharCode(65 + index): e.toModel(),
+    };
+  }
+}
+
 @Entity()
 class HistoricSetEntity {
   @Id()
@@ -103,6 +162,12 @@ class HistoricSetEntity {
   final supersetSection = ToOne<HistoricSupersetWrapperEntity>();
 
   final defaultSet = ToOne<HistoricDefaultSetEntity>();
+}
+
+extension ConvertHistoricSet on HistoricSetEntity {
+  IHistoricSet toModel() {
+    return defaultSet.target!.toModel();
+  }
 }
 
 @Entity()
@@ -122,4 +187,16 @@ class HistoricDefaultSetEntity {
   int units;
 
   final exercise = ToOne<ExerciseEntity>();
+}
+
+extension ConvertHistoricDefaultSet on HistoricDefaultSetEntity {
+  IHistoricSet toModel() {
+    return HistoricDefaultSetModel(
+      id: id,
+      reps: reps,
+      load: load,
+      units: Units.values[units],
+      exercise: exercise.target!.toModel(),
+    );
+  }
 }

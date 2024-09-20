@@ -1,14 +1,16 @@
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../_stores/historic_workout_store.dart';
 
 void main() {
   group('HistoricWorkoutModel', () {
-    test('toEntity', () {
+    test('should be unaffected by transformations', () {
       final model = HistoricWorkoutModelGenerator.single();
-      final res = model.toEntity();
+      final entity = model.toEntity();
+      final model2 = entity.toModel();
 
-      expect(res.id, model.id);
+      expect(model2, model);
     });
   });
 }
