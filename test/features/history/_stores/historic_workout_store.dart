@@ -20,7 +20,7 @@ class HistoricWorkoutModelGenerator {
       updatedAt: DateTime.now(),
       sections: IHistoricSectionGenerator.list(
         length: 4,
-        organization: [0, 0, 1, 0],
+        organization: [1, 0, 1, 0],
       ),
     );
   }

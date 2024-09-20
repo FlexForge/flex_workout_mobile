@@ -134,10 +134,11 @@ extension ConvertHistoricSupersetSection on HistoricSupersetSectionEntity {
 
 @Entity()
 class HistoricSupersetWrapperEntity {
-  HistoricSupersetWrapperEntity({this.id = 0});
+  HistoricSupersetWrapperEntity({required this.superSetString, this.id = 0});
 
   @Id()
   int id = 0;
+  List<String> superSetString;
 
   final supersetSection = ToOne<HistoricSupersetSectionEntity>();
 
@@ -147,8 +148,7 @@ class HistoricSupersetWrapperEntity {
 extension ConvertHistoricSupersetWrapper on HistoricSupersetWrapperEntity {
   Map<String, IHistoricSet> toModel() {
     return {
-      for (final (index, e) in sets.indexed)
-        String.fromCharCode(65 + index): e.toModel(),
+      for (final (index, e) in sets.indexed) superSetString[index]: e.toModel(),
     };
   }
 }

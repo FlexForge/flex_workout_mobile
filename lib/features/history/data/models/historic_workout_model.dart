@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
+import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
@@ -58,6 +59,7 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
 
 @MappableClass(discriminatorKey: 'organization')
 sealed class IHistoricSection with IHistoricSectionMappable {
+  dynamic bestSet();
   HistoricSectionEntity toEntity();
 }
 
@@ -74,6 +76,16 @@ class HistoricDefaultSectionModel
   final int id;
   final String title;
   List<IHistoricSet> sets;
+
+  @override
+  IHistoricSet bestSet() {
+    return sets.fold(sets.first, (previousValue, element) {
+      if (element.getVolume() > previousValue.getVolume()) {
+        return element;
+      }
+      return previousValue;
+    });
+  }
 
   @override
   HistoricSectionEntity toEntity() {
@@ -99,13 +111,35 @@ class HistoricSupersetSectionModel
   List<Map<String, IHistoricSet>> sets;
 
   @override
+  Map<String, IHistoricSet> bestSet() {
+    final bestSets = <String, IHistoricSet>{};
+
+    for (final set in sets) {
+      for (final entry in set.entries) {
+        if (!bestSets.containsKey(entry.key)) {
+          bestSets[entry.key] = entry.value;
+          continue;
+        }
+
+        if (entry.value.getVolume() > bestSets[entry.key]!.getVolume()) {
+          bestSets[entry.key] = entry.value;
+        }
+      }
+    }
+
+    return bestSets;
+  }
+
+  @override
   HistoricSectionEntity toEntity() {
     final supersetSection = HistoricSupersetSectionEntity(id: id, title: title)
       ..supersets.addAll(
         sets
             .map(
-              (e) => HistoricSupersetWrapperEntity(id: id)
-                ..sets.addAll(e.values.map((e) => e.toEntity())),
+              (e) => HistoricSupersetWrapperEntity(
+                id: id,
+                superSetString: e.keys.toList(),
+              )..sets.addAll(e.values.map((e) => e.toEntity())),
             )
             .toList(),
       );
@@ -116,6 +150,7 @@ class HistoricSupersetSectionModel
 
 @MappableClass(discriminatorKey: 'type')
 sealed class IHistoricSet with IHistoricSetMappable {
+  double getVolume({Units units = Units.kgs});
   HistoricSetEntity toEntity();
 }
 
@@ -137,6 +172,13 @@ class HistoricDefaultSetModel
   final Units units;
 
   final ExerciseModel exercise;
+
+  double get loadInKg => (units == Units.kgs) ? load : lbsToKgs(load);
+  double get loadInLbs => (units == Units.lbs) ? load : kgsToLbs(load);
+
+  @override
+  double getVolume({Units units = Units.kgs}) =>
+      (units == Units.kgs) ? loadInKg * reps : loadInLbs * reps;
 
   @override
   HistoricSetEntity toEntity() {
