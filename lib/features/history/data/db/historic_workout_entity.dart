@@ -42,6 +42,8 @@ class HistoricWorkoutEntity {
 
 @Entity()
 class HistoricSectionEntity {
+  HistoricSectionEntity({this.id = 0});
+
   @Id()
   int id = 0;
 
@@ -80,9 +82,10 @@ class HistoricSupersetSectionEntity {
   final supersets = ToMany<HistoricSupersetWrapperEntity>();
 }
 
-// Contains the sets within each superset
 @Entity()
 class HistoricSupersetWrapperEntity {
+  HistoricSupersetWrapperEntity({this.id = 0});
+
   @Id()
   int id = 0;
 

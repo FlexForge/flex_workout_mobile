@@ -66,18 +66,21 @@ class HistoricDefaultSectionModel
     with HistoricDefaultSectionModelMappable
     implements IHistoricSection {
   HistoricDefaultSectionModel({
+    required this.id,
     required this.title,
     required this.sets,
   });
 
+  final int id;
   final String title;
   List<IHistoricSet> sets;
 
   @override
   HistoricSectionEntity toEntity() {
-    final defaultSection = HistoricDefaultSectionEntity(title: title)
+    final defaultSection = HistoricDefaultSectionEntity(id: id, title: title)
       ..sets.addAll(sets.map((e) => e.toEntity()));
-    return HistoricSectionEntity()..defaultSection.target = defaultSection;
+    return HistoricSectionEntity(id: id)
+      ..defaultSection.target = defaultSection;
   }
 }
 
@@ -86,25 +89,28 @@ class HistoricSupersetSectionModel
     with HistoricSupersetSectionModelMappable
     implements IHistoricSection {
   HistoricSupersetSectionModel({
+    required this.id,
     required this.title,
     required this.sets,
   });
 
+  final int id;
   final String title;
   List<Map<String, IHistoricSet>> sets;
 
   @override
   HistoricSectionEntity toEntity() {
-    final supersetSection = HistoricSupersetSectionEntity(title: title)
+    final supersetSection = HistoricSupersetSectionEntity(id: id, title: title)
       ..supersets.addAll(
         sets
             .map(
-              (e) => HistoricSupersetWrapperEntity()
+              (e) => HistoricSupersetWrapperEntity(id: id)
                 ..sets.addAll(e.values.map((e) => e.toEntity())),
             )
             .toList(),
       );
-    return HistoricSectionEntity()..supersetSection.target = supersetSection;
+    return HistoricSectionEntity(id: id)
+      ..supersetSection.target = supersetSection;
   }
 }
 
@@ -118,12 +124,14 @@ class HistoricDefaultSetModel
     with HistoricDefaultSetModelMappable
     implements IHistoricSet {
   HistoricDefaultSetModel({
+    required this.id,
     required this.reps,
     required this.load,
     required this.units,
     required this.exercise,
   });
 
+  final int id;
   final int reps;
   final double load;
   final Units units;
@@ -133,6 +141,7 @@ class HistoricDefaultSetModel
   @override
   HistoricSetEntity toEntity() {
     final defaultSet = HistoricDefaultSetEntity(
+      id: id,
       reps: reps,
       load: load,
       units: units.index,
