@@ -419,21 +419,19 @@
           "id": "2:4221212453031717105",
           "name": "title",
           "type": 9
-        },
-        {
-          "id": "3:5826354698846094210",
-          "name": "sectionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "16:589604970984044401",
-          "relationTarget": "HistoricSectionEntity"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "11:3398551887238120830",
+          "name": "sets",
+          "targetId": "24:5167237900721500425"
+        }
+      ]
     },
     {
       "id": "21:7541243575752127441",
-      "lastPropertyId": "2:6572500250538842406",
+      "lastPropertyId": "4:1557499091022444023",
       "name": "HistoricSectionEntity",
       "properties": [
         {
@@ -449,6 +447,22 @@
           "flags": 520,
           "indexId": "17:1687134400909290047",
           "relationTarget": "HistoricWorkoutEntity"
+        },
+        {
+          "id": "3:6734885760156182418",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "19:7637502086323272219",
+          "relationTarget": "HistoricDefaultSectionEntity"
+        },
+        {
+          "id": "4:1557499091022444023",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "20:8163713624073575850",
+          "relationTarget": "HistoricSupersetSectionEntity"
         }
       ],
       "relations": []
@@ -468,22 +482,117 @@
           "id": "2:5916659394619849892",
           "name": "title",
           "type": 9
-        },
-        {
-          "id": "3:8840166711687597690",
-          "name": "sectionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "18:5074062409433759446",
-          "relationTarget": "HistoricSectionEntity"
         }
       ],
       "relations": []
+    },
+    {
+      "id": "23:5664710869213576884",
+      "lastPropertyId": "5:3213894126262483105",
+      "name": "HistoricDefaultSetEntity",
+      "properties": [
+        {
+          "id": "1:6371943518416528669",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2652642639319269557",
+          "name": "reps",
+          "type": 6
+        },
+        {
+          "id": "3:4107832614818486558",
+          "name": "load",
+          "type": 8
+        },
+        {
+          "id": "4:5591795912682761816",
+          "name": "units",
+          "type": 6
+        },
+        {
+          "id": "5:3213894126262483105",
+          "name": "exerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "23:4271657603784431830",
+          "relationTarget": "ExerciseEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "24:5167237900721500425",
+      "lastPropertyId": "4:5125405662603495384",
+      "name": "HistoricSetEntity",
+      "properties": [
+        {
+          "id": "1:1682346383805889473",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8123823954451405078",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "21:4110225039425522778",
+          "relationTarget": "HistoricDefaultSectionEntity"
+        },
+        {
+          "id": "3:4222781306855080722",
+          "name": "defaultSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "22:1272617020281495010",
+          "relationTarget": "HistoricDefaultSetEntity"
+        },
+        {
+          "id": "4:5125405662603495384",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "24:8446691940615966839",
+          "relationTarget": "HistoricSupersetWrapperEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "25:4150153300339377668",
+      "lastPropertyId": "2:3082444233309259024",
+      "name": "HistoricSupersetWrapperEntity",
+      "properties": [
+        {
+          "id": "1:875036350842801368",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3082444233309259024",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "25:735209876416700269",
+          "relationTarget": "HistoricSupersetSectionEntity"
+        }
+      ],
+      "relations": [
+        {
+          "id": "12:4878345826469070159",
+          "name": "sets",
+          "targetId": "24:5167237900721500425"
+        }
+      ]
     }
   ],
-  "lastEntityId": "22:7818935083394582688",
-  "lastIndexId": "18:5074062409433759446",
-  "lastRelationId": "10:8000109508733559477",
+  "lastEntityId": "25:4150153300339377668",
+  "lastIndexId": "25:735209876416700269",
+  "lastRelationId": "12:4878345826469070159",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -502,7 +611,9 @@
   "retiredIndexUids": [
     3425524962653332862,
     693240549055198901,
-    4014531425032126911
+    4014531425032126911,
+    589604970984044401,
+    5074062409433759446
   ],
   "retiredPropertyUids": [
     1908559708726607211,
@@ -592,7 +703,9 @@
     7201401242415370606,
     7521451397244145199,
     4970087725282634009,
-    8725679368810692080
+    8725679368810692080,
+    5826354698846094210,
+    8840166711687597690
   ],
   "retiredRelationUids": [
     2584876106965066276,

@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -43,7 +44,11 @@ class HistoricWorkoutEntity {
 class HistoricSectionEntity {
   @Id()
   int id = 0;
+
   final workout = ToOne<HistoricWorkoutEntity>();
+
+  final defaultSection = ToOne<HistoricDefaultSectionEntity>();
+  final supersetSection = ToOne<HistoricSupersetSectionEntity>();
 }
 
 @Entity()
@@ -57,7 +62,7 @@ class HistoricDefaultSectionEntity {
   int id = 0;
   String title;
 
-  final section = ToOne<HistoricSectionEntity>();
+  final sets = ToMany<HistoricSetEntity>();
 }
 
 @Entity()
@@ -71,5 +76,47 @@ class HistoricSupersetSectionEntity {
   int id = 0;
   String title;
 
-  final section = ToOne<HistoricSectionEntity>();
+  @Backlink('supersetSection')
+  final supersets = ToMany<HistoricSupersetWrapperEntity>();
+}
+
+// Contains the sets within each superset
+@Entity()
+class HistoricSupersetWrapperEntity {
+  @Id()
+  int id = 0;
+
+  final supersetSection = ToOne<HistoricSupersetSectionEntity>();
+
+  final sets = ToMany<HistoricSetEntity>();
+}
+
+@Entity()
+class HistoricSetEntity {
+  @Id()
+  int id = 0;
+
+  final defaultSection = ToOne<HistoricDefaultSectionEntity>();
+  final supersetSection = ToOne<HistoricSupersetWrapperEntity>();
+
+  final defaultSet = ToOne<HistoricDefaultSetEntity>();
+}
+
+@Entity()
+class HistoricDefaultSetEntity {
+  HistoricDefaultSetEntity({
+    required this.reps,
+    required this.load,
+    required this.units,
+    this.id = 0,
+  });
+
+  @Id()
+  int id = 0;
+
+  int reps;
+  double load;
+  int units;
+
+  final exercise = ToOne<ExerciseEntity>();
 }

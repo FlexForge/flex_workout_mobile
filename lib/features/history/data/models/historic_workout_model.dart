@@ -52,12 +52,13 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
         createdAt: createdAt,
       )
         ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
-        ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
+        ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity())
+        ..sections.addAll(sections.map((e) => e.toEntity()));
 }
 
 @MappableClass(discriminatorKey: 'organization')
 sealed class IHistoricSection with IHistoricSectionMappable {
-  // HistoricSectionEntity toEntity();
+  HistoricSectionEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -71,6 +72,13 @@ class HistoricDefaultSectionModel
 
   final String title;
   List<IHistoricSet> sets;
+
+  @override
+  HistoricSectionEntity toEntity() {
+    final defaultSection = HistoricDefaultSectionEntity(title: title)
+      ..sets.addAll(sets.map((e) => e.toEntity()));
+    return HistoricSectionEntity()..defaultSection.target = defaultSection;
+  }
 }
 
 @MappableClass(discriminatorValue: 'superset')
@@ -84,12 +92,28 @@ class HistoricSupersetSectionModel
 
   final String title;
   List<Map<String, IHistoricSet>> sets;
+
+  @override
+  HistoricSectionEntity toEntity() {
+    final supersetSection = HistoricSupersetSectionEntity(title: title)
+      ..supersets.addAll(
+        sets
+            .map(
+              (e) => HistoricSupersetWrapperEntity()
+                ..sets.addAll(e.values.map((e) => e.toEntity())),
+            )
+            .toList(),
+      );
+    return HistoricSectionEntity()..supersetSection.target = supersetSection;
+  }
 }
 
 @MappableClass(discriminatorKey: 'type')
-sealed class IHistoricSet with IHistoricSetMappable {}
+sealed class IHistoricSet with IHistoricSetMappable {
+  HistoricSetEntity toEntity();
+}
 
-@MappableClass(discriminatorValue: 'superset')
+@MappableClass(discriminatorValue: 'default')
 class HistoricDefaultSetModel
     with HistoricDefaultSetModelMappable
     implements IHistoricSet {
@@ -101,8 +125,18 @@ class HistoricDefaultSetModel
   });
 
   final int reps;
-  final int load;
+  final double load;
   final Units units;
 
   final ExerciseModel exercise;
+
+  @override
+  HistoricSetEntity toEntity() {
+    final defaultSet = HistoricDefaultSetEntity(
+      reps: reps,
+      load: load,
+      units: units.index,
+    )..exercise.target = exercise.toEntity();
+    return HistoricSetEntity()..defaultSet.target = defaultSet;
+  }
 }
