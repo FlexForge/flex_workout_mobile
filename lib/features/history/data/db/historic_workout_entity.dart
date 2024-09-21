@@ -56,7 +56,8 @@ extension ConvertHistoricWorkout on HistoricWorkoutEntity {
             secondaryMuscleGroups.map((e) => e.toModel()).toList(),
         createdAt: createdAt,
         updatedAt: updatedAt,
-        sections: sections.map((e) => e.toModel()).toList(),
+        sections: [],
+        // sections: sections.map((e) => e.toModel()).toList(),
       );
 }
 
@@ -155,6 +156,8 @@ extension ConvertHistoricSupersetWrapper on HistoricSupersetWrapperEntity {
 
 @Entity()
 class HistoricSetEntity {
+  HistoricSetEntity({this.id = 0});
+
   @Id()
   int id = 0;
 

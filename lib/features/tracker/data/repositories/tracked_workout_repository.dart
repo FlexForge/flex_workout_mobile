@@ -40,7 +40,7 @@ class TrackedWorkoutRepository {
         startTimestamp: workout.startTimestamp,
         updatedAt: now,
         createdAt: now,
-      )..sections.addAll(workout.sections.map((e) => e.toEntity()).toList());
+      );
 
       final id = box.put(workoutToAdd);
 

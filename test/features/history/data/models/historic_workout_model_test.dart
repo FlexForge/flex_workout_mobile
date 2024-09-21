@@ -9,8 +9,11 @@ void main() {
       final model = HistoricWorkoutModelGenerator.single();
       final entity = model.toEntity();
       final model2 = entity.toModel();
+      final entity2 = model2.toEntity();
+      final model3 = entity2.toModel();
 
       expect(model2, model);
+      expect(entity2, entity);
     });
   });
 }

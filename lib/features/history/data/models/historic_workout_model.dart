@@ -188,6 +188,8 @@ class HistoricDefaultSetModel
       load: load,
       units: units.index,
     )..exercise.target = exercise.toEntity();
-    return HistoricSetEntity()..defaultSet.target = defaultSet;
+    final defaultSetEntity = HistoricSetEntity()
+      ..defaultSet.target = defaultSet;
+    return defaultSetEntity;
   }
 }

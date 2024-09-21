@@ -3,12 +3,11 @@ import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flex_workout_mobile/features/tracker/data/db/tracked_workout_entity.dart';
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/default_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/superset_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 
 part 'live_workout_model.mapper.dart';
 
@@ -44,7 +43,7 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
   double getVolume(Units units);
   int getCompletedSets();
 
-  WorkoutSectionEntity toEntity();
+  HistoricSectionEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -86,15 +85,10 @@ class LiveDefaultSectionModel
   int getCompletedSets() => sets.where((element) => element.isComplete).length;
 
   @override
-  WorkoutSectionEntity toEntity() {
-    return WorkoutSectionEntity(
-      title: title,
-    )..organizers.addAll(
-        completedSets.map(
-          (e) => SetOrganizerEntity(setNumber: e.setIndex)
-            ..defaultSet.target = e.toEntity(),
-        ),
-      );
+  HistoricSectionEntity toEntity() {
+    final defaultSection = HistoricDefaultSectionEntity(title: title)
+      ..sets.addAll(completedSets.map((e) => e.toEntity()));
+    return HistoricSectionEntity()..defaultSection.target = defaultSection;
   }
 }
 
@@ -146,15 +140,18 @@ class LiveSupersetSectionModel
       allSets.where((element) => element.isComplete).length;
 
   @override
-  WorkoutSectionEntity toEntity() {
-    return WorkoutSectionEntity(
-      title: title,
-    )..organizers.addAll(
-        completeSetsMap.mapWithIndex(
-          (e, index) => SetOrganizerEntity(setNumber: index)
-            ..superSet.addAll(e.values.map((e) => e.toEntity())),
-        ),
+  HistoricSectionEntity toEntity() {
+    final supersetSection = HistoricSupersetSectionEntity(title: title)
+      ..supersets.addAll(
+        completeSetsMap
+            .map(
+              (e) => HistoricSupersetWrapperEntity(
+                superSetString: e.keys.toList(),
+              )..sets.addAll(e.values.map((e) => e.toEntity())),
+            )
+            .toList(),
       );
+    return HistoricSectionEntity()..supersetSection.target = supersetSection;
   }
 }
 
@@ -178,7 +175,7 @@ sealed class ILiveSet with ILiveSetMappable {
   final int setIndex;
   final String setString;
 
-  SetTypeEntity toEntity();
+  HistoricSetEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default_set')
@@ -219,13 +216,13 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
   Widget display() => DefaultSetTile(set: this);
 
   @override
-  SetTypeEntity toEntity() {
-    return SetTypeEntity(setLetter: setString)
-      ..exercise.target = exercise.toEntity()
-      ..normalSet.target = NormalSetEntity(
-        reps: reps!,
-        load: load!,
-        units: units!,
-      );
+  HistoricSetEntity toEntity() {
+    final defaultSet = HistoricDefaultSetEntity(
+      reps: reps!,
+      load: load!,
+      units: units!.index,
+    )..exercise.target = exercise.toEntity();
+    final setToAdd = HistoricSetEntity()..defaultSet.target = defaultSet;
+    return setToAdd;
   }
 }

@@ -1,21 +1,17 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/core/utils/functions.dart';
-import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class WorkoutHistoryListTile extends StatelessWidget {
   const WorkoutHistoryListTile({required this.workout, super.key});
 
-  final TrackedWorkoutModel workout;
+  final HistoricWorkoutModel workout;
 
   @override
   Widget build(BuildContext context) {
-    final sections = workout.sections.toWorkoutHistoryTable();
-
     return Section(
       subHeader: workout.title,
       body: Container(
@@ -98,72 +94,87 @@ class WorkoutHistoryListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                ...sections.map(
-                  (e) => TableRow(
-                    decoration: e.superSetIndex != null
-                        ? BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: getColorFromIndex(
-                                  context,
-                                  e.superSetIndex!,
-                                ),
-                                width: 4,
-                              ),
-                            ),
-                          )
-                        : null,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: e.superSetIndex != null ? AppLayout.p3 : 0,
-                          top:
-                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
-                          bottom: AppLayout.p1,
-                        ),
-                        child: Text(
-                          e.title,
-                          style: context.typography.labelMedium.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top:
-                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
-                          bottom: AppLayout.p1,
-                          left: AppLayout.p3,
-                        ),
-                        child: Text(
-                          e.sets.toString(),
-                          textAlign: TextAlign.end,
-                          style: context.typography.labelMedium,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top:
-                              sections.first != e ? AppLayout.p1 : AppLayout.p2,
-                          bottom: AppLayout.p1,
-                          left: AppLayout.p3,
-                        ),
-                        child: Text(
-                          e.bestSet,
-                          textAlign: TextAlign.end,
-                          style: context.typography.labelMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // ...workout.sections.map(
+                //   (e) {
+                //     switch (e) {
+                //       case final HistoricDefaultSectionModel obj:
+                //         return _defaultSectionRow(
+                //           context,
+                //           defaultSet: obj.bestSet(),
+                //           numberOfSets: obj.sets.length,
+                //         );
+                //       case final HistoricSupersetSectionModel obj:
+                //         return [0, 1].map((_) => TableRow(children: [
+                //               Text('Test'),
+                //               Text(''),
+                //               Text(''),
+                //             ]));
+                //     }
+                //   },
+                // ),
               ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  TableRow _defaultSectionRow(
+    BuildContext context, {
+    required IHistoricSet defaultSet,
+    required int numberOfSets,
+  }) {
+    switch (defaultSet) {
+      case final HistoricDefaultSetModel obj:
+        return TableRow(
+          children: [
+            ..._defaultSetRow(
+              context,
+              defaultSet: obj,
+              numberOfSets: numberOfSets,
+            ),
+          ],
+        );
+    }
+  }
+
+  TableRow _supersetSectionRow({
+    required Map<String, IHistoricSet> bestSets,
+  }) {
+    return TableRow(
+      children: [
+        Text('Test'),
+        Text(''),
+        Text(''),
+      ],
+    );
+  }
+
+  List<Widget> _defaultSetRow(
+    BuildContext context, {
+    required HistoricDefaultSetModel defaultSet,
+    required int numberOfSets,
+  }) {
+    return [
+      Text(
+        defaultSet.exercise.name,
+        style: context.typography.labelMedium.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      Text(
+        numberOfSets.toString(),
+        textAlign: TextAlign.end,
+        style: context.typography.labelMedium,
+      ),
+      Text(
+        defaultSet.load.toString(),
+        textAlign: TextAlign.end,
+        style: context.typography.labelMedium,
+      ),
+    ];
   }
 }

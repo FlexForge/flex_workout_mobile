@@ -1,8 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
+import 'package:flex_workout_mobile/features/history/ui/components/historic_workout_tile.dart';
 import 'package:flex_workout_mobile/features/history/ui/components/workout_history_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,19 +15,13 @@ class WorkoutHistoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedDay = ref.watch(trackedWorkoutFilterControllerProvider);
-    final workoutList = ref.watch(trackedWorkoutListControllerProvider);
+    final historicWorkoutsList =
+        ref.watch(historicWorkoutListControllerProvider);
 
-    final workouts = selectedDay != null
-        ? workoutList.toSingleMap(selectedDay: selectedDay)
-        : workoutList.toFullMap();
-
-    return workouts.isEmpty
+    return historicWorkoutsList.isEmpty
         ? SliverToBoxAdapter(
             child: Section(
-              header: selectedDay != null
-                  ? DateFormat.yMMMMEEEEd().format(selectedDay)
-                  : DateFormat.yMMMM().format(DateTime.now()),
+              header: DateFormat.yMMMM().format(DateTime.now()),
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               body: Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
@@ -42,38 +38,40 @@ class WorkoutHistoryList extends ConsumerWidget {
             ),
           )
         : SliverList.builder(
-            itemCount: workouts.length,
+            itemCount: historicWorkoutsList.length,
             itemBuilder: (context, index) {
-              final section = workouts.entries.toList()[index];
+              final workout = historicWorkoutsList[index];
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      section.key,
-                      style: context.typography.headlineMedium
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: AppLayout.p3),
-                    ListView.separated(
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: section.value.length,
-                      itemBuilder: (context, index) {
-                        final workout = section.value[index];
+              return HistoricWorkoutTile(workout: workout);
 
-                        return WorkoutHistoryListTile(workout: workout);
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: AppLayout.p3),
-                    ),
-                    const SizedBox(height: AppLayout.p6),
-                  ],
-                ),
-              );
+              // return Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         section.key,
+              //         style: context.typography.headlineMedium
+              //             .copyWith(fontWeight: FontWeight.bold),
+              //       ),
+              //       const SizedBox(height: AppLayout.p3),
+              //       ListView.separated(
+              //         padding: EdgeInsets.zero,
+              //         physics: const NeverScrollableScrollPhysics(),
+              //         shrinkWrap: true,
+              //         itemCount: section.value.length,
+              //         itemBuilder: (context, index) {
+              //           final workout = section.value[index];
+
+              //           return WorkoutHistoryListTile(workout: workout);
+              //         },
+              //         separatorBuilder: (context, index) =>
+              //             const SizedBox(height: AppLayout.p3),
+              //       ),
+              //       const SizedBox(height: AppLayout.p6),
+              //     ],
+              //   ),
+              // );
             },
           );
   }

@@ -563,7 +563,7 @@
     },
     {
       "id": "25:4150153300339377668",
-      "lastPropertyId": "2:3082444233309259024",
+      "lastPropertyId": "3:2675981351055628200",
       "name": "HistoricSupersetWrapperEntity",
       "properties": [
         {
@@ -579,6 +579,11 @@
           "flags": 520,
           "indexId": "25:735209876416700269",
           "relationTarget": "HistoricSupersetSectionEntity"
+        },
+        {
+          "id": "3:2675981351055628200",
+          "name": "superSetString",
+          "type": 30
         }
       ],
       "relations": [
