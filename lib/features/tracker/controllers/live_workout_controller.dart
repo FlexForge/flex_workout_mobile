@@ -17,6 +17,7 @@ class LiveWorkoutController extends _$LiveWorkoutController {
     var time = 'Evening';
     if (now.hour < 17) time = 'Afternoon';
     if (now.hour < 11) time = 'Morning';
+    if (now.hour < 5) time = 'Night';
 
     return LiveWorkoutModel(
       subtitle: '$time Workout',

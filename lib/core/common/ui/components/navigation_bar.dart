@@ -56,7 +56,7 @@ class MainNavigationBar extends ConsumerWidget {
                       context,
                       index: 1,
                       label: 'History',
-                      icon: Symbols.history,
+                      icon: Symbols.schedule,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),

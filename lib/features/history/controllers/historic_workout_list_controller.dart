@@ -48,13 +48,17 @@ class HistoricWorkoutListController extends _$HistoricWorkoutListController {
           );
           return [cell];
         case final HistoricSupersetSectionModel obj:
-          return obj.bestSet().values.map(
-                (e) => WorkoutHistoryTableCell(
-                  e,
-                  numberOfSets: obj.sets.length,
-                  superSetIndex: index,
-                ),
-              );
+          return obj.bestSet().entries.map((entry) {
+            final numberOfSets = obj.sets.fold(0, (acc, set) {
+              if (set[entry.key] == null) return acc;
+              return acc + 1;
+            });
+            return WorkoutHistoryTableCell(
+              entry.value,
+              numberOfSets: numberOfSets,
+              superSetIndex: index,
+            );
+          });
       }
     }).toList();
   }

@@ -2,6 +2,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flutter/material.dart';
@@ -121,6 +122,7 @@ class HistoricWorkoutTile extends ConsumerWidget {
                         context,
                         defaultSet: obj,
                         numberOfSets: cell.numberOfSets,
+                        superSetIndex: cell.superSetIndex,
                       );
                   }
                 }),
@@ -136,13 +138,25 @@ class HistoricWorkoutTile extends ConsumerWidget {
     BuildContext context, {
     required HistoricDefaultSetModel defaultSet,
     required int numberOfSets,
+    int? superSetIndex,
   }) {
     return TableRow(
+      decoration: superSetIndex == null
+          ? null
+          : BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: getColorFromIndex(context, superSetIndex),
+                  width: 4,
+                ),
+              ),
+            ),
       children: [
         Padding(
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: AppLayout.p1,
             bottom: AppLayout.p1,
+            left: superSetIndex != null ? AppLayout.p2 : 0,
           ),
           child: Text(
             defaultSet.exercise.name,

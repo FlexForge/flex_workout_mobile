@@ -142,16 +142,17 @@ class LiveSupersetSectionModel
 
   @override
   HistoricSectionEntity toEntity() {
+    final setsToAdd = completeSetsMap.map(
+      (e) => HistoricSupersetWrapperEntity(
+        superSetString: e.keys.toList(),
+      )..sets.addAll(e.values.map((e) => e.toEntity())),
+    );
+
+    final cleanedSets =
+        setsToAdd.where((element) => element.sets.isNotEmpty).toList();
+
     final supersetSection = HistoricSupersetSectionEntity(title: title)
-      ..supersets.addAll(
-        completeSetsMap
-            .map(
-              (e) => HistoricSupersetWrapperEntity(
-                superSetString: e.keys.toList(),
-              )..sets.addAll(e.values.map((e) => e.toEntity())),
-            )
-            .toList(),
-      );
+      ..supersets.addAll(cleanedSets);
     return HistoricSectionEntity()..supersetSection.target = supersetSection;
   }
 }
