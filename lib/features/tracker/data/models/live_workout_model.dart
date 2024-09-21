@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/defa
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sections/superset_section.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 part 'live_workout_model.mapper.dart';
 
@@ -225,4 +226,11 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
     final setToAdd = HistoricSetEntity()..defaultSet.target = defaultSet;
     return setToAdd;
   }
+}
+
+extension Date on DateTime {
+  String toReadableDate() => DateFormat.yMMMMd().format(this);
+
+  String toReadableTime() =>
+      DateFormat.jm().format(this).toLowerCase().replaceAll(' ', '');
 }

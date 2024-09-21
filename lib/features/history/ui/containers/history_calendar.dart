@@ -1,6 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/flex_calendar.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +25,7 @@ class _HistoricCalendarState extends ConsumerState<HistoricCalendar> {
       events: historicWorkouts,
       onDaySelected: (selectedDay) {
         ref
-            .read(trackedWorkoutFilterControllerProvider.notifier)
+            .read(historicWorkoutFilterControllerProvider.notifier)
             .handle(selectedDay);
       },
     );

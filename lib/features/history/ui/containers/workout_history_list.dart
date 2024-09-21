@@ -1,8 +1,8 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_filter_controller.dart';
 import 'package:flex_workout_mobile/features/history/ui/components/historic_workout_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,7 @@ class WorkoutHistoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedDay = ref.watch(trackedWorkoutFilterControllerProvider);
+    final selectedDay = ref.watch(historicWorkoutFilterControllerProvider);
     final workoutList = ref.watch(historicWorkoutListControllerProvider);
 
     final workouts = selectedDay != null
