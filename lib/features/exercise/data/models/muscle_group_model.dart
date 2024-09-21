@@ -23,3 +23,8 @@ extension ConvertMuscleGroupModel on MuscleGroupModel {
         createdAt: createdAt,
       );
 }
+
+extension ConvertMuscleGroupModelList on List<MuscleGroupModel> {
+  List<MuscleGroupEntity> toEntity() =>
+      map((group) => group.toEntity()).toList();
+}

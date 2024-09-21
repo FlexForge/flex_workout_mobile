@@ -1,8 +1,8 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/history/controllers/tracked_workout_list_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_create_controller.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
+import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/main_tracker_app_bar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/workout_summary_bottom_bar.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/workout_summary_header.dart';
@@ -18,13 +18,13 @@ class WorkoutSummaryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<TrackedWorkoutModel?>(
-      trackedWorkoutCreateControllerProvider,
+    ref.listen<HistoricWorkoutModel?>(
+      historicWorkoutCreateControllerProvider,
       (previous, next) {
         if (next == null) return;
 
         ref
-            .read(trackedWorkoutListControllerProvider.notifier)
+            .read(historicWorkoutListControllerProvider.notifier)
             .addWorkout(next);
         context.pop();
       },

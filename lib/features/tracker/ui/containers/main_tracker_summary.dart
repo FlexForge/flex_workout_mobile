@@ -9,7 +9,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/tracked_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';

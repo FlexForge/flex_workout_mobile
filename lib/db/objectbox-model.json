@@ -69,162 +69,6 @@
       ]
     },
     {
-      "id": "12:6191354483525145228",
-      "lastPropertyId": "4:6932154362788493033",
-      "name": "NormalSetEntity",
-      "properties": [
-        {
-          "id": "1:7191386090173397553",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:6981672614557830814",
-          "name": "reps",
-          "type": 6
-        },
-        {
-          "id": "3:3836654277305443526",
-          "name": "load",
-          "type": 8
-        },
-        {
-          "id": "4:6932154362788493033",
-          "name": "dbUnits",
-          "type": 6
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "13:4897929567643704671",
-      "lastPropertyId": "4:8216366873756167528",
-      "name": "SetOrganizerEntity",
-      "properties": [
-        {
-          "id": "1:6995170969317300690",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:1920270301725014438",
-          "name": "setNumber",
-          "type": 6
-        },
-        {
-          "id": "3:6610181882045486806",
-          "name": "sectionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "10:3795321791615215748",
-          "relationTarget": "WorkoutSectionEntity"
-        },
-        {
-          "id": "4:8216366873756167528",
-          "name": "defaultSetId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "11:7927935807189753093",
-          "relationTarget": "SetTypeEntity"
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "14:1186681313098944309",
-      "lastPropertyId": "5:8640092810515157073",
-      "name": "SetTypeEntity",
-      "properties": [
-        {
-          "id": "1:6601977272463607404",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:375516094546992812",
-          "name": "setLetter",
-          "type": 9
-        },
-        {
-          "id": "3:1119960150972855658",
-          "name": "exerciseId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "12:7084375910763234555",
-          "relationTarget": "ExerciseEntity"
-        },
-        {
-          "id": "4:21338712294110089",
-          "name": "superOrganizerId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "13:3291521460420416880",
-          "relationTarget": "SetOrganizerEntity"
-        },
-        {
-          "id": "5:8640092810515157073",
-          "name": "normalSetId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "14:3211596809046395352",
-          "relationTarget": "NormalSetEntity"
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "15:878219187818857769",
-      "lastPropertyId": "8:3153389972886889051",
-      "name": "TrackedWorkoutEntity",
-      "properties": [
-        {
-          "id": "1:1397348797638596929",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:916714272235885460",
-          "name": "title",
-          "type": 9
-        },
-        {
-          "id": "3:19272412523026336",
-          "name": "subtitle",
-          "type": 9
-        },
-        {
-          "id": "4:3296438216333564102",
-          "name": "notes",
-          "type": 9
-        },
-        {
-          "id": "5:8538126524024457013",
-          "name": "durationInMinutes",
-          "type": 6
-        },
-        {
-          "id": "6:1450575409958406893",
-          "name": "startTimestamp",
-          "type": 10
-        },
-        {
-          "id": "7:445488357221916127",
-          "name": "updatedAt",
-          "type": 10
-        },
-        {
-          "id": "8:3153389972886889051",
-          "name": "createdAt",
-          "type": 10
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "16:8488355134826219133",
       "lastPropertyId": "10:8488589369836008598",
       "name": "UserEntity",
@@ -284,33 +128,6 @@
       "relations": []
     },
     {
-      "id": "17:1263318335407291283",
-      "lastPropertyId": "3:3603950685325219131",
-      "name": "WorkoutSectionEntity",
-      "properties": [
-        {
-          "id": "1:912873281753230932",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:1203440710392998614",
-          "name": "title",
-          "type": 9
-        },
-        {
-          "id": "3:3603950685325219131",
-          "name": "workoutId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "15:3313062510369647533",
-          "relationTarget": "TrackedWorkoutEntity"
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "18:570827146444236513",
       "lastPropertyId": "5:9024247724829058625",
       "name": "MuscleGroupEntity",
@@ -343,11 +160,261 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "19:8498471089907822543",
+      "lastPropertyId": "8:4997920906409309568",
+      "name": "HistoricWorkoutEntity",
+      "properties": [
+        {
+          "id": "1:5406823752283148063",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2934665710111386320",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:8031944135671302872",
+          "name": "subtitle",
+          "type": 9
+        },
+        {
+          "id": "4:8805492799908390406",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "5:7350371785139217647",
+          "name": "startTimestamp",
+          "type": 10
+        },
+        {
+          "id": "6:5887661744874976281",
+          "name": "endTimestamp",
+          "type": 10
+        },
+        {
+          "id": "7:4556581526407183571",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "8:4997920906409309568",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "9:6607338660013490385",
+          "name": "primaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        },
+        {
+          "id": "10:8000109508733559477",
+          "name": "secondaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        }
+      ]
+    },
+    {
+      "id": "20:3785725583016281512",
+      "lastPropertyId": "3:5826354698846094210",
+      "name": "HistoricDefaultSectionEntity",
+      "properties": [
+        {
+          "id": "1:4316748946125787960",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4221212453031717105",
+          "name": "title",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "11:3398551887238120830",
+          "name": "sets",
+          "targetId": "24:5167237900721500425"
+        }
+      ]
+    },
+    {
+      "id": "21:7541243575752127441",
+      "lastPropertyId": "4:1557499091022444023",
+      "name": "HistoricSectionEntity",
+      "properties": [
+        {
+          "id": "1:7798620966798937271",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6572500250538842406",
+          "name": "workoutId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "17:1687134400909290047",
+          "relationTarget": "HistoricWorkoutEntity"
+        },
+        {
+          "id": "3:6734885760156182418",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "19:7637502086323272219",
+          "relationTarget": "HistoricDefaultSectionEntity"
+        },
+        {
+          "id": "4:1557499091022444023",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "20:8163713624073575850",
+          "relationTarget": "HistoricSupersetSectionEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "22:7818935083394582688",
+      "lastPropertyId": "3:8840166711687597690",
+      "name": "HistoricSupersetSectionEntity",
+      "properties": [
+        {
+          "id": "1:8739595483583733108",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5916659394619849892",
+          "name": "title",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "23:5664710869213576884",
+      "lastPropertyId": "5:3213894126262483105",
+      "name": "HistoricDefaultSetEntity",
+      "properties": [
+        {
+          "id": "1:6371943518416528669",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2652642639319269557",
+          "name": "reps",
+          "type": 6
+        },
+        {
+          "id": "3:4107832614818486558",
+          "name": "load",
+          "type": 8
+        },
+        {
+          "id": "4:5591795912682761816",
+          "name": "units",
+          "type": 6
+        },
+        {
+          "id": "5:3213894126262483105",
+          "name": "exerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "23:4271657603784431830",
+          "relationTarget": "ExerciseEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "24:5167237900721500425",
+      "lastPropertyId": "4:5125405662603495384",
+      "name": "HistoricSetEntity",
+      "properties": [
+        {
+          "id": "1:1682346383805889473",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8123823954451405078",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "21:4110225039425522778",
+          "relationTarget": "HistoricDefaultSectionEntity"
+        },
+        {
+          "id": "3:4222781306855080722",
+          "name": "defaultSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "22:1272617020281495010",
+          "relationTarget": "HistoricDefaultSetEntity"
+        },
+        {
+          "id": "4:5125405662603495384",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "24:8446691940615966839",
+          "relationTarget": "HistoricSupersetWrapperEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "25:4150153300339377668",
+      "lastPropertyId": "3:2675981351055628200",
+      "name": "HistoricSupersetWrapperEntity",
+      "properties": [
+        {
+          "id": "1:875036350842801368",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3082444233309259024",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "25:735209876416700269",
+          "relationTarget": "HistoricSupersetSectionEntity"
+        },
+        {
+          "id": "3:2675981351055628200",
+          "name": "superSetString",
+          "type": 30
+        }
+      ],
+      "relations": [
+        {
+          "id": "12:4878345826469070159",
+          "name": "sets",
+          "targetId": "24:5167237900721500425"
+        }
+      ]
     }
   ],
-  "lastEntityId": "18:570827146444236513",
-  "lastIndexId": "15:3313062510369647533",
-  "lastRelationId": "8:889337884594601825",
+  "lastEntityId": "25:4150153300339377668",
+  "lastIndexId": "25:735209876416700269",
+  "lastRelationId": "12:4878345826469070159",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -361,12 +428,19 @@
     475983448748029103,
     8972193450090133298,
     4785345928310412210,
-    5827586521444761878
+    5827586521444761878,
+    6191354483525145228,
+    4897929567643704671,
+    1186681313098944309,
+    878219187818857769,
+    1263318335407291283
   ],
   "retiredIndexUids": [
     3425524962653332862,
     693240549055198901,
-    4014531425032126911
+    4014531425032126911,
+    589604970984044401,
+    5074062409433759446
   ],
   "retiredPropertyUids": [
     1908559708726607211,
@@ -456,7 +530,33 @@
     7201401242415370606,
     7521451397244145199,
     4970087725282634009,
-    8725679368810692080
+    8725679368810692080,
+    5826354698846094210,
+    8840166711687597690,
+    7191386090173397553,
+    6981672614557830814,
+    3836654277305443526,
+    6932154362788493033,
+    6995170969317300690,
+    1920270301725014438,
+    6610181882045486806,
+    8216366873756167528,
+    6601977272463607404,
+    375516094546992812,
+    1119960150972855658,
+    21338712294110089,
+    8640092810515157073,
+    1397348797638596929,
+    916714272235885460,
+    19272412523026336,
+    3296438216333564102,
+    8538126524024457013,
+    1450575409958406893,
+    445488357221916127,
+    3153389972886889051,
+    912873281753230932,
+    1203440710392998614,
+    3603950685325219131
   ],
   "retiredRelationUids": [
     2584876106965066276,

@@ -1,6 +1,6 @@
 enum Units {
-  kgs(name: 'kgs', fullName: 'Kilograms'),
-  lbs(name: 'lbs', fullName: 'Pounds');
+  kgs(name: 'kg', fullName: 'Kilograms'),
+  lbs(name: 'lb', fullName: 'Pounds');
 
   const Units({required this.name, required this.fullName});
 

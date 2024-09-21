@@ -1,9 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'tracked_workout_filter_controller.g.dart';
+part 'historic_workout_filter_controller.g.dart';
 
 @riverpod
-class TrackedWorkoutFilterController extends _$TrackedWorkoutFilterController {
+class HistoricWorkoutFilterController
+    extends _$HistoricWorkoutFilterController {
   @override
   DateTime? build() {
     return null;

@@ -2,9 +2,9 @@ import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart'
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_create_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/main_tracker_info_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/tracked_workout_create_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -21,7 +21,7 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
 
     void logWorkout() {
       ref
-          .read(trackedWorkoutCreateControllerProvider.notifier)
+          .read(historicWorkoutCreateControllerProvider.notifier)
           .handle(form, workout);
 
       ref
