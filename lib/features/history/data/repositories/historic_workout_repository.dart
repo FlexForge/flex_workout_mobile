@@ -15,11 +15,9 @@ class HistoricWorkoutRepository {
 
   Either<Failure, List<HistoricWorkoutModel>> getHistoricWorkouts() {
     try {
-      final res = box.get(3);
+      final res = box.getAll();
 
-      // final models = res.map((e) => e.toModel()).toList();
-
-      return right([res!.toModel()]);
+      return right(res.map((e) => e.toModel()).toList());
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));
     }

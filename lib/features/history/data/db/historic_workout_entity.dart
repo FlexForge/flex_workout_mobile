@@ -56,8 +56,7 @@ extension ConvertHistoricWorkout on HistoricWorkoutEntity {
             secondaryMuscleGroups.map((e) => e.toModel()).toList(),
         createdAt: createdAt,
         updatedAt: updatedAt,
-        sections: [],
-        // sections: sections.map((e) => e.toModel()).toList(),
+        sections: sections.map((e) => e.toModel()).toList(),
       );
 }
 
