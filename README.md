@@ -1,8 +1,5 @@
 <a id="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-
-
 <!-- PROJECT LOGO -->
 <br />
 
@@ -91,21 +88,25 @@ The MVP is currently very bare bones only containing a few features that are cor
 
 *The current onboarding experience is a placeholder acting as a user registration form until a more concrete registration process is required.*
 
-<!-- Onboarding Mov -->
+https://github.com/user-attachments/assets/32322b09-c294-449d-a089-52062d4b7fdc
 
 ### Workout Tracking
 
 ![Workout Tracking Shot][workout-tracker]
 
-<!-- Tracker Mov -->
+https://github.com/user-attachments/assets/cc4507a9-4dc8-4ea7-96f7-63c1aab2ac25
+
+
 
 ### History
 
-<!-- History Mov -->
+https://github.com/user-attachments/assets/847aa68f-531c-4bbf-9ab5-f5740fb37cee
 
 ### Exercise List and Info
 
 ![Exercises][exercises]
+
+https://github.com/user-attachments/assets/4614d7ba-218a-4eba-b474-cb8e93952095
 
 <!-- Exercises Mov -->
 
@@ -168,7 +169,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [product-screenshot]: assets/readme/flex.png
 [workout-tracker]: assets/readme/tracking.png
 [exercises]: assets/readme/exercises.png
-[onboarding-mov]: assets/readme/onboarding.mov
 [flutter-shield]: https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white
 [flutter-url]: https://flutter.dev/
 [dart-shield]: https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white
