@@ -82,7 +82,7 @@ jobs:
       - name: 🪄 Spell Check
         uses: streetsidesoftware/cspell-action@v6
         with:
-          config: .github/cspell.json
+          config: .vscode/cspell.json
           incremental_files_only: true
           root: .
           verbose: false

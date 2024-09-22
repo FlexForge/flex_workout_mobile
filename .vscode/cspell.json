@@ -1,0 +1,28 @@
+{
+    "version": "0.2",
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "enabled": true,
+    "language": "en",
+    "dictionaries": ["allowed_dictionary", "forbidden_dictionary"],
+    "dictionaryDefinitions": [
+        {
+            "name": "allowed_dictionary",
+            "path": "./.cspell/allowed.txt",
+            "addWords": true
+        },
+        {
+            "name": "forbidden_dictionary",
+            "path": "./.cspell/forbidden.txt",
+            "addWords": true
+        },
+    ],
+    "useGitignore": true,
+    "ignorePaths": [
+        "**/ios",
+        "**/windows",
+        "**/android",
+        "**/macos",
+        "**/linux",
+        "**/forbidden.txt",
+    ]
+}
