@@ -1,6 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_step_one.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_one.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -63,8 +63,8 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
         child: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            ExerciseCreateFormStepOne(),
+          children: [
+            ExerciseCreateFormStepOne(next: () => _updateCurrentPageIndex(2)),
           ],
         ),
       ),
