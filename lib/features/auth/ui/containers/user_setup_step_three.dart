@@ -66,17 +66,22 @@ class UserSetupFormStepThree extends ConsumerWidget {
             const SizedBox(height: AppLayout.p4),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-              child: FlexRadioList<RadioListItem>(
+              child: FlexRadioList<RadioListItem<int>, int>(
                 formControl: form.sexControl,
-                builder: (e, selected, onPressed) => RadioListItem(
+                builder: (e, selected, onPressed) => RadioListItem<int>(
                   name: e.name,
                   icon: e.icon,
+                  value: e.value,
                   selected: selected,
                   onPressed: onPressed,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppLayout.p4,
+                    vertical: AppLayout.p6,
+                  ),
                 ),
                 options: const [
-                  RadioListItem(name: 'Female', icon: Icons.female),
-                  RadioListItem(name: 'Male', icon: Icons.male),
+                  RadioListItem(name: 'Female', icon: Icons.female, value: 0),
+                  RadioListItem(name: 'Male', icon: Icons.male, value: 1),
                 ],
               ),
             ),

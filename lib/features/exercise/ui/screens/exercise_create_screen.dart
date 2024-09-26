@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_one.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_two.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -17,7 +18,7 @@ class ExerciseCreateScreen extends StatefulWidget {
 
 class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
   late PageController _pageController;
-  late int currentStep = 1;
+  late int currentStep = 0;
 
   @override
   void initState() {
@@ -62,9 +63,13 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
       body: SafeArea(
         child: PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
+          // physics: const NeverScrollableScrollPhysics(),
           children: [
-            ExerciseCreateFormStepOne(next: () => _updateCurrentPageIndex(2)),
+            ExerciseCreateFormStepOne(next: () => _updateCurrentPageIndex(1)),
+            ExerciseCreateFormStepTwo(
+              next: () => _updateCurrentPageIndex(2),
+              back: () => _updateCurrentPageIndex(0),
+            ),
           ],
         ),
       ),

@@ -26,7 +26,7 @@ class ExerciseCreateFormStepOne extends ConsumerWidget {
           ReactiveGeneralFormConsumer(
             builder: (context, form, child) => Expanded(
               child: FlexButton(
-                enabled: form.nameControl?.valid ?? false,
+                enabled: form.currentForm.valid,
                 onPressed: next,
                 label: 'Next',
                 icon: Icons.chevron_right,
@@ -63,7 +63,7 @@ class ExerciseCreateFormStepOne extends ConsumerWidget {
               },
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             ),
-            const SizedBox(height: AppLayout.p4),
+            const SizedBox(height: AppLayout.p2),
             FlexTextField<String>(
               formControl: form.videoUrlControl,
               label: 'Video Clip',

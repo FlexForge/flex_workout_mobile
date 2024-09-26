@@ -1,6 +1,8 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'exercise_model.freezed.dart';
 
@@ -44,22 +46,30 @@ enum Engagement {
     readableName: 'Bilateral',
     description: 'Exercises where both sides of the body work together.'
         ' For example a Squat or Bench Press.',
+    icon: Symbols.keyboard_double_arrow_up,
   ),
   bilateralSeparate(
     readableName: 'Bilateral With Separate Weights',
     description: 'Exercise where both sides of the body work together,'
         ' but each side uses a separate weight. Ex: Dumbbell Bench Press',
+    icon: Symbols.collapse_all,
   ),
   unilateral(
     readableName: 'Unilateral',
     description: 'Exercises where you work one side of the body at a time.'
         ' Ex: Bulgarian Split Squat or Lunges',
+    icon: Symbols.keyboard_arrow_up,
   );
 
-  const Engagement({required this.readableName, this.description});
+  const Engagement({
+    required this.readableName,
+    this.description,
+    this.icon,
+  });
 
   final String readableName;
   final String? description;
+  final IconData? icon;
 }
 
 enum Equipment {
