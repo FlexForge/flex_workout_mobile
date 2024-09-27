@@ -36,7 +36,7 @@ class Advanced with _$Advanced {
   const factory Advanced({
     @RfControl() Equipment? equipment,
     @RfControl() MovementPattern? movementPattern,
-    @RfControl() @Default(Engagement.bilateral) Engagement? engagement,
+    @RfControl() Engagement? engagement,
   }) = _Advanced;
 }
 

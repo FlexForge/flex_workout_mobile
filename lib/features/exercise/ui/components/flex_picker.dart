@@ -77,9 +77,10 @@ class FlexPicker<T> extends StatelessWidget {
                         final res =
                             await context.pushNamed(modalRouteName!) as T?;
 
-                        if (res != null) {
-                          field.didChange(res);
-                        }
+                        if (res == null) return;
+                        if (field.value == res) return field.didChange(null);
+
+                        field.didChange(res);
                       },
                       padding: EdgeInsets.zero,
                       foregroundColor: field.context.colors.foregroundPrimary,

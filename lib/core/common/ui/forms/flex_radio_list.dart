@@ -40,6 +40,9 @@ class FlexRadioList<T extends RadioListItemMixin<K>, K>
                     children: options
                         .map(
                           (e) => builder(e, field.value == e.value, () {
+                            if (field.value == e.value) {
+                              return field.didChange(null);
+                            }
                             field.didChange(e.value);
                           }),
                         )
