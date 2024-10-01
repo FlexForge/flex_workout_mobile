@@ -55,7 +55,7 @@ class ExerciseCreateFormStepTwo extends ConsumerWidget {
         form: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FlexPicker<Equipment>(
+            FlexPicker(
               formControl: form.equipmentControl,
               label: 'Equipment',
               displayValue: (e) => e.readableName,
@@ -63,7 +63,7 @@ class ExerciseCreateFormStepTwo extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             ),
             const SizedBox(height: AppLayout.p4),
-            FlexPicker<MovementPattern>(
+            FlexPicker(
               formControl: form.movementPatternControl,
               label: 'Movement Pattern',
               displayValue: (e) => e.readableName,
@@ -79,12 +79,12 @@ class ExerciseCreateFormStepTwo extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppLayout.p2),
-            FlexRadioList<RadioListItem<Engagement>, Engagement>(
+            FlexRadioList(
               formControl: form.engagementControl,
               columnGap: AppLayout.p2,
               rowGap: AppLayout.p2,
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-              builder: (e, selected, onPressed) => RadioListItem<Engagement>(
+              builder: (e, selected, onPressed) => RadioListItem(
                 name: e.name,
                 icon: e.icon,
                 value: e.value,
@@ -95,7 +95,7 @@ class ExerciseCreateFormStepTwo extends ConsumerWidget {
               ),
               options: Engagement.values
                   .map(
-                    (pattern) => RadioListItem<Engagement>(
+                    (pattern) => RadioListItem(
                       name: pattern.readableName,
                       icon: pattern.icon ?? Symbols.brightness_1,
                       description: pattern.description,

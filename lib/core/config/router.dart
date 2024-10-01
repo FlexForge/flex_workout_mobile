@@ -6,9 +6,9 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
-import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/equipment_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/movement_pattern_picker.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/primary_muscle_group_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
@@ -106,6 +106,16 @@ final router = GoRouter(
                     const MovementPatternModal(child: MovementPatternPicker()),
               ),
             ),
+            GoRoute(
+              path: PrimaryMuscleGroupPicker.routePath,
+              name: PrimaryMuscleGroupPicker.routeName,
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
+                swipeDismissible: true,
+                barrierColor: context.colors.overlay,
+                child:
+                    const MuscleGroupModal(child: PrimaryMuscleGroupPicker()),
+              ),
+            )
           ],
         ),
         GoRoute(

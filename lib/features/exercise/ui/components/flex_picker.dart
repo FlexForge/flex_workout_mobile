@@ -26,7 +26,7 @@ class FlexPicker<T> extends StatelessWidget {
   final bool Function(FormControl<T>)? showErrors;
   final String hintText;
 
-  final Widget Function(T)? display;
+  final Widget Function(T?)? display;
   final String Function(T)? displayValue;
   final String? modalRouteName;
 
@@ -70,7 +70,7 @@ class FlexPicker<T> extends StatelessWidget {
                     const SizedBox(height: AppLayout.p1),
                   ],
                   if (display != null)
-                    display!(field.value as T)
+                    display!(field.value)
                   else
                     FlexButton(
                       onPressed: () async {
