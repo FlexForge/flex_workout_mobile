@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_one.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_three.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_two.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,8 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
     );
   }
 
+  void submit() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +72,10 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
             ExerciseCreateFormStepTwo(
               next: () => _updateCurrentPageIndex(2),
               back: () => _updateCurrentPageIndex(0),
+            ),
+            ExerciseCreateFormStepThree(
+              submit: submit,
+              back: () => _updateCurrentPageIndex(1),
             ),
           ],
         ),
