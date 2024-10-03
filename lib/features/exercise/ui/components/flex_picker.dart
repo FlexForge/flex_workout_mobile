@@ -7,7 +7,7 @@ import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
 
 class FlexPicker<T> extends StatelessWidget {
   const FlexPicker({
-    this.display,
+    this.displayBuilder,
     this.displayValue,
     this.modalRouteName,
     this.formControlName,
@@ -26,7 +26,7 @@ class FlexPicker<T> extends StatelessWidget {
   final bool Function(FormControl<T>)? showErrors;
   final String hintText;
 
-  final Widget Function(T?)? display;
+  final Widget Function(T?, ReactiveFormFieldState<T, T>)? displayBuilder;
   final String Function(T)? displayValue;
   final String? modalRouteName;
 
@@ -69,8 +69,8 @@ class FlexPicker<T> extends StatelessWidget {
                     ),
                     const SizedBox(height: AppLayout.p1),
                   ],
-                  if (display != null)
-                    display!(field.value)
+                  if (displayBuilder != null)
+                    displayBuilder!(field.value, field)
                   else
                     FlexButton(
                       onPressed: () async {

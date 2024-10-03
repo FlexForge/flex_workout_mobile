@@ -115,7 +115,18 @@ final router = GoRouter(
                 child:
                     const MuscleGroupModal(child: PrimaryMuscleGroupPicker()),
               ),
-            )
+            ),
+            GoRoute(
+              path: SecondaryMuscleGroupsPicker.routePath,
+              name: SecondaryMuscleGroupsPicker.routeName,
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
+                swipeDismissible: true,
+                barrierColor: context.colors.overlay,
+                child: const MuscleGroupModal(
+                  child: SecondaryMuscleGroupsPicker(),
+                ),
+              ),
+            ),
           ],
         ),
         GoRoute(
