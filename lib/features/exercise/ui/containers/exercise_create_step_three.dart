@@ -7,7 +7,7 @@ import 'package:flex_workout_mobile/features/exercise/controllers/exercise_form_
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_form_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_display.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_field.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/components/primary_muscle_group_picker.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/forms/primary_muscle_group_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';

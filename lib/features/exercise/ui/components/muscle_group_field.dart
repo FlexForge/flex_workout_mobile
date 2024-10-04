@@ -3,7 +3,7 @@ import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dar
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/components/flex_picker.dart';
+import 'package:flex_workout_mobile/core/common/ui/forms/flex_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
