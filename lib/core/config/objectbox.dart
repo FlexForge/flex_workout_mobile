@@ -9,7 +9,7 @@ import 'package:flex_workout_mobile/features/history/data/db/historic_workout_en
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-const devMode = false;
+const devMode = true;
 const resetWorkouts = true;
 
 class ObjectBox {
@@ -49,7 +49,7 @@ class ObjectBox {
     store.box<HistoricWorkoutEntity>().removeAll();
 
     store.box<MuscleGroupEntity>().putMany(muscleGroups);
-    store.box<ExerciseEntity>().putManyAsync(masterExercises);
+    store.box<ExerciseEntity>().putMany(masterExercises);
   }
 
   void _resetWorkoutData() {

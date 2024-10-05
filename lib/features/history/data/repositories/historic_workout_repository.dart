@@ -50,7 +50,7 @@ class HistoricWorkoutRepository {
       if (res == null) {
         return left(
           const Failure.internalServerError(
-            message: 'Unable to fetch new exercise',
+            message: 'Unable to fetch new workout',
           ),
         );
       }

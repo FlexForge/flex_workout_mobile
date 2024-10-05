@@ -3,9 +3,11 @@ import 'package:flex_workout_mobile/core/common/ui/components/segment_controller
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
@@ -28,6 +30,12 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void createItem() {
+      if (_selectedValue == 2) {
+        context.goNamed(ExerciseCreateScreen.routeName);
+      }
+    }
+
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
       body: CustomScrollView(
@@ -62,7 +70,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                     padding: const EdgeInsets.all(AppLayout.p3),
                     backgroundColor: context.colors.backgroundSecondary,
                     foregroundColor: context.colors.foregroundPrimary,
-                    onPressed: () => {},
+                    onPressed: createItem,
                   ),
                 ],
               ),
