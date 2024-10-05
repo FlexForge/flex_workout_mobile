@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_radio_list_item.dart';
+import 'package:flex_workout_mobile/core/common/ui/forms/flex_picker.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/flex_radio_list.dart';
 import 'package:flex_workout_mobile/core/common/ui/forms/form_wrapper.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
@@ -8,7 +9,6 @@ import 'package:flex_workout_mobile/features/exercise/controllers/exercise_form_
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_form_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/equipment_picker.dart';
-import 'package:flex_workout_mobile/core/common/ui/forms/flex_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

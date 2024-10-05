@@ -24,11 +24,13 @@ class RadioListItem<T> extends StatelessWidget
 
   final String name;
   final IconData icon;
-  final T value;
+
   final String? description;
 
   final EdgeInsets padding;
 
+  @override
+  final T value;
   @override
   final bool selected;
   @override
