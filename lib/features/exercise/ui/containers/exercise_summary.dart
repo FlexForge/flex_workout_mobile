@@ -22,6 +22,7 @@ class ExerciseSummary extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [

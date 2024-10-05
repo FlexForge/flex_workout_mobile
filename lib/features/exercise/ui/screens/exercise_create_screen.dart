@@ -1,23 +1,26 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_form_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_one.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_three.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_create_step_two.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class ExerciseCreateScreen extends StatefulWidget {
+class ExerciseCreateScreen extends ConsumerStatefulWidget {
   const ExerciseCreateScreen({super.key});
 
   static const routeName = 'exercise_create';
   static const routePath = 'exercise/create';
 
   @override
-  State<ExerciseCreateScreen> createState() => _ExerciseCreateScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ExerciseCreateScreenState();
 }
 
-class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
+class _ExerciseCreateScreenState extends ConsumerState<ExerciseCreateScreen> {
   late PageController _pageController;
   late int currentStep = 0;
 
@@ -45,7 +48,9 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
     );
   }
 
-  void submit() {}
+  void submit() {
+    ref.read(exerciseFormControllerProvider.notifier).create();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _ExerciseCreateScreenState extends State<ExerciseCreateScreen> {
       body: SafeArea(
         child: PageView(
           controller: _pageController,
-          // physics: const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             ExerciseCreateFormStepOne(next: () => _updateCurrentPageIndex(1)),
             ExerciseCreateFormStepTwo(
