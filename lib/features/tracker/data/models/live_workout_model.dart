@@ -44,7 +44,7 @@ sealed class ILiveSection<T> with ILiveSectionMappable<T> {
   double getVolume(Units units);
   int getCompletedSets();
 
-  HistoricSectionEntity toEntity();
+  HistoricSectionEntity? toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -86,7 +86,9 @@ class LiveDefaultSectionModel
   int getCompletedSets() => sets.where((element) => element.isComplete).length;
 
   @override
-  HistoricSectionEntity toEntity() {
+  HistoricSectionEntity? toEntity() {
+    if (completedSets.isEmpty) return null;
+
     final defaultSection = HistoricDefaultSectionEntity(title: title)
       ..sets.addAll(completedSets.map((e) => e.toEntity()));
     return HistoricSectionEntity()..defaultSection.target = defaultSection;
@@ -141,7 +143,7 @@ class LiveSupersetSectionModel
       allSets.where((element) => element.isComplete).length;
 
   @override
-  HistoricSectionEntity toEntity() {
+  HistoricSectionEntity? toEntity() {
     final setsToAdd = completeSetsMap.map(
       (e) => HistoricSupersetWrapperEntity(
         superSetString: e.keys.toList(),
@@ -150,6 +152,8 @@ class LiveSupersetSectionModel
 
     final cleanedSets =
         setsToAdd.where((element) => element.sets.isNotEmpty).toList();
+
+    if (cleanedSets.isEmpty) return null;
 
     final supersetSection = HistoricSupersetSectionEntity(title: title)
       ..supersets.addAll(cleanedSets);
