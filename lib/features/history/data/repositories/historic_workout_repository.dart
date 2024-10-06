@@ -4,7 +4,6 @@ import 'package:flex_workout_mobile/features/history/data/db/historic_workout_en
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:objectbox/objectbox.dart';
 
 class HistoricWorkoutRepository {
