@@ -68,6 +68,7 @@ class UserSetupFormStepThree extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
               child: FlexRadioList<RadioListItem<int>, int>(
                 formControl: form.sexControl,
+                rowGap: AppLayout.p2,
                 builder: (e, selected, onPressed) => RadioListItem<int>(
                   name: e.name,
                   icon: e.icon,

@@ -21,9 +21,8 @@ class MainTrackerSections extends ConsumerWidget {
 
         return section.display();
       },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: AppLayout.p3,
-      ),
+      separatorBuilder: (context, index) =>
+          const SizedBox(height: AppLayout.p3),
     );
   }
 }

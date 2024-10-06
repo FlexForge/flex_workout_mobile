@@ -89,8 +89,8 @@ class MuscleGroupField extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             child: FlexButton(
               onPressed: () async {
-                final musclesGroups = await context.pushNamed(modalRouteName)
-                    as List<MuscleGroupModel>?;
+                final musclesGroups = await context
+                    .pushNamed<List<MuscleGroupModel>>(modalRouteName);
 
                 field.didChange(musclesGroups);
               },

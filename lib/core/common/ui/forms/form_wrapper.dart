@@ -7,6 +7,7 @@ class FormWrapper extends StatelessWidget {
     required this.form,
     this.actionButtons,
     this.backgroundColor,
+    this.padding,
     super.key,
   });
 
@@ -14,6 +15,7 @@ class FormWrapper extends StatelessWidget {
   final List<Widget>? actionButtons;
 
   final Color? backgroundColor;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +24,19 @@ class FormWrapper extends StatelessWidget {
       body: SizedBox.expand(
         child: Stack(
           children: [
-            SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                top: AppLayout.p6,
-                bottom: AppLayout.bottomBuffer,
-              ),
-              clipBehavior: Clip.none,
-              child: Column(
-                children: [
-                  form,
-                  const SizedBox(
-                    height: AppLayout.bottomBuffer,
+            ListView(
+              padding: padding ??
+                  const EdgeInsets.only(
+                    top: AppLayout.p6,
+                    bottom: AppLayout.bottomBuffer,
                   ),
-                ],
-              ),
+              clipBehavior: Clip.none,
+              children: [
+                form,
+                const SizedBox(
+                  height: AppLayout.bottomBuffer,
+                ),
+              ],
             ),
             if (actionButtons != null)
               Positioned(

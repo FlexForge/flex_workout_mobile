@@ -42,7 +42,12 @@ class HistoricWorkoutRepository {
       )
         ..primaryMuscleGroups.addAll(workout.primaryMuscleGroups.toEntity())
         ..secondaryMuscleGroups.addAll(workout.secondaryMuscleGroups.toEntity())
-        ..sections.addAll(workout.sections.map((e) => e.toEntity()));
+        ..sections.addAll(
+          workout.sections
+              .map((e) => e.toEntity())
+              .where((entity) => entity != null)
+              .cast(),
+        );
 
       final id = box.put(workoutToAdd);
       final res = box.get(id);

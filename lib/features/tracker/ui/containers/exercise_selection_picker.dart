@@ -1,13 +1,16 @@
+import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ExerciseSelectionPicker extends ConsumerStatefulWidget {
@@ -39,7 +42,38 @@ class _ExerciseSelectionPickerState
 
     return Column(
       children: [
-        const ExerciseSelectionTopBar(),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: AppLayout.p4,
+            right: AppLayout.p4,
+            bottom: AppLayout.p4,
+            top: AppLayout.p4,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: FlexSearchBar(
+                  onChanged: (value) {},
+                  hintText: 'Search...',
+                  prefixIcon: Symbols.search,
+                ),
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () async {
+                  final res = await context
+                      .pushNamed<ExerciseModel>(ExerciseQuickCreate.routeName);
+
+                  if (res == null) return;
+                  items.add(res);
+                },
+                icon: Icons.add,
+                backgroundColor: context.colors.backgroundSecondary,
+                foregroundColor: context.colors.foregroundPrimary,
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: ListView.separated(
             itemCount: sections.length,
