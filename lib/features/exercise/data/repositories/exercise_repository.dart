@@ -11,8 +11,21 @@ class ExerciseRepository {
 
   Box<ExerciseEntity> get box => store.box<ExerciseEntity>();
 
-  Either<Failure, List<ExerciseModel>> getExercises() {
+  Either<Failure, List<ExerciseModel>> getExercises({
+    String query = '',
+  }) {
     try {
+      final searchQuery = box
+          .query(ExerciseEntity_.name.contains('', caseSensitive: false))
+          .build();
+
+      if (query.isNotEmpty) {
+        final res =
+            (searchQuery..param(ExerciseEntity_.name).value = query).find();
+
+        return right(res.map((e) => e.toModel()).toList());
+      }
+
       final res = box.getAll();
 
       return right(res.map((e) => e.toModel()).toList());

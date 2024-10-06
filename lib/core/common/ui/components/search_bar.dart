@@ -46,6 +46,7 @@ class FlexSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       textInputAction: inputAction,
       textCapitalization: inputCapitalization,
       textAlignVertical: TextAlignVertical.center,
