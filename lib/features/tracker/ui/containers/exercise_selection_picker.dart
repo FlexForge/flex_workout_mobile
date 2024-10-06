@@ -7,8 +7,10 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,6 +68,12 @@ class _ExerciseSelectionPickerState
                   ),
                   hintText: 'Search...',
                   prefixIcon: Symbols.search,
+                  suffix: FlexButton(
+                    onPressed: () =>
+                        context.goNamed(ExerciseSelectionFilters.routeName),
+                    icon: Symbols.sort,
+                    backgroundColor: Colors.transparent,
+                  ),
                 ),
               ),
               const SizedBox(width: AppLayout.p2),

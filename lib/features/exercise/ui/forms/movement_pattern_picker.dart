@@ -53,8 +53,11 @@ class MovementPatternPicker extends StatelessWidget {
               FlexButton(
                 onPressed: context.pop,
                 icon: Symbols.close,
-                padding: const EdgeInsets.all(AppLayout.p2),
+                iconSize: 16,
+                iconWeight: 700,
+                padding: const EdgeInsets.all(AppLayout.p1),
                 borderRadius: AppLayout.roundedRadius,
+                iconColor: context.colors.foregroundSecondary,
                 backgroundColor: context.colors.backgroundTertiary,
               ),
               const SizedBox(width: AppLayout.p4),

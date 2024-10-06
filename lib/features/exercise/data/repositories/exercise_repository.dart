@@ -13,20 +13,23 @@ class ExerciseRepository {
 
   Either<Failure, List<ExerciseModel>> getExercises({
     String query = '',
+    List<int> muscleGroupQuery = const [],
   }) {
     try {
-      final searchQuery = box
-          .query(ExerciseEntity_.name.contains('', caseSensitive: false))
-          .build();
+      final searchBuilder =
+          box.query(ExerciseEntity_.name.contains('', caseSensitive: false));
 
-      if (query.isNotEmpty) {
-        final res =
-            (searchQuery..param(ExerciseEntity_.name).value = query).find();
-
-        return right(res.map((e) => e.toModel()).toList());
+      if (muscleGroupQuery.isNotEmpty) {
+        searchBuilder.linkMany(
+          ExerciseEntity_.primaryMuscleGroups,
+          MuscleGroupEntity_.id.oneOf(muscleGroupQuery),
+        );
       }
 
-      final res = box.getAll();
+      final searchQuery = searchBuilder.build();
+
+      final res =
+          (searchQuery..param(ExerciseEntity_.name).value = query).find();
 
       return right(res.map((e) => e.toModel()).toList());
     } catch (e) {

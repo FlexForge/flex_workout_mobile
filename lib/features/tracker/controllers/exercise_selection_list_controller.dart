@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/providers.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,11 +12,13 @@ class ExerciseSelectionListController
   @override
   List<ExerciseModel> build() {
     final query = ref.watch(exerciseSelectionSearchQueryControllerProvider);
+    final muscleGroups = ref.watch(muscleGroupFilterControllerProvider);
 
-    print(query);
+    final muscleGroupIds = muscleGroups.map((group) => group.id).toList();
 
-    final res =
-        ref.watch(exerciseRepositoryProvider).getExercises(query: query);
+    final res = ref
+        .watch(exerciseRepositoryProvider)
+        .getExercises(query: query, muscleGroupQuery: muscleGroupIds);
 
     return res.fold((l) => throw l, (r) => r);
   }
