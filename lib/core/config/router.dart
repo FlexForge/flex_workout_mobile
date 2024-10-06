@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/equipment_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/primary_muscle_group_picker.dart';
@@ -56,6 +57,19 @@ final router = GoRouter(
                   nestedNavigator: ExerciseSelectionScreen(),
                 ),
               ),
+              routes: [
+                GoRoute(
+                  path: ExerciseQuickCreate.routePath,
+                  name: ExerciseQuickCreate.routeName,
+                  pageBuilder: (context, state) => CupertinoModalSheetPage(
+                    swipeDismissible: true,
+                    barrierColor: context.colors.overlay,
+                    child: const ExerciseQuickCreateModal(
+                      child: ExerciseQuickCreate(),
+                    ),
+                  ),
+                ),
+              ],
             ),
             GoRoute(
               path: NormalSetScreen.routePath,

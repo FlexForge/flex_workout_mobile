@@ -12,6 +12,10 @@ class ExerciseSelectionListController
     final res = ref.watch(exerciseRepositoryProvider).getExercises();
     return res.fold((l) => throw l, (r) => r);
   }
+
+  void addExercise(ExerciseModel exercise) {
+    state = [...state, exercise];
+  }
 }
 
 extension ExerciseSelectionListToMap on List<ExerciseModel> {

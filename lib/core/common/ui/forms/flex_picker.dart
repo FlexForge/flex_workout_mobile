@@ -74,8 +74,7 @@ class FlexPicker<T> extends StatelessWidget {
                   else
                     FlexButton(
                       onPressed: () async {
-                        final res =
-                            await context.pushNamed(modalRouteName!) as T?;
+                        final res = await context.pushNamed<T>(modalRouteName!);
 
                         if (res == null) return;
                         if (field.value == res) return field.didChange(null);
