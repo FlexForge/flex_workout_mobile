@@ -80,7 +80,7 @@ class WorkoutSummaryOverview extends ConsumerWidget {
                     ),
                   ),
                 ),
-        )
+        ),
       ],
     );
   }
