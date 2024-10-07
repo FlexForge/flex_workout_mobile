@@ -43,3 +43,24 @@ class EquipmentFilterController extends _$EquipmentFilterController {
     state = [];
   }
 }
+
+@riverpod
+class MovementPatternFilterController
+    extends _$MovementPatternFilterController {
+  @override
+  List<MovementPattern> build() {
+    return [];
+  }
+
+  void handle(MovementPattern pattern) {
+    if (state.contains(pattern)) {
+      state = state.where((entry) => entry != pattern).toList();
+    } else {
+      state = [...state, pattern];
+    }
+  }
+
+  void clear() {
+    state = [];
+  }
+}

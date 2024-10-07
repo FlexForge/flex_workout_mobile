@@ -21,6 +21,7 @@ class ExerciseSelectionFiltersModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return DraggableSheet(
       initialExtent: const Extent.proportional(0.5),
+      minExtent: const Extent.proportional(0.5),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: child,
@@ -267,7 +268,11 @@ class MovementPatternFilter extends ConsumerWidget {
         rowSizes: List.generate(8, (_) => auto),
         children: [
           RadioListItem(
-            onPressed: () {},
+            onPressed: () => ref
+                .read(movementPatternFilterControllerProvider.notifier)
+                .clear(),
+            selected:
+                ref.watch(movementPatternFilterControllerProvider).isEmpty,
             padding: const EdgeInsets.only(right: AppLayout.p1),
             name: 'All',
             icon: Symbols.apps,
@@ -275,7 +280,12 @@ class MovementPatternFilter extends ConsumerWidget {
           ),
           ...MovementPattern.values.map(
             (pattern) => RadioListItem(
-              onPressed: () {},
+              onPressed: () => ref
+                  .read(movementPatternFilterControllerProvider.notifier)
+                  .handle(pattern),
+              selected: ref
+                  .watch(movementPatternFilterControllerProvider)
+                  .contains(pattern),
               padding: const EdgeInsets.only(right: AppLayout.p1),
               name: pattern.readableName,
               icon: Symbols.brightness_1,

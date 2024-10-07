@@ -15,6 +15,7 @@ class ExerciseRepository {
     String query = '',
     List<int> muscleGroupQuery = const [],
     List<int> equipmentQuery = const [],
+    List<int> movementPatternQuery = const [],
   }) {
     try {
       var searchQueryBuilder =
@@ -23,6 +24,12 @@ class ExerciseRepository {
       if (equipmentQuery.isNotEmpty) {
         searchQueryBuilder = searchQueryBuilder.and(
           ExerciseEntity_.dbEquipment.oneOf(equipmentQuery),
+        );
+      }
+
+      if (movementPatternQuery.isNotEmpty) {
+        searchQueryBuilder = searchQueryBuilder.and(
+          ExerciseEntity_.dbMovementPattern.oneOf(movementPatternQuery),
         );
       }
 
