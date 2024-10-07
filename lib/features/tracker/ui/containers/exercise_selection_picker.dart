@@ -10,6 +10,7 @@ import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_qui
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,9 @@ class _ExerciseSelectionPickerState
 
                   if (res == null) return;
                   items.add(res);
+                  ref
+                      .read(liveWorkoutControllerProvider.notifier)
+                      .addNewExercise(res);
                 },
                 icon: Icons.add,
                 backgroundColor: context.colors.backgroundSecondary,
@@ -189,13 +193,7 @@ class _ExerciseSelectionPickerState
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      subtitle: Text(
-                        'Exercise Information',
-                        style: context.typography.bodySmall.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: context.colors.foregroundSecondary,
-                        ),
-                      ),
+                      subtitle: rowSubtitle(context, exercise),
                       suffix: items.contains(exercise)
                           ? CircleAvatar(
                               radius: 10,
@@ -233,6 +231,32 @@ class _ExerciseSelectionPickerState
       ],
     );
   }
+}
+
+Widget rowSubtitle(BuildContext context, ExerciseModel exercise) {
+  return Row(
+    children: [
+      Text(
+        exercise.movementPattern.readableName,
+        style: context.typography.bodySmall.copyWith(
+          fontWeight: FontWeight.w500,
+          color: context.colors.foregroundSecondary,
+        ),
+      ),
+      const SizedBox(width: AppLayout.p4),
+      Flexible(
+        child: Text(
+          exercise.primaryMuscleGroups.map((e) => e.name).join(' • '),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: context.typography.bodySmall.copyWith(
+            fontWeight: FontWeight.w500,
+            color: context.colors.foregroundSecondary,
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 Widget extraInfo(BuildContext context, String label, IconData icon) {

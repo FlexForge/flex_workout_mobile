@@ -26,6 +26,11 @@ class LiveWorkoutController extends _$LiveWorkoutController {
     );
   }
 
+  void addNewExercise(ExerciseModel exercise) {
+    final exerciseList = List<ExerciseModel>.from(state.newExercises);
+    state = state.copyWith(newExercises: exerciseList..add(exercise));
+  }
+
   void addDefaultSection(List<ExerciseModel> exercises) {
     for (final exercise in exercises) {
       final defaultSet = LiveDefaultSetModel(

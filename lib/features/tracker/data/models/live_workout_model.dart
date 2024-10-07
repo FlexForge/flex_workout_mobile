@@ -18,6 +18,7 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
     required this.subtitle,
     required this.startTimestamp,
     required this.sections,
+    this.newExercises = const <ExerciseModel>[],
     this.primaryMuscleGroups = const <MuscleGroupModel>[],
     this.secondaryMuscleGroups = const <MuscleGroupModel>[],
   });
@@ -27,6 +28,8 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
 
   final List<MuscleGroupModel> primaryMuscleGroups;
   final List<MuscleGroupModel> secondaryMuscleGroups;
+
+  final List<ExerciseModel> newExercises;
 
   List<ILiveSection<dynamic>> sections;
 }

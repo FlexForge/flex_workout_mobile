@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
@@ -31,6 +32,47 @@ class WorkoutSummaryOverview extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       'No muscles targeted',
+                      style: context.typography.bodyMedium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundSecondary,
+                      ),
+                    ),
+                  ),
+                ),
+        ),
+        const SizedBox(height: AppLayout.p3),
+        Section(
+          subHeader: workout.newExercises.isNotEmpty ? 'New Exercises' : null,
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          body: workout.newExercises.isNotEmpty
+              ? ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: workout.newExercises.length,
+                  itemBuilder: (context, index) {
+                    final exercise = workout.newExercises[index];
+
+                    return FlexListTile(
+                      title: Text(
+                        exercise.name,
+                        style: context.typography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      // subtitle: rowSubtitle(context, exercise),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(
+                    height: 0,
+                    indent: 54,
+                    color: context.colors.divider,
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+                  child: Center(
+                    child: Text(
+                      'No new exercises created',
                       style: context.typography.bodyMedium.copyWith(
                         fontWeight: FontWeight.w500,
                         color: context.colors.foregroundSecondary,
