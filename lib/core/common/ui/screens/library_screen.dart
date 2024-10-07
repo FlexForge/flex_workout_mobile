@@ -1,5 +1,4 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/segment_controller.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
