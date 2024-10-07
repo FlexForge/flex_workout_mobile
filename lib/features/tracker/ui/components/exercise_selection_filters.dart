@@ -1,4 +1,3 @@
-import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_radio_list_item.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
@@ -8,7 +7,6 @@ import 'package:flex_workout_mobile/features/tracker/controllers/exercise_select
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
@@ -65,32 +63,20 @@ class _ExerciseSelectionFiltersState extends State<ExerciseSelectionFilters>
     return SheetContentScaffold(
       backgroundColor: context.colors.backgroundPrimary,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: AppLayout.p4),
-          Row(
-            children: [
-              const SizedBox(width: AppLayout.p4),
-              Text(
-                'Filters',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: context.typography.headlineMedium
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              const Spacer(),
-              FlexButton(
-                onPressed: context.pop,
-                icon: Symbols.close,
-                iconSize: 16,
-                iconWeight: 700,
-                padding: const EdgeInsets.all(AppLayout.p1),
-                borderRadius: AppLayout.roundedRadius,
-                iconColor: context.colors.foregroundSecondary,
-                backgroundColor: context.colors.backgroundTertiary,
-              ),
-              const SizedBox(width: AppLayout.p2),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+            child: Text(
+              'Filters',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: context.typography.headlineMedium
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
+
           // const SizedBox(height: AppLayout.p2),
           ColoredBox(
             color: context.colors.backgroundPrimary,
