@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class FlexSearchBar extends StatelessWidget {
   const FlexSearchBar({
     required this.onChanged,
+    this.initialValue,
     this.hintText,
     this.suffix,
     this.prefixIcon,
@@ -28,6 +29,7 @@ class FlexSearchBar extends StatelessWidget {
   final String? hintText;
   final Widget? suffix;
   final IconData? prefixIcon;
+  final String? initialValue;
 
   final EdgeInsets padding;
 
@@ -48,6 +50,7 @@ class FlexSearchBar extends StatelessWidget {
     return Stack(
       children: [
         TextFormField(
+          initialValue: initialValue,
           onChanged: onChanged,
           textInputAction: inputAction,
           textCapitalization: inputCapitalization,

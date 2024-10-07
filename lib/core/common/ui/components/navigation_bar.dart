@@ -50,6 +50,8 @@ class MainNavigationBar extends ConsumerWidget {
                   ),
                   color: context.colors.backgroundSecondary,
                   child: FlexSearchBar(
+                    initialValue:
+                        ref.read(exerciseSearchQueryControllerProvider),
                     onChanged: (value) => debouncer.run(() {
                       ref
                           .read(exerciseSearchQueryControllerProvider.notifier)
