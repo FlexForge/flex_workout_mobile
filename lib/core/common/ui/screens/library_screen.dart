@@ -59,12 +59,15 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               ),
               child: Row(
                 children: [
-                  SegmentedController(
-                    selectedValue: _selectedValue,
-                    onValueChanged: _onSegmentedControllerValueChanged,
-                    items: const ['Programs', 'Workouts', 'Exercises'],
+                  Expanded(
+                    child: SegmentedController(
+                      selectedValue: _selectedValue,
+                      onValueChanged: _onSegmentedControllerValueChanged,
+                      items: const ['Programs', 'Workouts', 'Exercises'],
+                      stretch: true,
+                    ),
                   ),
-                  const Spacer(),
+                  const SizedBox(width: AppLayout.p4),
                   FlexButton(
                     icon: Symbols.add,
                     padding: const EdgeInsets.all(AppLayout.p3),

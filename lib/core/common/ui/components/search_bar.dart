@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class FlexSearchBar extends StatelessWidget {
   const FlexSearchBar({
     required this.onChanged,
+    this.initialValue,
     this.hintText,
     this.suffix,
     this.prefixIcon,
@@ -28,6 +29,7 @@ class FlexSearchBar extends StatelessWidget {
   final String? hintText;
   final Widget? suffix;
   final IconData? prefixIcon;
+  final String? initialValue;
 
   final EdgeInsets padding;
 
@@ -45,69 +47,80 @@ class FlexSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      textInputAction: inputAction,
-      textCapitalization: inputCapitalization,
-      textAlignVertical: TextAlignVertical.center,
-      obscureText: obscureText,
-      autofocus: autoFocus,
-      autocorrect: false,
-      style: style ??
-          context.typography.bodyMedium.copyWith(
-            color: context.colors.foregroundPrimary,
-            fontWeight: FontWeight.w500,
-          ),
-      keyboardType: inputType,
-      cursorColor: context.colors.foregroundPrimary,
-      decoration: InputDecoration(
-        isCollapsed: true,
-        hintText: hintText,
-        fillColor: backgroundColor ?? context.colors.backgroundSecondary,
-        filled: true,
-        hintStyle: style?.copyWith(
-              color: context.colors.foregroundSecondary,
-            ) ??
-            context.typography.bodyMedium.copyWith(
-              color: context.colors.foregroundSecondary,
-            ),
-        suffix: suffix,
-        prefixIcon: prefixIcon != null
-            ? Icon(
-                prefixIcon,
-                size: 20,
-                weight: 700,
+    return Stack(
+      children: [
+        TextFormField(
+          initialValue: initialValue,
+          onChanged: onChanged,
+          textInputAction: inputAction,
+          textCapitalization: inputCapitalization,
+          textAlignVertical: TextAlignVertical.center,
+          obscureText: obscureText,
+          autofocus: autoFocus,
+          autocorrect: false,
+          style: style ??
+              context.typography.bodyMedium.copyWith(
                 color: context.colors.foregroundPrimary,
-              )
-            : null,
-        isDense: true,
-        prefixIconConstraints: const BoxConstraints(minWidth: 44),
-        counterStyle: context.typography.labelXSmall
-            .copyWith(color: context.colors.foregroundSecondary),
-        contentPadding: contentPadding ??
-            const EdgeInsets.symmetric(
-              horizontal: AppLayout.p2,
-              vertical: AppLayout.p3,
-            ),
-        focusedBorder: enableBorder
-            ? OutlineInputBorder(
-                // Border style when the field is focused
-                borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
-                borderSide: BorderSide(
-                  color: context.colors.foregroundPrimary,
-                  width: 2,
+                fontWeight: FontWeight.w500,
+              ),
+          keyboardType: inputType,
+          cursorColor: context.colors.foregroundPrimary,
+          decoration: InputDecoration(
+            isCollapsed: true,
+            hintText: hintText,
+            fillColor: backgroundColor ?? context.colors.backgroundSecondary,
+            filled: true,
+            hintStyle: style?.copyWith(
+                  color: context.colors.foregroundSecondary,
+                ) ??
+                context.typography.bodyMedium.copyWith(
+                  color: context.colors.foregroundSecondary,
                 ),
-              )
-            : const OutlineInputBorder(borderSide: BorderSide.none),
-        enabledBorder: enableBorder
-            ? OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: backgroundColor ?? context.colors.backgroundSecondary,
-                  width: 0,
+            prefixIcon: prefixIcon != null
+                ? Icon(
+                    prefixIcon,
+                    size: 20,
+                    weight: 700,
+                    color: context.colors.foregroundPrimary,
+                  )
+                : null,
+            isDense: true,
+            prefixIconConstraints: const BoxConstraints(minWidth: 44),
+            counterStyle: context.typography.labelXSmall
+                .copyWith(color: context.colors.foregroundSecondary),
+            contentPadding: contentPadding ??
+                const EdgeInsets.symmetric(
+                  horizontal: AppLayout.p2,
+                  vertical: AppLayout.p3,
                 ),
-                borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
-              )
-            : const OutlineInputBorder(borderSide: BorderSide.none),
-      ),
+            focusedBorder: enableBorder
+                ? OutlineInputBorder(
+                    // Border style when the field is focused
+                    borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+                    borderSide: BorderSide(
+                      color: context.colors.foregroundPrimary,
+                      width: 2,
+                    ),
+                  )
+                : const OutlineInputBorder(borderSide: BorderSide.none),
+            enabledBorder: enableBorder
+                ? OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color:
+                          backgroundColor ?? context.colors.backgroundSecondary,
+                      width: 0,
+                    ),
+                    borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+                  )
+                : const OutlineInputBorder(borderSide: BorderSide.none),
+          ),
+        ),
+        if (suffix != null)
+          Positioned(
+            right: 0,
+            child: suffix!,
+          ),
+      ],
     );
   }
 }

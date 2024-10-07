@@ -1,5 +1,7 @@
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/providers.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'exercise_selection_list_controller.g.dart';
@@ -9,7 +11,24 @@ class ExerciseSelectionListController
     extends _$ExerciseSelectionListController {
   @override
   List<ExerciseModel> build() {
-    final res = ref.watch(exerciseRepositoryProvider).getExercises();
+    final query = ref.watch(exerciseSelectionSearchQueryControllerProvider);
+    final muscleGroups = ref.watch(muscleGroupFilterControllerProvider);
+    final equipment = ref.watch(equipmentFilterControllerProvider);
+    final movementPattens = ref.watch(movementPatternFilterControllerProvider);
+
+    final muscleGroupIds = muscleGroups.map((group) => group.id).toList();
+    final equipmentIndexes =
+        equipment.map((equipment) => equipment.index).toList();
+    final patternIndexes =
+        movementPattens.map((pattern) => pattern.index).toList();
+
+    final res = ref.watch(exerciseRepositoryProvider).getExercises(
+          query: query,
+          muscleGroupQuery: muscleGroupIds,
+          equipmentQuery: equipmentIndexes,
+          movementPatternQuery: patternIndexes,
+        );
+
     return res.fold((l) => throw l, (r) => r);
   }
 

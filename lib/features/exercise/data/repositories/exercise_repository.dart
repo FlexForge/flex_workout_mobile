@@ -11,10 +11,40 @@ class ExerciseRepository {
 
   Box<ExerciseEntity> get box => store.box<ExerciseEntity>();
 
-  Either<Failure, List<ExerciseModel>> getExercises() {
+  Either<Failure, List<ExerciseModel>> getExercises({
+    String query = '',
+    List<int> muscleGroupQuery = const [],
+    List<int> equipmentQuery = const [],
+    List<int> movementPatternQuery = const [],
+  }) {
     try {
-      final res = box.getAll();
+      var searchQueryBuilder =
+          ExerciseEntity_.name.contains(query, caseSensitive: false);
 
+      if (equipmentQuery.isNotEmpty) {
+        searchQueryBuilder = searchQueryBuilder.and(
+          ExerciseEntity_.dbEquipment.oneOf(equipmentQuery),
+        );
+      }
+
+      if (movementPatternQuery.isNotEmpty) {
+        searchQueryBuilder = searchQueryBuilder.and(
+          ExerciseEntity_.dbMovementPattern.oneOf(movementPatternQuery),
+        );
+      }
+
+      final searchBuilder = box.query(searchQueryBuilder);
+
+      if (muscleGroupQuery.isNotEmpty) {
+        searchBuilder.linkMany(
+          ExerciseEntity_.primaryMuscleGroups,
+          MuscleGroupEntity_.id.oneOf(muscleGroupQuery),
+        );
+      }
+
+      final searchQuery = searchBuilder.build();
+
+      final res = searchQuery.find();
       return right(res.map((e) => e.toModel()).toList());
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));

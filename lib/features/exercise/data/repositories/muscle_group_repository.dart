@@ -13,9 +13,10 @@ class MuscleGroupRepository {
 
   Either<Failure, List<MuscleGroupModel>> getMuscleGroups() {
     try {
-      final res = box.getAll();
+      final builder = box.query().order(MuscleGroupEntity_.name).build();
+      final query = builder.find();
 
-      return right(res.map((e) => e.toModel()).toList());
+      return right(query.map((e) => e.toModel()).toList());
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));
     }

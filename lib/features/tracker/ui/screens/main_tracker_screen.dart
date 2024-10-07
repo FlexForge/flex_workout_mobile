@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
 
 class MainTrackerScreen extends ConsumerStatefulWidget {
   const MainTrackerScreen({required this.next, super.key});
@@ -59,12 +58,8 @@ class _MainTrackerScreenState extends ConsumerState<MainTrackerScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
                 child: FlexButton(
-                  onPressed: () {
-                    DefaultSheetController.maybeOf(context)
-                        ?.animateTo(const Extent.proportional(1));
-
-                    context.goNamed(ExerciseSelectionScreen.routeName);
-                  },
+                  onPressed: () =>
+                      context.goNamed(ExerciseSelectionScreen.routeName),
                   expanded: true,
                   label: 'Add Exercise',
                   icon: Symbols.add,

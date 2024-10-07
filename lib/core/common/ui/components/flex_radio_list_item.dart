@@ -18,6 +18,7 @@ class RadioListItem<T> extends StatelessWidget
     this.description,
     this.padding = EdgeInsets.zero,
     this.selected = false,
+    this.shrinkWrap = false,
     this.onPressed,
     super.key,
   });
@@ -28,6 +29,7 @@ class RadioListItem<T> extends StatelessWidget
   final String? description;
 
   final EdgeInsets padding;
+  final bool shrinkWrap;
 
   @override
   final T value;
@@ -47,6 +49,7 @@ class RadioListItem<T> extends StatelessWidget
       child: Padding(
         padding: padding,
         child: Row(
+          mainAxisSize: shrinkWrap ? MainAxisSize.min : MainAxisSize.max,
           children: [
             Icon(icon),
             const SizedBox(width: AppLayout.p3),

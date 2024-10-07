@@ -4,9 +4,13 @@ import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +28,7 @@ class ExerciseSelectionPicker extends ConsumerStatefulWidget {
 class _ExerciseSelectionPickerState
     extends ConsumerState<ExerciseSelectionPicker> {
   final List<ExerciseModel> items = [];
+  final debouncer = Debouncer(milliseconds: 250);
 
   void updateSelectedItems(ExerciseModel exercise) {
     setState(() {
@@ -40,22 +45,37 @@ class _ExerciseSelectionPickerState
     final sections =
         ref.watch(exerciseSelectionListControllerProvider).toSelectionMap();
 
+    final muscleGroupFilters = ref.watch(muscleGroupFilterControllerProvider);
+    final equipmentFilters = ref.watch(equipmentFilterControllerProvider);
+    final movementPatternFilters =
+        ref.watch(movementPatternFilterControllerProvider);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: AppLayout.p4),
         Padding(
-          padding: const EdgeInsets.only(
-            left: AppLayout.p4,
-            right: AppLayout.p4,
-            bottom: AppLayout.p4,
-            top: AppLayout.p4,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
           child: Row(
             children: [
               Expanded(
                 child: FlexSearchBar(
-                  onChanged: (value) {},
+                  onChanged: (value) => debouncer.run(
+                    () => ref
+                        .read(
+                          exerciseSelectionSearchQueryControllerProvider
+                              .notifier,
+                        )
+                        .handle(value),
+                  ),
                   hintText: 'Search...',
                   prefixIcon: Symbols.search,
+                  suffix: FlexButton(
+                    onPressed: () =>
+                        context.goNamed(ExerciseSelectionFilters.routeName),
+                    icon: Symbols.sort,
+                    backgroundColor: Colors.transparent,
+                  ),
                 ),
               ),
               const SizedBox(width: AppLayout.p2),
@@ -74,6 +94,76 @@ class _ExerciseSelectionPickerState
             ],
           ),
         ),
+        const SizedBox(height: AppLayout.p4),
+        if (muscleGroupFilters.isNotEmpty ||
+            equipmentFilters.isNotEmpty ||
+            movementPatternFilters.isNotEmpty) ...[
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: AppLayout.p4),
+                FlexButton(
+                  onPressed: () {
+                    ref
+                        .read(muscleGroupFilterControllerProvider.notifier)
+                        .clear();
+                    ref
+                        .read(equipmentFilterControllerProvider.notifier)
+                        .clear();
+                    ref
+                        .read(
+                          movementPatternFilterControllerProvider.notifier,
+                        )
+                        .clear();
+                  },
+                  label: 'Clear',
+                  labelStyle: context.typography.labelMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  icon: Symbols.close,
+                  iconSize: 18,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppLayout.p3,
+                    vertical: AppLayout.p1,
+                  ),
+                  backgroundColor: context.colors.backgroundSecondary,
+                  borderColor: context.colors.backgroundSecondary,
+                ),
+                const SizedBox(width: AppLayout.p2),
+                if (muscleGroupFilters.isNotEmpty) ...[
+                  extraInfo(
+                    context,
+                    muscleGroupFilters.map((group) => group.name).join(', '),
+                    Symbols.workspaces,
+                  ),
+                  const SizedBox(width: AppLayout.p2),
+                ],
+                if (equipmentFilters.isNotEmpty) ...[
+                  extraInfo(
+                    context,
+                    equipmentFilters
+                        .map((group) => group.readableName)
+                        .join(', '),
+                    Symbols.exercise,
+                  ),
+                  const SizedBox(width: AppLayout.p2),
+                ],
+                if (movementPatternFilters.isNotEmpty)
+                  extraInfo(
+                    context,
+                    movementPatternFilters
+                        .map((group) => group.readableName)
+                        .join(', '),
+                    Symbols.directions_run,
+                  ),
+                const SizedBox(width: AppLayout.p4),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppLayout.p4),
+        ],
         Expanded(
           child: ListView.separated(
             itemCount: sections.length,
@@ -143,4 +233,37 @@ class _ExerciseSelectionPickerState
       ],
     );
   }
+}
+
+Widget extraInfo(BuildContext context, String label, IconData icon) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: context.colors.divider,
+      ),
+      borderRadius:
+          const BorderRadius.all(Radius.circular(AppLayout.cornerRadius)),
+    ),
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppLayout.p3,
+      vertical: AppLayout.p1,
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: 16,
+        ),
+        const SizedBox(width: AppLayout.p1),
+        Text(
+          label,
+          style: context.typography.labelMedium.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    ),
+  );
 }
