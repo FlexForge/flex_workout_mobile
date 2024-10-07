@@ -14,10 +14,19 @@ class ExerciseRepository {
   Either<Failure, List<ExerciseModel>> getExercises({
     String query = '',
     List<int> muscleGroupQuery = const [],
+    List<int> equipmentQuery = const [],
   }) {
     try {
-      final searchBuilder =
-          box.query(ExerciseEntity_.name.contains('', caseSensitive: false));
+      var searchQueryBuilder =
+          ExerciseEntity_.name.contains(query, caseSensitive: false);
+
+      if (equipmentQuery.isNotEmpty) {
+        searchQueryBuilder = searchQueryBuilder.and(
+          ExerciseEntity_.dbEquipment.oneOf(equipmentQuery),
+        );
+      }
+
+      final searchBuilder = box.query(searchQueryBuilder);
 
       if (muscleGroupQuery.isNotEmpty) {
         searchBuilder.linkMany(
@@ -28,9 +37,7 @@ class ExerciseRepository {
 
       final searchQuery = searchBuilder.build();
 
-      final res =
-          (searchQuery..param(ExerciseEntity_.name).value = query).find();
-
+      final res = searchQuery.find();
       return right(res.map((e) => e.toModel()).toList());
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));

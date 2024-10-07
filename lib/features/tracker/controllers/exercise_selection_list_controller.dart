@@ -13,12 +13,17 @@ class ExerciseSelectionListController
   List<ExerciseModel> build() {
     final query = ref.watch(exerciseSelectionSearchQueryControllerProvider);
     final muscleGroups = ref.watch(muscleGroupFilterControllerProvider);
+    final equipment = ref.watch(equipmentFilterControllerProvider);
 
     final muscleGroupIds = muscleGroups.map((group) => group.id).toList();
+    final equipmentIndexes =
+        equipment.map((equipment) => equipment.index).toList();
 
-    final res = ref
-        .watch(exerciseRepositoryProvider)
-        .getExercises(query: query, muscleGroupQuery: muscleGroupIds);
+    final res = ref.watch(exerciseRepositoryProvider).getExercises(
+          query: query,
+          muscleGroupQuery: muscleGroupIds,
+          equipmentQuery: equipmentIndexes,
+        );
 
     return res.fold((l) => throw l, (r) => r);
   }

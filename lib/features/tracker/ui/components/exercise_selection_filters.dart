@@ -153,8 +153,8 @@ class _ExerciseSelectionFiltersState extends State<ExerciseSelectionFilters>
               controller: _tabController,
               children: const [
                 MuscleGroupsFilter(),
-                MuscleGroupsFilter(),
-                MuscleGroupsFilter(),
+                EquipmentFilter(),
+                MovementPatternFilter(),
               ],
             ),
           ),
@@ -181,9 +181,8 @@ class MuscleGroupsFilter extends ConsumerWidget {
         rowSizes: List.generate(10, (_) => auto),
         children: [
           RadioListItem(
-            onPressed: () {
-              ref.read(muscleGroupFilterControllerProvider.notifier).clear();
-            },
+            onPressed: () =>
+                ref.read(muscleGroupFilterControllerProvider.notifier).clear(),
             selected: ref.watch(muscleGroupFilterControllerProvider).isEmpty,
             padding: const EdgeInsets.only(right: AppLayout.p1),
             name: 'All',
@@ -192,17 +191,94 @@ class MuscleGroupsFilter extends ConsumerWidget {
           ),
           ...muscleGroups.map(
             (group) => RadioListItem(
-              onPressed: () {
-                ref
-                    .read(muscleGroupFilterControllerProvider.notifier)
-                    .handle(group);
-              },
+              onPressed: () => ref
+                  .read(muscleGroupFilterControllerProvider.notifier)
+                  .handle(group),
               selected: ref
                   .watch(muscleGroupFilterControllerProvider)
                   .contains(group),
               padding: const EdgeInsets.only(right: AppLayout.p1),
               name: group.name,
-              icon: Symbols.apps,
+              icon: Symbols.brightness_1,
+              value: null,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EquipmentFilter extends ConsumerWidget {
+  const EquipmentFilter({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppLayout.p2),
+      child: LayoutGrid(
+        gridFit: GridFit.loose,
+        columnGap: AppLayout.p2,
+        rowGap: AppLayout.p2,
+        columnSizes: [1.fr, 1.fr],
+        rowSizes: List.generate(5, (_) => auto),
+        children: [
+          RadioListItem(
+            onPressed: () =>
+                ref.read(equipmentFilterControllerProvider.notifier).clear(),
+            selected: ref.watch(equipmentFilterControllerProvider).isEmpty,
+            padding: const EdgeInsets.only(right: AppLayout.p1),
+            name: 'All',
+            icon: Symbols.apps,
+            value: null,
+          ),
+          ...Equipment.values.map(
+            (equipment) => RadioListItem(
+              onPressed: () => ref
+                  .read(equipmentFilterControllerProvider.notifier)
+                  .handle(equipment),
+              selected: ref
+                  .watch(equipmentFilterControllerProvider)
+                  .contains(equipment),
+              padding: const EdgeInsets.only(right: AppLayout.p1),
+              name: equipment.readableName,
+              icon: Symbols.brightness_1,
+              value: null,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MovementPatternFilter extends ConsumerWidget {
+  const MovementPatternFilter({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppLayout.p2),
+      child: LayoutGrid(
+        gridFit: GridFit.loose,
+        columnGap: AppLayout.p2,
+        rowGap: AppLayout.p2,
+        columnSizes: [1.fr, 1.fr],
+        rowSizes: List.generate(8, (_) => auto),
+        children: [
+          RadioListItem(
+            onPressed: () {},
+            padding: const EdgeInsets.only(right: AppLayout.p1),
+            name: 'All',
+            icon: Symbols.apps,
+            value: null,
+          ),
+          ...MovementPattern.values.map(
+            (pattern) => RadioListItem(
+              onPressed: () {},
+              padding: const EdgeInsets.only(right: AppLayout.p1),
+              name: pattern.readableName,
+              icon: Symbols.brightness_1,
               value: null,
             ),
           ),

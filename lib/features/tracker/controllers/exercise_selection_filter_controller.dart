@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,6 +16,26 @@ class MuscleGroupFilterController extends _$MuscleGroupFilterController {
       state = state.where((entry) => entry != muscleGroup).toList();
     } else {
       state = [...state, muscleGroup];
+    }
+  }
+
+  void clear() {
+    state = [];
+  }
+}
+
+@riverpod
+class EquipmentFilterController extends _$EquipmentFilterController {
+  @override
+  List<Equipment> build() {
+    return [];
+  }
+
+  void handle(Equipment equipment) {
+    if (state.contains(equipment)) {
+      state = state.where((entry) => entry != equipment).toList();
+    } else {
+      state = [...state, equipment];
     }
   }
 
