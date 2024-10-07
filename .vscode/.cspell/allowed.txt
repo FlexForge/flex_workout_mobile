@@ -52,6 +52,7 @@ symbolication
 todos
 uids
 unawaited
+vsync
 xcassets
 xcconfig
 xcode
