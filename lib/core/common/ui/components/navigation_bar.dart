@@ -1,5 +1,9 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/debouncer.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/resume_workout_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,17 +28,38 @@ class MainNavigationBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final app = ref.watch(appControllerProvider);
+    final debouncer = Debouncer(milliseconds: 250);
 
     return ColoredBox(
       color: context.colors.backgroundSecondary,
       child: SafeArea(
         child: BottomAppBar(
           padding: EdgeInsets.zero,
-          height: 64 + (app.workoutInProgress ? 52 : 0),
+          height: 64 +
+              (app.workoutInProgress ? 52 : 0) +
+              (selectedIndex == 2 ? 60 : 0),
           elevation: 0,
           child: Column(
             children: [
               if (app.workoutInProgress) const ResumeWorkoutBottomBar(),
+              if (selectedIndex == 2)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppLayout.p4,
+                    vertical: AppLayout.p2,
+                  ),
+                  color: context.colors.backgroundSecondary,
+                  child: FlexSearchBar(
+                    onChanged: (value) => debouncer.run(() {
+                      ref
+                          .read(exerciseSearchQueryControllerProvider.notifier)
+                          .handle(value);
+                    }),
+                    prefixIcon: Symbols.search,
+                    hintText: 'Search...',
+                    backgroundColor: context.colors.backgroundTertiary,
+                  ),
+                ),
               Container(
                 decoration: BoxDecoration(
                   color: context.colors.backgroundSecondary,

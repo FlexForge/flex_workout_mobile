@@ -18,8 +18,8 @@ class ExerciseSelectionFiltersModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableSheet(
-      initialExtent: const Extent.proportional(0.5),
-      minExtent: const Extent.proportional(0.5),
+      initialExtent: const Extent.proportional(0.75),
+      minExtent: const Extent.proportional(0.75),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: child,

@@ -59,12 +59,8 @@ class _MainTrackerScreenState extends ConsumerState<MainTrackerScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
                 child: FlexButton(
-                  onPressed: () {
-                    DefaultSheetController.maybeOf(context)
-                        ?.animateTo(const Extent.proportional(1));
-
-                    context.goNamed(ExerciseSelectionScreen.routeName);
-                  },
+                  onPressed: () =>
+                      context.goNamed(ExerciseSelectionScreen.routeName),
                   expanded: true,
                   label: 'Add Exercise',
                   icon: Symbols.add,

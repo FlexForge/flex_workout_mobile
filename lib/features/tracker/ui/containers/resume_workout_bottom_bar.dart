@@ -33,7 +33,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         splashFactory: NoSplash.splashFactory,
         foregroundColor: context.colors.foregroundPrimary,
-        backgroundColor: context.colors.backgroundSecondary,
+        backgroundColor: context.colors.backgroundTertiary,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(AppLayout.cornerRadius),
