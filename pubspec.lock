@@ -950,10 +950,10 @@ packages:
     dependency: "direct main"
     description:
       name: smooth_sheets
-      sha256: "065c69fac51856775045d4c63f68950e0b1eface8c39e09ab9dc73a2c5a1b142"
+      sha256: "2f48ca2d9f15a0c723e62024f5c7ea3a1e4ccbc7a9de0ccdffbcb35e4e3bc7ce"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.4"
+    version: "0.10.0"
   source_gen:
     dependency: transitive
     description:
@@ -1102,10 +1102,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   watcher:
     dependency: transitive
     description:

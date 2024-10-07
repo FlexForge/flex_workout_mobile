@@ -34,7 +34,7 @@ dependencies:
   reactive_forms_annotations: ^5.0.0
   riverpod_annotation: ^2.3.5
   shared_preferences: ^2.3.1
-  smooth_sheets: ^0.9.4
+  smooth_sheets: ^0.10.0
   table_calendar: ^3.1.2
   xml: ^6.5.0
 
