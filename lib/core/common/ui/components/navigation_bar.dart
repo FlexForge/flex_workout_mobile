@@ -35,33 +35,11 @@ class MainNavigationBar extends ConsumerWidget {
       child: SafeArea(
         child: BottomAppBar(
           padding: EdgeInsets.zero,
-          height: 64 +
-              (app.workoutInProgress ? 52 : 0) +
-              (selectedIndex == 2 ? 60 : 0),
+          height: 64 + (app.workoutInProgress ? 52 : 0),
           elevation: 0,
           child: Column(
             children: [
               if (app.workoutInProgress) const ResumeWorkoutBottomBar(),
-              if (selectedIndex == 2)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppLayout.p4,
-                    vertical: AppLayout.p2,
-                  ),
-                  color: context.colors.backgroundSecondary,
-                  child: FlexSearchBar(
-                    initialValue:
-                        ref.read(exerciseSearchQueryControllerProvider),
-                    onChanged: (value) => debouncer.run(() {
-                      ref
-                          .read(exerciseSearchQueryControllerProvider.notifier)
-                          .handle(value);
-                    }),
-                    prefixIcon: Symbols.search,
-                    hintText: 'Search...',
-                    backgroundColor: context.colors.backgroundTertiary,
-                  ),
-                ),
               Container(
                 decoration: BoxDecoration(
                   color: context.colors.backgroundSecondary,

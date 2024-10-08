@@ -1,7 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/segment_controller.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/core/utils/debouncer.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +25,8 @@ class LibraryScreen extends ConsumerStatefulWidget {
 
 class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   int _selectedValue = 0;
+  final debouncer = Debouncer(milliseconds: 250);
+
   void _onSegmentedControllerValueChanged(int value) {
     setState(() {
       _selectedValue = value;
@@ -38,6 +43,29 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
     return Scaffold(
       backgroundColor: context.colors.backgroundPrimary,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.p4,
+          vertical: AppLayout.p2,
+        ),
+        color: context.colors.backgroundSecondary,
+        child: FlexSearchBar(
+          initialValue: ref.read(exerciseSearchQueryControllerProvider),
+          onChanged: (value) => debouncer.run(() {
+            ref
+                .read(exerciseSearchQueryControllerProvider.notifier)
+                .handle(value);
+          }),
+          prefixIcon: Symbols.search,
+          hintText: 'Search...',
+          backgroundColor: context.colors.backgroundTertiary,
+          suffix: FlexButton(
+            onPressed: () => {},
+            icon: Symbols.sort,
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      ),
       body: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         scrollBehavior: const CupertinoScrollBehavior(),
