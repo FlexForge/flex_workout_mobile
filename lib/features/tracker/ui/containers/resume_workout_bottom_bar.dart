@@ -34,12 +34,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
         splashFactory: NoSplash.splashFactory,
         foregroundColor: context.colors.foregroundPrimary,
         backgroundColor: context.colors.backgroundTertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppLayout.cornerRadius),
-            topRight: Radius.circular(AppLayout.cornerRadius),
-          ),
-        ),
+        shape: const RoundedRectangleBorder(),
       ),
       child: ReactiveMainTrackerInfoForm(
         form: form,

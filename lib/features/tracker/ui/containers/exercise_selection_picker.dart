@@ -1,11 +1,12 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_list_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
@@ -137,30 +138,29 @@ class _ExerciseSelectionPickerState
                 ),
                 const SizedBox(width: AppLayout.p2),
                 if (muscleGroupFilters.isNotEmpty) ...[
-                  extraInfo(
-                    context,
-                    muscleGroupFilters.map((group) => group.name).join(', '),
-                    Symbols.workspaces,
+                  IconTextDisplay(
+                    label: muscleGroupFilters
+                        .map((group) => group.name)
+                        .join(', '),
+                    icon: Symbols.workspaces,
                   ),
                   const SizedBox(width: AppLayout.p2),
                 ],
                 if (equipmentFilters.isNotEmpty) ...[
-                  extraInfo(
-                    context,
-                    equipmentFilters
+                  IconTextDisplay(
+                    label: equipmentFilters
                         .map((group) => group.readableName)
                         .join(', '),
-                    Symbols.exercise,
+                    icon: Symbols.exercise,
                   ),
                   const SizedBox(width: AppLayout.p2),
                 ],
                 if (movementPatternFilters.isNotEmpty)
-                  extraInfo(
-                    context,
-                    movementPatternFilters
+                  IconTextDisplay(
+                    label: movementPatternFilters
                         .map((group) => group.readableName)
                         .join(', '),
-                    Symbols.directions_run,
+                    icon: Symbols.directions_run,
                   ),
                 const SizedBox(width: AppLayout.p4),
               ],
@@ -185,15 +185,9 @@ class _ExerciseSelectionPickerState
                   itemBuilder: (context, index) {
                     final exercise = section.value[index];
 
-                    return FlexListTile(
+                    return ExerciseListTile(
+                      exercise: exercise,
                       onTap: () => updateSelectedItems(exercise),
-                      title: Text(
-                        exercise.name,
-                        style: context.typography.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      subtitle: rowSubtitle(context, exercise),
                       suffix: items.contains(exercise)
                           ? CircleAvatar(
                               radius: 10,
@@ -231,63 +225,4 @@ class _ExerciseSelectionPickerState
       ],
     );
   }
-}
-
-Widget rowSubtitle(BuildContext context, ExerciseModel exercise) {
-  return Row(
-    children: [
-      Text(
-        exercise.movementPattern.readableName,
-        style: context.typography.bodySmall.copyWith(
-          fontWeight: FontWeight.w500,
-          color: context.colors.foregroundSecondary,
-        ),
-      ),
-      const SizedBox(width: AppLayout.p4),
-      Flexible(
-        child: Text(
-          exercise.primaryMuscleGroups.map((e) => e.name).join(' • '),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.typography.bodySmall.copyWith(
-            fontWeight: FontWeight.w500,
-            color: context.colors.foregroundSecondary,
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget extraInfo(BuildContext context, String label, IconData icon) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(
-        color: context.colors.divider,
-      ),
-      borderRadius:
-          const BorderRadius.all(Radius.circular(AppLayout.cornerRadius)),
-    ),
-    padding: const EdgeInsets.symmetric(
-      horizontal: AppLayout.p3,
-      vertical: AppLayout.p1,
-    ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 16,
-        ),
-        const SizedBox(width: AppLayout.p1),
-        Text(
-          label,
-          style: context.typography.labelMedium.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    ),
-  );
 }
