@@ -7,7 +7,10 @@ import 'package:flex_workout_mobile/core/common/ui/forms/form_wrapper.dart';
 import 'package:flex_workout_mobile/core/config/providers.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_edit_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_form_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_view_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_form_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_display.dart';
@@ -17,6 +20,7 @@ import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_
 import 'package:flex_workout_mobile/features/exercise/ui/forms/primary_muscle_group_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
 
@@ -47,6 +51,19 @@ class _ExerciseEditFormState extends ConsumerState<ExerciseEditForm> {
   @override
   Widget build(BuildContext context) {
     final form = ref.watch(exerciseFormControllerProvider);
+
+    ref.listen<ExerciseModel?>(
+        exerciseEditControllerProvider(widget.exercise.id.toString()),
+        (previous, next) {
+      if (next == null) return;
+
+      ref.invalidate(
+        exerciseViewControllerProvider(widget.exercise.id.toString()),
+      );
+      ref.read(exerciseListControllerProvider.notifier).updateExercise(next);
+
+      context.pop();
+    });
 
     return ReactiveExerciseForm(
       form: form,
