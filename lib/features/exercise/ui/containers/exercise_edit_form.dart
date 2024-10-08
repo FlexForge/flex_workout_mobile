@@ -57,7 +57,9 @@ class _ExerciseEditFormState extends ConsumerState<ExerciseEditForm> {
             builder: (context, form, child) => Expanded(
               child: FlexButton(
                 enabled: form.form.valid,
-                onPressed: () {},
+                onPressed: () => ref
+                    .read(exerciseFormControllerProvider.notifier)
+                    .update(widget.exercise),
                 label: 'Update Exercise',
                 icon: Symbols.add_task,
                 backgroundColor: context.colors.foregroundPrimary,

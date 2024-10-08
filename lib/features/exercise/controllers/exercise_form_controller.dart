@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_create_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_edit_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_form_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,6 +15,12 @@ class ExerciseFormController extends _$ExerciseFormController {
 
   void create() {
     ref.read(exerciseCreateControllerProvider.notifier).handle(state);
+  }
+
+  void update(ExerciseModel exercise) {
+    ref
+        .read(exerciseEditControllerProvider(exercise.id.toString()).notifier)
+        .handle(state, exercise);
   }
 
   void autofillForm(ExerciseModel exercise) {
