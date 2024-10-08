@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
+import 'package:flex_workout_mobile/features/system/controllers/weight_unit_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,10 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
   @override
   Widget build(BuildContext context) {
     final workout = ref.watch(liveWorkoutControllerProvider);
+    final weightUnit = ref.watch(weightUnitControllerProvider);
     final totalVolume = ref
         .watch(liveWorkoutControllerProvider.notifier)
-        .getTotalVolume(Units.lbs);
+        .getTotalVolume(Units.values[weightUnit.index]);
     final totalSets =
         ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
 

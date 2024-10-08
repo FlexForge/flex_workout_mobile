@@ -2,6 +2,7 @@ import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
+import 'package:flex_workout_mobile/features/system/controllers/weight_unit_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/summary_highlight.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,10 @@ class WorkoutSummaryHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workout = ref.watch(liveWorkoutControllerProvider);
+    final weightUnit = ref.watch(weightUnitControllerProvider);
     final totalVolume = ref
         .watch(liveWorkoutControllerProvider.notifier)
-        .getTotalVolume(Units.lbs);
+        .getTotalVolume(Units.values[weightUnit.index]);
     final totalSets =
         ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
 
@@ -43,7 +45,7 @@ class WorkoutSummaryHeader extends ConsumerWidget {
                 diameter: 110,
                 color: context.colors.blue,
                 value: totalVolume.cleanNumber(decimal: 0),
-                label: 'lbs',
+                label: Units.values[weightUnit.index].name,
               ),
               const Spacer(),
               SummaryHighlight(
