@@ -154,4 +154,15 @@ class ExerciseRepository {
       return left(Failure.internalServerError(message: e.toString()));
     }
   }
+
+  Either<Failure, bool> deleteExercise({
+    required int id,
+  }) {
+    try {
+      final res = box.remove(id);
+      return right(res);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
 }

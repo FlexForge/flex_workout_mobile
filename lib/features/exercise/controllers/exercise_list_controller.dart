@@ -34,6 +34,10 @@ class ExerciseListController extends _$ExerciseListController {
     state = [...state, exercise];
   }
 
+  void deleteExercise(ExerciseModel exercise) {
+    state = state.where((e) => e.id != exercise.id).toList();
+  }
+
   void updateExercise(ExerciseModel exercise) {
     final newState = [...state];
     final index = newState.indexWhere((e) => e.id == exercise.id);
