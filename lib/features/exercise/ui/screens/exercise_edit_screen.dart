@@ -1,6 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_edit_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_edit_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class ExerciseEditScreen extends ConsumerWidget {
         border: null,
         padding: EdgeInsetsDirectional.zero,
       ),
-      body: const Placeholder(),
+      body: ExerciseEditForm(exercise: exercise),
     );
   }
 }
