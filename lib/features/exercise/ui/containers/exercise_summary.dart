@@ -44,9 +44,7 @@ class ExerciseSummary extends StatelessWidget {
                     SquareButton(
                       onPressed: () => context.pushNamed(
                         ExerciseEditScreen.routeName,
-                        pathParameters: {
-                          'eid': exercise.id.toString(),
-                        },
+                        pathParameters: {'eid': exercise.id.toString()},
                       ),
                       label: 'Edit',
                       icon: Symbols.edit,
