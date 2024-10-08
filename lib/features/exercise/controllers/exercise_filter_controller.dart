@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'exercise_filter_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class MuscleGroupFilterController extends _$MuscleGroupFilterController {
   @override
   List<MuscleGroupModel> build() {
@@ -24,7 +24,7 @@ class MuscleGroupFilterController extends _$MuscleGroupFilterController {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class EquipmentFilterController extends _$EquipmentFilterController {
   @override
   List<Equipment> build() {
@@ -44,7 +44,7 @@ class EquipmentFilterController extends _$EquipmentFilterController {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class MovementPatternFilterController
     extends _$MovementPatternFilterController {
   @override
