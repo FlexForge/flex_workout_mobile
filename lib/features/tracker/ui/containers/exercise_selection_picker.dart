@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
@@ -138,30 +139,29 @@ class _ExerciseSelectionPickerState
                 ),
                 const SizedBox(width: AppLayout.p2),
                 if (muscleGroupFilters.isNotEmpty) ...[
-                  extraInfo(
-                    context,
-                    muscleGroupFilters.map((group) => group.name).join(', '),
-                    Symbols.workspaces,
+                  IconTextDisplay(
+                    label: muscleGroupFilters
+                        .map((group) => group.name)
+                        .join(', '),
+                    icon: Symbols.workspaces,
                   ),
                   const SizedBox(width: AppLayout.p2),
                 ],
                 if (equipmentFilters.isNotEmpty) ...[
-                  extraInfo(
-                    context,
-                    equipmentFilters
+                  IconTextDisplay(
+                    label: equipmentFilters
                         .map((group) => group.readableName)
                         .join(', '),
-                    Symbols.exercise,
+                    icon: Symbols.exercise,
                   ),
                   const SizedBox(width: AppLayout.p2),
                 ],
                 if (movementPatternFilters.isNotEmpty)
-                  extraInfo(
-                    context,
-                    movementPatternFilters
+                  IconTextDisplay(
+                    label: movementPatternFilters
                         .map((group) => group.readableName)
                         .join(', '),
-                    Symbols.directions_run,
+                    icon: Symbols.directions_run,
                   ),
                 const SizedBox(width: AppLayout.p4),
               ],
@@ -226,37 +226,4 @@ class _ExerciseSelectionPickerState
       ],
     );
   }
-}
-
-Widget extraInfo(BuildContext context, String label, IconData icon) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(
-        color: context.colors.divider,
-      ),
-      borderRadius:
-          const BorderRadius.all(Radius.circular(AppLayout.cornerRadius)),
-    ),
-    padding: const EdgeInsets.symmetric(
-      horizontal: AppLayout.p3,
-      vertical: AppLayout.p1,
-    ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 16,
-        ),
-        const SizedBox(width: AppLayout.p1),
-        Text(
-          label,
-          style: context.typography.labelMedium.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    ),
-  );
 }

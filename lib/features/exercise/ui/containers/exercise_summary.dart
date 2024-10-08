@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
@@ -82,52 +83,17 @@ class ExerciseSummary extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: AppLayout.p4),
-                extraInfo(
-                  context,
-                  exercise.equipment.readableName,
-                  Symbols.exercise,
+                IconTextDisplay(
+                  label: exercise.equipment.readableName,
+                  icon: Symbols.exercise,
                 ),
                 const SizedBox(width: AppLayout.p3),
-                extraInfo(
-                  context,
-                  exercise.engagement.readableName,
-                  Symbols.keyboard_double_arrow_up,
+                IconTextDisplay(
+                  label: exercise.engagement.readableName,
+                  icon: Symbols.keyboard_double_arrow_up,
                 ),
                 const SizedBox(width: AppLayout.p4),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget extraInfo(BuildContext context, String label, IconData icon) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: context.colors.divider,
-        ),
-        borderRadius:
-            const BorderRadius.all(Radius.circular(AppLayout.cornerRadius)),
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppLayout.p3,
-        vertical: AppLayout.p1,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            size: 16,
-          ),
-          const SizedBox(width: AppLayout.p1),
-          Text(
-            label,
-            style: context.typography.labelMedium.copyWith(
-              fontWeight: FontWeight.w600,
             ),
           ),
         ],
