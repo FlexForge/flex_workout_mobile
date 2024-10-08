@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/auth/ui/containers/user_info_card.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
 import 'package:flex_workout_mobile/features/system/ui/containers/theme_selector.dart';
+import 'package:flex_workout_mobile/features/system/ui/containers/weight_unit_selector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +60,11 @@ class SettingsScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                ),
+                const SizedBox(height: AppLayout.p6),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppLayout.p4),
+                  child: WeightUnitSelector(),
                 ),
                 const SizedBox(height: AppLayout.p6),
                 const Padding(

@@ -70,7 +70,7 @@
     },
     {
       "id": "16:8488355134826219133",
-      "lastPropertyId": "10:8488589369836008598",
+      "lastPropertyId": "11:3372132771620798347",
       "name": "UserEntity",
       "properties": [
         {
@@ -122,6 +122,11 @@
         {
           "id": "10:8488589369836008598",
           "name": "dbPreferredTheme",
+          "type": 6
+        },
+        {
+          "id": "11:3372132771620798347",
+          "name": "dbPreferredWeightUnit",
           "type": 6
         }
       ],
