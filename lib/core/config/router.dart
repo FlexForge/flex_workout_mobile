@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.dart';
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/equipment_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_picker.dart';
@@ -160,6 +161,16 @@ final router = GoRouter(
           name: ExerciseViewScreen.routeName,
           builder: (context, state) => ExerciseViewScreen(
             id: state.pathParameters['eid']!,
+          ),
+        ),
+
+        GoRoute(
+          path: ExerciseFilters.routePath,
+          name: ExerciseFilters.routeName,
+          pageBuilder: (context, state) => CupertinoModalSheetPage(
+            swipeDismissible: true,
+            barrierColor: context.colors.overlay,
+            child: const ExerciseFiltersModal(child: ExerciseFilters()),
           ),
         ),
       ],

@@ -5,6 +5,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,11 +60,13 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           prefixIcon: Symbols.search,
           hintText: 'Search...',
           backgroundColor: context.colors.backgroundTertiary,
-          suffix: FlexButton(
-            onPressed: () => {},
-            icon: Symbols.sort,
-            backgroundColor: Colors.transparent,
-          ),
+          suffix: _selectedValue == 2
+              ? FlexButton(
+                  onPressed: () => context.goNamed(ExerciseFilters.routeName),
+                  icon: Symbols.sort,
+                  backgroundColor: Colors.transparent,
+                )
+              : null,
         ),
       ),
       body: CustomScrollView(
