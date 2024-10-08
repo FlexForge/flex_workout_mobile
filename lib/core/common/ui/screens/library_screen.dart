@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters_display.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,9 +85,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppLayout.p4,
-                vertical: AppLayout.p6,
+              padding: const EdgeInsets.only(
+                left: AppLayout.p4,
+                right: AppLayout.p4,
+                top: AppLayout.p6,
               ),
               child: Row(
                 children: [
@@ -110,7 +112,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               ),
             ),
           ),
-          if (_selectedValue == 2) const ExerciseList(),
+          if (_selectedValue == 2) ...[
+            const SliverToBoxAdapter(child: ExerciseList()),
+          ],
           const SliverToBoxAdapter(
             child: SizedBox(height: AppLayout.bottomBuffer),
           ),
