@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_list_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
@@ -185,15 +186,9 @@ class _ExerciseSelectionPickerState
                   itemBuilder: (context, index) {
                     final exercise = section.value[index];
 
-                    return FlexListTile(
+                    return ExerciseListTile(
+                      exercise: exercise,
                       onTap: () => updateSelectedItems(exercise),
-                      title: Text(
-                        exercise.name,
-                        style: context.typography.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      subtitle: rowSubtitle(context, exercise),
                       suffix: items.contains(exercise)
                           ? CircleAvatar(
                               radius: 10,
@@ -231,32 +226,6 @@ class _ExerciseSelectionPickerState
       ],
     );
   }
-}
-
-Widget rowSubtitle(BuildContext context, ExerciseModel exercise) {
-  return Row(
-    children: [
-      Text(
-        exercise.movementPattern.readableName,
-        style: context.typography.bodySmall.copyWith(
-          fontWeight: FontWeight.w500,
-          color: context.colors.foregroundSecondary,
-        ),
-      ),
-      const SizedBox(width: AppLayout.p4),
-      Flexible(
-        child: Text(
-          exercise.primaryMuscleGroups.map((e) => e.name).join(' • '),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.typography.bodySmall.copyWith(
-            fontWeight: FontWeight.w500,
-            color: context.colors.foregroundSecondary,
-          ),
-        ),
-      ),
-    ],
-  );
 }
 
 Widget extraInfo(BuildContext context, String label, IconData icon) {

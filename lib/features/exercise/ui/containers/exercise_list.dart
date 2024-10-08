@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_filter_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_list_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -138,20 +139,14 @@ class ExerciseList extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final exercise = section.value[index];
 
-                    return FlexListTile(
+                    return ExerciseListTile(
+                      exercise: exercise,
                       onTap: () => context.goNamed(
                         ExerciseViewScreen.routeName,
                         pathParameters: {
                           'eid': exercise.id.toString(),
                         },
                       ),
-                      title: Text(
-                        exercise.name,
-                        style: context.typography.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      subtitle: rowSubtitle(context, exercise),
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -167,32 +162,6 @@ class ExerciseList extends ConsumerWidget {
             separatorBuilder: (context, index) =>
                 const SizedBox(height: AppLayout.p6),
           ),
-      ],
-    );
-  }
-
-  Widget rowSubtitle(BuildContext context, ExerciseModel exercise) {
-    return Row(
-      children: [
-        Text(
-          exercise.movementPattern.readableName,
-          style: context.typography.bodySmall.copyWith(
-            fontWeight: FontWeight.w500,
-            color: context.colors.foregroundSecondary,
-          ),
-        ),
-        const SizedBox(width: AppLayout.p4),
-        Flexible(
-          child: Text(
-            exercise.primaryMuscleGroups.map((e) => e.name).join(' • '),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: context.typography.bodySmall.copyWith(
-              fontWeight: FontWeight.w500,
-              color: context.colors.foregroundSecondary,
-            ),
-          ),
-        ),
       ],
     );
   }
