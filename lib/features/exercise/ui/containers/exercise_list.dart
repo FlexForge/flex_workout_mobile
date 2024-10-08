@@ -3,8 +3,10 @@ import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_delete_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_filter_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_list_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
@@ -139,31 +141,7 @@ class ExerciseList extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final exercise = section.value[index];
 
-                    return SwipeActionCell(
-                      key: ObjectKey(exercise.hashCode),
-                      backgroundColor: context.colors.backgroundSecondary,
-                      trailingActions: <SwipeAction>[
-                        SwipeAction(
-                          title: 'Edit',
-                          icon: const Icon(Icons.edit, size: 20),
-                          style: context.typography.labelSmall,
-                          onTap: (_) => context.goNamed(
-                            ExerciseEditScreen.routeName,
-                            pathParameters: {'eid': exercise.id.toString()},
-                          ),
-                          color: context.colors.blue,
-                        ),
-                      ],
-                      child: ExerciseListTile(
-                        exercise: exercise,
-                        onTap: () => context.goNamed(
-                          ExerciseViewScreen.routeName,
-                          pathParameters: {
-                            'eid': exercise.id.toString(),
-                          },
-                        ),
-                      ),
-                    );
+                    return ExerciseListItem(exercise: exercise);
                   },
                   separatorBuilder: (context, index) {
                     return Divider(
@@ -179,6 +157,60 @@ class ExerciseList extends ConsumerWidget {
                 const SizedBox(height: AppLayout.p6),
           ),
       ],
+    );
+  }
+}
+
+class ExerciseListItem extends ConsumerWidget {
+  const ExerciseListItem({required this.exercise, super.key});
+
+  final ExerciseModel exercise;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SwipeActionCell(
+      key: ObjectKey(exercise.hashCode),
+      backgroundColor: context.colors.backgroundSecondary,
+      trailingActions: <SwipeAction>[
+        SwipeAction(
+          nestedAction: SwipeNestedAction(
+            title: 'Are you sure',
+            icon: const Icon(Icons.check, size: 20),
+          ),
+          title: 'Delete',
+          icon: const Icon(Icons.delete, size: 20),
+          style: context.typography.labelSmall,
+          onTap: (CompletionHandler handler) async {
+            await handler(true);
+            ref
+                .read(exerciseDeleteControllerProvider(exercise).notifier)
+                .handle();
+            ref
+                .read(exerciseListControllerProvider.notifier)
+                .deleteExercise(exercise);
+          },
+          color: context.colors.red,
+        ),
+        SwipeAction(
+          title: 'Edit',
+          icon: const Icon(Icons.edit, size: 20),
+          style: context.typography.labelSmall,
+          onTap: (_) => context.goNamed(
+            ExerciseEditScreen.routeName,
+            pathParameters: {'eid': exercise.id.toString()},
+          ),
+          color: context.colors.blue,
+        ),
+      ],
+      child: ExerciseListTile(
+        exercise: exercise,
+        onTap: () => context.goNamed(
+          ExerciseViewScreen.routeName,
+          pathParameters: {
+            'eid': exercise.id.toString(),
+          },
+        ),
+      ),
     );
   }
 }
