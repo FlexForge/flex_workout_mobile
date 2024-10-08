@@ -39,6 +39,7 @@ class MuscleGroupField extends StatelessWidget {
           const SizedBox(height: AppLayout.p2),
           if (muscleGroups != null)
             ListView.separated(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: muscleGroups.length,
@@ -65,14 +66,11 @@ class MuscleGroupField extends StatelessWidget {
                       color: context.colors.red,
                     ),
                   ],
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: AppLayout.p2),
-                    child: FlexListTile(
-                      title: Text(
-                        muscleGroup.name,
-                        style: context.typography.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
+                  child: FlexListTile(
+                    title: Text(
+                      muscleGroup.name,
+                      style: context.typography.bodyMedium.copyWith(
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),

@@ -93,7 +93,52 @@ class ExerciseRepository {
         ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
         ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
 
-      final id = box.put(exerciseToAdd);
+      final id = box.put(exerciseToAdd, mode: PutMode.insert);
+      final res = box.get(id);
+
+      if (res == null) {
+        return left(
+          const Failure.internalServerError(
+            message: 'Unable to fetch new exercise',
+          ),
+        );
+      }
+
+      return right(res.toModel());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
+  Either<Failure, ExerciseModel> updateExercise({
+    required ExerciseModel originalExercise,
+    required String name,
+    required List<MuscleGroupModel> primaryMuscleGroups,
+    required List<MuscleGroupModel> secondaryMuscleGroups,
+    Engagement? engagement,
+    Equipment? equipment,
+    MovementPattern? movementPattern,
+    String? description,
+    String? videoUrl,
+  }) {
+    try {
+      final now = DateTime.now();
+
+      final exerciseToAdd = ExerciseEntity(
+        id: originalExercise.id,
+        name: name,
+        description: description,
+        videoUrl: videoUrl,
+        engagement: engagement ?? originalExercise.engagement,
+        equipment: equipment ?? originalExercise.equipment,
+        movementPattern: movementPattern ?? originalExercise.movementPattern,
+        updatedAt: now,
+        createdAt: originalExercise.createdAt,
+      )
+        ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
+        ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
+
+      final id = box.put(exerciseToAdd, mode: PutMode.update);
       final res = box.get(id);
 
       if (res == null) {

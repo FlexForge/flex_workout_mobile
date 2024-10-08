@@ -33,4 +33,14 @@ class ExerciseListController extends _$ExerciseListController {
   void addExercise(ExerciseModel exercise) {
     state = [...state, exercise];
   }
+
+  void updateExercise(ExerciseModel exercise) {
+    final newState = [...state];
+    final index = newState.indexWhere((e) => e.id == exercise.id);
+
+    if (index == -1) return;
+
+    newState[index] = exercise;
+    state = newState;
+  }
 }

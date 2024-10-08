@@ -12,6 +12,7 @@ import 'package:flex_workout_mobile/features/exercise/ui/forms/equipment_picker.
 import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/primary_muscle_group_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
@@ -163,6 +164,13 @@ final router = GoRouter(
             id: state.pathParameters['eid']!,
           ),
         ),
+        GoRoute(
+          path: ExerciseEditScreen.routPath,
+          name: ExerciseEditScreen.routeName,
+          builder: (context, state) => ExerciseEditScreen(
+            id: state.pathParameters['eid']!,
+          ),
+        ),
 
         GoRoute(
           path: ExerciseFilters.routePath,
@@ -175,6 +183,8 @@ final router = GoRouter(
         ),
       ],
     ),
+
+    /// Onboarding
     GoRoute(
       path: '/${OnboardingScreen.routePath}',
       name: OnboardingScreen.routePath,
