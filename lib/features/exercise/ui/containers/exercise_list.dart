@@ -1,12 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_filter_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
-import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_list_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/extensions/list_extensions.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';

@@ -6,7 +6,6 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/debouncer.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters_display.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,9 +1,5 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/search_bar.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/core/utils/debouncer.dart';
-import 'package:flex_workout_mobile/features/exercise/controllers/exercise_search_query_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/resume_workout_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +24,6 @@ class MainNavigationBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final app = ref.watch(appControllerProvider);
-    final debouncer = Debouncer(milliseconds: 250);
 
     return ColoredBox(
       color: context.colors.backgroundSecondary,
