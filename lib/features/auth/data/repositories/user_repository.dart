@@ -81,4 +81,27 @@ class UserRepository {
       return left(Failure.internalServerError(message: e.toString()));
     }
   }
+
+  Either<Failure, WeightUnit> updateWeightUnit({
+    required WeightUnit unit,
+  }) {
+    try {
+      final res = box.getAll();
+
+      if (res.isEmpty) {
+        return left(const Failure.empty());
+      }
+
+      final user = res.first;
+
+      box.put(
+        user..dbPreferredWeightUnit = unit.index,
+        mode: ob.PutMode.update,
+      );
+
+      return right(unit);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
 }

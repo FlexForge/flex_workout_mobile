@@ -11,6 +11,7 @@ class UserEntity {
     this.id = 0,
     this.isMale = true,
     this.preferredTheme = ThemeMode.system,
+    this.preferredWeightUnit = WeightUnit.kg,
     this.userName,
     this.birthDate,
     this.updatedAt,
@@ -44,6 +45,21 @@ class UserEntity {
         : ThemeMode.system;
   }
 
+  @Transient()
+  WeightUnit preferredWeightUnit;
+
+  int get dbPreferredWeightUnit {
+    _ensureStableEnumValues();
+    return preferredWeightUnit.index;
+  }
+
+  set dbPreferredWeightUnit(int value) {
+    _ensureStableEnumValues();
+    preferredWeightUnit = value >= 0 && value < WeightUnit.values.length
+        ? WeightUnit.values[value]
+        : WeightUnit.kg;
+  }
+
   @Property(type: PropertyType.date)
   DateTime? updatedAt;
   @Property(type: PropertyType.date)
@@ -53,6 +69,9 @@ class UserEntity {
     assert(ThemeMode.system.index == 0, 'Enum values changed');
     assert(ThemeMode.light.index == 1, 'Enum values changed');
     assert(ThemeMode.dark.index == 2, 'Enum values changed');
+
+    assert(WeightUnit.kg.index == 0, 'Enum values changed');
+    assert(WeightUnit.lb.index == 1, 'Enum values changed');
   }
 }
 
@@ -66,6 +85,7 @@ extension ConvertUser on UserEntity {
         isMale: isMale,
         userName: userName,
         preferredTheme: preferredTheme,
+        preferredWeightUnit: preferredWeightUnit,
         updatedAt: updatedAt,
         createdAt: createdAt,
       );

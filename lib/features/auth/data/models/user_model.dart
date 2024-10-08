@@ -14,6 +14,7 @@ class UserModel with _$UserModel {
     required String email,
     required bool isMale,
     required ThemeMode preferredTheme,
+    required WeightUnit preferredWeightUnit,
     DateTime? birthDate,
     String? userName,
     DateTime? updatedAt,
@@ -31,6 +32,7 @@ extension ConvertUserModel on UserModel {
         userName: userName,
         birthDate: birthDate,
         preferredTheme: preferredTheme,
+        preferredWeightUnit: preferredWeightUnit,
         updatedAt: updatedAt,
         createdAt: createdAt,
       );
