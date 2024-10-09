@@ -17,7 +17,7 @@ class WorkoutSummaryHeader extends ConsumerWidget {
     final weightUnit = ref.watch(weightUnitControllerProvider);
     final totalVolume = ref
         .watch(liveWorkoutControllerProvider.notifier)
-        .getTotalVolume(Units.values[weightUnit.index]);
+        .getTotalVolume(weightUnit);
     final totalSets =
         ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
 
@@ -45,7 +45,7 @@ class WorkoutSummaryHeader extends ConsumerWidget {
                 diameter: 110,
                 color: context.colors.blue,
                 value: totalVolume.cleanNumber(decimal: 0),
-                label: Units.values[weightUnit.index].name,
+                label: weightUnit.name,
               ),
               const Spacer(),
               SummaryHighlight(

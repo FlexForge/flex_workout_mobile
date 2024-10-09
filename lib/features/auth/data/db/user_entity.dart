@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/auth/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
@@ -11,7 +12,7 @@ class UserEntity {
     this.id = 0,
     this.isMale = true,
     this.preferredTheme = ThemeMode.system,
-    this.preferredWeightUnit = WeightUnit.kg,
+    this.preferredWeightUnit = Units.kgs,
     this.userName,
     this.birthDate,
     this.updatedAt,
@@ -46,7 +47,7 @@ class UserEntity {
   }
 
   @Transient()
-  WeightUnit preferredWeightUnit;
+  Units preferredWeightUnit;
 
   int get dbPreferredWeightUnit {
     _ensureStableEnumValues();
@@ -55,9 +56,9 @@ class UserEntity {
 
   set dbPreferredWeightUnit(int value) {
     _ensureStableEnumValues();
-    preferredWeightUnit = value >= 0 && value < WeightUnit.values.length
-        ? WeightUnit.values[value]
-        : WeightUnit.kg;
+    preferredWeightUnit = value >= 0 && value < Units.values.length
+        ? Units.values[value]
+        : Units.kgs;
   }
 
   @Property(type: PropertyType.date)
@@ -70,8 +71,8 @@ class UserEntity {
     assert(ThemeMode.light.index == 1, 'Enum values changed');
     assert(ThemeMode.dark.index == 2, 'Enum values changed');
 
-    assert(WeightUnit.kg.index == 0, 'Enum values changed');
-    assert(WeightUnit.lb.index == 1, 'Enum values changed');
+    assert(Units.kgs.index == 0, 'Enum values changed');
+    assert(Units.lbs.index == 1, 'Enum values changed');
   }
 }
 

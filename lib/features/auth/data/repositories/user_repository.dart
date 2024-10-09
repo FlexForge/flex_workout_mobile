@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/core/utils/failure.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart' as ob;
 import 'package:flex_workout_mobile/features/auth/data/db/user_entity.dart';
@@ -82,8 +83,8 @@ class UserRepository {
     }
   }
 
-  Either<Failure, WeightUnit> updateWeightUnit({
-    required WeightUnit unit,
+  Either<Failure, Units> updateWeightUnit({
+    required Units unit,
   }) {
     try {
       final res = box.getAll();

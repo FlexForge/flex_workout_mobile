@@ -58,7 +58,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
     final weightUnit = ref.watch(weightUnitControllerProvider);
     final totalVolume = ref
         .watch(liveWorkoutControllerProvider.notifier)
-        .getTotalVolume(Units.values[weightUnit.index]);
+        .getTotalVolume(weightUnit);
     final totalSets =
         ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
 
