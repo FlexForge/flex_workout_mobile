@@ -26,7 +26,7 @@ dependencies:
   mocktail: ^1.0.4
   objectbox: ^4.0.1
   objectbox_flutter_libs: any
-  package_info_plus: ^8.0.2
+  package_info_plus: ^8.0.3
   path: ^1.9.0
   path_drawing: ^1.0.1
   path_provider: ^2.1.4
