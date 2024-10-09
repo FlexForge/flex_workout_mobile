@@ -6,7 +6,6 @@ import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.da
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
 import 'package:flex_workout_mobile/features/system/controllers/weight_unit_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
