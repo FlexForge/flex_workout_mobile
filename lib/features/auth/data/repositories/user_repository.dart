@@ -73,7 +73,7 @@ class UserRepository {
       final user = res.first;
 
       box.put(
-        user..dbPreferredTheme = theme.index,
+        user..preferredTheme = theme,
         mode: ob.PutMode.update,
       );
 
@@ -96,7 +96,7 @@ class UserRepository {
       final user = res.first;
 
       box.put(
-        user..dbPreferredWeightUnit = unit.index,
+        user..preferredWeightUnit = unit,
         mode: ob.PutMode.update,
       );
 
