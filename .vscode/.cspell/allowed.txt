@@ -17,6 +17,7 @@ firebase
 firestore
 formz
 fpdart
+fullscreen
 gcloud
 genhtml
 glute
