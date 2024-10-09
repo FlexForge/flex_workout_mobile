@@ -8,8 +8,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class WeightUnitDisplay extends ConsumerStatefulWidget {
-  const WeightUnitDisplay(
-      {required this.selectedValue, required this.onValueChanged, super.key});
+  const WeightUnitDisplay({
+    required this.selectedValue,
+    required this.onValueChanged,
+    super.key,
+  });
 
   final int selectedValue;
 

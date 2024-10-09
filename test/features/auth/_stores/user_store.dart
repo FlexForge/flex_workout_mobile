@@ -5,10 +5,11 @@ import 'package:flex_workout_mobile/features/auth/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UserModelGenerator {
-  static UserModel single(
-      {ThemeMode? preferredTheme,
-      Units? preferredWeightUnit,
-      DateTime? createdAt}) {
+  static UserModel single({
+    ThemeMode? preferredTheme,
+    Units? preferredWeightUnit,
+    DateTime? createdAt,
+  }) {
     return UserModel(
       id: faker.randomGenerator.integer(9999),
       firstName: faker.person.firstName(),
