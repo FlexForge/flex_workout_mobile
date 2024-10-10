@@ -81,15 +81,16 @@ class ExerciseSummary extends ConsumerWidget {
                       iconSize: 24,
                     ),
                     const SizedBox(width: AppLayout.p4),
-                    SquareButton(
-                      onPressed: () => context.goNamed(
-                        DemoVideoDisplay.routeName,
-                        pathParameters: {'eid': exercise.id.toString()},
+                    if (exercise.youtubeVideoId != null)
+                      SquareButton(
+                        onPressed: () => context.goNamed(
+                          DemoVideoDisplay.routeName,
+                          pathParameters: {'eid': exercise.id.toString()},
+                        ),
+                        label: 'Demo',
+                        icon: Symbols.movie,
+                        iconSize: 24,
                       ),
-                      label: 'Demo',
-                      icon: Symbols.movie,
-                      iconSize: 24,
-                    ),
                   ],
                 ),
                 const SizedBox(height: AppLayout.p4),

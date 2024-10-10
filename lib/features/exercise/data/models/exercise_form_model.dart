@@ -2,6 +2,7 @@
 
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flex_workout_mobile/features/exercise/data/validators/youtube_url_validator.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reactive_forms_annotations/reactive_forms_annotations.dart';
 
@@ -25,7 +26,7 @@ class General with _$General {
   const factory General({
     @RfControl(validators: [RequiredValidator()]) String? name,
     @RfControl() String? description,
-    @RfControl() String? videoUrl,
+    @RfControl(validators: [YoutubeUrlValidator()]) String? videoUrl,
   }) = _General;
 }
 

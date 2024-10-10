@@ -168,7 +168,9 @@ final router = GoRouter(
             GoRoute(
               path: DemoVideoDisplay.routPath,
               name: DemoVideoDisplay.routeName,
-              builder: (context, state) => const DemoVideoDisplay(),
+              builder: (context, state) => DemoVideoDisplay(
+                id: state.pathParameters['eid']!,
+              ),
             ),
           ],
         ),

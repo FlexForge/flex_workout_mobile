@@ -10,7 +10,7 @@ class ExerciseEntity {
     required this.createdAt,
     this.id = 0,
     this.description,
-    this.videoUrl,
+    this.youtubeVideoId,
     this.engagement = Engagement.bilateral,
     this.equipment = Equipment.other,
     this.movementPattern = MovementPattern.other,
@@ -22,7 +22,7 @@ class ExerciseEntity {
   String name;
   String? description;
 
-  String? videoUrl;
+  String? youtubeVideoId;
 
   final primaryMuscleGroups = ToMany<MuscleGroupEntity>();
   final secondaryMuscleGroups = ToMany<MuscleGroupEntity>();
@@ -77,7 +77,7 @@ extension ConvertExercise on ExerciseEntity {
         id: id,
         name: name,
         description: description,
-        videoUrl: videoUrl,
+        youtubeVideoId: youtubeVideoId,
         primaryMuscleGroups:
             primaryMuscleGroups.map((e) => e.toModel()).toList(),
         secondaryMuscleGroups:

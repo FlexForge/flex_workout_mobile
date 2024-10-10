@@ -75,7 +75,7 @@ class ExerciseRepository {
     Equipment? equipment,
     MovementPattern? movementPattern,
     String? description,
-    String? videoUrl,
+    String? youtubeVideoId,
   }) {
     try {
       final now = DateTime.now();
@@ -83,7 +83,7 @@ class ExerciseRepository {
       final exerciseToAdd = ExerciseEntity(
         name: name,
         description: description,
-        videoUrl: videoUrl,
+        youtubeVideoId: youtubeVideoId,
         engagement: engagement ?? Engagement.bilateral,
         equipment: equipment ?? Equipment.other,
         movementPattern: movementPattern ?? MovementPattern.other,
@@ -119,7 +119,7 @@ class ExerciseRepository {
     Equipment? equipment,
     MovementPattern? movementPattern,
     String? description,
-    String? videoUrl,
+    String? youtubeVideoId,
   }) {
     try {
       final now = DateTime.now();
@@ -128,7 +128,7 @@ class ExerciseRepository {
         id: originalExercise.id,
         name: name,
         description: description,
-        videoUrl: videoUrl,
+        youtubeVideoId: youtubeVideoId,
         engagement: engagement ?? originalExercise.engagement,
         equipment: equipment ?? originalExercise.equipment,
         movementPattern: movementPattern ?? originalExercise.movementPattern,

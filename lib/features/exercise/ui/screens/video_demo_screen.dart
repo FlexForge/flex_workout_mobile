@@ -3,30 +3,37 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/info_card.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_view_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DemoVideoDisplay extends StatefulWidget {
-  const DemoVideoDisplay({super.key});
+class DemoVideoDisplay extends ConsumerStatefulWidget {
+  const DemoVideoDisplay({required this.id, super.key});
+
+  final String id;
 
   static const routeName = 'video_demo';
-  static const routPath = 'exercise/video_demo';
+  static const routPath = 'video_demo';
 
   @override
-  State<DemoVideoDisplay> createState() => _DemoVideoDisplayState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DemoVideoDisplayState();
 }
 
-class _DemoVideoDisplayState extends State<DemoVideoDisplay> {
+class _DemoVideoDisplayState extends ConsumerState<DemoVideoDisplay> {
   late YoutubePlayerController _controller;
   var duration = 0;
 
   @override
   void initState() {
     super.initState();
+    final exercise = ref.read(exerciseViewControllerProvider(widget.id));
+
     _controller = YoutubePlayerController(
-      initialVideoId: 'puxOweptIMs',
+      initialVideoId: exercise.youtubeVideoId!,
       flags: const YoutubePlayerFlags(
         autoPlay: false,
         hideThumbnail: true,
@@ -49,6 +56,8 @@ class _DemoVideoDisplayState extends State<DemoVideoDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    final exercise = ref.watch(exerciseViewControllerProvider(widget.id));
+
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
         actionsPadding: const EdgeInsets.symmetric(
@@ -69,12 +78,10 @@ class _DemoVideoDisplayState extends State<DemoVideoDisplay> {
         backgroundColor: context.colors.backgroundSecondary,
         appBar: CupertinoNavigationBar(
           middle: Text(
-            'Video Demo',
+            '${exercise.name} Demo',
             style: TextStyle(color: context.colors.foregroundPrimary),
           ),
-          leading: const FlexBackButton(
-            icon: Symbols.close,
-          ),
+          leading: const FlexBackButton(),
           backgroundColor: context.colors.backgroundSecondary,
           border: null,
           padding: EdgeInsetsDirectional.zero,
