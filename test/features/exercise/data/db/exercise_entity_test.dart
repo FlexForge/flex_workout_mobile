@@ -12,7 +12,7 @@ void main() {
       expect(res.id, entity.id);
       expect(res.name, entity.name);
       expect(res.description, entity.description);
-      expect(res.videoUrl, entity.videoUrl);
+      expect(res.youtubeVideoId, entity.youtubeVideoId);
       expect(res.equipment, entity.equipment);
       expect(res.movementPattern, entity.movementPattern);
       expect(res.engagement, entity.engagement);

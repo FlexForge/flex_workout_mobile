@@ -25,7 +25,6 @@ class DemoVideoDisplay extends ConsumerStatefulWidget {
 
 class _DemoVideoDisplayState extends ConsumerState<DemoVideoDisplay> {
   late YoutubePlayerController _controller;
-  var duration = 0;
 
   @override
   void initState() {
@@ -70,9 +69,6 @@ class _DemoVideoDisplayState extends ConsumerState<DemoVideoDisplay> {
           ),
         ],
         controller: _controller,
-        onReady: () => setState(() {
-          duration = _controller.metadata.duration.inMinutes;
-        }),
       ),
       builder: (context, player) => Scaffold(
         backgroundColor: context.colors.backgroundSecondary,
