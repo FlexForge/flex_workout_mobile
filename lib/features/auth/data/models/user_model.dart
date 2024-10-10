@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/auth/data/db/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,6 +15,7 @@ class UserModel with _$UserModel {
     required String email,
     required bool isMale,
     required ThemeMode preferredTheme,
+    required Units preferredWeightUnit,
     DateTime? birthDate,
     String? userName,
     DateTime? updatedAt,
@@ -31,6 +33,7 @@ extension ConvertUserModel on UserModel {
         userName: userName,
         birthDate: birthDate,
         preferredTheme: preferredTheme,
+        preferredWeightUnit: preferredWeightUnit,
         updatedAt: updatedAt,
         createdAt: createdAt,
       );

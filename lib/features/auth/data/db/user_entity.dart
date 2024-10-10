@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/auth/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
@@ -11,6 +12,7 @@ class UserEntity {
     this.id = 0,
     this.isMale = true,
     this.preferredTheme = ThemeMode.system,
+    this.preferredWeightUnit = Units.kgs,
     this.userName,
     this.birthDate,
     this.updatedAt,
@@ -44,6 +46,21 @@ class UserEntity {
         : ThemeMode.system;
   }
 
+  @Transient()
+  Units preferredWeightUnit;
+
+  int get dbPreferredWeightUnit {
+    _ensureStableEnumValues();
+    return preferredWeightUnit.index;
+  }
+
+  set dbPreferredWeightUnit(int value) {
+    _ensureStableEnumValues();
+    preferredWeightUnit = value >= 0 && value < Units.values.length
+        ? Units.values[value]
+        : Units.kgs;
+  }
+
   @Property(type: PropertyType.date)
   DateTime? updatedAt;
   @Property(type: PropertyType.date)
@@ -53,6 +70,9 @@ class UserEntity {
     assert(ThemeMode.system.index == 0, 'Enum values changed');
     assert(ThemeMode.light.index == 1, 'Enum values changed');
     assert(ThemeMode.dark.index == 2, 'Enum values changed');
+
+    assert(Units.kgs.index == 0, 'Enum values changed');
+    assert(Units.lbs.index == 1, 'Enum values changed');
   }
 }
 
@@ -66,6 +86,7 @@ extension ConvertUser on UserEntity {
         isMale: isMale,
         userName: userName,
         preferredTheme: preferredTheme,
+        preferredWeightUnit: preferredWeightUnit,
         updatedAt: updatedAt,
         createdAt: createdAt,
       );
