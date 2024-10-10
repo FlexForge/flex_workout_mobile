@@ -116,8 +116,8 @@ class _ExerciseEditFormState extends ConsumerState<ExerciseEditForm> {
             const SizedBox(height: AppLayout.p2),
             FlexTextField<String>(
               formControl: form.generalForm.videoUrlControl,
-              label: 'Video Clip',
-              hintText: 'Enter the url of a demo video',
+              label: 'YouTube Video Demo',
+              hintText: 'Enter the YouTube url of a demo video',
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             ),
             const SizedBox(height: AppLayout.p8),

@@ -3,6 +3,7 @@ import 'package:flex_workout_mobile/features/exercise/data/models/exercise_form_
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 part 'exercise_edit_controller.g.dart';
 
@@ -27,7 +28,8 @@ class ExerciseEditController extends _$ExerciseEditController {
 
     final name = generalModel?.name;
     final description = generalModel?.description;
-    final videoUrl = generalModel?.videoUrl;
+    final youtubeVideoId =
+        YoutubePlayer.convertUrlToId(generalModel?.videoUrl ?? '');
 
     final movementPattern = advancedModel?.movementPattern;
     final engagement = advancedModel?.engagement;
@@ -42,7 +44,7 @@ class ExerciseEditController extends _$ExerciseEditController {
           originalExercise: originalExercise,
           name: name,
           description: description,
-          videoUrl: videoUrl,
+          youtubeVideoId: youtubeVideoId,
           engagement: engagement,
           equipment: equipment,
           movementPattern: movementPattern,

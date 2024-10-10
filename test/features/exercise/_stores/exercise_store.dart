@@ -10,7 +10,7 @@ class ExerciseModelGenerator {
       id: faker.randomGenerator.integer(9999),
       name: name ?? faker.person.name(),
       description: faker.lorem.sentences(5).join(' '),
-      videoUrl: faker.internet.httpsUrl(),
+      youtubeVideoId: faker.internet.httpsUrl(),
       equipment: Equipment.values[faker.randomGenerator.integer(8)],
       movementPattern:
           MovementPattern.values[faker.randomGenerator.integer(13)],
@@ -33,7 +33,7 @@ class ExerciseEntityGenerator {
       id: faker.randomGenerator.integer(9999),
       name: faker.person.name(),
       description: faker.lorem.sentences(5).join(' '),
-      videoUrl: faker.internet.httpsUrl(),
+      youtubeVideoId: faker.internet.httpsUrl(),
       equipment: Equipment.values[faker.randomGenerator.integer(8)],
       movementPattern:
           MovementPattern.values[faker.randomGenerator.integer(13)],

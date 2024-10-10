@@ -19,7 +19,7 @@ class ExerciseModel with _$ExerciseModel {
     @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
     @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
     String? description,
-    String? videoUrl,
+    String? youtubeVideoId,
   }) = _ExerciseModel;
 }
 
@@ -28,7 +28,7 @@ extension ConvertExerciseModel on ExerciseModel {
         id: id,
         name: name,
         description: description,
-        videoUrl: videoUrl,
+        youtubeVideoId: youtubeVideoId,
         equipment: equipment,
         engagement: engagement,
         movementPattern: movementPattern,

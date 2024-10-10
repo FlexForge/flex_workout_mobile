@@ -34,6 +34,7 @@ final barbellAdPress = ExerciseEntity(
   name: 'AD Press (Barbell)',
   description:
       'Sit on bench. Hold barbell with overhand grip. Press barbell overhead. Repeat.',
+  youtubeVideoId: 'TcCECP_AvPI', // cspell:disable-line
   equipment: Equipment.barbell,
   engagement: Engagement.bilateral,
   movementPattern: MovementPattern.verticalPush,

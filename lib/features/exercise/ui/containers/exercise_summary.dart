@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/features/exercise/controllers/exercise_delet
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/screens/video_demo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -80,12 +81,16 @@ class ExerciseSummary extends ConsumerWidget {
                       iconSize: 24,
                     ),
                     const SizedBox(width: AppLayout.p4),
-                    SquareButton(
-                      onPressed: () => {},
-                      label: 'Demo',
-                      icon: Symbols.movie,
-                      iconSize: 24,
-                    ),
+                    if (exercise.youtubeVideoId != null)
+                      SquareButton(
+                        onPressed: () => context.goNamed(
+                          DemoVideoDisplay.routeName,
+                          pathParameters: {'eid': exercise.id.toString()},
+                        ),
+                        label: 'Demo',
+                        icon: Symbols.movie,
+                        iconSize: 24,
+                      ),
                   ],
                 ),
                 const SizedBox(height: AppLayout.p4),

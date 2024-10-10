@@ -66,8 +66,8 @@ class ExerciseCreateFormStepOne extends ConsumerWidget {
             const SizedBox(height: AppLayout.p2),
             FlexTextField<String>(
               formControl: form.videoUrlControl,
-              label: 'Video Clip',
-              hintText: 'Enter the url of a demo video',
+              label: 'YouTube Video Demo',
+              hintText: 'Enter the YouTube url of a demo video',
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             ),
           ],

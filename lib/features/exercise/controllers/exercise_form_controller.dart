@@ -28,7 +28,9 @@ class ExerciseFormController extends _$ExerciseFormController {
       general: General(
         name: exercise.name,
         description: exercise.description,
-        videoUrl: exercise.videoUrl,
+        videoUrl: exercise.youtubeVideoId != null
+            ? 'https://youtu.be/${exercise.youtubeVideoId}'
+            : null,
       ),
       advanced: Advanced(
         equipment: exercise.equipment,
