@@ -163,14 +163,12 @@ class HistoricSetEntity {
   final defaultSection = ToOne<HistoricDefaultSectionEntity>();
   final supersetSection = ToOne<HistoricSupersetWrapperEntity>();
 
-  final exercise = ToOne<ExerciseEntity>();
-
   final defaultSet = ToOne<HistoricDefaultSetEntity>();
 }
 
 extension ConvertHistoricSet on HistoricSetEntity {
-  IHistoricSet toModel({bool showExercise = true}) {
-    return defaultSet.target!.toModel(showExercise ? exercise.target : null);
+  IHistoricSet toModel() {
+    return defaultSet.target!.toModel();
   }
 }
 
@@ -189,16 +187,18 @@ class HistoricDefaultSetEntity {
   int reps;
   double load;
   int units;
+
+  final exercise = ToOne<ExerciseEntity>();
 }
 
 extension ConvertHistoricDefaultSet on HistoricDefaultSetEntity {
-  IHistoricSet toModel(ExerciseEntity? exercise) {
+  IHistoricSet toModel() {
     return HistoricDefaultSetModel(
       id: id,
       reps: reps,
       load: load,
       units: Units.values[units],
-      exercise: exercise?.toModel(),
+      exercise: exercise.target!.toModel(),
     );
   }
 }

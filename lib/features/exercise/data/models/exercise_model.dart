@@ -1,46 +1,29 @@
-import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-part 'exercise_model.mapper.dart';
+part 'exercise_model.freezed.dart';
 
-@MappableClass()
-class ExerciseModel with ExerciseModelMappable {
-  ExerciseModel({
-    required this.id,
-    required this.name,
-    required this.equipment,
-    required this.movementPattern,
-    required this.engagement,
-    required this.createdAt,
-    required this.updatedAt,
-    this.primaryMuscleGroups = const [],
-    this.secondaryMuscleGroups = const [],
-    this.historicSets = const [],
-    this.description,
-    this.youtubeVideoId,
-  });
+@freezed
+class ExerciseModel with _$ExerciseModel {
+  const factory ExerciseModel({
+    required int id,
+    required String name,
+    required Equipment equipment,
+    required MovementPattern movementPattern,
+    required Engagement engagement,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
+    @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
+    String? description,
+    String? youtubeVideoId,
+  }) = _ExerciseModel;
+}
 
-  final int id;
-  final String name;
-  String? description;
-  String? youtubeVideoId;
-
-  final Equipment equipment;
-  final MovementPattern movementPattern;
-  final Engagement engagement;
-
-  List<MuscleGroupModel> primaryMuscleGroups;
-  List<MuscleGroupModel> secondaryMuscleGroups;
-
-  List<IHistoricSet> historicSets;
-
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
+extension ConvertExerciseModel on ExerciseModel {
   ExerciseEntity toEntity() => ExerciseEntity(
         id: id,
         name: name,
@@ -55,8 +38,7 @@ class ExerciseModel with ExerciseModelMappable {
         ..primaryMuscleGroups
             .addAll(primaryMuscleGroups.map((e) => e.toEntity()))
         ..secondaryMuscleGroups
-            .addAll(secondaryMuscleGroups.map((e) => e.toEntity()))
-        ..historicSets.addAll(historicSets.map((e) => e.toEntity()));
+            .addAll(secondaryMuscleGroups.map((e) => e.toEntity()));
 }
 
 enum Engagement {

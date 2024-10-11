@@ -38,7 +38,6 @@ class ExerciseSummary extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(exercise.historicSets.toString()),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             child: Column(

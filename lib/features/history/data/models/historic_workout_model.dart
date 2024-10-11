@@ -171,7 +171,7 @@ class HistoricDefaultSetModel
   final double load;
   final Units units;
 
-  final ExerciseModel? exercise;
+  final ExerciseModel exercise;
 
   double get loadInKg => (units == Units.kgs) ? load : lbsToKgs(load);
   double get loadInLbs => (units == Units.lbs) ? load : kgsToLbs(load);
@@ -187,11 +187,9 @@ class HistoricDefaultSetModel
       reps: reps,
       load: load,
       units: units.index,
-    );
+    )..exercise.target = exercise.toEntity();
     final defaultSetEntity = HistoricSetEntity()
-      ..defaultSet.target = defaultSet
-      ..exercise.target = exercise!.toEntity();
-
+      ..defaultSet.target = defaultSet;
     return defaultSetEntity;
   }
 }
