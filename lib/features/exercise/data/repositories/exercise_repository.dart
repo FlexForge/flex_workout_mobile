@@ -165,4 +165,22 @@ class ExerciseRepository {
       return left(Failure.internalServerError(message: e.toString()));
     }
   }
+
+  Either<Failure, dynamic> getExerciseHistory(int id) {
+    try {
+      final res = box.get(id);
+
+      if (res == null) {
+        return left(
+          const Failure.unprocessableEntity(message: 'Exercise does not exist'),
+        );
+      }
+
+      final exerciseModel = res.toModel();
+
+      return right(null);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
 }

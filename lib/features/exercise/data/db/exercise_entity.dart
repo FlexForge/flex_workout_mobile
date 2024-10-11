@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -66,6 +67,9 @@ class ExerciseEntity {
         : MovementPattern.other;
   }
 
+  @Backlink('exercise')
+  final historicSets = ToMany<HistoricSetEntity>();
+
   @Property(type: PropertyType.date)
   DateTime updatedAt;
   @Property(type: PropertyType.date)
@@ -82,6 +86,8 @@ extension ConvertExercise on ExerciseEntity {
             primaryMuscleGroups.map((e) => e.toModel()).toList(),
         secondaryMuscleGroups:
             secondaryMuscleGroups.map((e) => e.toModel()).toList(),
+        historicSets:
+            historicSets.map((e) => e.toModel(showExercise: false)).toList(),
         engagement: engagement,
         equipment: equipment,
         movementPattern: movementPattern,

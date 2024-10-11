@@ -328,21 +328,13 @@
           "id": "4:5591795912682761816",
           "name": "units",
           "type": 6
-        },
-        {
-          "id": "5:3213894126262483105",
-          "name": "exerciseId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "23:4271657603784431830",
-          "relationTarget": "ExerciseEntity"
         }
       ],
       "relations": []
     },
     {
       "id": "24:5167237900721500425",
-      "lastPropertyId": "4:5125405662603495384",
+      "lastPropertyId": "5:8376811204204471464",
       "name": "HistoricSetEntity",
       "properties": [
         {
@@ -374,6 +366,14 @@
           "flags": 520,
           "indexId": "24:8446691940615966839",
           "relationTarget": "HistoricSupersetWrapperEntity"
+        },
+        {
+          "id": "5:8376811204204471464",
+          "name": "exerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "26:475035886678434548",
+          "relationTarget": "ExerciseEntity"
         }
       ],
       "relations": []
@@ -413,7 +413,7 @@
     }
   ],
   "lastEntityId": "25:4150153300339377668",
-  "lastIndexId": "25:735209876416700269",
+  "lastIndexId": "26:475035886678434548",
   "lastRelationId": "12:4878345826469070159",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -440,7 +440,8 @@
     693240549055198901,
     4014531425032126911,
     589604970984044401,
-    5074062409433759446
+    5074062409433759446,
+    4271657603784431830
   ],
   "retiredPropertyUids": [
     1908559708726607211,
@@ -557,7 +558,8 @@
     912873281753230932,
     1203440710392998614,
     3603950685325219131,
-    8717342749120273941
+    8717342749120273941,
+    3213894126262483105
   ],
   "retiredRelationUids": [
     2584876106965066276,

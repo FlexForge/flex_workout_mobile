@@ -230,8 +230,10 @@ class LiveDefaultSetModel with LiveDefaultSetModelMappable implements ILiveSet {
       reps: reps!,
       load: load!,
       units: units!.index,
-    )..exercise.target = exercise.toEntity();
-    final setToAdd = HistoricSetEntity()..defaultSet.target = defaultSet;
+    );
+    final setToAdd = HistoricSetEntity()
+      ..defaultSet.target = defaultSet
+      ..exercise.target = exercise.toEntity();
     return setToAdd;
   }
 }

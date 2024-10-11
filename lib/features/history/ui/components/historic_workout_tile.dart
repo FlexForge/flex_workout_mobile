@@ -159,7 +159,7 @@ class HistoricWorkoutTile extends ConsumerWidget {
             left: superSetIndex != null ? AppLayout.p2 : 0,
           ),
           child: Text(
-            defaultSet.exercise.name,
+            defaultSet.exercise!.name,
             style: context.typography.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
             ),
