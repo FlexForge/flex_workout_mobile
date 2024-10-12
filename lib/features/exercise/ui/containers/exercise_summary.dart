@@ -6,6 +6,7 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_delete_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
+import 'package:flex_workout_mobile/features/exercise/controllers/exercise_view_controller.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/video_demo_screen.dart';
@@ -21,6 +22,9 @@ class ExerciseSummary extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sets =
+        ref.watch(historicSetControllerProvider(exercise.id.toString()));
+
     void onDelete() {
       ref.read(exerciseDeleteControllerProvider(exercise).notifier).handle();
       ref
@@ -38,6 +42,7 @@ class ExerciseSummary extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(sets.toString()),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             child: Column(

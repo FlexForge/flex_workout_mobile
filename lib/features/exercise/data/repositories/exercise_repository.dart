@@ -3,6 +3,8 @@ import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
+import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 class ExerciseRepository {
@@ -161,6 +163,22 @@ class ExerciseRepository {
     try {
       final res = box.remove(id);
       return right(res);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
+  Either<Failure, List<IHistoricSet>> getHistoricSets({
+    required int id,
+  }) {
+    try {
+      final setBuilder = store.box<HistoricSetEntity>().query()
+        ..link(HistoricSetEntity_.exercise, ExerciseEntity_.id.equals(id));
+      final query = setBuilder.build();
+
+      final res = query.find();
+
+      return right(res.map((e) => e.toModel()).toList());
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));
     }
