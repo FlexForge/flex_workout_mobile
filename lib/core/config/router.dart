@@ -15,6 +15,7 @@ import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/video_demo_screen.dart';
+import 'package:flex_workout_mobile/features/history/ui/screens/historic_workout_view_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
@@ -189,6 +190,15 @@ final router = GoRouter(
             swipeDismissible: true,
             barrierColor: context.colors.overlay,
             child: const ExerciseFiltersModal(child: ExerciseFilters()),
+          ),
+        ),
+
+        /// Historic Workout Routes
+        GoRoute(
+          path: HistoricWorkoutViewScreen.routePath,
+          name: HistoricWorkoutViewScreen.routeName,
+          builder: (context, state) => HistoricWorkoutViewScreen(
+            id: state.pathParameters['wid']!,
           ),
         ),
       ],

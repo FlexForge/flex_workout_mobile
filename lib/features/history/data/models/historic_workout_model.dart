@@ -42,6 +42,8 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
   int get durationInMinutes =>
       startTimestamp.difference(endTimestamp).inMinutes;
 
+  double get volume => 25000;
+
   HistoricWorkoutEntity toEntity() => HistoricWorkoutEntity(
         id: id,
         title: title,

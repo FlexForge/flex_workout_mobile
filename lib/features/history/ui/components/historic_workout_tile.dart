@@ -5,9 +5,11 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
+import 'package:flex_workout_mobile/features/history/ui/screens/historic_workout_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -23,6 +25,10 @@ class HistoricWorkoutTile extends ConsumerWidget {
         .getWorkoutHistoryTable(workout);
 
     return Section(
+      onTap: () => context.goNamed(
+        HistoricWorkoutViewScreen.routeName,
+        pathParameters: {'wid': workout.id.toString()},
+      ),
       subHeader: workout.title,
       padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
       body: Container(
