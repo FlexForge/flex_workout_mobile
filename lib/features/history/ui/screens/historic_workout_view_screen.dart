@@ -1,6 +1,8 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
+import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_view_controller.dart';
+import 'package:flex_workout_mobile/features/history/ui/containers/historic_workout_overview.dart';
 import 'package:flex_workout_mobile/features/history/ui/containers/historic_workout_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,11 @@ class HistoricWorkoutViewScreen extends ConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         clipBehavior: Clip.none,
         child: Column(
-          children: [HistoricWorkoutSummary(workout: workout)],
+          children: [
+            HistoricWorkoutSummary(workout: workout),
+            const SizedBox(height: AppLayout.p6),
+            HistoricWorkoutOverview(workout: workout),
+          ],
         ),
       ),
     );
