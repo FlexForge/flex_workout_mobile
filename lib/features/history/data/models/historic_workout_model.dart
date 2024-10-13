@@ -147,7 +147,7 @@ class HistoricSupersetSectionModel
   @override
   double getVolume({Units units = Units.kgs}) {
     return sets.fold(0, (previousValue, element) {
-      final test = element.values.fold(0.0, (previousValue, element) {
+      final test = element.values.fold<double>(0, (previousValue, element) {
         return previousValue + element.getVolume(units: units);
       });
 
