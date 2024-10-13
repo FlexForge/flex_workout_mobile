@@ -38,7 +38,7 @@ class HistoricWorkoutSummary extends ConsumerWidget {
                       ),
                     ),
                     StackedText(
-                      heading: workout.volume.cleanNumber(),
+                      heading: workout.getVolume().cleanNumber(),
                       subHeading: 'Volume',
                       suffix: 'lb',
                       alignment: CrossAxisAlignment.end,
