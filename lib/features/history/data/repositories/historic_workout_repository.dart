@@ -23,6 +23,22 @@ class HistoricWorkoutRepository {
     }
   }
 
+  Either<Failure, HistoricWorkoutModel> getWorkoutById(int id) {
+    try {
+      final res = box.get(id);
+
+      if (res == null) {
+        return left(
+          const Failure.unprocessableEntity(message: 'Workout does not exist'),
+        );
+      }
+
+      return right(res.toModel());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
   Either<Failure, HistoricWorkoutModel> createdHistoricWorkout({
     required String title,
     required String notes,
