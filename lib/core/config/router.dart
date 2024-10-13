@@ -20,6 +20,7 @@ import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_sele
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
+import 'package:flex_workout_mobile/platforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/swipe_action_navigator_observer.dart';
 import 'package:go_router/go_router.dart';
@@ -45,11 +46,7 @@ final router = GoRouter(
         GoRoute(
           path: TrackerScreen.routePath,
           name: TrackerScreen.routeName,
-          pageBuilder: (context, state) => CupertinoModalSheetPage(
-            swipeDismissible: true,
-            barrierColor: context.colors.overlay,
-            child: const TrackerScreenModal(nestedNavigator: TrackerScreen()),
-          ),
+          pageBuilder: P.trackerScreenPageBuilder,
           routes: [
             GoRoute(
               path: ExerciseSelectionScreen.routePath,
