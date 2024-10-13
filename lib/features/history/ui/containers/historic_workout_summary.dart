@@ -1,11 +1,15 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_delete_controller.dart';
+import 'package:flex_workout_mobile/features/history/controllers/historic_workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class HistoricWorkoutSummary extends ConsumerWidget {
@@ -15,6 +19,19 @@ class HistoricWorkoutSummary extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void onDelete() {
+      ref
+          .read(historicWorkoutDeleteControllerProvider(workout).notifier)
+          .handle();
+      ref
+          .read(historicWorkoutListControllerProvider.notifier)
+          .deleteWorkout(workout);
+
+      context
+        ..pop()
+        ..pop();
+    }
+
     final duration = workout.endTimestamp.difference(workout.startTimestamp);
 
     return Container(
@@ -54,15 +71,22 @@ class HistoricWorkoutSummary extends ConsumerWidget {
                 const SizedBox(height: AppLayout.p4),
                 Row(
                   children: [
+                    // SquareButton(
+                    //   onPressed: () => {},
+                    //   label: 'Edit',
+                    //   icon: Symbols.edit,
+                    //   iconSize: 24,
+                    // ),
+                    // const SizedBox(width: AppLayout.p4),
                     SquareButton(
-                      onPressed: () => {},
-                      label: 'Edit',
-                      icon: Symbols.edit,
-                      iconSize: 24,
-                    ),
-                    const SizedBox(width: AppLayout.p4),
-                    SquareButton(
-                      onPressed: () {},
+                      onPressed: () async => showFlexAlertDialog(
+                        context,
+                        title: 'Delete Workout',
+                        description:
+                            'Are you sure you want to delete ${workout.title}? '
+                            'This action cannot be undone.',
+                        onPressed: onDelete,
+                      ),
                       label: 'Delete',
                       icon: Symbols.delete_outline,
                       iconSize: 24,

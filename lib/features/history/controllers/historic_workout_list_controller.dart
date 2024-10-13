@@ -35,6 +35,10 @@ class HistoricWorkoutListController extends _$HistoricWorkoutListController {
     state = [...state, workout];
   }
 
+  void deleteWorkout(HistoricWorkoutModel workout) {
+    state = state.where((e) => e.id != workout.id).toList();
+  }
+
   List<WorkoutHistoryTableCell> getWorkoutHistoryTable(
     HistoricWorkoutModel workout,
   ) {
