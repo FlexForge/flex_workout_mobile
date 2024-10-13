@@ -42,7 +42,11 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
   int get durationInMinutes =>
       startTimestamp.difference(endTimestamp).inMinutes;
 
-  double get volume => 25000;
+  double getVolume({Units units = Units.lbs}) {
+    return sections.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units: units);
+    });
+  }
 
   HistoricWorkoutEntity toEntity() => HistoricWorkoutEntity(
         id: id,
@@ -62,6 +66,7 @@ class HistoricWorkoutModel with HistoricWorkoutModelMappable {
 @MappableClass(discriminatorKey: 'organization')
 sealed class IHistoricSection with IHistoricSectionMappable {
   dynamic bestSet();
+  double getVolume({Units units = Units.kgs});
   HistoricSectionEntity toEntity();
 }
 
@@ -86,6 +91,13 @@ class HistoricDefaultSectionModel
         return element;
       }
       return previousValue;
+    });
+  }
+
+  @override
+  double getVolume({Units units = Units.kgs}) {
+    return sets.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units: units);
     });
   }
 
@@ -130,6 +142,17 @@ class HistoricSupersetSectionModel
     }
 
     return bestSets;
+  }
+
+  @override
+  double getVolume({Units units = Units.kgs}) {
+    return sets.fold(0, (previousValue, element) {
+      final test = element.values.fold<double>(0, (previousValue, element) {
+        return previousValue + element.getVolume(units: units);
+      });
+
+      return previousValue + test;
+    });
   }
 
   @override
