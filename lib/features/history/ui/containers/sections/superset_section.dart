@@ -6,23 +6,25 @@ import 'package:flex_workout_mobile/features/history/ui/containers/sets/default_
 import 'package:flutter/material.dart';
 
 class HistoricWorkoutSupersetSection extends StatelessWidget {
-  const HistoricWorkoutSupersetSection({required this.section, super.key});
+  const HistoricWorkoutSupersetSection({
+    required this.section,
+    required this.index,
+    super.key,
+  });
 
+  final int index;
   final HistoricSupersetSectionModel section;
 
   @override
   Widget build(BuildContext context) {
     return Section(
-      header: section.title,
-      subHeader: 'Working Sets',
-      padding: const EdgeInsets.only(
-        left: AppLayout.p4,
-        right: AppLayout.p4,
-        bottom: AppLayout.p3,
-      ),
+      header: index == 0 ? 'Workout Overview' : null,
+      subHeader: section.title,
+      padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
       body: Column(
         children: [
           ListView.separated(
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: section.sets.length,
@@ -30,6 +32,7 @@ class HistoricWorkoutSupersetSection extends StatelessWidget {
               final set = section.sets[setIndex];
 
               return ListView.separated(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: set.length,
@@ -49,14 +52,12 @@ class HistoricWorkoutSupersetSection extends StatelessWidget {
                         setString: superSet.key,
                       );
                   }
-                  // return superSet.display();
                 },
               );
             },
             separatorBuilder: (context, index) =>
                 Divider(height: 0, color: context.colors.divider),
           ),
-          const SizedBox(height: AppLayout.p4),
         ],
       ),
     );

@@ -43,10 +43,12 @@ class FlexListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        HapticFeedback.selectionClick();
-        onTap?.call();
-      },
+      onPressed: onTap != null
+          ? () {
+              HapticFeedback.selectionClick();
+              onTap?.call();
+            }
+          : null,
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,

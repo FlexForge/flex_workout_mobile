@@ -6,23 +6,25 @@ import 'package:flex_workout_mobile/features/history/ui/containers/sets/default_
 import 'package:flutter/material.dart';
 
 class HistoricWorkoutDefaultSection extends StatelessWidget {
-  const HistoricWorkoutDefaultSection({required this.section, super.key});
+  const HistoricWorkoutDefaultSection({
+    required this.section,
+    required this.index,
+    super.key,
+  });
 
+  final int index;
   final HistoricDefaultSectionModel section;
 
   @override
   Widget build(BuildContext context) {
     return Section(
-      header: section.title,
-      subHeader: 'Working Sets',
-      padding: const EdgeInsets.only(
-        left: AppLayout.p4,
-        right: AppLayout.p4,
-        bottom: AppLayout.p3,
-      ),
+      header: index == 0 ? 'Workout Overview' : null,
+      subHeader: section.title,
+      padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
       body: Column(
         children: [
           ListView.separated(
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: section.sets.length,
@@ -40,7 +42,6 @@ class HistoricWorkoutDefaultSection extends StatelessWidget {
             separatorBuilder: (context, index) =>
                 Divider(indent: 54, height: 0, color: context.colors.divider),
           ),
-          const SizedBox(height: AppLayout.p4),
         ],
       ),
     );

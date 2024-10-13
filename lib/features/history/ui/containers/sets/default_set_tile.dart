@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
@@ -79,16 +80,9 @@ class HistoricWorkoutDefaultSetTile extends StatelessWidget {
         ),
       ),
       suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
-      suffix: FlexButton(
+      suffix: const IconTextDisplay(
         label: 'Complete',
         icon: Symbols.done_all,
-        iconSize: 16,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppLayout.p4,
-          vertical: AppLayout.p1,
-        ),
-        disabledForegroundColor: context.colors.foregroundSecondary,
-        disabledBackgroundColor: context.colors.backgroundTertiary,
       ),
     );
   }

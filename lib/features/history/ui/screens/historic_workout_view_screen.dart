@@ -1,6 +1,9 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
+import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_display.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_view_controller.dart';
 import 'package:flex_workout_mobile/features/history/ui/containers/historic_workout_overview.dart';
 import 'package:flex_workout_mobile/features/history/ui/containers/historic_workout_summary.dart';
@@ -40,6 +43,16 @@ class HistoricWorkoutViewScreen extends ConsumerWidget {
             HistoricWorkoutSummary(workout: workout),
             const SizedBox(height: AppLayout.p6),
             HistoricWorkoutOverview(workout: workout),
+            const SizedBox(height: AppLayout.p6),
+            Section(
+              padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+              header: 'Muscle Groups Targeted',
+              body: MuscleGroupView(
+                primaryMuscleGroups: workout.primaryMuscleGroups,
+                secondaryMuscleGroups: workout.secondaryMuscleGroups,
+              ),
+            ),
+            const SizedBox(height: AppLayout.bottomBuffer),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ class HistoricWorkoutOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: workout.sections.length,
@@ -20,13 +21,13 @@ class HistoricWorkoutOverview extends StatelessWidget {
 
         switch (section) {
           case final HistoricDefaultSectionModel obj:
-            return HistoricWorkoutDefaultSection(section: obj);
+            return HistoricWorkoutDefaultSection(section: obj, index: index);
           case final HistoricSupersetSectionModel obj:
-            return HistoricWorkoutSupersetSection(section: obj);
+            return HistoricWorkoutSupersetSection(section: obj, index: index);
         }
       },
       separatorBuilder: (context, index) =>
-          const SizedBox(height: AppLayout.p6),
+          const SizedBox(height: AppLayout.p3),
     );
   }
 }
