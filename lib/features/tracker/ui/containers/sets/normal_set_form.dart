@@ -4,9 +4,9 @@ import 'package:flex_workout_mobile/core/common/ui/forms/flex_text_field.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +19,7 @@ class NormalSetInputForm extends ConsumerWidget {
     super.key,
   });
 
-  final LiveDefaultSetModel set;
+  final DefaultSetModel set;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -96,7 +96,7 @@ class NormalSetInputForm extends ConsumerWidget {
   Widget normalSetFormHeader(BuildContext context, WidgetRef ref) {
     void onSubmit(NormalSetForm form) {
       ref
-          .read(liveWorkoutControllerProvider.notifier)
+          .read(workoutControllerProvider.notifier)
           .completeDefaultSet(form, set);
       context.pop();
     }

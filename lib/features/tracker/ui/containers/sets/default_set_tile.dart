@@ -3,8 +3,8 @@ import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dar
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,12 +15,12 @@ import 'package:material_symbols_icons/symbols.dart';
 class DefaultSetTile extends ConsumerWidget {
   const DefaultSetTile({required this.set, super.key});
 
-  final LiveDefaultSetModel set;
+  final DefaultSetModel set;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void deleteSet() {
-      ref.read(liveWorkoutControllerProvider.notifier).removeDefaultSet(set);
+      ref.read(workoutControllerProvider.notifier).removeDefaultSet(set);
     }
 
     return SwipeActionCell(
@@ -50,7 +50,7 @@ class DefaultSetTile extends ConsumerWidget {
 class _Completed extends StatelessWidget {
   const _Completed({required this.set});
 
-  final LiveDefaultSetModel set;
+  final DefaultSetModel set;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _Completed extends StatelessWidget {
 class _Incomplete extends StatelessWidget {
   const _Incomplete({required this.set});
 
-  final LiveDefaultSetModel set;
+  final DefaultSetModel set;
 
   @override
   Widget build(BuildContext context) {

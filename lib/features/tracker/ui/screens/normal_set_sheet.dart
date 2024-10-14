@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/normal_set_form.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +52,7 @@ class NormalSetScreen extends StatelessWidget {
   static const routePath = 'normal_set';
   static const routeName = 'normal_set_form';
 
-  final LiveDefaultSetModel? set;
+  final DefaultSetModel? set;
 
   @override
   Widget build(BuildContext context) {

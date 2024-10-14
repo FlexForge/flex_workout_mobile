@@ -1,7 +1,7 @@
+import 'package:flex_workout_mobile/core/extensions/datetime_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +10,7 @@ class MainTrackerAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workout = ref.watch(liveWorkoutControllerProvider);
+    final workout = ref.watch(workoutControllerProvider);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(

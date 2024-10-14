@@ -3,8 +3,8 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/history/controllers/historic_workout_create_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/main_tracker_info_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -16,16 +16,16 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workout = ref.watch(liveWorkoutControllerProvider);
+    final workout = ref.watch(workoutControllerProvider);
     final form = ref.watch(mainTrackerInfoFormControllerProvider);
 
     void logWorkout() {
-      ref
-          .read(historicWorkoutCreateControllerProvider.notifier)
-          .handle(form, workout);
+      // ref
+      //     .read(historicWorkoutCreateControllerProvider.notifier)
+      //     .handle(form, workout);
 
       ref
-        ..invalidate(liveWorkoutControllerProvider)
+        ..invalidate(workoutControllerProvider)
         ..invalidate(mainTrackerInfoFormControllerProvider);
       ref.read(appControllerProvider.notifier).endWorkout();
     }

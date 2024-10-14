@@ -1,6 +1,8 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'workout_controller.g.dart';
@@ -30,18 +32,16 @@ class WorkoutController extends _$WorkoutController {
 
   void addDefaultSection(List<ExerciseModel> exercises) {
     for (final exercise in exercises) {
-      final sections = List<ISection>.from(state.newExercises);
       final sectionToAdd = DefaultSectionModel(sets: [], exercise: exercise);
-
-      state = state.copyWith(sections: sections..add(sectionToAdd));
+      state.sections.add(sectionToAdd);
+      _updateMuscleGroups();
     }
   }
 
   void addSupersetSection(List<ExerciseModel> exercises) {
-    final sections = List<ISection>.from(state.newExercises);
     final sectionToAdd = SupersetSectionModel(sets: [], exercises: exercises);
-
-    state = state.copyWith(sections: sections..add(sectionToAdd));
+    state.sections.add(sectionToAdd);
+    _updateMuscleGroups();
   }
 
   void addDefaultSet(ISection section) {
@@ -50,31 +50,153 @@ class WorkoutController extends _$WorkoutController {
 
     switch (state.sections[index]) {
       case final DefaultSectionModel obj:
-        final setToAdd = DefaultSetModel(exercise: obj.exercise);
+        final setToAdd = DefaultSetModel(
+          sectionIndex: index,
+          setIndex: obj.sets.length,
+          exercise: obj.exercise,
+        );
 
         obj.sets.add(setToAdd);
       case final SupersetSectionModel obj:
         final setToAdd = <String, ISet>{};
-        for (final (index, exercise) in obj.exercises.indexed) {
-          final key = String.fromCharCode(65 + index);
-          final value = DefaultSetModel(exercise: exercise);
+        for (final (setIndex, exercise) in obj.exercises.indexed) {
+          final key = String.fromCharCode(65 + setIndex);
+          final value = DefaultSetModel(
+            sectionIndex: index,
+            setIndex: obj.sets.length,
+            setString: key,
+            exercise: exercise,
+          );
           setToAdd.addAll({key: value});
         }
 
         obj.sets.add(setToAdd);
     }
+
+    state = state.copyWith(subtitle: state.subtitle);
   }
 
   void completeDefaultSet(NormalSetForm form, DefaultSetModel currentSet) {
-    throw UnimplementedError();
+    final section = state.sections[currentSet.sectionIndex];
+
+    switch (section) {
+      case final DefaultSectionModel defaultSection:
+        state =
+            state.copyWith.sections.at(currentSet.sectionIndex).$update((_) {
+          return defaultSection.copyWith.sets
+              .at(currentSet.setIndex)
+              .$update((_) {
+            return currentSet.copyWith(
+              load: form.model.load,
+              reps: form.model.reps,
+              units: Units.values[form.model.units!],
+            );
+          });
+        });
+
+      case final SupersetSectionModel supersetSection:
+        state =
+            state.copyWith.sections.at(currentSet.sectionIndex).$update((_) {
+          return supersetSection.copyWith.sets
+              .at(currentSet.setIndex)
+              .$update((set) {
+            set[currentSet.setString] = currentSet.copyWith(
+              load: form.model.load,
+              reps: form.model.reps,
+              units: Units.values[form.model.units!],
+            );
+
+            return set;
+          });
+        });
+    }
+
+    state = state.copyWith(subtitle: state.subtitle);
   }
 
   void removeSection(ISection section) {
-    final sections = List<ISection>.from(state.sections);
-    state = state.copyWith(sections: sections..remove(section));
+    state.sections.remove(section);
+    _resetIndexes();
+    _updateMuscleGroups();
   }
 
   void removeDefaultSet(DefaultSetModel set) {
-    throw UnimplementedError();
+    final section = state.sections[set.sectionIndex];
+
+    switch (section) {
+      case final DefaultSectionModel obj:
+        obj.sets.remove(set);
+      case final SupersetSectionModel obj:
+        obj.sets[set.setIndex]
+            .removeWhere((key, value) => key == set.setString);
+
+        if (obj.sets[set.setIndex].isEmpty) obj.sets.removeAt(set.setIndex);
+    }
+
+    _resetIndexes();
+  }
+
+  void _resetIndexes() {
+    final sections = List<ISection>.from(state.sections);
+
+    final newSections = sections.mapWithIndex((section, sectionIndex) {
+      switch (section) {
+        case final DefaultSectionModel defaultSection:
+          return defaultSection.copyWith(
+            sets: defaultSection.sets.mapWithIndex((set, setIndex) {
+              switch (set) {
+                case final DefaultSetModel defaultSet:
+                  return defaultSet.copyWith(
+                    sectionIndex: sectionIndex,
+                    setIndex: setIndex,
+                  );
+              }
+            }).toList(),
+          );
+
+        case final SupersetSectionModel supersetSection:
+          return supersetSection.copyWith(
+            sets: supersetSection.sets.mapWithIndex((set, setIndex) {
+              return set
+                ..updateAll((key, value) {
+                  switch (value) {
+                    case final DefaultSetModel defaultSet:
+                      return defaultSet.copyWith(
+                        sectionIndex: sectionIndex,
+                        setIndex: setIndex,
+                      );
+                  }
+                });
+            }).toList(),
+          );
+      }
+    }).toList();
+
+    state = state.copyWith(sections: newSections);
+  }
+
+  void _updateMuscleGroups() {
+    final exercises = state.sections.flatMap((section) {
+      switch (section) {
+        case final DefaultSectionModel defaultSection:
+          return [defaultSection.exercise];
+        case final SupersetSectionModel supersetSection:
+          return supersetSection.exercises;
+      }
+    }).toList();
+
+    final primaryMuscleGroups = exercises.flatMap((exercise) {
+      return exercise.primaryMuscleGroups;
+    }).toSet();
+
+    final secondaryMuscleGroups = exercises.flatMap((exercise) {
+      return exercise.secondaryMuscleGroups;
+    }).toSet()
+      ..removeWhere(primaryMuscleGroups.contains);
+
+    state = state.copyWith(
+      primaryMuscleGroups: primaryMuscleGroups.toList(),
+      secondaryMuscleGroups: secondaryMuscleGroups.toList(),
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -13,9 +13,7 @@ class MainTrackerBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workout = ref.watch(liveWorkoutControllerProvider);
-    final totalSets =
-        ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
+    final workout = ref.watch(workoutControllerProvider);
 
     return Container(
       height: 60,
@@ -32,7 +30,7 @@ class MainTrackerBottomBar extends ConsumerWidget {
             Expanded(
               child: FlexButton(
                 onPressed: next,
-                enabled: workout.sections.isNotEmpty && totalSets > 0,
+                // enabled: workout.sections.isNotEmpty && totalSets > 0,
                 label: 'Finish',
                 icon: Symbols.check,
                 backgroundColor: context.colors.foregroundPrimary,

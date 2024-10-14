@@ -2,9 +2,10 @@ import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/swipe_action_circle.dart';
+import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/default_set_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
@@ -13,16 +14,16 @@ import 'package:material_symbols_icons/symbols.dart';
 class SupersetSectionView extends ConsumerWidget {
   const SupersetSectionView({required this.section, super.key});
 
-  final LiveSupersetSectionModel section;
+  final SupersetSectionModel section;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void addSet(LiveSupersetSectionModel sectionIndex) {
-      ref.read(liveWorkoutControllerProvider.notifier).addSet(section);
+    void addSet() {
+      ref.read(workoutControllerProvider.notifier).addDefaultSet(section);
     }
 
     void deleteSection() {
-      ref.read(liveWorkoutControllerProvider.notifier).removeSection(section);
+      ref.read(workoutControllerProvider.notifier).removeSection(section);
     }
 
     return SwipeActionCell(
@@ -71,7 +72,10 @@ class SupersetSectionView extends ConsumerWidget {
                   itemBuilder: (context, exerciseIndex) {
                     final superSet = set.values.toList()[exerciseIndex];
 
-                    return superSet.display();
+                    switch (superSet) {
+                      case final DefaultSetModel obj:
+                        return DefaultSetTile(set: obj);
+                    }
                   },
                 );
               },
@@ -86,7 +90,7 @@ class SupersetSectionView extends ConsumerWidget {
                 horizontal: AppLayout.p4,
               ),
               child: FlexButton(
-                onPressed: () => addSet(section),
+                onPressed: addSet,
                 expanded: true,
                 label: 'Add Set',
                 icon: Symbols.add,

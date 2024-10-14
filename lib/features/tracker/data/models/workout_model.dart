@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flutter/material.dart';
 
 part 'workout_model.mapper.dart';
 
@@ -75,6 +76,8 @@ class SupersetSectionModel
   List<Map<String, ISet>> sets;
   List<ExerciseModel> exercises;
 
+  String get title => 'Title';
+
   @override
   ISet? bestSet() {
     return null;
@@ -89,23 +92,34 @@ class SupersetSectionModel
 @MappableClass(discriminatorKey: 'type')
 sealed class ISet with ISetMappable {
   double getVolume({Units units = Units.kgs});
+  bool get isComplete;
   // HistoricSetEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
 class DefaultSetModel with DefaultSetModelMappable implements ISet {
   DefaultSetModel({
+    required this.sectionIndex,
+    required this.setIndex,
     required this.exercise,
+    this.setString = '',
     this.reps,
     this.load,
     this.units,
   });
+
+  final int sectionIndex;
+  final int setIndex;
+  final String setString;
 
   final int? reps;
   final double? load;
   final Units? units;
 
   final ExerciseModel exercise;
+
+  @override
+  bool get isComplete => reps != null && load != null && units != null;
 
   @override
   double getVolume({Units units = Units.kgs}) => 0;

@@ -11,7 +11,7 @@ import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_qui
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +89,7 @@ class _ExerciseSelectionPickerState
                   if (res == null) return;
                   items.add(res);
                   ref
-                      .read(liveWorkoutControllerProvider.notifier)
+                      .read(workoutControllerProvider.notifier)
                       .addNewExercise(res);
                 },
                 icon: Icons.add,

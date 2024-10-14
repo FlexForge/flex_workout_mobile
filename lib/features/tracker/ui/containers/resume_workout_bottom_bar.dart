@@ -1,11 +1,11 @@
 import 'package:flex_workout_mobile/core/common/controllers/app_controller.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
+import 'package:flex_workout_mobile/core/extensions/datetime_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/main_tracker_info_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final form = ref.watch(mainTrackerInfoFormControllerProvider);
-    final workout = ref.watch(liveWorkoutControllerProvider);
+    final workout = ref.watch(workoutControllerProvider);
 
     return TextButton(
       onPressed: () {
@@ -59,7 +59,7 @@ class ResumeWorkoutBottomBar extends ConsumerWidget {
                     onPressed: () {
                       ref
                         ..invalidate(mainTrackerInfoFormControllerProvider)
-                        ..invalidate(liveWorkoutControllerProvider);
+                        ..invalidate(workoutControllerProvider);
                       ref.read(appControllerProvider.notifier).endWorkout();
 
                       context.pop();

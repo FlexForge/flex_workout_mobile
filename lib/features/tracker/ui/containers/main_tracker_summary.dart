@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/text_with_color.dart';
+import 'package:flex_workout_mobile/core/extensions/datetime_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/num_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/muscle_group_view.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -30,7 +29,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   void initState() {
-    final startTime = ref.read(liveWorkoutControllerProvider).startTimestamp;
+    final startTime = ref.read(workoutControllerProvider).startTimestamp;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -53,12 +52,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final workout = ref.watch(liveWorkoutControllerProvider);
-    final totalVolume = ref
-        .watch(liveWorkoutControllerProvider.notifier)
-        .getTotalVolume(Units.lbs);
-    final totalSets =
-        ref.watch(liveWorkoutControllerProvider.notifier).getSetsCompleted();
+    final workout = ref.watch(workoutControllerProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,13 +77,14 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
               TextWithColor(
                 color: context.colors.blue,
                 label: 'Total volume',
-                value: totalVolume.cleanNumber(),
+                value: workout.getVolume().cleanNumber(),
                 isLarge: true,
               ),
               TextWithColor(
                 color: context.colors.green,
                 label: 'Sets completed',
-                value: totalSets.cleanNumber(decimal: 0),
+                value: '0',
+                // value: totalSets.cleanNumber(decimal: 0),
                 isLarge: true,
               ),
               TextWithColor(
