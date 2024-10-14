@@ -20,9 +20,9 @@ class WorkoutSummaryBottomBar extends ConsumerWidget {
     final form = ref.watch(mainTrackerInfoFormControllerProvider);
 
     void logWorkout() {
-      // ref
-      //     .read(historicWorkoutCreateControllerProvider.notifier)
-      //     .handle(form, workout);
+      ref
+          .read(historicWorkoutCreateControllerProvider.notifier)
+          .handle(form, workout);
 
       ref
         ..invalidate(workoutControllerProvider)

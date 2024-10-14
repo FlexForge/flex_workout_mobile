@@ -83,7 +83,7 @@ class _MainTrackerSummaryState extends ConsumerState<MainTrackerSummary> {
               TextWithColor(
                 color: context.colors.green,
                 label: 'Sets completed',
-                value: '0',
+                value: workout.getTotalSets().cleanNumber(decimal: 0),
                 // value: totalSets.cleanNumber(decimal: 0),
                 isLarge: true,
               ),

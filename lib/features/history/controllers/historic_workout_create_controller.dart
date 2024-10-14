@@ -1,7 +1,7 @@
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:flex_workout_mobile/features/history/providers.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/tracker_form_model.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'historic_workout_create_controller.g.dart';
@@ -14,7 +14,7 @@ class HistoricWorkoutCreateController
     return null;
   }
 
-  void handle(MainTrackerInfoForm infoForm, LiveWorkoutModel workout) {
+  void handle(MainTrackerInfoForm infoForm, WorkoutModel workout) {
     final title = infoForm.model.title ?? 'Unnamed Workout';
     final notes = infoForm.model.notes ?? '';
 

@@ -48,32 +48,35 @@ class WorkoutController extends _$WorkoutController {
     final index = state.sections.indexOf(section);
     if (index < 0) return;
 
-    switch (state.sections[index]) {
-      case final DefaultSectionModel obj:
-        final setToAdd = DefaultSetModel(
-          sectionIndex: index,
-          setIndex: obj.sets.length,
-          exercise: obj.exercise,
-        );
+    state = state.copyWith.sections.at(index).$update((section) {
+      switch (section) {
+        case final SupersetSectionModel superset:
+          final sets = List<Map<String, ISet>>.from(superset.sets);
 
-        obj.sets.add(setToAdd);
-      case final SupersetSectionModel obj:
-        final setToAdd = <String, ISet>{};
-        for (final (setIndex, exercise) in obj.exercises.indexed) {
-          final key = String.fromCharCode(65 + setIndex);
-          final value = DefaultSetModel(
+          final setToAdd = <String, ISet>{};
+          for (final (setIndex, exercise) in superset.exercises.indexed) {
+            final key = String.fromCharCode(65 + setIndex);
+            final value = DefaultSetModel(
+              sectionIndex: index,
+              setIndex: superset.sets.length,
+              setString: key,
+              exercise: exercise,
+            );
+            setToAdd.addAll({key: value});
+          }
+
+          return superset.copyWith(sets: sets..add(setToAdd));
+        case final DefaultSectionModel defaultSection:
+          final sets = List<ISet>.from(defaultSection.sets);
+          final setToAdd = DefaultSetModel(
             sectionIndex: index,
-            setIndex: obj.sets.length,
-            setString: key,
-            exercise: exercise,
+            setIndex: defaultSection.sets.length,
+            exercise: defaultSection.exercise,
           );
-          setToAdd.addAll({key: value});
-        }
 
-        obj.sets.add(setToAdd);
-    }
-
-    state = state.copyWith(subtitle: state.subtitle);
+          return defaultSection.copyWith(sets: sets..add(setToAdd));
+      }
+    });
   }
 
   void completeDefaultSet(NormalSetForm form, DefaultSetModel currentSet) {

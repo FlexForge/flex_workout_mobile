@@ -16,7 +16,6 @@ import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_s
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_view_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/video_demo_screen.dart';
 import 'package:flex_workout_mobile/features/history/ui/screens/historic_workout_view_screen.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/data/models/workout_model.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';

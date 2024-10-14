@@ -1,8 +1,9 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/core/utils/enums.dart';
+import 'package:flex_workout_mobile/core/utils/functions.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
-import 'package:flutter/material.dart';
+import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 
 part 'workout_model.mapper.dart';
 
@@ -35,13 +36,20 @@ class WorkoutModel with WorkoutModelMappable {
       return previousValue + element.getVolume(units: units);
     });
   }
+
+  int getTotalSets() {
+    return sections.fold(0, (previousValue, element) {
+      return previousValue + element.getCompletedSets();
+    });
+  }
 }
 
 @MappableClass(discriminatorKey: 'organization')
 sealed class ISection with ISectionMappable {
   dynamic bestSet();
   double getVolume({Units units = Units.kgs});
-  // HistoricSectionEntity toEntity();
+  int getCompletedSets();
+  HistoricSectionEntity? toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -55,6 +63,7 @@ class DefaultSectionModel with DefaultSectionModelMappable implements ISection {
   ExerciseModel exercise;
 
   String get title => exercise.name;
+  List<ISet> get completedSets => sets.where((set) => set.isComplete).toList();
 
   @override
   ISet? bestSet() {
@@ -63,7 +72,21 @@ class DefaultSectionModel with DefaultSectionModelMappable implements ISection {
 
   @override
   double getVolume({Units units = Units.kgs}) {
-    return 0;
+    return completedSets.fold(0, (previousValue, element) {
+      return previousValue + element.getVolume(units: units);
+    });
+  }
+
+  @override
+  int getCompletedSets() => completedSets.length;
+
+  @override
+  HistoricSectionEntity? toEntity() {
+    if (completedSets.isEmpty) return null;
+
+    final defaultSection = HistoricDefaultSectionEntity(title: title)
+      ..sets.addAll(completedSets.map((set) => set.toEntity()!));
+    return HistoricSectionEntity()..defaultSection.target = defaultSection;
   }
 }
 
@@ -71,12 +94,21 @@ class DefaultSectionModel with DefaultSectionModelMappable implements ISection {
 class SupersetSectionModel
     with SupersetSectionModelMappable
     implements ISection {
-  SupersetSectionModel({required this.sets, required this.exercises});
+  SupersetSectionModel({
+    required this.sets,
+    required this.exercises,
+  });
 
   List<Map<String, ISet>> sets;
   List<ExerciseModel> exercises;
 
   String get title => 'Title';
+  List<Map<String, ISet>> get completedSets {
+    final test = List<Map<String, ISet>>.from(sets);
+    return test
+        .map((e) => e..removeWhere((key, value) => value.isComplete))
+        .toList();
+  }
 
   @override
   ISet? bestSet() {
@@ -85,7 +117,31 @@ class SupersetSectionModel
 
   @override
   double getVolume({Units units = Units.kgs}) {
-    return 0;
+    return completedSets.fold(0, (previousValue, element) {
+      final test = element.values.fold<double>(0, (previousValue, element) {
+        return previousValue + element.getVolume(units: units);
+      });
+
+      return previousValue + test;
+    });
+  }
+
+  @override
+  int getCompletedSets() => 0;
+
+  @override
+  HistoricSectionEntity? toEntity() {
+    final setsToAdd = completedSets.map(
+      (e) => HistoricSupersetWrapperEntity(superSetString: e.keys.toList())
+        ..sets.addAll(e.values.map((e) => e.toEntity()!)),
+    );
+
+    final cleanedSets = setsToAdd.where((e) => e.sets.isNotEmpty).toList();
+    if (cleanedSets.isEmpty) return null;
+
+    final supersetSection = HistoricSupersetSectionEntity(title: title)
+      ..supersets.addAll(cleanedSets);
+    return HistoricSectionEntity()..supersetSection.target = supersetSection;
   }
 }
 
@@ -93,7 +149,7 @@ class SupersetSectionModel
 sealed class ISet with ISetMappable {
   double getVolume({Units units = Units.kgs});
   bool get isComplete;
-  // HistoricSetEntity toEntity();
+  HistoricSetEntity? toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
@@ -118,9 +174,27 @@ class DefaultSetModel with DefaultSetModelMappable implements ISet {
 
   final ExerciseModel exercise;
 
+  double? get loadInKg => (units == Units.kgs) ? load : lbsToKgs(load ?? 0);
+  double? get loadInLbs => (units == Units.lbs) ? load : kgsToLbs(load ?? 0);
+
   @override
   bool get isComplete => reps != null && load != null && units != null;
 
   @override
-  double getVolume({Units units = Units.kgs}) => 0;
+  double getVolume({Units units = Units.kgs}) {
+    if (!isComplete) return 0;
+    return (units == Units.kgs) ? loadInKg! * reps! : loadInLbs! * reps!;
+  }
+
+  @override
+  HistoricSetEntity? toEntity() {
+    if (!isComplete) return null;
+
+    final defaultSet =
+        HistoricDefaultSetEntity(reps: reps!, load: load!, units: units!.index);
+
+    return HistoricSetEntity()
+      ..defaultSet.target = defaultSet
+      ..exercise.target = exercise.toEntity();
+  }
 }

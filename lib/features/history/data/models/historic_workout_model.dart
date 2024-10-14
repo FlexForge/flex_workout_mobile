@@ -212,9 +212,10 @@ class HistoricDefaultSetModel
       reps: reps,
       load: load,
       units: units.index,
-    )..exercise.target = exercise.toEntity();
+    );
     final defaultSetEntity = HistoricSetEntity()
-      ..defaultSet.target = defaultSet;
+      ..defaultSet.target = defaultSet
+      ..exercise.target = exercise.toEntity();
     return defaultSetEntity;
   }
 }
