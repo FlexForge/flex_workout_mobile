@@ -93,6 +93,7 @@ class WorkoutController extends _$WorkoutController {
               load: form.model.load,
               reps: form.model.reps,
               units: Units.values[form.model.units!],
+              timeOfCompletion: DateTime.now(),
             );
           });
         });
@@ -107,6 +108,7 @@ class WorkoutController extends _$WorkoutController {
               load: form.model.load,
               reps: form.model.reps,
               units: Units.values[form.model.units!],
+              timeOfCompletion: DateTime.now(),
             );
 
             return set;

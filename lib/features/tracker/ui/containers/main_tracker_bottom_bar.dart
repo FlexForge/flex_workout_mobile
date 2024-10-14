@@ -30,7 +30,8 @@ class MainTrackerBottomBar extends ConsumerWidget {
             Expanded(
               child: FlexButton(
                 onPressed: next,
-                // enabled: workout.sections.isNotEmpty && totalSets > 0,
+                enabled:
+                    workout.sections.isNotEmpty && workout.getTotalSets() > 0,
                 label: 'Finish',
                 icon: Symbols.check,
                 backgroundColor: context.colors.foregroundPrimary,

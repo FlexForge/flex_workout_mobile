@@ -27,6 +27,7 @@ final exampleWorkout = HistoricWorkoutModel(
           load: 100,
           units: Units.kgs,
           exercise: barbellBenchPress.toModel(),
+          timeOfCompletion: DateTime.now().add(const Duration(minutes: 1)),
         ),
         HistoricDefaultSetModel(
           id: 0,
@@ -34,6 +35,7 @@ final exampleWorkout = HistoricWorkoutModel(
           load: 100,
           units: Units.kgs,
           exercise: barbellBenchPress.toModel(),
+          timeOfCompletion: DateTime.now().add(const Duration(minutes: 2)),
         ),
         HistoricDefaultSetModel(
           id: 0,
@@ -41,6 +43,7 @@ final exampleWorkout = HistoricWorkoutModel(
           load: 100,
           units: Units.kgs,
           exercise: barbellBenchPress.toModel(),
+          timeOfCompletion: DateTime.now().add(const Duration(minutes: 4)),
         ),
       ],
     ),
@@ -55,6 +58,7 @@ final exampleWorkout = HistoricWorkoutModel(
             load: 100,
             units: Units.kgs,
             exercise: barbellInclineBenchPress.toModel(),
+            timeOfCompletion: DateTime.now().add(const Duration(minutes: 10)),
           ),
           'B': HistoricDefaultSetModel(
             id: 0,
@@ -62,6 +66,7 @@ final exampleWorkout = HistoricWorkoutModel(
             load: 100,
             units: Units.kgs,
             exercise: plateLoadedNeckExtension.toModel(),
+            timeOfCompletion: DateTime.now().add(const Duration(minutes: 11)),
           ),
         },
         {
@@ -71,6 +76,7 @@ final exampleWorkout = HistoricWorkoutModel(
             load: 100,
             units: Units.kgs,
             exercise: barbellInclineBenchPress.toModel(),
+            timeOfCompletion: DateTime.now().add(const Duration(minutes: 14)),
           ),
           'B': HistoricDefaultSetModel(
             id: 0,
@@ -78,6 +84,7 @@ final exampleWorkout = HistoricWorkoutModel(
             load: 100,
             units: Units.kgs,
             exercise: plateLoadedNeckExtension.toModel(),
+            timeOfCompletion: DateTime.now().add(const Duration(minutes: 15)),
           ),
         },
         {
@@ -87,6 +94,7 @@ final exampleWorkout = HistoricWorkoutModel(
             load: 100,
             units: Units.kgs,
             exercise: barbellInclineBenchPress.toModel(),
+            timeOfCompletion: DateTime.now().add(const Duration(minutes: 20)),
           ),
         },
       ],
@@ -101,6 +109,7 @@ final exampleWorkout = HistoricWorkoutModel(
           load: 100,
           units: Units.kgs,
           exercise: barbellAdPress.toModel(),
+          timeOfCompletion: DateTime.now().add(const Duration(minutes: 25)),
         ),
         HistoricDefaultSetModel(
           id: 0,
@@ -108,6 +117,7 @@ final exampleWorkout = HistoricWorkoutModel(
           load: 100,
           units: Units.kgs,
           exercise: barbellAdPress.toModel(),
+          timeOfCompletion: DateTime.now().add(const Duration(minutes: 30)),
         ),
       ],
     ),

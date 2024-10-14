@@ -29,7 +29,7 @@ class WorkoutModel with WorkoutModelMappable {
   final List<ExerciseModel> newExercises;
 
   int get durationInMinutes =>
-      startTimestamp.difference(DateTime.now()).inMinutes;
+      DateTime.now().difference(startTimestamp).inMinutes;
 
   double getVolume({Units units = Units.kgs}) {
     return sections.fold(0, (previousValue, element) {
@@ -162,6 +162,7 @@ class DefaultSetModel with DefaultSetModelMappable implements ISet {
     this.reps,
     this.load,
     this.units,
+    this.timeOfCompletion,
   });
 
   final int sectionIndex;
@@ -171,6 +172,7 @@ class DefaultSetModel with DefaultSetModelMappable implements ISet {
   final int? reps;
   final double? load;
   final Units? units;
+  final DateTime? timeOfCompletion;
 
   final ExerciseModel exercise;
 
@@ -178,7 +180,8 @@ class DefaultSetModel with DefaultSetModelMappable implements ISet {
   double? get loadInLbs => (units == Units.lbs) ? load : kgsToLbs(load ?? 0);
 
   @override
-  bool get isComplete => reps != null && load != null && units != null;
+  bool get isComplete =>
+      reps != null && load != null && units != null && timeOfCompletion != null;
 
   @override
   double getVolume({Units units = Units.kgs}) {
@@ -190,8 +193,12 @@ class DefaultSetModel with DefaultSetModelMappable implements ISet {
   HistoricSetEntity? toEntity() {
     if (!isComplete) return null;
 
-    final defaultSet =
-        HistoricDefaultSetEntity(reps: reps!, load: load!, units: units!.index);
+    final defaultSet = HistoricDefaultSetEntity(
+      reps: reps!,
+      load: load!,
+      units: units!.index,
+      timeOfCompletion: timeOfCompletion!,
+    );
 
     return HistoricSetEntity()
       ..defaultSet.target = defaultSet

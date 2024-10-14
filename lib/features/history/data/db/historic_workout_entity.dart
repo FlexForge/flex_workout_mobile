@@ -181,6 +181,7 @@ class HistoricDefaultSetEntity {
     required this.reps,
     required this.load,
     required this.units,
+    required this.timeOfCompletion,
     this.id = 0,
   });
 
@@ -190,6 +191,9 @@ class HistoricDefaultSetEntity {
   int reps;
   double load;
   int units;
+
+  @Property(type: PropertyType.date)
+  DateTime timeOfCompletion;
 }
 
 extension ConvertHistoricDefaultSet on HistoricDefaultSetEntity {
@@ -199,6 +203,7 @@ extension ConvertHistoricDefaultSet on HistoricDefaultSetEntity {
       reps: reps,
       load: load,
       units: Units.values[units],
+      timeOfCompletion: timeOfCompletion,
       exercise: exercise.toModel(),
     );
   }

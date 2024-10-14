@@ -305,7 +305,7 @@
     },
     {
       "id": "23:5664710869213576884",
-      "lastPropertyId": "5:3213894126262483105",
+      "lastPropertyId": "6:3543730088154341570",
       "name": "HistoricDefaultSetEntity",
       "properties": [
         {
@@ -328,6 +328,11 @@
           "id": "4:5591795912682761816",
           "name": "units",
           "type": 6
+        },
+        {
+          "id": "6:3543730088154341570",
+          "name": "timeOfCompletion",
+          "type": 10
         }
       ],
       "relations": []

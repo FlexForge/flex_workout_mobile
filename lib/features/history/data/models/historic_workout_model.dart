@@ -189,6 +189,7 @@ class HistoricDefaultSetModel
     required this.load,
     required this.units,
     required this.exercise,
+    required this.timeOfCompletion,
   });
 
   final int id;
@@ -197,6 +198,7 @@ class HistoricDefaultSetModel
   final Units units;
 
   final ExerciseModel exercise;
+  final DateTime timeOfCompletion;
 
   double get loadInKg => (units == Units.kgs) ? load : lbsToKgs(load);
   double get loadInLbs => (units == Units.lbs) ? load : kgsToLbs(load);
@@ -212,6 +214,7 @@ class HistoricDefaultSetModel
       reps: reps,
       load: load,
       units: units.index,
+      timeOfCompletion: timeOfCompletion,
     );
     final defaultSetEntity = HistoricSetEntity()
       ..defaultSet.target = defaultSet

@@ -40,8 +40,7 @@ class WorkoutSummaryHeader extends ConsumerWidget {
               SummaryHighlight(
                 diameter: 110,
                 color: context.colors.yellow,
-                value: '0',
-                // value: totalSets.cleanNumber(decimal: 0),
+                value: workout.getTotalSets().cleanNumber(decimal: 0),
                 label: 'sets',
               ),
               const Spacer(),
