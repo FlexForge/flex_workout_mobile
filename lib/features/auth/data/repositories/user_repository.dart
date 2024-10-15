@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/core/utils/failure.dart';
 import 'package:flex_workout_mobile/db/objectbox.g.dart' as ob;
 import 'package:flex_workout_mobile/features/auth/data/db/user_entity.dart';
@@ -72,11 +73,34 @@ class UserRepository {
       final user = res.first;
 
       box.put(
-        user..dbPreferredTheme = theme.index,
+        user..preferredTheme = theme,
         mode: ob.PutMode.update,
       );
 
       return right(theme);
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
+  Either<Failure, Units> updateWeightUnit({
+    required Units unit,
+  }) {
+    try {
+      final res = box.getAll();
+
+      if (res.isEmpty) {
+        return left(const Failure.empty());
+      }
+
+      final user = res.first;
+
+      box.put(
+        user..preferredWeightUnit = unit,
+        mode: ob.PutMode.update,
+      );
+
+      return right(unit);
     } catch (e) {
       return left(Failure.internalServerError(message: e.toString()));
     }

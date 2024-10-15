@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/auth/controllers/user_create_controller.dart';
 import 'package:flex_workout_mobile/features/auth/data/models/user_form_model.dart';
 import 'package:flex_workout_mobile/features/auth/data/models/user_model.dart';
@@ -56,6 +57,7 @@ void main() {
           email: mockUser.email!,
           isMale: mockUser.sex! == 1,
           preferredTheme: ThemeMode.system,
+          preferredWeightUnit: Units.kgs,
         );
 
         when(
