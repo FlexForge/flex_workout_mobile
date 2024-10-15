@@ -131,8 +131,8 @@ final barbellRomanianDeadlift = ExerciseEntity(
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 )
-  ..primaryMuscleGroups.addAll([quads])
-  ..secondaryMuscleGroups.addAll([]);
+  ..primaryMuscleGroups.addAll([hamstrings])
+  ..secondaryMuscleGroups.addAll([abs, glutes]);
 
 final dumbbellInclineCurl = ExerciseEntity(
   name: 'Incline Curl (Dumbbell)',

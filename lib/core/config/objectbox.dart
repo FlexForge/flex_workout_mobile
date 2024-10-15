@@ -55,5 +55,8 @@ class ObjectBox {
   void _resetWorkoutData() {
     store.box<HistoricWorkoutEntity>().removeAll();
     store.box<HistoricWorkoutEntity>().put(exampleWorkout.toEntity());
+    store
+        .box<HistoricWorkoutEntity>()
+        .putMany(historicWorkouts.map((e) => e.toEntity()).toList());
   }
 }
