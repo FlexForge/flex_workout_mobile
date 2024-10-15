@@ -22,11 +22,13 @@ class ExerciseHistoryTile extends StatelessWidget {
   const ExerciseHistoryTile({
     required this.padding,
     this.graphColor,
+    this.graph,
     super.key,
   });
 
   final EdgeInsets padding;
   final Color? graphColor;
+  final LineGraphModel? graph;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class ExerciseHistoryTile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppLayout.p2),
-            LineGraphTile(graph: example, color: graphColor),
+            LineGraphTile(graph: graph ?? example, color: graphColor),
             const SizedBox(height: AppLayout.p4),
             Divider(
               height: 1,

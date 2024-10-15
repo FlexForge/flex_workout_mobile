@@ -19,7 +19,7 @@ final exampleWorkout = HistoricWorkoutModel(
   sections: [
     HistoricDefaultSectionModel(
       id: 0,
-      title: 'Barbell BenchPress',
+      title: 'Barbell Bench Press',
       sets: [
         HistoricDefaultSetModel(
           id: 0,
@@ -32,7 +32,7 @@ final exampleWorkout = HistoricWorkoutModel(
         HistoricDefaultSetModel(
           id: 0,
           reps: 10,
-          load: 100,
+          load: 95,
           units: Units.kgs,
           exercise: barbellBenchPress.toModel(),
           timeOfCompletion: DateTime.now().add(const Duration(minutes: 2)),
@@ -40,7 +40,7 @@ final exampleWorkout = HistoricWorkoutModel(
         HistoricDefaultSetModel(
           id: 0,
           reps: 10,
-          load: 100,
+          load: 90,
           units: Units.kgs,
           exercise: barbellBenchPress.toModel(),
           timeOfCompletion: DateTime.now().add(const Duration(minutes: 4)),

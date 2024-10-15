@@ -52,8 +52,9 @@ class GraphPainter extends CustomPainter {
       ..strokeWidth = 2;
 
     final offsets = points.reversed.mapWithIndex((point, index) {
-      final y = ((point.yAxis - getMinPoint) / (getMaxPoint - getMinPoint)) *
-          size.height;
+      final y =
+          ((point.yAxis - getMinPoint) / (getMaxPoint - getMinPoint + 1)) *
+              size.height;
       return Offset(widthRatio * index, y);
     }).toList();
 

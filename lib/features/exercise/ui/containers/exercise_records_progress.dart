@@ -1,17 +1,23 @@
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/analytics/controllers/exercise_history_controller.dart';
+import 'package:flex_workout_mobile/features/analytics/data/models/line_graph_model.dart';
 import 'package:flex_workout_mobile/features/analytics/ui/containers/exercise_history_tile.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExerciseRecordsProgress extends StatelessWidget {
+class ExerciseRecordsProgress extends ConsumerWidget {
   const ExerciseRecordsProgress({required this.exercise, super.key});
 
   final ExerciseModel exercise;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final points =
+        ref.watch(exerciseHistoryControllerProvider(exercise.id.toString()));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +42,17 @@ class ExerciseRecordsProgress extends StatelessWidget {
                 right: AppLayout.p3 / 2,
               ),
               graphColor: context.colors.green,
+              graph: points.isNotEmpty
+                  ? LineGraphModel(name: 'Load', points: points)
+                  : null,
             ),
+            // ExerciseHistoryTile(
+            //   padding: const EdgeInsets.only(
+            //     right: AppLayout.p4,
+            //     left: AppLayout.p3 / 2,
+            //   ),
+            //   graphColor: context.colors.yellow,
+            // ),
             ExerciseHistoryTile(
               padding: const EdgeInsets.only(
                 right: AppLayout.p4,
