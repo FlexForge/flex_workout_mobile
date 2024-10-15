@@ -1,7 +1,6 @@
 import 'package:flex_workout_mobile/core/utils/enums.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
-import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/history/data/models/historic_workout_model.dart';
 import 'package:objectbox/objectbox.dart';
 
