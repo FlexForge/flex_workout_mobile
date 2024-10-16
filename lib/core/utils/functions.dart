@@ -27,3 +27,7 @@ double lbsToKgs(double lbs) {
 double kgsToLbs(double kgs) {
   return kgs * 2.204623;
 }
+
+double calculateOneRepMax({required double load, required int reps}) {
+  return load * (36 / (37 - reps));
+}

@@ -15,8 +15,10 @@ class ExerciseRecordsProgress extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final points =
-        ref.watch(exerciseHistoryControllerProvider(exercise.id.toString()));
+    final maxLoadTile =
+        ref.watch(exerciseMaxLoadControllerProvider(exercise.id.toString()));
+    final oneRmTile =
+        ref.watch(exerciseOneRmControllerProvider(exercise.id.toString()));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,24 +43,20 @@ class ExerciseRecordsProgress extends ConsumerWidget {
                 left: AppLayout.p4,
                 right: AppLayout.p3 / 2,
               ),
-              graphColor: context.colors.green,
-              graph: points.isNotEmpty
-                  ? LineGraphModel(name: 'Load', points: points)
+              graphColor: context.colors.blue,
+              graph: oneRmTile.isNotEmpty
+                  ? LineGraphModel(name: '1 RM', points: oneRmTile)
                   : null,
             ),
-            // ExerciseHistoryTile(
-            //   padding: const EdgeInsets.only(
-            //     right: AppLayout.p4,
-            //     left: AppLayout.p3 / 2,
-            //   ),
-            //   graphColor: context.colors.yellow,
-            // ),
             ExerciseHistoryTile(
               padding: const EdgeInsets.only(
                 right: AppLayout.p4,
                 left: AppLayout.p3 / 2,
               ),
               graphColor: context.colors.yellow,
+              graph: maxLoadTile.isNotEmpty
+                  ? LineGraphModel(name: 'Max Load', points: maxLoadTile)
+                  : null,
             ),
           ],
         ),

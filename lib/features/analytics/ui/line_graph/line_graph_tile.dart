@@ -54,8 +54,8 @@ class GraphPainter extends CustomPainter {
     final offsets = points.reversed.mapWithIndex((point, index) {
       final y =
           ((point.yAxis - getMinPoint) / (getMaxPoint - getMinPoint + 1)) *
-              size.height;
-      return Offset(widthRatio * index, y);
+              -size.height;
+      return Offset(widthRatio * index, y + size.height);
     }).toList();
 
     canvas.drawPoints(PointMode.polygon, offsets, mainPaint);

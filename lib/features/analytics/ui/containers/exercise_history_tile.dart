@@ -4,6 +4,7 @@ import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/analytics/data/models/line_graph_model.dart';
 import 'package:flex_workout_mobile/features/analytics/ui/line_graph/line_graph_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 final example = LineGraphModel(
@@ -28,13 +29,14 @@ class ExerciseHistoryTile extends StatelessWidget {
 
   final EdgeInsets padding;
   final Color? graphColor;
-  final LineGraphModel? graph;
+  final LineGraphModel<DateTime>? graph;
 
   @override
   Widget build(BuildContext context) {
     return Section(
+      onTap: () => print(graph),
       padding: padding,
-      subHeader: example.name,
+      subHeader: graph?.name ?? 'Unknown',
       body: Container(
         padding: const EdgeInsets.only(
           left: AppLayout.p4,
@@ -45,7 +47,9 @@ class ExerciseHistoryTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sept 18 - now',
+              graph != null
+                  ? '${DateFormat.MMMd().format(graph!.points.last.xAxis)} - now'
+                  : 'unknown',
               style: context.typography.labelMedium.copyWith(
                 color: context.colors.foregroundSecondary,
               ),

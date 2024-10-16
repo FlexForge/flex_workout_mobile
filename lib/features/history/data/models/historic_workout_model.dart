@@ -176,6 +176,8 @@ class HistoricSupersetSectionModel
 @MappableClass(discriminatorKey: 'type')
 sealed class IHistoricSet with IHistoricSetMappable {
   double getVolume({Units units = Units.kgs});
+  double getMaxLoad({Units units = Units.kgs});
+  double getOneRepMax({Units units = Units.kgs});
   HistoricSetEntity toEntity();
 }
 
@@ -206,6 +208,16 @@ class HistoricDefaultSetModel
   @override
   double getVolume({Units units = Units.kgs}) =>
       (units == Units.kgs) ? loadInKg * reps : loadInLbs * reps;
+
+  @override
+  double getMaxLoad({Units units = Units.kgs}) =>
+      (units == Units.kgs) ? loadInKg : loadInLbs;
+
+  @override
+  double getOneRepMax({Units units = Units.kgs}) => calculateOneRepMax(
+        load: (units == Units.kgs) ? loadInKg : loadInLbs,
+        reps: reps,
+      );
 
   @override
   HistoricSetEntity toEntity() {
