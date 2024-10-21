@@ -1,10 +1,13 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/workout/controllers/workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/workout/ui/components/workout_list_tile.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/workout_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutList extends ConsumerWidget {
   const WorkoutList({super.key});
@@ -59,7 +62,13 @@ class WorkoutList extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final workout = section.value[index];
 
-                    return WorkoutListTile(workout: workout, onTap: () {});
+                    return WorkoutListTile(
+                      workout: workout,
+                      onTap: () => context.goNamed(
+                        WorkoutViewScreen.routeName,
+                        pathParameters: {'wid': workout.id.toString()},
+                      ),
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return Divider(
