@@ -2,10 +2,13 @@ import 'package:flex_workout_mobile/db/objectbox.g.dart';
 import 'package:flex_workout_mobile/db/seed/historic_workout.dart';
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
 import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
+import 'package:flex_workout_mobile/db/seed/workout_templates.dart';
 import 'package:flex_workout_mobile/features/auth/providers.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
+import 'package:flex_workout_mobile/features/workout/data/db/workout_entity.dart';
+import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -47,9 +50,11 @@ class ObjectBox {
     store.box<ExerciseEntity>().removeAll();
     store.box<MuscleGroupEntity>().removeAll();
     store.box<HistoricWorkoutEntity>().removeAll();
+    store.box<WorkoutEntity>().removeAll();
 
     store.box<MuscleGroupEntity>().putMany(muscleGroups);
     store.box<ExerciseEntity>().putMany(masterExercises);
+    store.box<WorkoutEntity>().put(exampleWorkoutTemplate.toEntity());
   }
 
   void _resetWorkoutData() {

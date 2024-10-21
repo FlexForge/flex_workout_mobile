@@ -410,9 +410,48 @@
           "targetId": "24:5167237900721500425"
         }
       ]
+    },
+    {
+      "id": "26:5487550426183236122",
+      "lastPropertyId": "6:5778433879935229564",
+      "name": "WorkoutEntity",
+      "properties": [
+        {
+          "id": "1:2139029729533695518",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1889113834883241704",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2013089307104577550",
+          "name": "subtitle",
+          "type": 9
+        },
+        {
+          "id": "4:1134315380164539818",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:3038822165643033046",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "6:5778433879935229564",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "25:4150153300339377668",
+  "lastEntityId": "26:5487550426183236122",
   "lastIndexId": "25:735209876416700269",
   "lastRelationId": "12:4878345826469070159",
   "lastSequenceId": "0:0",
