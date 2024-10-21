@@ -1,18 +1,10 @@
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
-import 'package:flex_workout_mobile/core/common/ui/components/icon_text_display.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/stacked_text.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/exercise/controllers/exercise_delete_controller.dart';
-import 'package:flex_workout_mobile/features/exercise/controllers/exercise_list_controller.dart';
-import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_edit_screen.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/screens/video_demo_screen.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class WorkoutSummary extends ConsumerWidget {

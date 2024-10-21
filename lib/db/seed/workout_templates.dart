@@ -1,3 +1,5 @@
+import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
+import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 
 final exampleWorkoutTemplate = WorkoutModel(
@@ -11,4 +13,29 @@ final exampleWorkoutTemplate = WorkoutModel(
       'exercises following.',
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
+  sections: [
+    DefaultWorkoutSectionModel(
+      id: 0,
+      sets: [
+        DefaultWorkoutSetModel(
+          id: 0,
+          minReps: 3,
+          maxReps: 5,
+          exercise: weightedChinUps.toModel(),
+        ),
+        DefaultWorkoutSetModel(
+          id: 0,
+          minReps: 3,
+          maxReps: 5,
+          exercise: weightedChinUps.toModel(),
+        ),
+        DefaultWorkoutSetModel(
+          id: 0,
+          minReps: 3,
+          maxReps: 5,
+          exercise: weightedChinUps.toModel(),
+        ),
+      ],
+    ),
+  ],
 );

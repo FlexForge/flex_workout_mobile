@@ -1,7 +1,6 @@
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/workout/controllers/workout_list_controller.dart';
 import 'package:flex_workout_mobile/features/workout/ui/components/workout_list_tile.dart';
 import 'package:flex_workout_mobile/features/workout/ui/screens/workout_view_screen.dart';

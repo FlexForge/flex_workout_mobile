@@ -1,3 +1,4 @@
+import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -11,6 +12,9 @@ class WorkoutEntity {
     required this.createdAt,
     this.id = 0,
   });
+
+  @Backlink('workout')
+  final sections = ToMany<WorkoutSectionEntity>();
 
   @Id()
   int id = 0;
@@ -33,5 +37,95 @@ extension ConvertWorkout on WorkoutEntity {
         description: description,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        sections: sections.map((e) => e.toModel()).toList(),
       );
+}
+
+@Entity()
+class WorkoutSectionEntity {
+  WorkoutSectionEntity({this.id = 0});
+
+  @Id()
+  int id = 0;
+
+  final workout = ToOne<WorkoutEntity>();
+
+  final defaultSection = ToOne<DefaultSectionEntity>();
+}
+
+extension ConvertSection on WorkoutSectionEntity {
+  IWorkoutSection toModel() {
+    if (defaultSection.target != null) {
+      return defaultSection.target!.toModel();
+    } else {
+      return defaultSection.target!.toModel();
+    }
+  }
+}
+
+@Entity()
+class DefaultSectionEntity {
+  DefaultSectionEntity({
+    this.id = 0,
+  });
+
+  @Id()
+  int id = 0;
+
+  final sets = ToMany<SetEntity>();
+}
+
+extension ConvertHistoricDefaultSection on DefaultSectionEntity {
+  IWorkoutSection toModel() {
+    return DefaultWorkoutSectionModel(
+      id: id,
+      sets: sets.map((e) => e.toModel()).toList(),
+    );
+  }
+}
+
+@Entity()
+class SetEntity {
+  SetEntity({this.id = 0});
+
+  @Id()
+  int id = 0;
+
+  final defaultSection = ToOne<DefaultSectionEntity>();
+
+  final defaultSet = ToOne<DefaultSetEntity>();
+}
+
+extension ConvertHistoricSet on SetEntity {
+  IWorkoutSet toModel() {
+    return defaultSet.target!.toModel();
+  }
+}
+
+@Entity()
+class DefaultSetEntity {
+  DefaultSetEntity({
+    required this.minReps,
+    this.maxReps,
+    this.id = 0,
+  });
+
+  @Id()
+  int id = 0;
+
+  int minReps;
+  int? maxReps;
+
+  final exercise = ToOne<ExerciseEntity>();
+}
+
+extension ConvertHistoricDefaultSet on DefaultSetEntity {
+  IWorkoutSet toModel() {
+    return DefaultWorkoutSetModel(
+      id: id,
+      minReps: minReps,
+      maxReps: maxReps,
+      exercise: exercise.target!.toModel(),
+    );
+  }
 }

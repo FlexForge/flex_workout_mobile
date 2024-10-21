@@ -449,11 +449,123 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "27:8113079910343309654",
+      "lastPropertyId": "1:8401264833208727911",
+      "name": "DefaultSectionEntity",
+      "properties": [
+        {
+          "id": "1:8401264833208727911",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "13:8768173500611303962",
+          "name": "sets",
+          "targetId": "29:2982564063073440437"
+        }
+      ]
+    },
+    {
+      "id": "28:4567735108930289799",
+      "lastPropertyId": "4:6046787651251389708",
+      "name": "DefaultSetEntity",
+      "properties": [
+        {
+          "id": "1:4067470736693334602",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9185297525090903257",
+          "name": "minReps",
+          "type": 6
+        },
+        {
+          "id": "3:6145403770930951017",
+          "name": "maxReps",
+          "type": 6
+        },
+        {
+          "id": "4:6046787651251389708",
+          "name": "exerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "26:6904244343325429255",
+          "relationTarget": "ExerciseEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "29:2982564063073440437",
+      "lastPropertyId": "3:68019802328497132",
+      "name": "SetEntity",
+      "properties": [
+        {
+          "id": "1:8544983595381553850",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:904566752883942638",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "27:2724041564618106984",
+          "relationTarget": "DefaultSectionEntity"
+        },
+        {
+          "id": "3:68019802328497132",
+          "name": "defaultSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "28:8468638920989850683",
+          "relationTarget": "DefaultSetEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "30:224713623374774748",
+      "lastPropertyId": "3:2771838701384637671",
+      "name": "WorkoutSectionEntity",
+      "properties": [
+        {
+          "id": "1:3175759883929897736",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4724627231772948670",
+          "name": "workoutId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "29:8073888481756402048",
+          "relationTarget": "WorkoutEntity"
+        },
+        {
+          "id": "3:2771838701384637671",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "30:7100168318662005526",
+          "relationTarget": "DefaultSectionEntity"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "26:5487550426183236122",
-  "lastIndexId": "25:735209876416700269",
-  "lastRelationId": "12:4878345826469070159",
+  "lastEntityId": "30:224713623374774748",
+  "lastIndexId": "30:7100168318662005526",
+  "lastRelationId": "13:8768173500611303962",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
