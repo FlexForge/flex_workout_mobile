@@ -42,7 +42,7 @@ class P {
   static Platforms? appPlatform;
 
   /// Widgets
-  /// - Page Builders
+  // - Page Builders
   static Page<dynamic> Function(BuildContext, GoRouterState)?
       trackerScreenPageBuilder;
 }
