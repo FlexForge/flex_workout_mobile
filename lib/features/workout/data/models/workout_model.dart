@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
@@ -49,15 +51,38 @@ class DefaultWorkoutSectionModel
     implements IWorkoutSection {
   DefaultWorkoutSectionModel({
     required this.id,
+    required this.title,
     required this.sets,
   });
 
   final int id;
+  final String title;
   List<IWorkoutSet> sets;
+
+  int get totalSets => sets.length;
+
+  int get minReps => sets.fold(99, (prev, e) {
+        switch (e) {
+          case final DefaultWorkoutSetModel defaultSet:
+            return min(prev, defaultSet.minReps);
+        }
+      });
+
+  int? get maxReps {
+    final maxReps = sets.fold(0, (prev, e) {
+      switch (e) {
+        case final DefaultWorkoutSetModel defaultSet:
+          return max(max(prev, defaultSet.minReps), defaultSet.maxReps ?? prev);
+      }
+    });
+
+    if (maxReps <= minReps) return null;
+    return maxReps;
+  }
 
   @override
   WorkoutSectionEntity toEntity() {
-    final defaultSection = DefaultSectionEntity(id: id)
+    final defaultSection = DefaultSectionEntity(id: id, title: title)
       ..sets.addAll(sets.map((e) => e.toEntity()));
     return WorkoutSectionEntity(id: id)..defaultSection.target = defaultSection;
   }

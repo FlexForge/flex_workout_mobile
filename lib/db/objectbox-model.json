@@ -452,7 +452,7 @@
     },
     {
       "id": "27:8113079910343309654",
-      "lastPropertyId": "1:8401264833208727911",
+      "lastPropertyId": "2:3706904818253272913",
       "name": "DefaultSectionEntity",
       "properties": [
         {
@@ -460,6 +460,11 @@
           "name": "id",
           "type": 6,
           "flags": 1
+        },
+        {
+          "id": "2:3706904818253272913",
+          "name": "title",
+          "type": 9
         }
       ],
       "relations": [

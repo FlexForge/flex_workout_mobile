@@ -66,12 +66,14 @@ extension ConvertSection on WorkoutSectionEntity {
 @Entity()
 class DefaultSectionEntity {
   DefaultSectionEntity({
+    required this.title,
     this.id = 0,
   });
 
   @Id()
   int id = 0;
 
+  String title;
   final sets = ToMany<SetEntity>();
 }
 
@@ -79,6 +81,7 @@ extension ConvertHistoricDefaultSection on DefaultSectionEntity {
   IWorkoutSection toModel() {
     return DefaultWorkoutSectionModel(
       id: id,
+      title: title,
       sets: sets.map((e) => e.toModel()).toList(),
     );
   }

@@ -8,7 +8,6 @@ import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.da
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/history/data/db/historic_workout_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/db/workout_entity.dart';
-import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
