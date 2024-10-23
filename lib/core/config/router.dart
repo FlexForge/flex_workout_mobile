@@ -21,6 +21,7 @@ import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_sele
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/workout_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/swipe_action_navigator_observer.dart';
 import 'package:go_router/go_router.dart';
@@ -198,6 +199,15 @@ final router = GoRouter(
           path: HistoricWorkoutViewScreen.routePath,
           name: HistoricWorkoutViewScreen.routeName,
           builder: (context, state) => HistoricWorkoutViewScreen(
+            id: state.pathParameters['wid']!,
+          ),
+        ),
+
+        /// Workout Routes
+        GoRoute(
+          path: WorkoutViewScreen.routePath,
+          name: WorkoutViewScreen.routeName,
+          builder: (context, state) => WorkoutViewScreen(
             id: state.pathParameters['wid']!,
           ),
         ),
