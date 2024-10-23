@@ -51,12 +51,15 @@ class WorkoutSectionEntity {
   final workout = ToOne<WorkoutEntity>();
 
   final defaultSection = ToOne<DefaultSectionEntity>();
+  final supersetSection = ToOne<SupersetSectionEntity>();
 }
 
 extension ConvertSection on WorkoutSectionEntity {
   IWorkoutSection toModel() {
     if (defaultSection.target != null) {
       return defaultSection.target!.toModel();
+    } else if (supersetSection.target != null) {
+      return supersetSection.target!.toModel();
     } else {
       return defaultSection.target!.toModel();
     }
@@ -88,6 +91,55 @@ extension ConvertHistoricDefaultSection on DefaultSectionEntity {
 }
 
 @Entity()
+class SupersetSectionEntity {
+  SupersetSectionEntity({
+    required this.title,
+    this.id = 0,
+  });
+
+  @Id()
+  int id = 0;
+  String title;
+
+  @Backlink('supersetSection')
+  final supersets = ToMany<SupersetWrapperEntity>();
+}
+
+extension ConvertHistoricSupersetSection on SupersetSectionEntity {
+  IWorkoutSection toModel() {
+    return SupersetWorkoutSectionModel(
+      id: id,
+      title: title,
+      sets: supersets.map((e) => e.toModel()).toList(),
+    );
+  }
+}
+
+@Entity()
+class SupersetWrapperEntity {
+  SupersetWrapperEntity({
+    required this.supersetString,
+    this.id = 0,
+  });
+
+  @Id()
+  int id = 0;
+  List<String> supersetString;
+
+  final supersetSection = ToOne<SupersetSectionEntity>();
+
+  final sets = ToMany<SetEntity>();
+}
+
+extension ConvertSupersetWrapper on SupersetWrapperEntity {
+  Map<String, IWorkoutSet> toModel() {
+    return {
+      for (final (index, e) in sets.indexed) supersetString[index]: e.toModel(),
+    };
+  }
+}
+
+@Entity()
 class SetEntity {
   SetEntity({this.id = 0});
 
@@ -95,6 +147,7 @@ class SetEntity {
   int id = 0;
 
   final defaultSection = ToOne<DefaultSectionEntity>();
+  final supersetSection = ToOne<SupersetSectionEntity>();
 
   final defaultSet = ToOne<DefaultSetEntity>();
 }

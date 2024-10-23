@@ -38,37 +38,46 @@ final exampleWorkoutTemplate = WorkoutModel(
         ),
       ],
     ),
-    DefaultWorkoutSectionModel(
+    SupersetWorkoutSectionModel(
       id: 0,
-      title: 'Second Exercise',
+      title: 'Incline Bench Press (Barbell) and Neck Extension (Plate Loaded)',
       sets: [
-        DefaultWorkoutSetModel(
-          id: 0,
-          minReps: 1,
-          exercise: weightedChinUps.toModel(),
-        ),
-        DefaultWorkoutSetModel(
-          id: 0,
-          minReps: 3,
-          exercise: weightedChinUps.toModel(),
-        ),
-        DefaultWorkoutSetModel(
-          id: 0,
-          minReps: 3,
-          maxReps: 5,
-          exercise: weightedChinUps.toModel(),
-        ),
-      ],
-    ),
-    DefaultWorkoutSectionModel(
-      id: 0,
-      title: 'Second Exercise',
-      sets: [
-        DefaultWorkoutSetModel(
-          id: 0,
-          minReps: 1,
-          exercise: weightedChinUps.toModel(),
-        ),
+        {
+          'A': DefaultWorkoutSetModel(
+            id: 0,
+            minReps: 8,
+            maxReps: 10,
+            exercise: barbellInclineBenchPress.toModel(),
+          ),
+          'B': DefaultWorkoutSetModel(
+            id: 0,
+            minReps: 10,
+            maxReps: 12,
+            exercise: plateLoadedNeckExtension.toModel(),
+          ),
+        },
+        {
+          'A': DefaultWorkoutSetModel(
+            id: 0,
+            minReps: 6,
+            maxReps: 8,
+            exercise: barbellInclineBenchPress.toModel(),
+          ),
+          'B': DefaultWorkoutSetModel(
+            id: 0,
+            minReps: 8,
+            maxReps: 10,
+            exercise: plateLoadedNeckExtension.toModel(),
+          ),
+        },
+        {
+          'A': DefaultWorkoutSetModel(
+            id: 0,
+            minReps: 4,
+            maxReps: 6,
+            exercise: barbellInclineBenchPress.toModel(),
+          ),
+        },
       ],
     ),
   ],

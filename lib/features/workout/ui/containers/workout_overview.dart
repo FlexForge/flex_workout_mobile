@@ -30,6 +30,68 @@ class WorkoutOverview extends StatelessWidget {
           final section = workout.sections[index];
 
           switch (section) {
+            case final SupersetWorkoutSectionModel supersetSection:
+              return FlexListTile(
+                title: Text(
+                  supersetSection.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.typography.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: context.colors.foregroundPrimary,
+                  ),
+                ),
+                subtitle: Row(
+                  children: [
+                    Text(
+                      supersetSection.getTotalSets().values.join('-'),
+                      style: context.typography.bodySmall.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundPrimary,
+                      ),
+                    ),
+                    Text(
+                      ' sets',
+                      style: context.typography.bodySmall.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundSecondary,
+                      ),
+                    ),
+                    const SizedBox(width: AppLayout.p1),
+                    Icon(
+                      Symbols.close,
+                      size: 10,
+                      weight: 700,
+                      color: context.colors.foregroundSecondary,
+                    ),
+                    const SizedBox(width: AppLayout.p1),
+                    Text(
+                      supersetSection.minReps.toString(),
+                      style: context.typography.bodySmall.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundPrimary,
+                      ),
+                    ),
+                    if (supersetSection.maxReps != null) ...[
+                      Text(
+                        '-${supersetSection.maxReps}',
+                        style: context.typography.bodySmall.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: context.colors.foregroundPrimary,
+                        ),
+                      ),
+                    ],
+                    Text(
+                      // ignore: lines_longer_than_80_chars
+                      ' rep${supersetSection.minReps > 1 || supersetSection.maxReps != null ? 's' : ''}',
+                      style: context.typography.bodySmall.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: context.colors.foregroundSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             case final DefaultWorkoutSectionModel defaultSection:
               return FlexListTile(
                 disabledForegroundColor: context.colors.foregroundPrimary,
