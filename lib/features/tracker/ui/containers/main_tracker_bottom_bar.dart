@@ -3,20 +3,22 @@ import 'dart:math' as math;
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
+import 'package:flex_workout_mobile/features/tracker/controllers/timer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class MainTrackerBottomBar extends StatefulWidget {
+class MainTrackerBottomBar extends ConsumerStatefulWidget {
   const MainTrackerBottomBar({required this.next, super.key});
 
   final VoidCallback next;
 
   @override
-  State<MainTrackerBottomBar> createState() => _MainTrackerBottomBarState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MainTrackerBottomBarState();
 }
 
-class _MainTrackerBottomBarState extends State<MainTrackerBottomBar>
+class _MainTrackerBottomBarState extends ConsumerState<MainTrackerBottomBar>
     with TickerProviderStateMixin {
   late AnimationController controller;
 
@@ -34,6 +36,8 @@ class _MainTrackerBottomBarState extends State<MainTrackerBottomBar>
 
   @override
   Widget build(BuildContext context) {
+    final timer = ref.watch(timerControllerProvider);
+
     return Container(
       height: 60,
       decoration: BoxDecoration(
@@ -63,22 +67,38 @@ class _MainTrackerBottomBarState extends State<MainTrackerBottomBar>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FlexButton(
-                  onPressed: () {
-                    controller
-                      ..duration = const Duration(seconds: 10)
-                      ..forward();
-                    // showDialog<void>(
-                    //   context: context,
-                    //   builder: (context) => const WorkoutTimer(
-                    //     startDuration: Duration(seconds: 30),
-                    //     initialDuration: Duration(minutes: 2, seconds: 30),
-                    //   ),
-                    // ),
-                  },
-                  label: 'Timer',
-                  icon: Symbols.timer,
-                  backgroundColor: context.colors.backgroundSecondary,
+                SizedBox(
+                  width: 92,
+                  child: FlexButton(
+                    onPressed: () {
+                      const duration = Duration(seconds: 30);
+                      ref
+                          .read(timerControllerProvider.notifier)
+                          .setTimer(duration);
+
+                      controller.duration = duration;
+
+                      showDialog<void>(
+                        context: context,
+                        builder: (context) => WorkoutTimer(
+                          initialDuration: duration,
+                          controller: controller,
+                        ),
+                      );
+                    },
+                    // label: timer.formattedRemaining,
+                    label: timer.elapsed > Duration.zero
+                        ? timer.formattedRemaining
+                        : 'Timer',
+                    labelStyle: context.typography.labelLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontFeatures: [
+                        const FontFeature.tabularFigures(),
+                      ],
+                    ),
+                    icon: Symbols.timer,
+                    backgroundColor: context.colors.backgroundSecondary,
+                  ),
                 ),
                 const SizedBox(width: AppLayout.p2),
                 Expanded(
@@ -101,13 +121,15 @@ class _MainTrackerBottomBarState extends State<MainTrackerBottomBar>
 
 class WorkoutTimer extends ConsumerStatefulWidget {
   const WorkoutTimer({
-    required this.startDuration,
     required this.initialDuration,
+    required this.controller,
+    this.startDuration = Duration.zero,
     super.key,
   });
 
   final Duration startDuration;
   final Duration initialDuration;
+  final AnimationController controller;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _WorkoutTimerState();
@@ -115,40 +137,32 @@ class WorkoutTimer extends ConsumerStatefulWidget {
 
 class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
     with TickerProviderStateMixin {
-  late AnimationController controller;
   late Duration duration;
-
-  String formatTime(Duration duration) => '${duration.inMinutes}'
-      ':'
-      '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
-
-  String get timerString {
-    final duration = controller.duration! * (1 - controller.value);
-    return formatTime(duration);
-  }
 
   @override
   void initState() {
     super.initState();
-    duration = widget.initialDuration;
-    controller = AnimationController(
-      vsync: this,
-      duration: widget.initialDuration,
-    );
-    controller.forward(
-      from: widget.startDuration.inMilliseconds /
-          widget.initialDuration.inMilliseconds,
-    );
+    final timer = ref.read(timerControllerProvider);
+    final currentValue =
+        timer.elapsed.inSeconds / timer.initialDuration.inSeconds;
+
+    duration = timer.initialDuration;
+    widget.controller.value = currentValue;
+
+    if (timer.isActive) {
+      widget.controller.forward(from: widget.controller.value);
+    }
   }
 
   @override
   void dispose() {
-    controller.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final timer = ref.watch(timerControllerProvider);
+
     return AlertDialog(
       elevation: 0,
       shadowColor: Colors.transparent,
@@ -157,7 +171,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
         borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
       ),
       content: AnimatedBuilder(
-        animation: controller,
+        animation: widget.controller,
         builder: (context, child) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -171,7 +185,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                     Positioned.fill(
                       child: CustomPaint(
                         painter: WorkoutTimerPainter(
-                          animation: controller,
+                          animation: widget.controller,
                           ringColor: context.colors.backgroundSecondary,
                           fillColor: context.colors.blue,
                           strokeCap: StrokeCap.butt,
@@ -192,7 +206,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              timerString,
+                              timer.formattedRemaining,
                               style: context.typography.titleLarge.copyWith(
                                 fontSize: 64,
                                 fontWeight: FontWeight.w900,
@@ -203,7 +217,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                               textWidthBasis: TextWidthBasis.longestLine,
                             ),
                             Text(
-                              formatTime(duration),
+                              timer.formattedInitial,
                               style: context.typography.titleSmall.copyWith(
                                 fontWeight: FontWeight.w900,
                                 height: 1,
@@ -221,41 +235,40 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
             ),
             const SizedBox(height: AppLayout.p2),
             AnimatedBuilder(
-              animation: controller,
+              animation: widget.controller,
               builder: (context, child) => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FlexButton(
                     onPressed: () {
-                      final oldValue =
-                          duration.inMilliseconds * controller.value;
-                      duration = duration + const Duration(seconds: 15);
-                      final newValue = oldValue / duration.inMilliseconds;
+                      ref.read(timerControllerProvider.notifier).addTime();
+                      final newValue = timer.elapsed.inSeconds /
+                          timer.initialDuration.inSeconds;
 
-                      controller
-                        ..duration = duration
+                      widget.controller
+                        ..duration =
+                            timer.initialDuration + const Duration(seconds: 15)
                         ..value = newValue
-                        ..forward(from: controller.value);
+                        ..forward(from: widget.controller.value);
                     },
                     label: '+ 15s',
                   ),
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
                     onPressed: () {
-                      if (controller.isAnimating) {
-                        controller.stop();
-                        setState(() {});
+                      if (timer.isActive) {
+                        widget.controller.stop();
+                        ref.read(timerControllerProvider.notifier).stop();
                       } else {
-                        controller.forward(from: controller.value);
-                        setState(() {});
+                        widget.controller
+                            .forward(from: widget.controller.value);
+                        ref.read(timerControllerProvider.notifier).start();
                       }
                     },
                     iconSize: 24,
                     iconWeight: 700,
                     iconFill: 1,
-                    icon: controller.isAnimating
-                        ? Symbols.pause
-                        : Symbols.play_arrow,
+                    icon: timer.isActive ? Symbols.pause : Symbols.play_arrow,
                   ),
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
@@ -263,14 +276,14 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                       if (duration.inSeconds <= 15) return;
 
                       final oldValue =
-                          duration.inMilliseconds * controller.value;
+                          duration.inMilliseconds * widget.controller.value;
                       duration = duration - const Duration(seconds: 15);
                       final newValue = oldValue / duration.inMilliseconds;
 
-                      controller
+                      widget.controller
                         ..duration = duration
                         ..value = newValue
-                        ..forward(from: controller.value);
+                        ..forward(from: widget.controller.value);
                     },
                     label: '- 15s',
                   ),
