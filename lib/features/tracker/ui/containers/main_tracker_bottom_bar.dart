@@ -1,20 +1,39 @@
+import 'dart:math' as math;
+
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-import 'dart:math' as math;
-
-class MainTrackerBottomBar extends ConsumerWidget {
+class MainTrackerBottomBar extends StatefulWidget {
   const MainTrackerBottomBar({required this.next, super.key});
 
   final VoidCallback next;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<MainTrackerBottomBar> createState() => _MainTrackerBottomBarState();
+}
+
+class _MainTrackerBottomBarState extends State<MainTrackerBottomBar>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    controller.stop();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 60,
       decoration: BoxDecoration(
@@ -22,39 +41,73 @@ class MainTrackerBottomBar extends ConsumerWidget {
           top: BorderSide(color: context.colors.divider), // Top border
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            FlexButton(
-              onPressed: () => showDialog(
-                context: context,
-                builder: (context) => WorkoutTimer(),
-              ),
-              label: 'Timer',
-              icon: Symbols.timer,
-              backgroundColor: context.colors.backgroundSecondary,
-            ),
-            const SizedBox(width: AppLayout.p2),
-            Expanded(
-              child: FlexButton(
-                onPressed: next,
-                label: 'Finish',
-                icon: Symbols.check,
-                backgroundColor: context.colors.foregroundPrimary,
-                foregroundColor: context.colors.backgroundPrimary,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: CustomPaint(
+              painter: WorkoutLineTimerPainter(
+                animation: controller,
+                lineColor: Colors.transparent,
+                fillColor: context.colors.blue,
+                strokeCap: StrokeCap.butt,
+                fillWidth: 4,
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlexButton(
+                  onPressed: () {
+                    controller
+                      ..duration = const Duration(seconds: 10)
+                      ..forward();
+                    // showDialog<void>(
+                    //   context: context,
+                    //   builder: (context) => const WorkoutTimer(
+                    //     startDuration: Duration(seconds: 30),
+                    //     initialDuration: Duration(minutes: 2, seconds: 30),
+                    //   ),
+                    // ),
+                  },
+                  label: 'Timer',
+                  icon: Symbols.timer,
+                  backgroundColor: context.colors.backgroundSecondary,
+                ),
+                const SizedBox(width: AppLayout.p2),
+                Expanded(
+                  child: FlexButton(
+                    onPressed: widget.next,
+                    label: 'Finish',
+                    icon: Symbols.check,
+                    backgroundColor: context.colors.foregroundPrimary,
+                    foregroundColor: context.colors.backgroundPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class WorkoutTimer extends ConsumerStatefulWidget {
-  const WorkoutTimer({super.key});
+  const WorkoutTimer({
+    required this.startDuration,
+    required this.initialDuration,
+    super.key,
+  });
+
+  final Duration startDuration;
+  final Duration initialDuration;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _WorkoutTimerState();
@@ -63,22 +116,29 @@ class WorkoutTimer extends ConsumerStatefulWidget {
 class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
     with TickerProviderStateMixin {
   late AnimationController controller;
+  late Duration duration;
+
+  String formatTime(Duration duration) => '${duration.inMinutes}'
+      ':'
+      '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
 
   String get timerString {
     final duration = controller.duration! * (1 - controller.value);
-    return '${duration.inMinutes}'
-        ':'
-        '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
+    return formatTime(duration);
   }
 
   @override
   void initState() {
     super.initState();
+    duration = widget.initialDuration;
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(minutes: 2, seconds: 5),
+      duration: widget.initialDuration,
     );
-    controller.forward();
+    controller.forward(
+      from: widget.startDuration.inMilliseconds /
+          widget.initialDuration.inMilliseconds,
+    );
   }
 
   @override
@@ -143,7 +203,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                               textWidthBasis: TextWidthBasis.longestLine,
                             ),
                             Text(
-                              '2:30',
+                              formatTime(duration),
                               style: context.typography.titleSmall.copyWith(
                                 fontWeight: FontWeight.w900,
                                 height: 1,
@@ -167,9 +227,14 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                 children: [
                   FlexButton(
                     onPressed: () {
+                      final oldValue =
+                          duration.inMilliseconds * controller.value;
+                      duration = duration + const Duration(seconds: 15);
+                      final newValue = oldValue / duration.inMilliseconds;
+
                       controller
-                        ..duration =
-                            controller.duration! + const Duration(seconds: 15)
+                        ..duration = duration
+                        ..value = newValue
                         ..forward(from: controller.value);
                     },
                     label: '+ 15s',
@@ -179,12 +244,15 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                     onPressed: () {
                       if (controller.isAnimating) {
                         controller.stop();
+                        setState(() {});
                       } else {
                         controller.forward(from: controller.value);
+                        setState(() {});
                       }
                     },
                     iconSize: 24,
                     iconWeight: 700,
+                    iconFill: 1,
                     icon: controller.isAnimating
                         ? Symbols.pause
                         : Symbols.play_arrow,
@@ -192,9 +260,16 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
                     onPressed: () {
+                      if (duration.inSeconds <= 15) return;
+
+                      final oldValue =
+                          duration.inMilliseconds * controller.value;
+                      duration = duration - const Duration(seconds: 15);
+                      final newValue = oldValue / duration.inMilliseconds;
+
                       controller
-                        ..duration =
-                            controller.duration! - const Duration(seconds: 15)
+                        ..duration = duration
+                        ..value = newValue
                         ..forward(from: controller.value);
                     },
                     label: '- 15s',
@@ -251,6 +326,57 @@ class WorkoutTimerPainter extends CustomPainter {
   bool shouldRepaint(WorkoutTimerPainter oldDelegate) {
     return animation.value != oldDelegate.animation.value ||
         ringColor != oldDelegate.ringColor ||
+        fillColor != oldDelegate.fillColor;
+  }
+}
+
+class WorkoutLineTimerPainter extends CustomPainter {
+  WorkoutLineTimerPainter({
+    required this.animation,
+    required this.fillColor,
+    required this.lineColor,
+    this.fillWidth = 2.0,
+    this.lineWidth = 2.0,
+    this.strokeCap = StrokeCap.round,
+  }) : super(repaint: animation);
+
+  final Animation<double> animation;
+
+  final Color lineColor;
+  final Color fillColor;
+
+  final double fillWidth;
+  final double lineWidth;
+  final StrokeCap strokeCap;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = lineColor
+      ..strokeWidth = lineWidth
+      ..strokeCap = strokeCap
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawLine(
+      Offset.zero,
+      Offset(size.width, 0),
+      paint,
+    );
+
+    paint
+      ..color = fillColor
+      ..strokeWidth = fillWidth;
+    canvas.drawLine(
+      Offset.zero,
+      Offset(size.width - (size.width * animation.value), 0),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(WorkoutLineTimerPainter oldDelegate) {
+    return animation.value != oldDelegate.animation.value ||
+        lineColor != oldDelegate.lineColor ||
         fillColor != oldDelegate.fillColor;
   }
 }
