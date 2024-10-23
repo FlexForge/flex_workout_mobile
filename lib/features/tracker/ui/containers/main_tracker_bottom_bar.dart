@@ -241,15 +241,20 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                 children: [
                   FlexButton(
                     onPressed: () {
+                      final newDuration =
+                          timer.initialDuration + const Duration(seconds: 15);
                       ref.read(timerControllerProvider.notifier).addTime();
-                      final newValue = timer.elapsed.inSeconds /
-                          timer.initialDuration.inSeconds;
+
+                      final newValue =
+                          timer.elapsed.inSeconds / newDuration.inSeconds;
 
                       widget.controller
-                        ..duration =
-                            timer.initialDuration + const Duration(seconds: 15)
-                        ..value = newValue
-                        ..forward(from: widget.controller.value);
+                        ..duration = newDuration
+                        ..value = newValue;
+
+                      if (timer.isActive) {
+                        widget.controller.forward(from: newValue);
+                      }
                     },
                     label: '+ 15s',
                   ),
@@ -273,17 +278,22 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
                     onPressed: () {
-                      if (duration.inSeconds <= 15) return;
+                      if (timer.remainingTime.inSeconds <= 15) return;
 
-                      final oldValue =
-                          duration.inMilliseconds * widget.controller.value;
-                      duration = duration - const Duration(seconds: 15);
-                      final newValue = oldValue / duration.inMilliseconds;
+                      final newDuration =
+                          timer.initialDuration - const Duration(seconds: 15);
+                      ref.read(timerControllerProvider.notifier).removeTime();
+
+                      final newValue =
+                          timer.elapsed.inSeconds / newDuration.inSeconds;
 
                       widget.controller
-                        ..duration = duration
-                        ..value = newValue
-                        ..forward(from: widget.controller.value);
+                        ..duration = newDuration
+                        ..value = newValue;
+
+                      if (timer.isActive) {
+                        widget.controller.forward(from: newValue);
+                      }
                     },
                     label: '- 15s',
                   ),
