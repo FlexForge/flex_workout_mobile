@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flex_workout_mobile/core/common/ui/components/button.dart';
+import 'package:flex_workout_mobile/core/extensions/date_extensions.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/timer_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -48,20 +50,21 @@ class _MainTrackerBottomBarState extends ConsumerState<MainTrackerBottomBar>
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: CustomPaint(
-              painter: WorkoutLineTimerPainter(
-                animation: controller,
-                lineColor: Colors.transparent,
-                fillColor: context.colors.blue,
-                strokeCap: StrokeCap.butt,
-                fillWidth: 4,
+          if (timer.isActive)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: CustomPaint(
+                painter: WorkoutLineTimerPainter(
+                  animation: controller,
+                  lineColor: Colors.transparent,
+                  fillColor: context.colors.blue,
+                  strokeCap: StrokeCap.butt,
+                  fillWidth: 4,
+                ),
               ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
             child: Row(
@@ -71,25 +74,14 @@ class _MainTrackerBottomBarState extends ConsumerState<MainTrackerBottomBar>
                   width: 92,
                   child: FlexButton(
                     onPressed: () {
-                      const duration = Duration(seconds: 30);
-                      ref
-                          .read(timerControllerProvider.notifier)
-                          .setTimer(duration);
-
-                      controller.duration = duration;
-
                       showDialog<void>(
                         context: context,
-                        builder: (context) => WorkoutTimer(
-                          initialDuration: duration,
-                          controller: controller,
-                        ),
+                        builder: (context) =>
+                            WorkoutTimerWrapper(controller: controller),
                       );
                     },
                     // label: timer.formattedRemaining,
-                    label: timer.elapsed > Duration.zero
-                        ? timer.formattedRemaining
-                        : 'Timer',
+                    label: timer.isActive ? timer.formattedRemaining : 'Timer',
                     labelStyle: context.typography.labelLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       fontFeatures: [
@@ -119,16 +111,164 @@ class _MainTrackerBottomBarState extends ConsumerState<MainTrackerBottomBar>
   }
 }
 
+class WorkoutTimerWrapper extends ConsumerWidget {
+  const WorkoutTimerWrapper({required this.controller, super.key});
+
+  final AnimationController controller;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final timer = ref.watch(timerControllerProvider);
+
+    return AlertDialog(
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      backgroundColor: context.colors.backgroundPrimary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
+      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: AppLayout.p4),
+      content: timer.isActive
+          ? WorkoutTimer(controller: controller)
+          : const SetWorkoutTimer(),
+    );
+  }
+}
+
+class SetWorkoutTimer extends ConsumerStatefulWidget {
+  const SetWorkoutTimer({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SetWorkoutTimerState();
+}
+
+class _SetWorkoutTimerState extends ConsumerState<SetWorkoutTimer> {
+  Duration duration = const Duration(seconds: 15);
+
+  @override
+  Widget build(BuildContext context) {
+    void startTime() {
+      ref.read(timerControllerProvider.notifier).setTimer(duration);
+      ref.read(timerControllerProvider.notifier).start();
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: AppLayout.p4),
+              FlexButton(
+                onPressed: () {},
+                label: '1:00',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () {},
+                label: '1:30',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () {},
+                label: '2:00',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () {},
+                label: '2:30',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () {},
+                label: '3:00',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p2),
+              FlexButton(
+                onPressed: () {},
+                label: '5:00',
+                backgroundColor: context.colors.backgroundSecondary,
+              ),
+              const SizedBox(width: AppLayout.p4),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppLayout.p2),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          alignment: FractionalOffset.center,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: Stack(
+              alignment: FractionalOffset.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(AppLayout.p2),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: context.colors.backgroundSecondary,
+                      borderRadius:
+                          BorderRadius.circular(AppLayout.roundedRadius),
+                    ),
+                    width: double.infinity,
+                    child: CupertinoPicker.builder(
+                      itemExtent: 44,
+                      childCount: 40,
+                      onSelectedItemChanged: (index) {
+                        duration = Duration(seconds: (index + 1) * 15);
+                      },
+                      itemBuilder: (context, index) {
+                        final duration = Duration(seconds: (index + 1) * 15);
+
+                        return Center(
+                          child: Text(
+                            duration.formatted,
+                            style: context.typography.labelLarge.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontFeatures: [
+                                const FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: AppLayout.p2),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+          child: FlexButton(
+            onPressed: startTime,
+            expanded: true,
+            label: 'Start',
+            backgroundColor: context.colors.foregroundPrimary,
+            foregroundColor: context.colors.backgroundPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class WorkoutTimer extends ConsumerStatefulWidget {
   const WorkoutTimer({
-    required this.initialDuration,
     required this.controller,
-    this.startDuration = Duration.zero,
     super.key,
   });
 
-  final Duration startDuration;
-  final Duration initialDuration;
   final AnimationController controller;
 
   @override
@@ -147,30 +287,22 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
         timer.elapsed.inSeconds / timer.initialDuration.inSeconds;
 
     duration = timer.initialDuration;
-    widget.controller.value = currentValue;
+    widget.controller
+      ..duration = timer.initialDuration
+      ..value = currentValue;
 
-    if (timer.isActive) {
+    if (!timer.isPaused) {
       widget.controller.forward(from: widget.controller.value);
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final timer = ref.watch(timerControllerProvider);
 
-    return AlertDialog(
-      elevation: 0,
-      shadowColor: Colors.transparent,
-      backgroundColor: context.colors.backgroundPrimary,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppLayout.cornerRadius),
-      ),
-      content: AnimatedBuilder(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+      child: AnimatedBuilder(
         animation: widget.controller,
         builder: (context, child) => Column(
           mainAxisSize: MainAxisSize.min,
@@ -252,7 +384,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                         ..duration = newDuration
                         ..value = newValue;
 
-                      if (timer.isActive) {
+                      if (!timer.isPaused) {
                         widget.controller.forward(from: newValue);
                       }
                     },
@@ -261,7 +393,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
                     onPressed: () {
-                      if (timer.isActive) {
+                      if (!timer.isPaused) {
                         widget.controller.stop();
                         ref.read(timerControllerProvider.notifier).stop();
                       } else {
@@ -273,7 +405,17 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                     iconSize: 24,
                     iconWeight: 700,
                     iconFill: 1,
-                    icon: timer.isActive ? Symbols.pause : Symbols.play_arrow,
+                    icon: timer.isPaused ? Symbols.play_arrow : Symbols.pause,
+                  ),
+                  const SizedBox(width: AppLayout.p2),
+                  FlexButton(
+                    onPressed: () {
+                      ref.read(timerControllerProvider.notifier).cancel();
+                    },
+                    iconSize: 24,
+                    iconWeight: 700,
+                    iconFill: 1,
+                    icon: Symbols.stop,
                   ),
                   const SizedBox(width: AppLayout.p2),
                   FlexButton(
@@ -291,7 +433,7 @@ class _WorkoutTimerState extends ConsumerState<WorkoutTimer>
                         ..duration = newDuration
                         ..value = newValue;
 
-                      if (timer.isActive) {
+                      if (!timer.isPaused) {
                         widget.controller.forward(from: newValue);
                       }
                     },
