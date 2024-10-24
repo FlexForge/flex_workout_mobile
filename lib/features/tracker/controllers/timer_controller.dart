@@ -1,32 +1,9 @@
 import 'dart:async';
 
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:flex_workout_mobile/core/extensions/date_extensions.dart';
+import 'package:flex_workout_mobile/features/tracker/data/models/timer_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'timer_controller.g.dart';
-part 'timer_controller.mapper.dart';
-
-@MappableClass()
-class TimerModel with TimerModelMappable {
-  TimerModel({
-    required this.initialDuration,
-    this.elapsed = Duration.zero,
-    this.isActive = false,
-    this.isPaused = false,
-  });
-
-  final Duration initialDuration;
-  final Duration elapsed;
-  final bool isPaused;
-  final bool isActive;
-
-  Duration get remainingTime => initialDuration - elapsed;
-
-  String get formattedElapsed => elapsed.formatted;
-  String get formattedInitial => initialDuration.formatted;
-  String get formattedRemaining => remainingTime.formatted;
-}
 
 @Riverpod(keepAlive: true)
 class TimerController extends _$TimerController {
