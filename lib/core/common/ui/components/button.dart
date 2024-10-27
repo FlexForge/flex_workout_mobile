@@ -19,6 +19,7 @@ class FlexButton extends StatelessWidget {
     this.borderRadius,
     this.labelStyle,
     this.iconSize = 20,
+    this.iconFill = 0,
     this.iconWeight = 400,
     this.borderWidth = 2,
     this.enabled = true,
@@ -41,6 +42,7 @@ class FlexButton extends StatelessWidget {
   final Color? disabledForegroundColor;
   final Color? borderColor;
   final Color? iconColor;
+  final double iconFill;
   final EdgeInsets? padding;
   final double? borderRadius;
   final double borderWidth;
@@ -111,6 +113,7 @@ class FlexButton extends StatelessWidget {
                     size: iconSize,
                     color: iconColor,
                     weight: iconWeight,
+                    fill: iconFill,
                   ),
               ],
             ),
