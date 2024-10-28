@@ -31,7 +31,6 @@ class TimerController extends _$TimerController {
         await FlutterRingtonePlayer().play(
           android: AndroidSounds.alarm,
           ios: const IosSound(1306),
-          volume: 1,
         );
         await HapticFeedback.heavyImpact();
       }
@@ -39,8 +38,7 @@ class TimerController extends _$TimerController {
       if (state.elapsed >= state.initialDuration) {
         await FlutterRingtonePlayer().play(
           android: AndroidSounds.alarm,
-          ios: const IosSound(1103),
-          asAlarm: true,
+          ios: IosSounds.alarm,
         );
         cancel();
       }
