@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flex_workout_mobile/features/tracker/data/models/timer_model.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'timer_controller.g.dart';
@@ -21,11 +23,25 @@ class TimerController extends _$TimerController {
   void start() {
     state = state.copyWith(isActive: true, isPaused: false);
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       state =
           state.copyWith(elapsed: state.elapsed + const Duration(seconds: 1));
 
-      if (state.elapsed >= state.initialDuration) cancel();
+      if (state.remainingTime.inSeconds <= 4) {
+        await FlutterRingtonePlayer().play(
+          android: AndroidSounds.alarm,
+          ios: const IosSound(1306),
+        );
+        await HapticFeedback.heavyImpact();
+      }
+
+      if (state.elapsed >= state.initialDuration) {
+        await FlutterRingtonePlayer().play(
+          android: AndroidSounds.alarm,
+          ios: IosSounds.alarm,
+        );
+        cancel();
+      }
     });
   }
 
