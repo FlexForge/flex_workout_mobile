@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "11:4617132138658608666",
-      "lastPropertyId": "10:7690556669737315507",
+      "lastPropertyId": "11:9152887463284914920",
       "name": "ExerciseEntity",
       "properties": [
         {
@@ -53,6 +53,14 @@
           "id": "10:7690556669737315507",
           "name": "youtubeVideoId",
           "type": 9
+        },
+        {
+          "id": "11:9152887463284914920",
+          "name": "baseExerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "26:6376420271172503691",
+          "relationTarget": "ExerciseEntity"
         }
       ],
       "relations": [
@@ -413,7 +421,7 @@
     }
   ],
   "lastEntityId": "25:4150153300339377668",
-  "lastIndexId": "25:735209876416700269",
+  "lastIndexId": "26:6376420271172503691",
   "lastRelationId": "12:4878345826469070159",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

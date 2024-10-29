@@ -207,6 +207,21 @@ final closeGripBarbellBenchPress = ExerciseEntity(
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
 )
+  ..baseExercise.target = barbellBenchPress
+  ..primaryMuscleGroups.addAll([triceps])
+  ..secondaryMuscleGroups.addAll([chest, frontDelts]);
+
+final pausedCloseGripBarbellBenchPress = ExerciseEntity(
+  name: 'Paused Close Grip Bench Press (Barbell)',
+  description:
+      'Lie supine on bench. Graph bar with overhand and shoulder width grip. Arch back, extend hips, and position feet back flat on floor. Dismount barbell from rack over chest.\n\nLower weight to lower chest. Press bar upwards until arms are extended. Repeat.',
+  engagement: Engagement.bilateral,
+  equipment: Equipment.barbell,
+  movementPattern: MovementPattern.horizontalPush,
+  updatedAt: DateTime.now(),
+  createdAt: DateTime.now(),
+)
+  ..baseExercise.target = closeGripBarbellBenchPress
   ..primaryMuscleGroups.addAll([triceps])
   ..secondaryMuscleGroups.addAll([chest, frontDelts]);
 
@@ -380,4 +395,5 @@ final masterExercises = [
   barbellPreacherCurl,
   krocRow,
   cableLateralRaise,
+  pausedCloseGripBarbellBenchPress
 ];

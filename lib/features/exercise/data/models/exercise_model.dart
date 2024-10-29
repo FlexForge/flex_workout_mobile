@@ -18,6 +18,7 @@ class ExerciseModel with _$ExerciseModel {
     required DateTime updatedAt,
     @Default([]) List<MuscleGroupModel> primaryMuscleGroups,
     @Default([]) List<MuscleGroupModel> secondaryMuscleGroups,
+    ExerciseModel? baseExercise,
     String? description,
     String? youtubeVideoId,
   }) = _ExerciseModel;
@@ -35,6 +36,7 @@ extension ConvertExerciseModel on ExerciseModel {
         updatedAt: updatedAt,
         createdAt: createdAt,
       )
+        ..baseExercise.target = baseExercise?.toEntity()
         ..primaryMuscleGroups
             .addAll(primaryMuscleGroups.map((e) => e.toEntity()))
         ..secondaryMuscleGroups
