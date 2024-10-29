@@ -47,7 +47,10 @@ class SimilarVariantExercises extends ConsumerWidget {
                       );
                     },
                     separatorBuilder: (context, index) => Divider(
-                        height: 1, indent: 54, color: context.colors.divider),
+                      height: 1,
+                      indent: 54,
+                      color: context.colors.divider,
+                    ),
                     itemCount: similarExercises.length,
                   )
                 : Padding(
@@ -78,13 +81,16 @@ class SimilarVariantExercises extends ConsumerWidget {
                         onTap: () => context.pushNamed(
                           ExerciseViewScreen.routeName,
                           pathParameters: {
-                            'eid': variantExercise.id.toString()
+                            'eid': variantExercise.id.toString(),
                           },
                         ),
                       );
                     },
                     separatorBuilder: (context, index) => Divider(
-                        height: 1, indent: 54, color: context.colors.divider),
+                      height: 1,
+                      indent: 54,
+                      color: context.colors.divider,
+                    ),
                     itemCount: variantExercises.length,
                   )
                 : Padding(

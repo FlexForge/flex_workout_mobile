@@ -395,5 +395,5 @@ final masterExercises = [
   barbellPreacherCurl,
   krocRow,
   cableLateralRaise,
-  pausedCloseGripBarbellBenchPress
+  pausedCloseGripBarbellBenchPress,
 ];
