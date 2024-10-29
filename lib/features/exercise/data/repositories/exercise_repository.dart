@@ -67,6 +67,32 @@ class ExerciseRepository {
     }
   }
 
+  Either<Failure, List<ExerciseModel>> getSimilarExercises(
+    ExerciseModel exercise,
+  ) {
+    try {
+      final primaryMuscleGroupIds =
+          exercise.primaryMuscleGroups.map((e) => e.id).toList();
+
+      final queryCondition = ExerciseEntity_.dbMovementPattern
+          .equals(exercise.movementPattern.index)
+          .and(ExerciseEntity_.id.notEquals(exercise.id));
+
+      final queryBuilder = box.query(queryCondition)
+        ..linkMany(
+          ExerciseEntity_.primaryMuscleGroups,
+          MuscleGroupEntity_.id.oneOf(primaryMuscleGroupIds),
+        );
+
+      final searchQuery = queryBuilder.build();
+
+      final res = searchQuery.find();
+      return right(res.map((e) => e.toModel()).toList());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
   Either<Failure, ExerciseModel> createExercise({
     required String name,
     required List<MuscleGroupModel> primaryMuscleGroups,
