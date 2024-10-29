@@ -93,6 +93,27 @@ class ExerciseRepository {
     }
   }
 
+  Either<Failure, List<ExerciseModel>> getVariantExercises(
+    ExerciseModel exercise,
+  ) {
+    try {
+      final queryCondition = ExerciseEntity_.id.notEquals(exercise.id);
+
+      final queryBuilder = box.query(queryCondition)
+        ..link(
+          ExerciseEntity_.baseExercise,
+          ExerciseEntity_.id.equals(exercise.id),
+        );
+
+      final searchQuery = queryBuilder.build();
+
+      final res = searchQuery.find();
+      return right(res.map((e) => e.toModel()).toList());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
   Either<Failure, ExerciseModel> createExercise({
     required String name,
     required List<MuscleGroupModel> primaryMuscleGroups,
