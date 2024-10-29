@@ -28,47 +28,77 @@ class SimilarVariantExercises extends ConsumerWidget {
         children: [
           Section(
             header: 'Similar & Variant Exercises',
-            subHeader: 'Similar Exercises',
-            body: ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final similarExercise = similarExercises[index];
-                return ExerciseListTile(
-                  exercise: similarExercise,
-                  onTap: () => context.pushNamed(
-                    ExerciseViewScreen.routeName,
-                    pathParameters: {'eid': similarExercise.id.toString()},
+            subHeader: similarExercises.isNotEmpty ? 'Similar Exercises' : null,
+            body: similarExercises.isNotEmpty
+                ? ListView.separated(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final similarExercise = similarExercises[index];
+                      return ExerciseListTile(
+                        exercise: similarExercise,
+                        onTap: () => context.pushNamed(
+                          ExerciseViewScreen.routeName,
+                          pathParameters: {
+                            'eid': similarExercise.id.toString(),
+                          },
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => Divider(
+                        height: 1, indent: 54, color: context.colors.divider),
+                    itemCount: similarExercises.length,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+                    child: Center(
+                      child: Text(
+                        'No similar exercises',
+                        style: context.typography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: context.colors.foregroundSecondary,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              separatorBuilder: (context, index) =>
-                  Divider(height: 1, indent: 54, color: context.colors.divider),
-              itemCount: similarExercises.length,
-            ),
           ),
           const SizedBox(height: AppLayout.p3),
           Section(
-            subHeader: 'Variant Exercises',
-            body: ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final variantExercise = variantExercises[index];
-                return ExerciseListTile(
-                  exercise: variantExercise,
-                  onTap: () => context.pushNamed(
-                    ExerciseViewScreen.routeName,
-                    pathParameters: {'eid': variantExercise.id.toString()},
+            subHeader: variantExercises.isNotEmpty ? 'Variant Exercises' : null,
+            body: variantExercises.isNotEmpty
+                ? ListView.separated(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final variantExercise = variantExercises[index];
+                      return ExerciseListTile(
+                        exercise: variantExercise,
+                        onTap: () => context.pushNamed(
+                          ExerciseViewScreen.routeName,
+                          pathParameters: {
+                            'eid': variantExercise.id.toString()
+                          },
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => Divider(
+                        height: 1, indent: 54, color: context.colors.divider),
+                    itemCount: variantExercises.length,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AppLayout.p6),
+                    child: Center(
+                      child: Text(
+                        'No variant exercises',
+                        style: context.typography.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: context.colors.foregroundSecondary,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              separatorBuilder: (context, index) =>
-                  Divider(height: 1, indent: 54, color: context.colors.divider),
-              itemCount: variantExercises.length,
-            ),
           ),
         ],
       ),
