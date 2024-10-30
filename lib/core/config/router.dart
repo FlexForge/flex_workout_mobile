@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/features/auth/ui/screens/onboarding_screen.d
 import 'package:flex_workout_mobile/features/auth/ui/screens/profile_screen.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_quick_create.dart';
+import 'package:flex_workout_mobile/features/exercise/ui/forms/base_exercise_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/equipment_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/movement_pattern_picker.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/forms/primary_muscle_group_picker.dart';
@@ -124,6 +125,15 @@ final router = GoRouter(
                 swipeDismissible: true,
                 barrierColor: context.colors.overlay,
                 child: const EquipmentModal(child: EquipmentPicker()),
+              ),
+            ),
+            GoRoute(
+              path: BaseExercisePicker.routePath,
+              name: BaseExercisePicker.routeName,
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
+                swipeDismissible: true,
+                barrierColor: context.colors.overlay,
+                child: const BaseExerciseModal(child: BaseExercisePicker()),
               ),
             ),
             GoRoute(
