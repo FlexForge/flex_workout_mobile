@@ -27,6 +27,8 @@ class ExerciseEntity {
   final primaryMuscleGroups = ToMany<MuscleGroupEntity>();
   final secondaryMuscleGroups = ToMany<MuscleGroupEntity>();
 
+  final baseExercise = ToOne<ExerciseEntity>();
+
   @Transient()
   Engagement engagement;
 
@@ -85,6 +87,7 @@ extension ConvertExercise on ExerciseEntity {
         engagement: engagement,
         equipment: equipment,
         movementPattern: movementPattern,
+        baseExercise: baseExercise.target?.toModel(),
         updatedAt: updatedAt,
         createdAt: createdAt,
       );

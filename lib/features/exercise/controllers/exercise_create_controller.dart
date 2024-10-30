@@ -22,8 +22,7 @@ class ExerciseCreateController extends _$ExerciseCreateController {
     final description = generalModel?.description;
     final youtubeVideoId =
         YoutubePlayer.convertUrlToId(generalModel?.videoUrl ?? '');
-
-    ///
+    final baseExercise = generalModel?.baseExercise;
 
     final movementPattern = advancedModel?.movementPattern;
     final engagement = advancedModel?.engagement;
@@ -40,6 +39,7 @@ class ExerciseCreateController extends _$ExerciseCreateController {
           youtubeVideoId: youtubeVideoId,
           engagement: engagement,
           equipment: equipment,
+          baseExercise: baseExercise,
           movementPattern: movementPattern,
           primaryMuscleGroups: primaryMuscleGroups ?? [],
           secondaryMuscleGroups: secondaryMuscleGroups ?? [],

@@ -23,6 +23,34 @@ class ExerciseFormController extends _$ExerciseFormController {
         .handle(state, exercise);
   }
 
+  void fillFormFromBaseExercise(ExerciseModel exercise) {
+    final newValue = Exercise(
+      general: General(
+        name: state.model.general?.name ?? exercise.name,
+        description: state.model.general?.description ?? exercise.description,
+        videoUrl: state.model.general?.videoUrl ??
+            (exercise.youtubeVideoId != null
+                ? 'https://youtu.be/${exercise.youtubeVideoId}'
+                : null),
+      ),
+      advanced: Advanced(
+        equipment: state.model.advanced?.equipment ?? exercise.equipment,
+        movementPattern:
+            state.model.advanced?.movementPattern ?? exercise.movementPattern,
+        engagement: state.model.advanced?.engagement ?? exercise.engagement,
+      ),
+      muscleGroups: MuscleGroups(
+        primaryMuscleGroups: state.model.muscleGroups?.primaryMuscleGroups ??
+            exercise.primaryMuscleGroups,
+        secondaryMuscleGroups:
+            state.model.muscleGroups?.secondaryMuscleGroups ??
+                exercise.secondaryMuscleGroups,
+      ),
+    );
+
+    state.updateValue(newValue);
+  }
+
   void autofillForm(ExerciseModel exercise) {
     final newValue = Exercise(
       general: General(

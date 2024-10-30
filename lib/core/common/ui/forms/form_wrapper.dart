@@ -33,9 +33,6 @@ class FormWrapper extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 form,
-                const SizedBox(
-                  height: AppLayout.bottomBuffer,
-                ),
               ],
             ),
             if (actionButtons != null)

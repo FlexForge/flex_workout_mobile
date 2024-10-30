@@ -24,6 +24,7 @@ class Exercise with _$Exercise {
 @freezed
 class General with _$General {
   const factory General({
+    @RfControl() ExerciseModel? baseExercise,
     @RfControl(validators: [RequiredValidator()]) String? name,
     @RfControl() String? description,
     @RfControl(validators: [YoutubeUrlValidator()]) String? videoUrl,

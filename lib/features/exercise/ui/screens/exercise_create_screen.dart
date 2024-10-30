@@ -71,7 +71,7 @@ class _ExerciseCreateScreenState extends ConsumerState<ExerciseCreateScreen> {
       body: SafeArea(
         child: PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
+          // physics: const NeverScrollableScrollPhysics(),
           children: [
             ExerciseCreateFormStepOne(next: () => _updateCurrentPageIndex(1)),
             ExerciseCreateFormStepTwo(

@@ -67,10 +67,58 @@ class ExerciseRepository {
     }
   }
 
+  Either<Failure, List<ExerciseModel>> getSimilarExercises(
+    ExerciseModel exercise,
+  ) {
+    try {
+      final primaryMuscleGroupIds =
+          exercise.primaryMuscleGroups.map((e) => e.id).toList();
+
+      final queryCondition = ExerciseEntity_.dbMovementPattern
+          .equals(exercise.movementPattern.index)
+          .and(ExerciseEntity_.id.notEquals(exercise.id));
+
+      final queryBuilder = box.query(queryCondition)
+        ..linkMany(
+          ExerciseEntity_.primaryMuscleGroups,
+          MuscleGroupEntity_.id.oneOf(primaryMuscleGroupIds),
+        );
+
+      final searchQuery = queryBuilder.build();
+
+      final res = searchQuery.find();
+      return right(res.map((e) => e.toModel()).toList());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
+  Either<Failure, List<ExerciseModel>> getVariantExercises(
+    ExerciseModel exercise,
+  ) {
+    try {
+      final queryCondition = ExerciseEntity_.id.notEquals(exercise.id);
+
+      final queryBuilder = box.query(queryCondition)
+        ..link(
+          ExerciseEntity_.baseExercise,
+          ExerciseEntity_.id.equals(exercise.id),
+        );
+
+      final searchQuery = queryBuilder.build();
+
+      final res = searchQuery.find();
+      return right(res.map((e) => e.toModel()).toList());
+    } catch (e) {
+      return left(Failure.internalServerError(message: e.toString()));
+    }
+  }
+
   Either<Failure, ExerciseModel> createExercise({
     required String name,
     required List<MuscleGroupModel> primaryMuscleGroups,
     required List<MuscleGroupModel> secondaryMuscleGroups,
+    ExerciseModel? baseExercise,
     Engagement? engagement,
     Equipment? equipment,
     MovementPattern? movementPattern,
@@ -90,6 +138,7 @@ class ExerciseRepository {
         updatedAt: now,
         createdAt: now,
       )
+        ..baseExercise.target = baseExercise?.toEntity()
         ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
         ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
 
