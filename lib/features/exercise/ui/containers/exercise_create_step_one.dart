@@ -65,20 +65,27 @@ class _ExerciseCreateFormStepOneState
               ),
             ),
             const SizedBox(height: AppLayout.p3),
-            Expanded(
-              child: SegmentedController(
-              selectedValue: _selectedValue,
-              onValueChanged: _onSegmentedControllerValueChanged,
-              items: const ['New Exercise', 'Variation'],
-              backgroundColor: context.colors.backgroundTertiary,
-              // stretch: true,
-            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SegmentedController(
+                      selectedValue: _selectedValue,
+                      onValueChanged: _onSegmentedControllerValueChanged,
+                      items: const ['New Exercise', 'Variation'],
+                      backgroundColor: context.colors.backgroundTertiary,
+                      stretch: true,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: AppLayout.p4),
             if (_selectedValue == 1) ...[
               FlexPicker(
                 formControl: form.baseExerciseControl,
-                label: 'Equipment',
+                label: 'Base Exercise',
                 displayValue: (e) => e.name,
                 modalRouteName: BaseExercisePicker.routeName,
                 padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),

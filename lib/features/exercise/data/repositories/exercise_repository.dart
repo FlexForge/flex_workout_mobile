@@ -118,6 +118,7 @@ class ExerciseRepository {
     required String name,
     required List<MuscleGroupModel> primaryMuscleGroups,
     required List<MuscleGroupModel> secondaryMuscleGroups,
+    ExerciseModel? baseExercise,
     Engagement? engagement,
     Equipment? equipment,
     MovementPattern? movementPattern,
@@ -137,6 +138,7 @@ class ExerciseRepository {
         updatedAt: now,
         createdAt: now,
       )
+        ..baseExercise.target = baseExercise?.toEntity()
         ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
         ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity());
 
