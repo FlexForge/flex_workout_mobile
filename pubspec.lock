@@ -649,10 +649,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: fa19f3a99f280c81fe23d7f7ef1c4000511fa40ee52df43e0a3a4c91184ddb15
+      sha256: "7b723abea4ad37e16fe921f1f1971cbb9b0f66d223a8c99981168a2306416b98"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2788.0"
+    version: "4.2791.1"
   meta:
     dependency: transitive
     description:
