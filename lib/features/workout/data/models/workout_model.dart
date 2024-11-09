@@ -122,6 +122,13 @@ class SupersetWorkoutSectionModel
       totalSets,
       (k1, k2) => totalSets[k1]!.compareTo(totalSets[k2]!),
     );
+
+    if (sortedTotalSets.entries.first.value ==
+        sortedTotalSets.entries.last.value) {
+      return {
+        sortedTotalSets.entries.first.key: sortedTotalSets.entries.first.value,
+      };
+    }
     return {
       sortedTotalSets.entries.first.key: sortedTotalSets.entries.first.value,
       sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value
@@ -133,14 +140,20 @@ class SupersetWorkoutSectionModel
 
   int get minReps => sets.fold(99, (prev, e) {
         final minReps = e.values.fold<int>(99, (prev, e) {
-          return min(prev, (e as DefaultWorkoutSetModel).minReps);
+          switch (e) {
+            case final DefaultWorkoutSetModel defaultSet:
+              return min(prev, defaultSet.minReps);
+          }
         });
         return min(prev, minReps);
       });
 
   int? get maxReps => sets.fold(0, (prev, e) {
         final maxReps = e.values.fold<int>(0, (prev, e) {
-          return max(prev, (e as DefaultWorkoutSetModel).maxReps ?? prev);
+          switch (e) {
+            case final DefaultWorkoutSetModel defaultSet:
+              return max(prev, defaultSet.maxReps ?? prev);
+          }
         });
         return max(prev!, maxReps);
       });
