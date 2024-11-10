@@ -1,4 +1,5 @@
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
+import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -23,6 +24,10 @@ class WorkoutEntity {
   String subtitle;
   String description;
 
+  // Muscle Groups
+  final primaryMuscleGroups = ToMany<MuscleGroupEntity>();
+  final secondaryMuscleGroups = ToMany<MuscleGroupEntity>();
+
   @Property(type: PropertyType.date)
   DateTime updatedAt;
   @Property(type: PropertyType.date)
@@ -35,6 +40,10 @@ extension ConvertWorkout on WorkoutEntity {
         title: title,
         subtitle: subtitle,
         description: description,
+        primaryMuscleGroups:
+            primaryMuscleGroups.map((e) => e.toModel()).toList(),
+        secondaryMuscleGroups:
+            secondaryMuscleGroups.map((e) => e.toModel()).toList(),
         createdAt: createdAt,
         updatedAt: updatedAt,
         sections: sections.map((e) => e.toModel()).toList(),

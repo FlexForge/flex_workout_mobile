@@ -1,5 +1,7 @@
 import 'package:flex_workout_mobile/db/seed/master_exercises.dart';
+import 'package:flex_workout_mobile/db/seed/muscle_groups.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
+import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 
 final exampleWorkoutTemplate = WorkoutModel(
@@ -11,6 +13,8 @@ final exampleWorkoutTemplate = WorkoutModel(
       "of every week in Jeff's Power Building Phase 3.0 program. "
       'The workout focuses on a single strict rep of bench with supplementary '
       'exercises following.',
+  primaryMuscleGroups: [chest.toModel(), neck.toModel(), frontDelts.toModel()],
+  secondaryMuscleGroups: [triceps.toModel()],
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
   sections: [

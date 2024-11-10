@@ -1,6 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/components/flex_list_tile.dart';
 import 'package:flex_workout_mobile/core/common/ui/components/section.dart';
-import 'package:flex_workout_mobile/core/config/router.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';

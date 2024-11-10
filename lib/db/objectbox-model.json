@@ -448,7 +448,18 @@
           "type": 10
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "16:5131783587921249524",
+          "name": "primaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        },
+        {
+          "id": "17:1508909239057759826",
+          "name": "secondaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        }
+      ]
     },
     {
       "id": "27:8113079910343309654",
@@ -638,7 +649,7 @@
   ],
   "lastEntityId": "33:6478974001251763339",
   "lastIndexId": "34:451449923810480989",
-  "lastRelationId": "15:6623335069714609421",
+  "lastRelationId": "17:1508909239057759826",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

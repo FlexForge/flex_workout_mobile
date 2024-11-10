@@ -16,6 +16,8 @@ class WorkoutModel with WorkoutModelMappable {
     required this.title,
     required this.subtitle,
     required this.description,
+    required this.primaryMuscleGroups,
+    required this.secondaryMuscleGroups,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -27,6 +29,9 @@ class WorkoutModel with WorkoutModelMappable {
   final String subtitle;
   final String description;
 
+  List<MuscleGroupModel> primaryMuscleGroups;
+  List<MuscleGroupModel> secondaryMuscleGroups;
+
   final DateTime updatedAt;
   final DateTime createdAt;
 
@@ -37,7 +42,10 @@ class WorkoutModel with WorkoutModelMappable {
       description: description,
       updatedAt: updatedAt,
       createdAt: createdAt,
-    )..sections.addAll(sections.map((e) => e.toEntity()));
+    )
+      ..primaryMuscleGroups.addAll(primaryMuscleGroups.toEntity())
+      ..secondaryMuscleGroups.addAll(secondaryMuscleGroups.toEntity())
+      ..sections.addAll(sections.map((e) => e.toEntity()));
   }
 }
 
@@ -104,7 +112,7 @@ class SupersetWorkoutSectionModel
   List<Map<String, IWorkoutSet>> sets;
 
   Map<String, int> getTotalSets() {
-    Map<String, int> totalSets = {};
+    final totalSets = <String, int>{};
 
     for (final set in sets) {
       for (final entry in set.entries) {
@@ -117,8 +125,8 @@ class SupersetWorkoutSectionModel
       }
     }
 
-    /// TODO: sorted and take first and last - maybe delete this later
-    Map<String, int> sortedTotalSets = SplayTreeMap.from(
+    /// TODO(workout): sorted and take first and last - maybe delete this later
+    final sortedTotalSets = SplayTreeMap<String, int>.from(
       totalSets,
       (k1, k2) => totalSets[k1]!.compareTo(totalSets[k2]!),
     );
@@ -131,10 +139,10 @@ class SupersetWorkoutSectionModel
     }
     return {
       sortedTotalSets.entries.first.key: sortedTotalSets.entries.first.value,
-      sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value
+      sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value,
     };
 
-    /// TODO: all total sets - maybe delete this later
+    /// TODO(workout): all total sets - maybe delete this later
     // return totalSets;
   }
 
@@ -161,14 +169,16 @@ class SupersetWorkoutSectionModel
   @override
   WorkoutSectionEntity toEntity() {
     final supersetSection = SupersetSectionEntity(id: id, title: title)
-      ..supersets.addAll(sets
-          .map(
-            (e) => SupersetWrapperEntity(
-              id: id,
-              supersetString: e.keys.toList(),
-            )..sets.addAll(e.values.map((e) => e.toEntity())),
-          )
-          .toList());
+      ..supersets.addAll(
+        sets
+            .map(
+              (e) => SupersetWrapperEntity(
+                id: id,
+                supersetString: e.keys.toList(),
+              )..sets.addAll(e.values.map((e) => e.toEntity())),
+            )
+            .toList(),
+      );
     return WorkoutSectionEntity(id: id)
       ..supersetSection.target = supersetSection;
   }
