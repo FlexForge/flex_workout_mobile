@@ -125,7 +125,8 @@ class SupersetWorkoutSectionModel
       }
     }
 
-    /// TODO(mitchelljoram): sorted and take first and last - maybe delete this later
+    /// ignore: flutter_style_todos
+    /// TODO: sorted and take first and last - maybe delete this later
     final sortedTotalSets = SplayTreeMap<String, int>.from(
       totalSets,
       (k1, k2) => totalSets[k1]!.compareTo(totalSets[k2]!),
@@ -142,7 +143,8 @@ class SupersetWorkoutSectionModel
       sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value,
     };
 
-    /// TODO(mitchelljoram): all total sets - maybe delete this later
+    /// ignore: flutter_style_todos
+    /// TODO: all total sets - maybe delete this later
     // return totalSets;
   }
 
