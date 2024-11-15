@@ -125,7 +125,7 @@ class SupersetWorkoutSectionModel
       }
     }
 
-    /// TODO(workout): sorted and take first and last - maybe delete this later
+    /// TODO(mitchelljoram): sorted and take first and last - maybe delete this later
     final sortedTotalSets = SplayTreeMap<String, int>.from(
       totalSets,
       (k1, k2) => totalSets[k1]!.compareTo(totalSets[k2]!),
@@ -142,7 +142,7 @@ class SupersetWorkoutSectionModel
       sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value,
     };
 
-    /// TODO(workout): all total sets - maybe delete this later
+    /// TODO(mitchelljoram): all total sets - maybe delete this later
     // return totalSets;
   }
 
