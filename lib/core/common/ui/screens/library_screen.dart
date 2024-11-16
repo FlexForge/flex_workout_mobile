@@ -8,6 +8,7 @@ import 'package:flex_workout_mobile/features/exercise/controllers/exercise_searc
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/workout_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -111,6 +112,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               ),
             ),
           ),
+          if (_selectedValue == 1)
+            const SliverToBoxAdapter(child: WorkoutList()),
           if (_selectedValue == 2) ...[
             const SliverToBoxAdapter(child: ExerciseList()),
           ],

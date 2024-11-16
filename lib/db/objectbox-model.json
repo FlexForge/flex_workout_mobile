@@ -410,11 +410,246 @@
           "targetId": "24:5167237900721500425"
         }
       ]
+    },
+    {
+      "id": "26:5487550426183236122",
+      "lastPropertyId": "6:5778433879935229564",
+      "name": "WorkoutEntity",
+      "properties": [
+        {
+          "id": "1:2139029729533695518",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1889113834883241704",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2013089307104577550",
+          "name": "subtitle",
+          "type": 9
+        },
+        {
+          "id": "4:1134315380164539818",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:3038822165643033046",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "6:5778433879935229564",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "16:5131783587921249524",
+          "name": "primaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        },
+        {
+          "id": "17:1508909239057759826",
+          "name": "secondaryMuscleGroups",
+          "targetId": "18:570827146444236513"
+        }
+      ]
+    },
+    {
+      "id": "27:8113079910343309654",
+      "lastPropertyId": "2:3706904818253272913",
+      "name": "DefaultSectionEntity",
+      "properties": [
+        {
+          "id": "1:8401264833208727911",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3706904818253272913",
+          "name": "title",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "13:8768173500611303962",
+          "name": "sets",
+          "targetId": "29:2982564063073440437"
+        }
+      ]
+    },
+    {
+      "id": "28:4567735108930289799",
+      "lastPropertyId": "4:6046787651251389708",
+      "name": "DefaultSetEntity",
+      "properties": [
+        {
+          "id": "1:4067470736693334602",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9185297525090903257",
+          "name": "minReps",
+          "type": 6
+        },
+        {
+          "id": "3:6145403770930951017",
+          "name": "maxReps",
+          "type": 6
+        },
+        {
+          "id": "4:6046787651251389708",
+          "name": "exerciseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "26:6904244343325429255",
+          "relationTarget": "ExerciseEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "29:2982564063073440437",
+      "lastPropertyId": "5:2943018752387744173",
+      "name": "SetEntity",
+      "properties": [
+        {
+          "id": "1:8544983595381553850",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:904566752883942638",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "27:2724041564618106984",
+          "relationTarget": "DefaultSectionEntity"
+        },
+        {
+          "id": "3:68019802328497132",
+          "name": "defaultSetId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "28:8468638920989850683",
+          "relationTarget": "DefaultSetEntity"
+        },
+        {
+          "id": "4:5144310180676918141",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "31:8529830979138666001",
+          "relationTarget": "SupersetSectionEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "30:224713623374774748",
+      "lastPropertyId": "4:7697900798847338651",
+      "name": "WorkoutSectionEntity",
+      "properties": [
+        {
+          "id": "1:3175759883929897736",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4724627231772948670",
+          "name": "workoutId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "29:8073888481756402048",
+          "relationTarget": "WorkoutEntity"
+        },
+        {
+          "id": "3:2771838701384637671",
+          "name": "defaultSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "30:7100168318662005526",
+          "relationTarget": "DefaultSectionEntity"
+        },
+        {
+          "id": "4:7697900798847338651",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "34:451449923810480989",
+          "relationTarget": "SupersetSectionEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "31:3844375069208489568",
+      "lastPropertyId": "2:4434041608493774195",
+      "name": "SupersetSectionEntity",
+      "properties": [
+        {
+          "id": "1:4272563430061196056",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4434041608493774195",
+          "name": "title",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "33:6478974001251763339",
+      "lastPropertyId": "3:2513972626237744594",
+      "name": "SupersetWrapperEntity",
+      "properties": [
+        {
+          "id": "1:1330312171886396892",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2338334789490120624",
+          "name": "supersetString",
+          "type": 30
+        },
+        {
+          "id": "3:2513972626237744594",
+          "name": "supersetSectionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "33:7570181553517408127",
+          "relationTarget": "SupersetSectionEntity"
+        }
+      ],
+      "relations": [
+        {
+          "id": "15:6623335069714609421",
+          "name": "sets",
+          "targetId": "29:2982564063073440437"
+        }
+      ]
     }
   ],
-  "lastEntityId": "25:4150153300339377668",
-  "lastIndexId": "25:735209876416700269",
-  "lastRelationId": "12:4878345826469070159",
+  "lastEntityId": "33:6478974001251763339",
+  "lastIndexId": "34:451449923810480989",
+  "lastRelationId": "17:1508909239057759826",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -433,14 +668,16 @@
     4897929567643704671,
     1186681313098944309,
     878219187818857769,
-    1263318335407291283
+    1263318335407291283,
+    2919206724710822581
   ],
   "retiredIndexUids": [
     3425524962653332862,
     693240549055198901,
     4014531425032126911,
     589604970984044401,
-    5074062409433759446
+    5074062409433759446,
+    6137455564552169608
   ],
   "retiredPropertyUids": [
     1908559708726607211,
@@ -557,7 +794,9 @@
     912873281753230932,
     1203440710392998614,
     3603950685325219131,
-    8717342749120273941
+    8717342749120273941,
+    2943018752387744173,
+    7133419281051168634
   ],
   "retiredRelationUids": [
     2584876106965066276,
