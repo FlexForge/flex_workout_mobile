@@ -17,7 +17,7 @@ dependencies:
   flutter_layout_grid: ^2.0.7
   flutter_native_splash: ^2.4.1
   flutter_ringtone_player: ^4.0.0+3
-  flutter_riverpod: ^2.5.1
+  flutter_riverpod: ^2.6.1
   flutter_swipe_action_cell: ^3.1.5
   fpdart: ^1.1.0
   freezed_annotation: ^2.4.4
