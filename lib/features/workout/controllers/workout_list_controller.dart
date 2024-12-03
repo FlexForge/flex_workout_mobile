@@ -11,6 +11,24 @@ class WorkoutListController extends _$WorkoutListController {
     final res = ref.watch(workoutRepositoryProvider).getWorkouts();
     return res.fold((l) => throw l, (r) => r);
   }
+
+  void addWorkout(WorkoutModel workout) {
+    state = [...state, workout];
+  }
+
+  void deleteWorkout(WorkoutModel workout) {
+    state = state.where((e) => e.id != workout.id).toList();
+  }
+
+  void updateWorkout(WorkoutModel workout) {
+    final newState = [...state];
+    final index = newState.indexWhere((e) => e.id == workout.id);
+
+    if (index == -1) return;
+
+    newState[index] = workout;
+    state = newState;
+  }
 }
 
 extension WorkoutListToMap on List<WorkoutModel> {

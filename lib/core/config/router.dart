@@ -21,6 +21,7 @@ import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_sele
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/workout_create_screen.dart';
 import 'package:flex_workout_mobile/features/workout/ui/screens/workout_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/swipe_action_navigator_observer.dart';
@@ -210,6 +211,62 @@ final router = GoRouter(
           builder: (context, state) => WorkoutViewScreen(
             id: state.pathParameters['wid']!,
           ),
+        ),
+        GoRoute(
+          path: WorkoutCreateScreen.routePath,
+          name: WorkoutCreateScreen.routeName,
+          builder: (context, state) => const WorkoutCreateScreen(),
+          routes: [
+            GoRoute(
+              path: ExerciseSelectionScreen.routePath,
+              name: ExerciseSelectionScreen.routeName,
+              pageBuilder: (context, state) => CupertinoModalSheetPage(
+                swipeDismissible: true,
+                barrierColor: context.colors.overlay,
+                child: const ExerciseSelectionScreenModal(
+                  nestedNavigator: ExerciseSelectionScreen(),
+                ),
+              ),
+              routes: [
+                GoRoute(
+                  path: ExerciseQuickCreate.routePath,
+                  name: ExerciseQuickCreate.routeName,
+                  pageBuilder: (context, state) => CupertinoModalSheetPage(
+                    swipeDismissible: true,
+                    barrierColor: context.colors.overlay,
+                    child: const ExerciseQuickCreateModal(
+                      child: ExerciseQuickCreate(),
+                    ),
+                  ),
+                ),
+                GoRoute(
+                  path: ExerciseSelectionFilters.routePath,
+                  name: ExerciseSelectionFilters.routeName,
+                  pageBuilder: (context, state) => CupertinoModalSheetPage(
+                    swipeDismissible: true,
+                    barrierColor: context.colors.overlay,
+                    child: const ExerciseSelectionFiltersModal(
+                      child: ExerciseSelectionFilters(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: NormalSetScreen.routePath,
+              name: NormalSetScreen.routeName,
+              pageBuilder: (context, state) {
+                final set = state.extra as LiveDefaultSetModel?;
+                return CupertinoModalSheetPage(
+                  swipeDismissible: true,
+                  barrierColor: context.colors.overlay,
+                  child: NormalSetScreenModal(
+                    nestedNavigator: NormalSetScreen(set: set),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ],
     ),
