@@ -36,7 +36,8 @@ class ExerciseQuickCreate extends ConsumerWidget {
   const ExerciseQuickCreate({super.key});
 
   static const routePath = 'exercise_quick_create';
-  static const routeName = 'exercise/quick_create';
+  static const trackerRouteName = 'tracker_exercise/quick_create';
+  static const workoutRouteName = 'workout_exercise/quick_create';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

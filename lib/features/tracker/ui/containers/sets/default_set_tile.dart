@@ -55,7 +55,8 @@ class _Completed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
+      onTap: () =>
+          context.goNamed(NormalSetScreen.trackerRouteName, extra: set),
       prefix: Center(
         child: Text(
           '${set.setIndex + 1}${set.setString}',
@@ -122,7 +123,8 @@ class _Incomplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-      onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
+      onTap: () =>
+          context.goNamed(NormalSetScreen.trackerRouteName, extra: set),
       prefix: Center(
         child: Text(
           '${set.setIndex + 1}${set.setString}',

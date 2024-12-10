@@ -28,7 +28,8 @@ class ExerciseSelectionScreen extends StatelessWidget {
   const ExerciseSelectionScreen({super.key});
 
   static const routePath = 'exercise_selection';
-  static const routeName = 'tracker_exercise_selection';
+  static const trackerRouteName = 'tracker_exercise_selection';
+  static const workoutRouteName = 'workout_exercise_selection';
 
   @override
   Widget build(BuildContext context) {
