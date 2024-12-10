@@ -73,8 +73,8 @@ class _ExerciseSelectionPickerState
                   hintText: 'Search...',
                   prefixIcon: Symbols.search,
                   suffix: FlexButton(
-                    onPressed: () =>
-                        context.goNamed(ExerciseSelectionFilters.routeName),
+                    onPressed: () => context
+                        .goNamed(ExerciseSelectionFilters.trackerRouteName),
                     icon: Symbols.sort,
                     backgroundColor: Colors.transparent,
                   ),
@@ -83,8 +83,8 @@ class _ExerciseSelectionPickerState
               const SizedBox(width: AppLayout.p2),
               FlexButton(
                 onPressed: () async {
-                  final res = await context
-                      .pushNamed<ExerciseModel>(ExerciseQuickCreate.routeName);
+                  final res = await context.pushNamed<ExerciseModel>(
+                      ExerciseQuickCreate.trackerRouteName);
 
                   if (res == null) return;
                   items.add(res);

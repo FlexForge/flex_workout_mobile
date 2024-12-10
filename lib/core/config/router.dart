@@ -56,7 +56,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: ExerciseSelectionScreen.routePath,
-              name: ExerciseSelectionScreen.routeName,
+              name: ExerciseSelectionScreen.trackerRouteName,
               pageBuilder: (context, state) => CupertinoModalSheetPage(
                 swipeDismissible: true,
                 barrierColor: context.colors.overlay,
@@ -67,7 +67,7 @@ final router = GoRouter(
               routes: [
                 GoRoute(
                   path: ExerciseQuickCreate.routePath,
-                  name: ExerciseQuickCreate.routeName,
+                  name: ExerciseQuickCreate.trackerRouteName,
                   pageBuilder: (context, state) => CupertinoModalSheetPage(
                     swipeDismissible: true,
                     barrierColor: context.colors.overlay,
@@ -78,7 +78,7 @@ final router = GoRouter(
                 ),
                 GoRoute(
                   path: ExerciseSelectionFilters.routePath,
-                  name: ExerciseSelectionFilters.routeName,
+                  name: ExerciseSelectionFilters.trackerRouteName,
                   pageBuilder: (context, state) => CupertinoModalSheetPage(
                     swipeDismissible: true,
                     barrierColor: context.colors.overlay,
@@ -91,7 +91,7 @@ final router = GoRouter(
             ),
             GoRoute(
               path: NormalSetScreen.routePath,
-              name: NormalSetScreen.routeName,
+              name: NormalSetScreen.trackerRouteName,
               pageBuilder: (context, state) {
                 final set = state.extra as LiveDefaultSetModel?;
                 return CupertinoModalSheetPage(
@@ -206,20 +206,13 @@ final router = GoRouter(
 
         /// Workout Routes
         GoRoute(
-          path: WorkoutViewScreen.routePath,
-          name: WorkoutViewScreen.routeName,
-          builder: (context, state) => WorkoutViewScreen(
-            id: state.pathParameters['wid']!,
-          ),
-        ),
-        GoRoute(
           path: WorkoutCreateScreen.routePath,
           name: WorkoutCreateScreen.routeName,
           builder: (context, state) => const WorkoutCreateScreen(),
           routes: [
             GoRoute(
               path: ExerciseSelectionScreen.routePath,
-              name: ExerciseSelectionScreen.routeName,
+              name: ExerciseSelectionScreen.workoutRouteName,
               pageBuilder: (context, state) => CupertinoModalSheetPage(
                 swipeDismissible: true,
                 barrierColor: context.colors.overlay,
@@ -230,7 +223,7 @@ final router = GoRouter(
               routes: [
                 GoRoute(
                   path: ExerciseQuickCreate.routePath,
-                  name: ExerciseQuickCreate.routeName,
+                  name: ExerciseQuickCreate.workoutRouteName,
                   pageBuilder: (context, state) => CupertinoModalSheetPage(
                     swipeDismissible: true,
                     barrierColor: context.colors.overlay,
@@ -241,7 +234,7 @@ final router = GoRouter(
                 ),
                 GoRoute(
                   path: ExerciseSelectionFilters.routePath,
-                  name: ExerciseSelectionFilters.routeName,
+                  name: ExerciseSelectionFilters.workoutRouteName,
                   pageBuilder: (context, state) => CupertinoModalSheetPage(
                     swipeDismissible: true,
                     barrierColor: context.colors.overlay,
@@ -254,7 +247,7 @@ final router = GoRouter(
             ),
             GoRoute(
               path: NormalSetScreen.routePath,
-              name: NormalSetScreen.routeName,
+              name: NormalSetScreen.workoutRouteName,
               pageBuilder: (context, state) {
                 final set = state.extra as LiveDefaultSetModel?;
                 return CupertinoModalSheetPage(
@@ -267,6 +260,13 @@ final router = GoRouter(
               },
             ),
           ],
+        ),
+        GoRoute(
+          path: WorkoutViewScreen.routePath,
+          name: WorkoutViewScreen.routeName,
+          builder: (context, state) => WorkoutViewScreen(
+            id: state.pathParameters['wid']!,
+          ),
         ),
       ],
     ),
