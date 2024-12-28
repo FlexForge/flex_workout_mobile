@@ -65,7 +65,7 @@ class WorkoutSectionEntity {
 }
 
 extension ConvertSection on WorkoutSectionEntity {
-  IWorkoutSection toModel() {
+  IWorkoutSection<dynamic> toModel() {
     if (defaultSection.target != null) {
       return defaultSection.target!.toModel();
     } else if (supersetSection.target != null) {
@@ -91,7 +91,7 @@ class DefaultSectionEntity {
 }
 
 extension ConvertHistoricDefaultSection on DefaultSectionEntity {
-  IWorkoutSection toModel() {
+  IWorkoutSection<dynamic> toModel() {
     return WorkoutDefaultSectionModel(
       id: id,
       title: title,
@@ -117,7 +117,7 @@ class SupersetSectionEntity {
 }
 
 extension ConvertHistoricSupersetSection on SupersetSectionEntity {
-  IWorkoutSection toModel() {
+  IWorkoutSection<dynamic> toModel() {
     final sets = supersets.map((e) => e.toModel()).toList();
 
     final baseTemplate = <String, IWorkoutSet>{};

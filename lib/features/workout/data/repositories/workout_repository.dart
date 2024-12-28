@@ -38,7 +38,7 @@ class WorkoutRepository {
   }
 
   Either<Failure, WorkoutModel> createWorkout({
-    required List<IWorkoutSection> sections,
+    required List<IWorkoutSection<dynamic>> sections,
     required String title,
     required String subtitle,
     required List<MuscleGroupModel> primaryMuscleGroups,

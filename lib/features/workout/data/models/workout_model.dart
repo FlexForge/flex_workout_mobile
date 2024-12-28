@@ -26,7 +26,7 @@ class WorkoutModel with WorkoutModelMappable {
     required this.updatedAt,
   });
 
-  List<IWorkoutSection> sections;
+  List<IWorkoutSection<dynamic>> sections;
 
   final int id;
   final String title;
@@ -54,12 +54,14 @@ class WorkoutModel with WorkoutModelMappable {
 }
 
 @MappableClass(discriminatorKey: 'organization')
-sealed class IWorkoutSection with IWorkoutSectionMappable {
+sealed class IWorkoutSection<T> with IWorkoutSectionMappable<T> {
   IWorkoutSection({
     required this.title,
+    required this.sets,
   });
 
   String title;
+  List<T> sets;
 
   Widget display();
   List<ExerciseModel> getExercises();
@@ -74,7 +76,7 @@ sealed class IWorkoutSection with IWorkoutSectionMappable {
 @MappableClass(discriminatorValue: 'default')
 class WorkoutDefaultSectionModel
     with WorkoutDefaultSectionModelMappable
-    implements IWorkoutSection {
+    implements IWorkoutSection<IWorkoutSet> {
   WorkoutDefaultSectionModel({
     required this.id,
     required this.sets,
@@ -88,6 +90,7 @@ class WorkoutDefaultSectionModel
   String title;
 
   final IWorkoutSet templateSet;
+
   @override
   List<IWorkoutSet> sets;
 
@@ -134,7 +137,7 @@ class WorkoutDefaultSectionModel
 @MappableClass(discriminatorValue: 'superset')
 class WorkoutSupersetSectionModel
     with WorkoutSupersetSectionModelMappable
-    implements IWorkoutSection {
+    implements IWorkoutSection<Map<String, IWorkoutSet>> {
   WorkoutSupersetSectionModel({
     required this.id,
     required this.sets,
@@ -148,6 +151,7 @@ class WorkoutSupersetSectionModel
   String title;
 
   final Map<String, IWorkoutSet> templateSet;
+
   @override
   List<Map<String, IWorkoutSet>> sets;
 

@@ -52,7 +52,7 @@ class WorkoutController extends _$WorkoutController {
       );
 
       final section = WorkoutDefaultSectionModel(
-        id: state.sections.length,
+        id: 0,
         sets: [defaultSet],
         templateSet: defaultSet,
       )..generateTitle(exercise);
@@ -81,7 +81,7 @@ class WorkoutController extends _$WorkoutController {
     final template = Map<String, IWorkoutSet>.from(set);
 
     final section = WorkoutSupersetSectionModel(
-      id: state.sections.length,
+      id: 0,
       sets: [set],
       templateSet: template,
     )..generateTitle(exercises);
@@ -90,7 +90,7 @@ class WorkoutController extends _$WorkoutController {
     _updateMuscleGroups();
   }
 
-  void addSet(IWorkoutSection section) {
+  void addSet(IWorkoutSection<dynamic> section) {
     final index = state.sections.indexOf(section);
     if (index < 0) return;
 
@@ -110,7 +110,7 @@ class WorkoutController extends _$WorkoutController {
     state = state.copyWith(subtitle: state.subtitle);
   }
 
-  void removeSection(IWorkoutSection section) {
+  void removeSection(IWorkoutSection<dynamic> section) {
     state = state.copyWith(sections: state.sections..remove(section));
     _resetIndexes();
     _updateMuscleGroups();
@@ -141,9 +141,9 @@ class WorkoutController extends _$WorkoutController {
   }
 
   void _resetIndexes() {
-    final sections = List<IWorkoutSection>.from(state.sections);
-    final newSections =
-        sections.mapWithIndex<IWorkoutSection>((section, sectionIndex) {
+    final sections = List<IWorkoutSection<dynamic>>.from(state.sections);
+    final newSections = sections
+        .mapWithIndex<IWorkoutSection<dynamic>>((section, sectionIndex) {
       switch (section) {
         case final WorkoutDefaultSectionModel obj:
           return obj.copyWith(

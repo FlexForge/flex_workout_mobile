@@ -68,32 +68,37 @@ class WorkoutCreateFormStepTwo extends ConsumerWidget {
         const SizedBox(height: AppLayout.p3),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          child: FlexButton(
-            onPressed: () =>
-                context.goNamed(WorkoutExerciseSelectionScreen.routeName),
-            expanded: true,
-            label: 'Add Exercise',
-            icon: Symbols.add,
-            backgroundColor: context.colors.backgroundPrimary,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppLayout.p4),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FlexButton(
-                onPressed: back,
-                icon: Icons.chevron_left,
-                backgroundColor: context.colors.backgroundTertiary,
+                onPressed: () =>
+                    context.goNamed(WorkoutExerciseSelectionScreen.routeName),
+                expanded: true,
+                label: 'Add Exercise',
+                icon: Symbols.add,
+                backgroundColor: context.colors.backgroundPrimary,
               ),
-              const SizedBox(width: AppLayout.p3),
-              FlexButton(
-                enabled: form.form.valid,
-                onPressed: submit,
-                label: 'Create Workout',
-                icon: Symbols.add_task,
-                backgroundColor: context.colors.foregroundPrimary,
-                foregroundColor: context.colors.backgroundPrimary,
+              const SizedBox(height: AppLayout.p3),
+              Row(
+                children: [
+                  FlexButton(
+                    onPressed: back,
+                    icon: Icons.chevron_left,
+                    backgroundColor: context.colors.backgroundTertiary,
+                  ),
+                  const SizedBox(width: AppLayout.p3),
+                  Expanded(
+                    child: FlexButton(
+                      enabled: form.form.valid,
+                      onPressed: submit,
+                      label: 'Create Workout',
+                      icon: Symbols.add_task,
+                      backgroundColor: context.colors.foregroundPrimary,
+                      foregroundColor: context.colors.backgroundPrimary,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
