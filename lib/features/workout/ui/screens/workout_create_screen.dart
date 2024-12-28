@@ -1,6 +1,5 @@
 import 'package:flex_workout_mobile/core/common/ui/components/back_button.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
-import 'package:flex_workout_mobile/features/workout/controllers/workout_form_controller.dart';
 import 'package:flex_workout_mobile/features/workout/ui/containers/workout_create_step_one.dart';
 import 'package:flex_workout_mobile/features/workout/ui/containers/workout_create_step_two.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,10 +46,6 @@ class _WorkoutCreateScreenState extends ConsumerState<WorkoutCreateScreen> {
     );
   }
 
-  void submit() {
-    ref.read(workoutFormControllerProvider.notifier).create();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +71,6 @@ class _WorkoutCreateScreenState extends ConsumerState<WorkoutCreateScreen> {
               next: () => _updateCurrentPageIndex(1),
             ),
             WorkoutCreateFormStepTwo(
-              submit: submit,
               back: () => _updateCurrentPageIndex(0),
             ),
           ],

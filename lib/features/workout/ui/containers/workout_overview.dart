@@ -29,7 +29,7 @@ class WorkoutOverview extends StatelessWidget {
           final section = workout.sections[index];
 
           switch (section) {
-            case final SupersetWorkoutSectionModel supersetSection:
+            case final WorkoutSupersetSectionModel supersetSection:
               return FlexListTile(
                 title: Text(
                   supersetSection.title,
@@ -82,7 +82,7 @@ class WorkoutOverview extends StatelessWidget {
                     ],
                     Text(
                       // ignore: lines_longer_than_80_chars
-                      ' rep${supersetSection.minReps > 1 || supersetSection.maxReps != null ? 's' : ''}',
+                      ' rep${supersetSection.minReps != 1 || supersetSection.maxReps != null ? 's' : ''}',
                       style: context.typography.bodySmall.copyWith(
                         fontWeight: FontWeight.w500,
                         color: context.colors.foregroundSecondary,
@@ -91,7 +91,7 @@ class WorkoutOverview extends StatelessWidget {
                   ],
                 ),
               );
-            case final DefaultWorkoutSectionModel defaultSection:
+            case final WorkoutDefaultSectionModel defaultSection:
               return FlexListTile(
                 disabledForegroundColor: context.colors.foregroundPrimary,
                 title: Text(
@@ -105,14 +105,14 @@ class WorkoutOverview extends StatelessWidget {
                 subtitle: Row(
                   children: [
                     Text(
-                      defaultSection.totalSets.toString(),
+                      defaultSection.getTotalSets().toString(),
                       style: context.typography.bodySmall.copyWith(
                         fontWeight: FontWeight.w500,
                         color: context.colors.foregroundPrimary,
                       ),
                     ),
                     Text(
-                      ' set${defaultSection.totalSets > 1 ? 's' : ''}',
+                      ' set${defaultSection.getTotalSets() > 1 ? 's' : ''}',
                       style: context.typography.bodySmall.copyWith(
                         fontWeight: FontWeight.w500,
                         color: context.colors.foregroundSecondary,
@@ -144,7 +144,7 @@ class WorkoutOverview extends StatelessWidget {
                     ],
                     Text(
                       // ignore: lines_longer_than_80_chars
-                      ' rep${defaultSection.minReps > 1 || defaultSection.maxReps != null ? 's' : ''}',
+                      ' rep${defaultSection.minReps != 1 || defaultSection.maxReps != null ? 's' : ''}',
                       style: context.typography.bodySmall.copyWith(
                         fontWeight: FontWeight.w500,
                         color: context.colors.foregroundSecondary,
