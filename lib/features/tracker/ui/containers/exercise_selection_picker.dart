@@ -73,8 +73,8 @@ class _ExerciseSelectionPickerState
                   hintText: 'Search...',
                   prefixIcon: Symbols.search,
                   suffix: FlexButton(
-                    onPressed: () => context
-                        .goNamed(ExerciseSelectionFilters.trackerRouteName),
+                    onPressed: () =>
+                        context.goNamed(ExerciseSelectionFilters.routeName),
                     icon: Symbols.sort,
                     backgroundColor: Colors.transparent,
                   ),

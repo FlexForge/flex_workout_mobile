@@ -32,8 +32,7 @@ class ExerciseSelectionFilters extends StatefulWidget {
   const ExerciseSelectionFilters({super.key});
 
   static const routePath = 'exercise_selection_filters';
-  static const trackerRouteName = 'tracker_exercise_selection_filters';
-  static const workoutRouteName = 'workout_exercise_selection_filters';
+  static const routeName = 'tracker_exercise_selection_filters';
 
   @override
   State<ExerciseSelectionFilters> createState() =>

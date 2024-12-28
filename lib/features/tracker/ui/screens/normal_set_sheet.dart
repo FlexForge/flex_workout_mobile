@@ -50,8 +50,7 @@ class NormalSetScreen extends StatelessWidget {
   const NormalSetScreen({required this.set, super.key});
 
   static const routePath = 'normal_set';
-  static const trackerRouteName = 'tracker_normal_set_form';
-  static const workoutRouteName = 'workout_normal_set_form';
+  static const routeName = 'tracker_normal_set_form';
 
   final LiveDefaultSetModel? set;
 

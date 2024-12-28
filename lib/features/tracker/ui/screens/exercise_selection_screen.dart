@@ -25,11 +25,15 @@ class ExerciseSelectionScreenModal extends StatelessWidget {
 }
 
 class ExerciseSelectionScreen extends StatelessWidget {
-  const ExerciseSelectionScreen({super.key});
+  const ExerciseSelectionScreen({
+    required this.sourcePath,
+    super.key,
+  });
+
+  final int sourcePath;
 
   static const routePath = 'exercise_selection';
-  static const trackerRouteName = 'tracker_exercise_selection';
-  static const workoutRouteName = 'workout_exercise_selection';
+  static const routeName = 'tracker_exercise_selection';
 
   @override
   Widget build(BuildContext context) {
