@@ -18,42 +18,48 @@ final exampleWorkoutTemplate = WorkoutModel(
   updatedAt: DateTime.now(),
   createdAt: DateTime.now(),
   sections: [
-    DefaultWorkoutSectionModel(
+    WorkoutDefaultSectionModel(
       id: 0,
       title: 'Chin Ups (Weighted)',
       sets: [
-        DefaultWorkoutSetModel(
+        WorkoutDefaultSetModel(
           id: 0,
           minReps: 3,
           maxReps: 5,
           exercise: weightedChinUps.toModel(),
         ),
-        DefaultWorkoutSetModel(
+        WorkoutDefaultSetModel(
           id: 0,
           minReps: 3,
           maxReps: 5,
           exercise: weightedChinUps.toModel(),
         ),
-        DefaultWorkoutSetModel(
+        WorkoutDefaultSetModel(
           id: 0,
           minReps: 3,
           maxReps: 5,
           exercise: weightedChinUps.toModel(),
         ),
       ],
+      templateSet: WorkoutDefaultSetModel(
+        id: 0,
+        minReps: 3,
+        maxReps: 5,
+        exercise: weightedChinUps.toModel(),
+      ),
     ),
-    SupersetWorkoutSectionModel(
+    WorkoutSupersetSectionModel(
       id: 0,
       title: 'Incline Bench Press (Barbell) and Neck Extension (Plate Loaded)',
       sets: [
         {
-          'A': DefaultWorkoutSetModel(
+          'A': WorkoutDefaultSetModel(
             id: 0,
             minReps: 8,
             maxReps: 10,
             exercise: barbellInclineBenchPress.toModel(),
           ),
-          'B': DefaultWorkoutSetModel(
+          'B': WorkoutDefaultSetModel(
             id: 0,
             minReps: 10,
             maxReps: 12,
@@ -61,13 +67,13 @@ final exampleWorkoutTemplate = WorkoutModel(
           ),
         },
         {
-          'A': DefaultWorkoutSetModel(
+          'A': WorkoutDefaultSetModel(
             id: 0,
             minReps: 6,
             maxReps: 8,
             exercise: barbellInclineBenchPress.toModel(),
           ),
-          'B': DefaultWorkoutSetModel(
+          'B': WorkoutDefaultSetModel(
             id: 0,
             minReps: 8,
             maxReps: 10,
@@ -75,7 +81,7 @@ final exampleWorkoutTemplate = WorkoutModel(
           ),
         },
         {
-          'A': DefaultWorkoutSetModel(
+          'A': WorkoutDefaultSetModel(
             id: 0,
             minReps: 4,
             maxReps: 6,
@@ -83,6 +89,20 @@ final exampleWorkoutTemplate = WorkoutModel(
           ),
         },
       ],
+      templateSet: {
+        'A': WorkoutDefaultSetModel(
+          id: 0,
+          minReps: 8,
+          maxReps: 10,
+          exercise: barbellInclineBenchPress.toModel(),
+        ),
+        'B': WorkoutDefaultSetModel(
+          id: 0,
+          minReps: 10,
+          maxReps: 12,
+          exercise: plateLoadedNeckExtension.toModel(),
+        ),
+      },
     ),
   ],
 );
