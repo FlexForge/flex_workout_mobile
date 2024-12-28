@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'package:flex_workout_mobile/features/exercise/data/db/exercise_entity.dart';
 import 'package:flex_workout_mobile/features/exercise/data/db/muscle_group_entity.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
@@ -91,10 +92,11 @@ class DefaultSectionEntity {
 
 extension ConvertHistoricDefaultSection on DefaultSectionEntity {
   IWorkoutSection toModel() {
-    return DefaultWorkoutSectionModel(
+    return WorkoutDefaultSectionModel(
       id: id,
       title: title,
       sets: sets.map((e) => e.toModel()).toList(),
+      templateSet: sets.map((e) => e.toModel()).toList()[0],
     );
   }
 }
@@ -116,10 +118,27 @@ class SupersetSectionEntity {
 
 extension ConvertHistoricSupersetSection on SupersetSectionEntity {
   IWorkoutSection toModel() {
-    return SupersetWorkoutSectionModel(
+    final sets = supersets.map((e) => e.toModel()).toList();
+
+    final baseTemplate = <String, IWorkoutSet>{};
+    for (final set in sets) {
+      set.forEach((key, value) {
+        if (!baseTemplate.containsKey(key)) {
+          baseTemplate.addAll({key: value});
+        }
+      });
+    }
+
+    final template = SplayTreeMap<String, IWorkoutSet>.from(
+      baseTemplate,
+      (keys1, keys2) => keys1.compareTo(keys2),
+    );
+
+    return WorkoutSupersetSectionModel(
       id: id,
       title: title,
-      sets: supersets.map((e) => e.toModel()).toList(),
+      sets: sets,
+      templateSet: template,
     );
   }
 }
@@ -186,11 +205,11 @@ class DefaultSetEntity {
 
 extension ConvertHistoricDefaultSet on DefaultSetEntity {
   IWorkoutSet toModel() {
-    return DefaultWorkoutSetModel(
+    return WorkoutDefaultSetModel(
       id: id,
+      exercise: exercise.target!.toModel(),
       minReps: minReps,
       maxReps: maxReps,
-      exercise: exercise.target!.toModel(),
     );
   }
 }

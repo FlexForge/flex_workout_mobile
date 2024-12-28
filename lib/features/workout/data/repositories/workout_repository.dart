@@ -61,10 +61,7 @@ class WorkoutRepository {
           sections.map((e) => e.toEntity()).cast(),
         );
 
-      final id = box.put(
-        workoutToAdd,
-        mode: PutMode.insert,
-      );
+      final id = box.put(workoutToAdd, mode: PutMode.insert);
       final res = box.get(id);
 
       if (res == null) {

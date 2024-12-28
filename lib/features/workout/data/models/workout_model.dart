@@ -5,6 +5,10 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
 import 'package:flex_workout_mobile/features/workout/data/db/workout_entity.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/sections/default_section.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/sections/superset_section.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/sets/default_set_tile.dart';
+import 'package:flutter/material.dart';
 
 part 'workout_model.mapper.dart';
 
@@ -51,36 +55,66 @@ class WorkoutModel with WorkoutModelMappable {
 
 @MappableClass(discriminatorKey: 'organization')
 sealed class IWorkoutSection with IWorkoutSectionMappable {
+  IWorkoutSection({
+    required this.title,
+  });
+
+  String title;
+
+  Widget display();
+  List<ExerciseModel> getExercises();
+  dynamic getTotalSets();
+
+  int get minReps;
+  int? get maxReps;
+
   WorkoutSectionEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
-class DefaultWorkoutSectionModel
-    with DefaultWorkoutSectionModelMappable
+class WorkoutDefaultSectionModel
+    with WorkoutDefaultSectionModelMappable
     implements IWorkoutSection {
-  DefaultWorkoutSectionModel({
+  WorkoutDefaultSectionModel({
     required this.id,
-    required this.title,
     required this.sets,
+    required this.templateSet,
+    this.title = '',
   });
 
   final int id;
-  final String title;
+
+  @override
+  String title;
+
+  final IWorkoutSet templateSet;
+  @override
   List<IWorkoutSet> sets;
 
-  int get totalSets => sets.length;
+  void generateTitle(ExerciseModel exercise) => title = exercise.name;
 
+  @override
+  Widget display() => DefaultSectionView(section: this);
+
+  @override
+  List<ExerciseModel> getExercises() => [templateSet.exercise];
+
+  @override
+  int getTotalSets() => sets.length;
+
+  @override
   int get minReps => sets.fold(99, (prev, e) {
         switch (e) {
-          case final DefaultWorkoutSetModel defaultSet:
+          case final WorkoutDefaultSetModel defaultSet:
             return min(prev, defaultSet.minReps);
         }
       });
 
+  @override
   int? get maxReps {
     final maxReps = sets.fold(0, (prev, e) {
       switch (e) {
-        case final DefaultWorkoutSetModel defaultSet:
+        case final WorkoutDefaultSetModel defaultSet:
           return max(max(prev, defaultSet.minReps), defaultSet.maxReps ?? prev);
       }
     });
@@ -98,19 +132,36 @@ class DefaultWorkoutSectionModel
 }
 
 @MappableClass(discriminatorValue: 'superset')
-class SupersetWorkoutSectionModel
-    with SupersetWorkoutSectionModelMappable
+class WorkoutSupersetSectionModel
+    with WorkoutSupersetSectionModelMappable
     implements IWorkoutSection {
-  SupersetWorkoutSectionModel({
+  WorkoutSupersetSectionModel({
     required this.id,
-    required this.title,
     required this.sets,
+    required this.templateSet,
+    this.title = '',
   });
 
   final int id;
-  final String title;
+
+  @override
+  String title;
+
+  final Map<String, IWorkoutSet> templateSet;
+  @override
   List<Map<String, IWorkoutSet>> sets;
 
+  void generateTitle(List<ExerciseModel> exercises) =>
+      title = exercises.map((exercise) => exercise.name).toList().join(' and ');
+
+  @override
+  Widget display() => SupersetSectionView(section: this);
+
+  @override
+  List<ExerciseModel> getExercises() =>
+      templateSet.values.map((value) => value.exercise).toList();
+
+  @override
   Map<String, int> getTotalSets() {
     final totalSets = <String, int>{};
 
@@ -125,7 +176,6 @@ class SupersetWorkoutSectionModel
       }
     }
 
-    /// ignore: flutter_style_todos
     /// TODO: sorted and take first and last - maybe delete this later
     final sortedTotalSets = SplayTreeMap<String, int>.from(
       totalSets,
@@ -143,25 +193,26 @@ class SupersetWorkoutSectionModel
       sortedTotalSets.entries.last.key: sortedTotalSets.entries.last.value,
     };
 
-    /// ignore: flutter_style_todos
-    /// TODO: all total sets - maybe delete this later
+    // TODO: all total sets - maybe delete this later
     // return totalSets;
   }
 
+  @override
   int get minReps => sets.fold(99, (prev, e) {
         final minReps = e.values.fold<int>(99, (prev, e) {
           switch (e) {
-            case final DefaultWorkoutSetModel defaultSet:
+            case final WorkoutDefaultSetModel defaultSet:
               return min(prev, defaultSet.minReps);
           }
         });
         return min(prev, minReps);
       });
 
+  @override
   int? get maxReps => sets.fold(0, (prev, e) {
         final maxReps = e.values.fold<int>(0, (prev, e) {
           switch (e) {
-            case final DefaultWorkoutSetModel defaultSet:
+            case final WorkoutDefaultSetModel defaultSet:
               return max(prev, defaultSet.maxReps ?? prev);
           }
         });
@@ -188,29 +239,54 @@ class SupersetWorkoutSectionModel
 
 @MappableClass(discriminatorKey: 'type')
 sealed class IWorkoutSet with IWorkoutSetMappable {
+  IWorkoutSet({
+    required this.exercise,
+    required this.sectionIndex,
+    required this.setIndex,
+    this.setString = '',
+  });
+
+  final ExerciseModel exercise;
+
+  Widget display();
+
+  // Indexes
+  final int? sectionIndex;
+  final int? setIndex;
+  final String? setString;
+
   SetEntity toEntity();
 }
 
 @MappableClass(discriminatorValue: 'default')
-class DefaultWorkoutSetModel
-    with DefaultWorkoutSetModelMappable
+class WorkoutDefaultSetModel
+    with WorkoutDefaultSetModelMappable
     implements IWorkoutSet {
-  DefaultWorkoutSetModel({
+  WorkoutDefaultSetModel({
     required this.id,
+    required this.exercise,
     required this.minReps,
     this.maxReps,
-    this.muscleGroup,
-    this.movementPattern,
-    this.exercise,
+    this.sectionIndex,
+    this.setIndex,
+    this.setString = '',
   });
 
   final int id;
   final int minReps;
   final int? maxReps;
 
-  final MuscleGroupModel? muscleGroup;
-  final MovementPattern? movementPattern;
-  final ExerciseModel? exercise;
+  @override
+  final ExerciseModel exercise;
+  @override
+  final int? sectionIndex;
+  @override
+  final int? setIndex;
+  @override
+  final String? setString;
+
+  @override
+  Widget display() => DefaultSetTile(set: this);
 
   @override
   SetEntity toEntity() {
@@ -218,7 +294,7 @@ class DefaultWorkoutSetModel
       id: id,
       minReps: minReps,
       maxReps: maxReps,
-    )..exercise.target = exercise?.toEntity();
+    )..exercise.target = exercise.toEntity();
 
     return SetEntity()..defaultSet.target = defaultSet;
   }
