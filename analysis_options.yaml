@@ -24,3 +24,4 @@ analyzer:
     record_literal_one_positional_no_trailing_comma: error
     collection_methods_unrelated_type: warning
     unrelated_type_equality_checks: warning
+    flutter_style_todos: ignore
