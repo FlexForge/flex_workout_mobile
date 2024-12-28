@@ -12,25 +12,18 @@ class WorkoutFormController extends _$WorkoutFormController {
     return WorkoutForm(WorkoutForm.formElements(const Workout()), null);
   }
 
-  void create() {
-    ref.read(workoutCreateControllerProvider.notifier).handle(state);
+  void create(WorkoutModel model) {
+    ref.read(workoutCreateControllerProvider.notifier).handle(
+          state,
+          model,
+        );
   }
-
-  // TODO: workout edit
-  // void update(WorkoutModel workout) {
-  //   ref
-  //       .read(workoutEditControllerProvider(workout.id.toString()).notifier)
-  //       .handle(state, workout);
-  // }
 
   void autofillForm(WorkoutModel workout) {
     final newValue = Workout(
       general: General(
         name: workout.title,
         description: workout.description,
-      ),
-      exercises: Exercises(
-        sections: workout.sections,
       ),
     );
 

@@ -12,29 +12,21 @@ class WorkoutCreateController extends _$WorkoutCreateController {
     return null;
   }
 
-  void handle(WorkoutForm form) {
+  void handle(WorkoutForm form, WorkoutModel model) {
     final generalModel = form.model.general;
-    final exercisesModel = form.model.exercises;
 
     final title = generalModel?.name;
     final subtitle = generalModel?.focus;
     final description = generalModel?.description;
 
-    ///
-
-    final sections = exercisesModel?.sections ?? [];
-
-    final primaryMuscleGroups = exercisesModel?.primaryMuscleGroups ?? [];
-    final secondaryMuscleGroups = exercisesModel?.secondaryMuscleGroups ?? [];
-
     if (title == null || subtitle == null) return;
 
     final res = ref.read(workoutRepositoryProvider).createWorkout(
-          sections: sections,
+          sections: model.sections,
           title: title,
           subtitle: subtitle,
-          primaryMuscleGroups: primaryMuscleGroups,
-          secondaryMuscleGroups: secondaryMuscleGroups,
+          primaryMuscleGroups: model.primaryMuscleGroups,
+          secondaryMuscleGroups: model.secondaryMuscleGroups,
           description: description,
         );
 
