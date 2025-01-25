@@ -10,8 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class SupersetSectionView extends ConsumerWidget {
-  const SupersetSectionView({required this.section, super.key});
+class WorkoutSupersetSectionView extends ConsumerWidget {
+  const WorkoutSupersetSectionView({required this.section, super.key});
 
   final WorkoutSupersetSectionModel section;
 

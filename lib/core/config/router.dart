@@ -21,8 +21,10 @@ import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_sele
 import 'package:flex_workout_mobile/features/tracker/ui/screens/exercise_selection_screen.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/screens/tracker_screen.dart';
+import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:flex_workout_mobile/features/workout/ui/components/exercise_selection_filters.dart';
 import 'package:flex_workout_mobile/features/workout/ui/screens/exercise_selection_screen.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/normal_set_sheet.dart';
 import 'package:flex_workout_mobile/features/workout/ui/screens/workout_create_screen.dart';
 import 'package:flex_workout_mobile/features/workout/ui/screens/workout_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -249,20 +251,20 @@ final router = GoRouter(
                 ),
               ],
             ),
-            // GoRoute(
-            //   path: WorkoutNormalSetScreen.routePath,
-            //   name: WorkoutNormalSetScreen.routeName,
-            //   pageBuilder: (context, state) {
-            //     final set = state.extra as DefaultWorkoutSetModel?;
-            //     return CupertinoModalSheetPage(
-            //       swipeDismissible: true,
-            //       barrierColor: context.colors.overlay,
-            //       child: WorkoutNormalSetScreenModal(
-            //         nestedNavigator: WorkoutNormalSetScreen(set: set),
-            //       ),
-            //     );
-            //   },
-            // ),
+            GoRoute(
+              path: WorkoutNormalSetScreen.routePath,
+              name: WorkoutNormalSetScreen.routeName,
+              pageBuilder: (context, state) {
+                final set = state.extra as WorkoutDefaultSetModel?;
+                return CupertinoModalSheetPage(
+                  swipeDismissible: true,
+                  barrierColor: context.colors.overlay,
+                  child: WorkoutNormalSetScreenModal(
+                    nestedNavigator: WorkoutNormalSetScreen(set: set),
+                  ),
+                );
+              },
+            ),
           ],
         ),
         GoRoute(

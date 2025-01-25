@@ -10,8 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class DefaultSectionView extends ConsumerWidget {
-  const DefaultSectionView({required this.section, super.key});
+class WorkoutDefaultSectionView extends ConsumerWidget {
+  const WorkoutDefaultSectionView({required this.section, super.key});
 
   final WorkoutDefaultSectionModel section;
 

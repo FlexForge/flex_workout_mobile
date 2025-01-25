@@ -97,7 +97,7 @@ class WorkoutDefaultSectionModel
   void generateTitle(ExerciseModel exercise) => title = exercise.name;
 
   @override
-  Widget display() => DefaultSectionView(section: this);
+  Widget display() => WorkoutDefaultSectionView(section: this);
 
   @override
   List<ExerciseModel> getExercises() => [templateSet.exercise];
@@ -159,7 +159,7 @@ class WorkoutSupersetSectionModel
       title = exercises.map((exercise) => exercise.name).toList().join(' and ');
 
   @override
-  Widget display() => SupersetSectionView(section: this);
+  Widget display() => WorkoutSupersetSectionView(section: this);
 
   @override
   List<ExerciseModel> getExercises() =>
@@ -290,7 +290,7 @@ class WorkoutDefaultSetModel
   final String? setString;
 
   @override
-  Widget display() => DefaultSetTile(set: this);
+  Widget display() => WorkoutDefaultSetTile(set: this);
 
   @override
   SetEntity toEntity() {

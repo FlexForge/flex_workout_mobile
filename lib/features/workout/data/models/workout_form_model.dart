@@ -24,3 +24,12 @@ class General with _$General {
     @RfControl() String? description,
   }) = _General;
 }
+
+@Rf()
+@freezed
+class NormalSet with _$NormalSet {
+  const factory NormalSet({
+    @RfControl(validators: [RequiredValidator()]) int? minReps,
+    @RfControl() int? maxReps,
+  }) = _NormalSet;
+}

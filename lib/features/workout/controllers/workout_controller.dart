@@ -1,5 +1,6 @@
 import 'package:flex_workout_mobile/features/exercise/data/models/exercise_model.dart';
 import 'package:flex_workout_mobile/features/exercise/data/models/muscle_group_model.dart';
+import 'package:flex_workout_mobile/features/workout/data/models/workout_form_model.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -88,6 +89,33 @@ class WorkoutController extends _$WorkoutController {
 
     state.sections.add(section);
     _updateMuscleGroups();
+  }
+
+  void completeDefaultSet(
+      NormalSetForm form, WorkoutDefaultSetModel currentSet) {
+    final section = state.sections[currentSet.sectionIndex!];
+
+    switch (section) {
+      case final WorkoutDefaultSectionModel obj:
+        state.sections[currentSet.sectionIndex!] =
+            obj.copyWith.sets.at(currentSet.setIndex!).$update((set) {
+          return currentSet.copyWith(
+            minReps: form.model.minReps,
+            maxReps: form.model.maxReps,
+          );
+        });
+
+      case final WorkoutSupersetSectionModel obj:
+        state.sections[currentSet.sectionIndex!] =
+            obj.copyWith.sets.at(currentSet.setIndex!).$update((set) {
+          set[currentSet.setString!] = currentSet.copyWith(
+            minReps: form.model.minReps,
+            maxReps: form.model.maxReps,
+          );
+
+          return set;
+        });
+    }
   }
 
   void addSet(IWorkoutSection<dynamic> section) {

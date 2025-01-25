@@ -4,14 +4,15 @@ import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
 import 'package:flex_workout_mobile/features/workout/controllers/workout_controller.dart';
 import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/normal_set_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class DefaultSetTile extends ConsumerWidget {
-  const DefaultSetTile({required this.set, super.key});
+class WorkoutDefaultSetTile extends ConsumerWidget {
+  const WorkoutDefaultSetTile({required this.set, super.key});
 
   final WorkoutDefaultSetModel set;
 
@@ -41,7 +42,7 @@ class DefaultSetTile extends ConsumerWidget {
         ),
       ],
       child: _Exercise(set: set)
-      // set.exercise != null ? _Exercise(set: set) : Container()
+      // set.exercise != null ? _Exercise(set: set) :
       // set.movementPattern != null ? _MovementPattern(set: set) :
       // set.muscleGroup != null ? _MuscleGroup(set: set) : Container()
       ,
@@ -57,58 +58,62 @@ class _Exercise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexListTile(
-        //onTap: () => context.goNamed(NormalSetScreen.routeName, extra: set),
-        prefix: Center(
-          child: Text(
-            '${set.setIndex! + 1}${set.setString}',
-            style: context.typography.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: context.colors.foregroundSecondary,
-            ),
+      onTap: () =>
+          context.goNamed(WorkoutNormalSetScreen.routeName, extra: set),
+      prefix: Center(
+        child: Text(
+          '${set.setIndex! + 1}${set.setString}',
+          style: context.typography.headlineMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.colors.foregroundSecondary,
           ),
         ),
-        title: Row(
-          children: [
-            Container(),
-          ],
-        ),
-        subtitle: Row(
-          children: [
-            Container(),
-          ],
-        ),
-        suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
-        suffix: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  set.minReps.toString(),
-                  style: context.typography.bodySmall.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: context.colors.foregroundPrimary,
-                  ),
-                ),
-                if (set.maxReps != null) ...[
-                  Text(
-                    '-${set.maxReps}',
-                    style: context.typography.bodySmall.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: context.colors.foregroundPrimary,
-                    ),
-                  ),
-                ],
-              ],
+      ),
+      title: Row(
+        children: [
+          Text(
+            set.minReps.toString(),
+            style: context.typography.bodySmall.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundPrimary,
             ),
+          ),
+          if (set.maxReps != null) ...[
             Text(
-              ' rep${set.minReps != 1 || set.maxReps != null ? 's' : ''}',
+              '-${set.maxReps}',
               style: context.typography.bodySmall.copyWith(
                 fontWeight: FontWeight.w500,
-                color: context.colors.foregroundSecondary,
+                color: context.colors.foregroundPrimary,
               ),
             ),
           ],
-        ));
+          Text(
+            ' rep${set.minReps != 1 || set.maxReps != null ? 's' : ''}',
+            style: context.typography.bodySmall.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.colors.foregroundSecondary,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Row(
+        children: [
+          Container(),
+        ],
+      ),
+      suffixPadding: const EdgeInsets.only(right: AppLayout.p4),
+      suffix: FlexButton(
+        label: 'Edit set',
+        icon: Symbols.edit,
+        iconSize: 16,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.p4,
+          vertical: AppLayout.p1,
+        ),
+        disabledForegroundColor: context.colors.foregroundPrimary,
+        disabledBackgroundColor: context.colors.backgroundQuaternary,
+      ),
+    );
   }
 }
 
