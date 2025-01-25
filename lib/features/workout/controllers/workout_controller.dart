@@ -116,6 +116,9 @@ class WorkoutController extends _$WorkoutController {
           return set;
         });
     }
+
+    // Force UI to update
+    state = state.copyWith(subtitle: state.subtitle);
   }
 
   void addSet(IWorkoutSection<dynamic> section) {

@@ -34,35 +34,38 @@ class WorkoutNormalSetInputForm extends ConsumerWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FlexTextField(
-                formControl: form.minRepsControl,
-                label: 'Min Reps',
-                isRequired: true,
-                hintText: 'Enter reps completed',
-                inputAction: TextInputAction.done,
-                inputType: TextInputType.number,
-                validationMessages: {
-                  ValidationMessage.required: (error) =>
-                      'The number of reps are required',
-                },
-                suffix: Text(
-                  'rep(s)',
-                  style: context.typography.labelMedium
-                      .copyWith(color: context.colors.foregroundSecondary),
+              Expanded(
+                child: FlexTextField(
+                  formControl: form.minRepsControl,
+                  label: 'Min Reps',
+                  isRequired: true,
+                  hintText: 'Enter reps',
+                  inputAction: TextInputAction.done,
+                  inputType: TextInputType.number,
+                  validationMessages: {
+                    ValidationMessage.required: (error) =>
+                        'Min reps are required',
+                  },
+                  suffix: Text(
+                    'rep(s)',
+                    style: context.typography.labelMedium
+                        .copyWith(color: context.colors.foregroundSecondary),
+                  ),
                 ),
               ),
               const SizedBox(width: AppLayout.p2),
-              FlexTextField(
-                formControl: form.maxRepsControl,
-                label: 'Max Reps',
-                isRequired: true,
-                hintText: 'Enter reps completed',
-                inputAction: TextInputAction.done,
-                inputType: TextInputType.number,
-                suffix: Text(
-                  'rep(s)',
-                  style: context.typography.labelMedium
-                      .copyWith(color: context.colors.foregroundSecondary),
+              Expanded(
+                child: FlexTextField(
+                  formControl: form.maxRepsControl,
+                  label: 'Max Reps',
+                  hintText: 'Enter reps',
+                  inputAction: TextInputAction.done,
+                  inputType: TextInputType.number,
+                  suffix: Text(
+                    'rep(s)',
+                    style: context.typography.labelMedium
+                        .copyWith(color: context.colors.foregroundSecondary),
+                  ),
                 ),
               ),
             ],
