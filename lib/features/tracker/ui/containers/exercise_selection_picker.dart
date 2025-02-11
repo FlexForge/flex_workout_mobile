@@ -84,8 +84,8 @@ class _ExerciseSelectionPickerState
               FlexButton(
                 onPressed: () async {
                   final res = await context.pushNamed<ExerciseModel>(
-                      ExerciseQuickCreate.trackerRouteName);
-
+                    ExerciseQuickCreate.trackerRouteName,
+                  );
                   if (res == null) return;
                   items.add(res);
                   ref

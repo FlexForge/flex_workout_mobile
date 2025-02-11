@@ -92,7 +92,9 @@ class WorkoutController extends _$WorkoutController {
   }
 
   void completeDefaultSet(
-      NormalSetForm form, WorkoutDefaultSetModel currentSet) {
+    NormalSetForm form,
+    WorkoutDefaultSetModel currentSet,
+  ) {
     final section = state.sections[currentSet.sectionIndex!];
 
     switch (section) {
