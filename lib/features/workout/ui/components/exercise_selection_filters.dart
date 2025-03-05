@@ -10,8 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
-class ExerciseSelectionFiltersModal extends StatelessWidget {
-  const ExerciseSelectionFiltersModal({required this.child, super.key});
+class WorkoutExerciseSelectionFiltersModal extends StatelessWidget {
+  const WorkoutExerciseSelectionFiltersModal({required this.child, super.key});
 
   final Widget child;
 
@@ -28,18 +28,19 @@ class ExerciseSelectionFiltersModal extends StatelessWidget {
   }
 }
 
-class ExerciseSelectionFilters extends StatefulWidget {
-  const ExerciseSelectionFilters({super.key});
+class WorkoutExerciseSelectionFilters extends StatefulWidget {
+  const WorkoutExerciseSelectionFilters({super.key});
 
   static const routePath = 'exercise_selection_filters';
-  static const routeName = 'tracker_exercise_selection_filters';
+  static const routeName = 'workout_exercise_selection_filters';
 
   @override
-  State<ExerciseSelectionFilters> createState() =>
+  State<WorkoutExerciseSelectionFilters> createState() =>
       _ExerciseSelectionFiltersState();
 }
 
-class _ExerciseSelectionFiltersState extends State<ExerciseSelectionFilters>
+class _ExerciseSelectionFiltersState
+    extends State<WorkoutExerciseSelectionFilters>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 

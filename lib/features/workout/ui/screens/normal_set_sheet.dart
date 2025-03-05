@@ -1,14 +1,14 @@
 import 'package:flex_workout_mobile/core/common/ui/components/flex_alert_dialog.dart';
 import 'package:flex_workout_mobile/core/extensions/ui_extensions.dart';
 import 'package:flex_workout_mobile/core/theme/app_layout.dart';
-import 'package:flex_workout_mobile/features/tracker/data/models/live_workout_model.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/sets/normal_set_form.dart';
+import 'package:flex_workout_mobile/features/workout/data/models/workout_model.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/sets/normal_set_form.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
-class NormalSetScreenModal extends StatelessWidget {
-  const NormalSetScreenModal({
+class WorkoutNormalSetScreenModal extends StatelessWidget {
+  const WorkoutNormalSetScreenModal({
     required this.nestedNavigator,
     super.key,
   });
@@ -46,13 +46,13 @@ class NormalSetScreenModal extends StatelessWidget {
   }
 }
 
-class NormalSetScreen extends StatelessWidget {
-  const NormalSetScreen({required this.set, super.key});
+class WorkoutNormalSetScreen extends StatelessWidget {
+  const WorkoutNormalSetScreen({required this.set, super.key});
 
   static const routePath = 'normal_set';
-  static const routeName = 'tracker_normal_set_form';
+  static const routeName = 'workout_normal_set_form';
 
-  final LiveDefaultSetModel? set;
+  final WorkoutDefaultSetModel? set;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class NormalSetScreen extends StatelessWidget {
           0,
         ),
         child: set != null
-            ? NormalSetInputForm(set: set!)
+            ? WorkoutNormalSetInputForm(set: set!)
             : const Text('There was an issue loading the set'),
       ),
     );

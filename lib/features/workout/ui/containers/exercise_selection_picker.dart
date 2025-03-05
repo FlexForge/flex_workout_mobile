@@ -11,16 +11,15 @@ import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_qui
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_filter_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_list_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/controllers/exercise_selection_search_query_controller.dart';
-import 'package:flex_workout_mobile/features/tracker/controllers/live_workout_controller.dart';
 import 'package:flex_workout_mobile/features/tracker/ui/components/exercise_selection_filters.dart';
-import 'package:flex_workout_mobile/features/tracker/ui/containers/exercise_selection_bottom_bar.dart';
+import 'package:flex_workout_mobile/features/workout/ui/containers/exercise_selection_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class ExerciseSelectionPicker extends ConsumerStatefulWidget {
-  const ExerciseSelectionPicker({super.key});
+class WorkoutExerciseSelectionPicker extends ConsumerStatefulWidget {
+  const WorkoutExerciseSelectionPicker({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -28,7 +27,7 @@ class ExerciseSelectionPicker extends ConsumerStatefulWidget {
 }
 
 class _ExerciseSelectionPickerState
-    extends ConsumerState<ExerciseSelectionPicker> {
+    extends ConsumerState<WorkoutExerciseSelectionPicker> {
   final List<ExerciseModel> items = [];
   final debouncer = Debouncer(milliseconds: 250);
 
@@ -84,13 +83,11 @@ class _ExerciseSelectionPickerState
               FlexButton(
                 onPressed: () async {
                   final res = await context.pushNamed<ExerciseModel>(
-                    ExerciseQuickCreate.trackerRouteName,
+                    ExerciseQuickCreate.workoutRouteName,
                   );
+
                   if (res == null) return;
                   items.add(res);
-                  ref
-                      .read(liveWorkoutControllerProvider.notifier)
-                      .addNewExercise(res);
                 },
                 icon: Icons.add,
                 backgroundColor: context.colors.backgroundSecondary,
@@ -221,7 +218,7 @@ class _ExerciseSelectionPickerState
                 const SizedBox(height: AppLayout.p6),
           ),
         ),
-        ExerciseSelectionBottomBar(items: items),
+        WorkoutExerciseSelectionBottomBar(items: items),
       ],
     );
   }

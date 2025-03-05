@@ -8,7 +8,9 @@ import 'package:flex_workout_mobile/features/exercise/controllers/exercise_searc
 import 'package:flex_workout_mobile/features/exercise/ui/components/exercise_filters.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/containers/exercise_list.dart';
 import 'package:flex_workout_mobile/features/exercise/ui/screens/exercise_create_screen.dart';
+import 'package:flex_workout_mobile/features/workout/controllers/workout_controller.dart';
 import 'package:flex_workout_mobile/features/workout/ui/containers/workout_list.dart';
+import 'package:flex_workout_mobile/features/workout/ui/screens/workout_create_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +40,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     void createItem() {
-      if (_selectedValue == 2) {
+      if (_selectedValue == 1) {
+        ref.invalidate(workoutControllerProvider);
+        context.goNamed(WorkoutCreateScreen.routeName);
+      } else if (_selectedValue == 2) {
         context.goNamed(ExerciseCreateScreen.routeName);
       }
     }

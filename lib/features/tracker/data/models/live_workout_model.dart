@@ -36,7 +36,10 @@ class LiveWorkoutModel with LiveWorkoutModelMappable {
 
 @MappableClass(discriminatorKey: 'organization')
 sealed class ILiveSection<T> with ILiveSectionMappable<T> {
-  ILiveSection({required this.title, required this.sets});
+  ILiveSection({
+    required this.title,
+    required this.sets,
+  });
 
   String title;
   List<T> sets;
@@ -115,9 +118,8 @@ class LiveSupersetSectionModel
   @override
   List<Map<String, ILiveSet>> sets;
 
-  void generateTitle(List<ExerciseModel> exercises) {
-    title = exercises.first.name;
-  }
+  void generateTitle(List<ExerciseModel> exercises) =>
+      title = exercises.map((exercise) => exercise.name).toList().join(' and ');
 
   List<ILiveSet> get allSets =>
       sets.map((e) => e.values).expand((e) => e).toList();
