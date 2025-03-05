@@ -27,9 +27,10 @@ class WorkoutNormalSetInputForm extends ConsumerWidget {
         maxReps: set.maxReps,
       ),
       builder: (context, form, child) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          normalSetFormHeader(context, ref),
+          normalSetFormHeader(context, ref, set.setIndex! + 1),
           const SizedBox(height: AppLayout.p4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,47 +38,55 @@ class WorkoutNormalSetInputForm extends ConsumerWidget {
               Expanded(
                 child: FlexTextField(
                   formControl: form.minRepsControl,
-                  label: 'Min Reps',
+                  label: 'Reps',
                   isRequired: true,
-                  hintText: 'Enter reps',
+                  hintText: 'Min reps',
+                  suffix: const Text('rep(s)'),
                   inputAction: TextInputAction.done,
                   inputType: TextInputType.number,
                   validationMessages: {
                     ValidationMessage.required: (error) =>
                         'Min reps are required',
                   },
-                  suffix: Text(
-                    'rep(s)',
-                    style: context.typography.labelMedium
-                        .copyWith(color: context.colors.foregroundSecondary),
-                  ),
                 ),
               ),
-              const SizedBox(width: AppLayout.p2),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppLayout.p2,
+                  right: AppLayout.p2,
+                  top: AppLayout.p5,
+                ),
+                child: Text(
+                  '-',
+                  style: context.typography.titleLarge,
+                ),
+              ),
               Expanded(
                 child: FlexTextField(
                   formControl: form.maxRepsControl,
-                  label: 'Max Reps',
-                  hintText: 'Enter reps',
+                  label: ' ', // Empty label to keep textfields alined
+                  hintText: 'Max reps',
+                  suffix: const Text('rep(s)'),
                   inputAction: TextInputAction.done,
                   inputType: TextInputType.number,
-                  suffix: Text(
-                    'rep(s)',
-                    style: context.typography.labelMedium
-                        .copyWith(color: context.colors.foregroundSecondary),
-                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.p4),
-          const SizedBox(height: AppLayout.p4),
+          const SizedBox(height: AppLayout.p2),
+          // Intensity
+          const SizedBox(height: AppLayout.p2),
+          // Rest Duration
         ],
       ),
     );
   }
 
-  Widget normalSetFormHeader(BuildContext context, WidgetRef ref) {
+  Widget normalSetFormHeader(
+    BuildContext context,
+    WidgetRef ref,
+    int setIndex,
+  ) {
     void onSubmit(NormalSetForm form) {
       ref
           .read(workoutControllerProvider.notifier)
@@ -92,7 +101,7 @@ class WorkoutNormalSetInputForm extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Set Reps',
+                'Set $setIndex',
                 style: context.typography.headlineMedium.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
